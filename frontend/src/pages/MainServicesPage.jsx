@@ -1,5 +1,6 @@
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
+import apiClient from '../api/client';
 
 
 function cssToStyle(input) {
@@ -22,7 +23,7 @@ function cssToStyle(input) {
 class MainServicesPage extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { orb: 0, svc: 0, auto: true, flow: 1, apar: 'ar', fbar: 14500, formCat: 'All', sw: 0, who: 0, picks: [true, true, false, false, false, true, false], proc: 0, doubt: 0, faq: 0, chips: [false, false, false, false, false, false, false], sent: false };
+    this.state = { orb: 0, svc: 0, auto: true, flow: 1, apar: 'ar', fbar: 14500, formCat: 'All', sw: 0, who: 0, picks: [true, true, false, false, false, true, false], proc: 0, doubt: 0, faq: 0, chips: [false, false, false, false, false, false, false], sent: false, fname: '', femail: '', fphone: '', fbiz: '', freq: '', bizOpen: false, ferr: {}, sending: false };
   }
   componentDidMount() {
     this.t1 = setInterval(() => this.setState(s => ({ orb: (s.orb + 1) % 7 })), 3200);
@@ -258,7 +259,7 @@ class MainServicesPage extends React.Component {
       const on = s.proc === i, past = i < s.proc;
       return {
         n: String(i + 1), short: p.short, pressed: String(on), pick: () => this.setState({ proc: i }),
-        dot: 'width:56px;height:56px;border-radius:50%;display:grid;place-items:center;font:700 19px Space Grotesk,sans-serif;transition:all .35s;' + (on ? 'background:#6EE7C2;color:#0B1A1E;box-shadow:0 0 0 9px rgba(110,231,194,0.18);transform:scale(1.1)' : past ? 'background:#0D7A63;color:#FFFFFF' : 'background:#12262B;color:#FFFFFF;box-shadow:inset 0 0 0 1.5px rgba(255,255,255,0.25)'),
+        dot: 'width:56px;height:56px;border-radius:50%;display:grid;place-items:center;font:700 19px Space Grotesk,sans-serif;transition:all .35s;' + (on ? 'background:#6EE7C2;color:#0B1A1E;transform:scale(1.1)' : past ? 'background:#0D7A63;color:#FFFFFF' : 'background:#12262B;color:#FFFFFF;box-shadow:inset 0 0 0 1.5px rgba(255,255,255,0.25)'),
         lbl: 'font-size:14px;font-weight:' + (on ? 700 : 500) + ';color:' + (on ? '#FFFFFF' : '#A9BBBE')
       };
     });
@@ -308,6 +309,21 @@ class MainServicesPage extends React.Component {
       };
     });
 
+    const BUSINESS_TYPES = [
+      'CPA firm / accounting practice',
+      'Small or medium-sized business',
+      'Corporation / established business',
+      'Startup or entrepreneur',
+      'Individual or self-employed taxpayer'
+    ];
+    const CATEGORY_MAP = {
+      'CPA firm / accounting practice': 'cpa',
+      'Small or medium-sized business': 'business',
+      'Corporation / established business': 'business',
+      'Startup or entrepreneur': 'business',
+      'Individual or self-employed taxpayer': 'individual'
+    };
+    const SERVICE_SLUGS = ['tax-prep-outsourcing', 'bookkeeping-services', 'payroll-management', 'tax-planning', 'accounts-payable-receivable', 'foreign-compliance', 'tax-filing'];
     const formChips = SV.map((v, i) => {
       const on = s.chips[i];
       return {
@@ -340,7 +356,49 @@ class MainServicesPage extends React.Component {
       procSteps, procNum: '0' + (s.proc + 1), procTitle: cp.title, procText: cp.text,
       procBar: 'height:100%;background:#6EE7C2;width:' + (s.proc / 6 * 100).toFixed(1) + '%',
       doubts, faqs, formChips, footLinks,
-      notSent: !s.sent, sent: s.sent, onSubmit: (e) => { e.preventDefault(); this.setState({ sent: true }); }
+      notSent: !s.sent, sent: s.sent,
+      fname: s.fname, femail: s.femail, fphone: s.fphone, fbiz: s.fbiz, freq: s.freq,
+      bizOpen: s.bizOpen, ferr: s.ferr, sending: s.sending,
+      businessTypes: BUSINESS_TYPES, businessCat: (b) => CATEGORY_MAP[b] || 'business',
+      setFname: (e) => this.setState({ fname: e.target.value, ferr: { ...s.ferr, name: undefined } }),
+      setFemail: (e) => this.setState({ femail: e.target.value, ferr: { ...s.ferr, email: undefined } }),
+      setFphone: (e) => this.setState({ fphone: e.target.value, ferr: { ...s.ferr, phone: undefined } }),
+      setFreq: (e) => this.setState({ freq: e.target.value, ferr: { ...s.ferr, msg: undefined } }),
+      setBiz: (b) => this.setState({ fbiz: b, bizOpen: false, ferr: { ...s.ferr, biz: undefined } }),
+      toggleBiz: () => this.setState(st => ({ bizOpen: !st.bizOpen, ferr: { ...st.ferr, biz: undefined } })),
+      onSubmit: (e) => {
+        e.preventDefault();
+        const errors = {};
+        const name = s.fname.trim();
+        const email = s.femail.trim().toLowerCase();
+        const phone = s.fphone.trim();
+        const biz = s.fbiz;
+        const msg = s.freq.trim();
+        const selected = s.chips.map((on, i) => on ? i : -1).filter(i => i >= 0);
+        if (!name) errors.name = 'Full name is required.';
+        if (!email || !/^[^\s@<>]+@[^\s@<>]+\.[^\s@<>]+$/.test(email)) errors.email = 'Please enter a valid email address.';
+        const phoneDigits = phone.replace(/\D/g, '').length;
+        if (!phone || !/^\+?[\d\s().-]+$/.test(phone) || phoneDigits < 7 || phoneDigits > 15) errors.phone = 'Please enter a valid phone number.';
+        if (!biz) errors.biz = 'Please select your business type.';
+        if (selected.length === 0) errors.services = 'Please select at least one service.';
+        if (!msg) errors.msg = 'Please describe your requirements.';
+        if (Object.keys(errors).length) { this.setState({ ferr: errors }); return; }
+        this.setState({ sending: true, ferr: {} });
+        const payload = {
+          fullName: name,
+          email,
+          phone,
+          category: CATEGORY_MAP[biz] || 'business',
+          serviceSlug: SERVICE_SLUGS[selected[0]] || 'tax-prep-outsourcing',
+          message: msg,
+          preferredContactMethod: 'email',
+          privacyConsent: true,
+          sourcePage: window.location.pathname || '/services',
+        };
+        apiClient.post('/consultations', payload)
+          .then(() => this.setState({ sending: false, sent: true }))
+          .catch(() => this.setState({ sending: false, ferr: { form: 'Unable to submit your request right now. Please try again.' } }));
+      }
     };
   }
 
@@ -1377,7 +1435,7 @@ class MainServicesPage extends React.Component {
                       <div style={cssToStyle("font-size: 13px; color: #4C5654")}>Best for: {v.cur.who}</div>
 
 
-                      <a href={v.exploreHref} onClick={(e) => { e.preventDefault(); this.props.navigate && this.props.navigate(v.exploreHref); }} className="lnk" style={cssToStyle("margin-top: auto")}>Explore {v.cur.short} in detail
+                      <a href={v.exploreHref} onClick={(e) => { e.preventDefault(); this.props.navigate && this.props.navigate(v.exploreHref, { state: { fromCore: true } }); }} className="lnk" style={cssToStyle("margin-top: auto")}>Explore {v.cur.short} in detail
                         <span className="arrow" aria-hidden="true">→</span></a>
 
                     </div>
@@ -2102,41 +2160,44 @@ class MainServicesPage extends React.Component {
                       <div style={cssToStyle("display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 14px")}>
 
                         <label style={cssToStyle("display: grid; gap: 6px; font-size: 13px; font-weight: 600")}>Full name
-                          <input type="text" name="name" required="" style={cssToStyle("min-height: 48px; padding: 0 14px; border-radius: 12px; border: 1.5px solid #B8C4C1")} /></label>
+                          <input type="text" name="name" value={v.fname} onChange={v.setFname} placeholder="Your full name" aria-invalid={Boolean(v.ferr.name)} style={cssToStyle("min-height: 48px; padding: 0 14px; border-radius: 12px; border: 1.5px solid " + (v.ferr.name ? '#E11D48' : '#B8C4C1'))} />
+                          {v.ferr.name && <span style={cssToStyle("font-size: 12px; color: #E11D48")}>{v.ferr.name}</span>}
+                        </label>
 
 
                         <label style={cssToStyle("display: grid; gap: 6px; font-size: 13px; font-weight: 600")}>Email
-                          <input type="email" name="email" required="" style={cssToStyle("min-height: 48px; padding: 0 14px; border-radius: 12px; border: 1.5px solid #B8C4C1")} /></label>
+                          <input type="email" name="email" value={v.femail} onChange={v.setFemail} placeholder="you@firm.com" aria-invalid={Boolean(v.ferr.email)} style={cssToStyle("min-height: 48px; padding: 0 14px; border-radius: 12px; border: 1.5px solid " + (v.ferr.email ? '#E11D48' : '#B8C4C1'))} />
+                          {v.ferr.email && <span style={cssToStyle("font-size: 12px; color: #E11D48")}>{v.ferr.email}</span>}
+                        </label>
 
                       </div>
 
 
-                      <label style={cssToStyle("display: grid; gap: 6px; font-size: 13px; font-weight: 600")}>I am a
+                      <div style={cssToStyle("display: grid; gap: 6px; font-size: 13px; font-weight: 600; position: relative")}>I am a
 
-                        <sc-raw-select name="type" style={cssToStyle("min-height: 48px; padding: 0 12px; border-radius: 12px; border: 1.5px solid #B8C4C1; background: #FFFFFF")}>
+                        <button type="button" onClick={v.toggleBiz} aria-haspopup="listbox" aria-expanded={v.bizOpen} style={cssToStyle("min-height: 48px; padding: 0 14px; border-radius: 12px; border: 1.5px solid " + (v.ferr.biz ? '#E11D48' : '#B8C4C1') + "; background: #FFFFFF; display: flex; align-items: center; justify-content: space-between; cursor: pointer; text-align: left; color: #0B1A1E")}>
+                          <span style={cssToStyle("color: " + (v.fbiz ? '#0B1A1E' : '#8A9793'))}>{v.fbiz || 'Select your business type'}</span>
+                          <span aria-hidden="true" style={cssToStyle("transition: transform .25s; transform: rotate(" + (v.bizOpen ? '180deg' : '0deg') + ")")}>▾</span>
+                        </button>
+                        {v.ferr.biz && <span style={cssToStyle("font-size: 12px; color: #E11D48")}>{v.ferr.biz}</span>}
 
-                          <option>CPA firm / accounting practice</option>
+                        {v.bizOpen && (
+                          <ul role="listbox" style={cssToStyle("position: absolute; top: calc(100% + 6px); left: 0; right: 0; background: #FFFFFF; border: 1px solid #E1E7E5; border-radius: 14px; box-shadow: 0 18px 44px rgba(11,26,30,0.18); padding: 6px; margin: 0; list-style: none; z-index: 50; max-height: 260px; overflow: auto")}>
+                            {v.businessTypes.map((opt, oi) => (
+                              <li key={oi}>
+                                <button type="button" onClick={() => v.setBiz(opt)} role="option" aria-selected={v.fbiz === opt} style={cssToStyle("display: block; width: 100%; text-align: left; padding: 11px 12px; border-radius: 9px; font-size: 13.5px; background: " + (v.fbiz === opt ? '#EAF7F1' : 'transparent') + "; color: #0B1A1E; cursor: pointer; border: 0")}>{opt}</button>
+                              </li>
+                            ))}
+                          </ul>
+                        )}
 
-
-                          <option>Small or medium-sized business</option>
-
-
-                          <option>Corporation / established business</option>
-
-
-                          <option>Startup or entrepreneur</option>
-
-
-                          <option>Individual or self-employed taxpayer</option>
-
-                        </sc-raw-select>
-
-                      </label>
+                      </div>
 
 
                       <fieldset style={cssToStyle("border: 0; padding: 0; margin: 0")}>
 
                         <legend style={cssToStyle("font-size: 13px; font-weight: 600; margin-bottom: 8px")}>Services I'm interested in</legend>
+                        {v.ferr.services && <span style={cssToStyle("font-size: 12px; color: #E11D48; display: block; margin-bottom: 4px")}>{v.ferr.services}</span>}
 
 
                         <div style={cssToStyle("display: flex; flex-wrap: wrap; gap: 8px")}>
@@ -2157,11 +2218,14 @@ class MainServicesPage extends React.Component {
 
 
                       <label style={cssToStyle("display: grid; gap: 6px; font-size: 13px; font-weight: 600")}>Tell us about your requirements
-                        <textarea name="msg" rows="4" style={cssToStyle("padding: 12px 14px; border-radius: 12px; border: 1.5px solid #B8C4C1; resize: vertical")}></textarea></label>
+                        <textarea name="msg" rows="4" value={v.freq} onChange={v.setFreq} placeholder="Describe your accounting or tax requirements and the support you are looking for..." style={cssToStyle("padding: 12px 14px; min-height: 120px; border-radius: 12px; border: 1.5px solid " + (v.ferr.msg ? '#E11D48' : '#B8C4C1') + "; resize: vertical; font-family: inherit")}></textarea>
+                        {v.ferr.msg && <span style={cssToStyle("font-size: 12px; color: #E11D48")}>{v.ferr.msg}</span>}
+                      </label>
 
 
-                      <button type="submit" className="btn btn-ink" style={cssToStyle("justify-content: center; width: 100%")}>Request a Consultation
-                        <span className="arrow" aria-hidden="true">→</span></button>
+                      {v.ferr.form && <div role="alert" style={cssToStyle("font-size: 13px; color: #B91C1C; background: #FEF2F2; border: 1px solid #FECACA; border-radius: 10px; padding: 10px 12px")}>{v.ferr.form}</div>}
+                      <button type="submit" className="btn btn-ink" disabled={v.sending} style={cssToStyle("justify-content: center; width: 100%; opacity: " + (v.sending ? '0.7' : '1') + "; cursor: " + (v.sending ? 'not-allowed' : 'pointer'))}>{v.sending ? 'Submitting Request...' : 'Request a Consultation'}
+                        {!v.sending && <span className="arrow" aria-hidden="true">→</span>}</button>
 
 
                       <p style={cssToStyle("font-size: 12px; color: #4C5654; margin: 0")}>Your information is handled confidentially through authorized channels.</p>
@@ -2262,6 +2326,19 @@ class MainServicesPage extends React.Component {
 
 function MainServicesPageWithNav(props) {
   const navigate = useNavigate();
+  const location = useLocation();
+
+  React.useEffect(() => {
+    if (location.state && location.state.scrollToExplorer) {
+      const el = document.getElementById('explorer');
+      if (el) {
+        setTimeout(() => {
+          el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }, 120);
+      }
+    }
+  }, [location.key]);
+
   return <MainServicesPage {...props} navigate={navigate} />;
 }
 

@@ -29,6 +29,7 @@ import MainServicesPage from './pages/MainServicesPage.jsx';
 import TaxPlanningPage from './pages/services/TaxPlanningPage.jsx';
 import TaxPreparationPage from './pages/services/USATaxPreparationPage.jsx';
 import BookkeepingPage from './pages/services/BookkeepingPage.jsx';
+import PayrollManagementPage from './pages/services/PayrollManagementPage.jsx';
 import ContactPage from './pages/ContactPage.jsx';
 import './pages/ImportedPages.css';
 
@@ -223,6 +224,7 @@ export default function App() {
                             <Route path="/services/tax-planning" element={<TaxPlanningPage />} />
                             <Route path="/services/tax-preparation" element={<TaxPreparationPage />} />
                             <Route path="/services/bookkeeping" element={<BookkeepingPage />} />
+                            <Route path="/services/payroll-management" element={<PayrollManagementPage />} />
                             <Route path="/services/:slug" element={<ServiceDetailRoute />} />
                             <Route path="/cpa-outsourcing" element={<CpaOutsourcingPage />} />
                             <Route path="/hire-professionals" element={<HireProfessionalsPage />} />
