@@ -1,0 +1,756 @@
+# SMART TAX EXPERTS (STE) — CONTROLLED WEBSITE ENHANCEMENT MASTER PROMPT
+
+## 1. YOUR ROLE
+
+Act as a senior frontend engineer, UI/UX designer, motion designer, accessibility specialist, responsive design engineer, and US tax-calculator implementation specialist.
+
+I have an existing website project for **Smart Tax Experts (STE)**. The client has already approved the website's design, page layouts, theme, content, and overall visual direction.
+
+Your task is to make ONLY the specific changes described in this document. This is an enhancement of an approved project, NOT a website redesign.
+
+### NON-NEGOTIABLE RULES
+
+- Do not redesign the entire website.
+- Do not replace the existing design system, layouts, page structures, typography, or content unnecessarily.
+- Do not remove, rename, reorder, or restructure existing pages unless explicitly required below.
+- Do not make unrelated changes to any component, section, route, or functionality.
+- Preserve all existing working functionality.
+- Do not introduce unnecessary dependencies or rewrite the application from scratch.
+- Do not use placeholder values, fake calculations, fake business information, or decorative features that do not work.
+- Modify only the relevant files and components.
+- Before editing, inspect the existing project and understand its architecture, routes, components, themes, assets, and functionality.
+- Reuse existing components and styling wherever possible.
+- Implement the changes directly in the existing codebase instead of asking me to implement them manually.
+
+First inspect the project, create a precise implementation plan, and then implement the requested changes directly in the existing codebase.
+
+---
+
+## 2. CHANGE 1 — BRAND COLORS BASED ON THE STE LOGO
+
+I have attached the official Smart Tax Experts logo.
+
+Use the supplied logo as the source of truth for the brand identity.
+
+### Brand color requirements
+
+1. Extract or identify the primary green, secondary green, dark background, and neutral colors from the supplied logo.
+2. Build a consistent color system based on the actual logo colors.
+3. Apply the brand palette to relevant buttons, active states, borders, links, icons, focus states, charts, animation accents, and interactive elements.
+4. Preserve the existing design's visual identity, spacing, typography, and layout.
+5. Avoid adding unrelated colors or excessive gradients.
+6. Maintain accessible contrast between text, backgrounds, and controls.
+
+### Light theme
+
+- Use the appropriate logo version supplied for the light theme.
+- Maintain readable dark text on light surfaces.
+- Use the official green palette for accents, buttons, charts, and interactive elements.
+- Avoid making the entire interface green.
+- Ensure the calculator, forms, charts, and animations remain readable.
+
+### Dark theme
+
+- Use the appropriate logo version supplied for the dark theme.
+- Use a suitable dark background and readable foreground colors.
+- Preserve the same brand identity while adjusting contrast and surface colors.
+- Ensure buttons, cards, forms, charts, and animations remain clearly visible.
+
+### Logo asset handling
+
+Inspect the supplied logo files before making changes.
+
+If the logo has an unwanted background:
+
+- Remove the background while preserving the original logo artwork.
+- Preserve the exact logo lettering, shape, proportions, symbol, and green shades.
+- Prefer a transparent PNG or SVG where technically appropriate.
+- Do not redraw, reinterpret, distort, or regenerate the logo.
+- Do not use an AI-generated substitute for the official logo.
+- Do not stretch or crop the logo.
+- Use the correct supplied version for each theme.
+
+If a clean transparent asset cannot be produced reliably from the supplied PDF, retain the original and explain which additional source file is needed.
+
+---
+
+## 3. CHANGE 2 — LIVE ANIMATIONS ACROSS EXISTING PAGES
+
+Add professional, purposeful, interactive animations to the existing website without changing the approved page designs.
+
+The animation must feel polished, modern, premium, and appropriate for a professional tax consultancy.
+
+### Global animation requirements
+
+Where appropriate, implement:
+
+- Smooth section entrance animations.
+- Subtle scroll-triggered reveals.
+- Animated numbers only when backed by actual data.
+- Smooth transitions between interface states.
+- Interactive card and button hover effects.
+- Subtle border animations.
+- Animated chart elements and data visualizations.
+- Gentle background movement where it does not interfere with readability.
+- Smooth transitions for theme changes and dropdowns.
+
+Use the project's existing animation library if suitable. Otherwise, select a lightweight, compatible solution. GSAP with ScrollTrigger may be used if appropriate for the existing architecture.
+
+### Important animation rules
+
+- Do not animate every element simultaneously.
+- Do not add excessive bouncing, spinning, flashing, or unnecessary parallax.
+- Do not create long animations that delay access to content.
+- Do not animate text in ways that make it difficult to read.
+- Do not cause layout shifts, horizontal overflow, scroll locking, or broken navigation.
+- Ensure animations work with both light and dark themes.
+- Respect the user's reduced-motion preference.
+- Provide a usable experience when JavaScript animations are unavailable.
+
+### Service detail pages — mandatory
+
+Every existing service must have its own appropriate animation when the user opens its detail page.
+
+Do not implement an animation for only one service and leave the others unchanged.
+
+For every existing service:
+
+1. Identify the actual service and its purpose.
+2. Create an animation concept relevant to that specific service.
+3. Use suitable diagrams, visual elements, charts, icons, or realistic imagery.
+4. Keep the animation subtle enough for a professional financial-services website.
+5. Maintain the existing service page layout and content.
+6. Ensure the animation is performant on mobile and desktop.
+
+For example, a tax-planning service may feature an animated tax breakdown, a document workflow, or a calculation visualization. A bookkeeping service may use a ledger or financial reconciliation animation.
+
+These are examples only. Determine the actual animations from the services already present in the project. Do not invent new services or replace existing service content.
+
+---
+
+## 4. CHANGE 3 — IMPROVE THE EXISTING HOMEPAGE DIAGRAM
+
+I have attached a screenshot of the exact diagram I want you to improve.
+
+First identify the matching diagram in the existing homepage. Modify that diagram only.
+
+### Required improvements
+
+- Make it look like a professionally designed financial analytics dashboard.
+- Use realistic charts, proportional data visualization, clean labels, appropriate typography, subtle shadows, and consistent spacing.
+- Use the official STE brand colors.
+- Add tasteful animation to chart segments, indicators, and data transitions.
+- Make the diagram feel integrated into the website rather than pasted into the page.
+- Maintain its existing placement and general layout.
+- Ensure all labels remain readable on different screen sizes.
+- Avoid excessive glow, exaggerated 3D effects, and decorative clutter.
+
+### Originality and authenticity
+
+Do not copy another website's exact diagram, use a stock dashboard screenshot as the finished result, or generate a misleading graphic that appears to represent actual company data.
+
+Create the diagram using native frontend elements, SVG, Canvas, or the project's existing charting library as appropriate.
+
+If it represents illustrative data, label it clearly as illustrative or sample data. If real data already exists, use the actual data source.
+
+The final result should look like a thoughtfully designed, production-quality visualization rather than a pasted image.
+
+Do not alter other homepage sections while implementing this change.
+
+---
+
+## 5. CHANGE 4 — ADD A TAX CALCULATOR BUTTON TO THE HOMEPAGE
+
+Add a clearly visible but visually consistent button to the existing homepage that opens the US tax calculator.
+
+Suggested label: **"Calculate Your US Taxes"**
+
+Requirements:
+
+- Place it within an appropriate existing homepage section.
+- Match the existing STE design and button styles.
+- Open the calculator when clicked.
+- Use the application's existing routing conventions.
+- Do not introduce another unnecessary homepage redesign.
+- Ensure keyboard and mobile accessibility.
+
+The calculator may open as a dedicated page, drawer, or modal depending on the existing architecture. Choose the option that best preserves the approved website design and supports a detailed, usable calculator.
+
+---
+
+## 6. CHANGE 5 — BUILD A FUNCTIONAL US INCOME TAX CALCULATOR
+
+### Reference website
+
+https://www.hrblock.com/tax-calculator/
+
+Study the reference for its user experience, question flow, conditional inputs, income and deduction collection, filing-status selection, progressive result presentation, and calculation summary.
+
+Use it as inspiration for functionality and usability. Do not copy its branding, proprietary assets, exact design, or source code.
+
+### A. Primary objective
+
+Build a functional US income tax calculator for Smart Tax Experts.
+
+The calculator must support **US federal income tax plus applicable state and local income taxes** where the necessary rules are verified and implemented.
+
+Do not build an Indian income tax calculator for this feature.
+
+Do not treat the calculator as a universal global calculator. Its primary jurisdiction is the United States.
+
+### B. Tax jurisdiction selection
+
+Collect the information necessary to calculate the user's applicable US taxes.
+
+Include:
+
+- Tax year.
+- State of residence.
+- State or states where income was earned, when relevant.
+- Local jurisdiction, such as city or locality, when relevant.
+- Federal tax filing status.
+- Taxpayer age and other eligibility details where relevant.
+- Residency and income-source information where required.
+- Income, deductions, credits, withholding, and estimated payments.
+
+Do not ask unnecessary questions that have no impact on the selected calculation.
+
+Use conditional form fields based on the user's answers and the rules that apply to their situation.
+
+Do not assume that the state of residence is always the only state relevant to taxation. Multi-state income, moves between states, and nonresident state returns may require additional information.
+
+If the calculator cannot accurately support a complex multi-state or nonresident scenario, explain the limitation instead of producing a misleading result.
+
+### C. US federal income tax
+
+Implement the relevant US federal individual income tax rules for the selected tax year.
+
+Where applicable, account for:
+
+- Federal taxable income.
+- Progressive federal income tax brackets and marginal rates.
+- Filing-status-specific tax thresholds.
+- Standard deduction.
+- Itemized deductions, where supported.
+- Applicable adjustments to income.
+- Eligible tax credits.
+- Relevant income exclusions and other adjustments.
+- Capital gains and qualified dividends, where supported.
+- Additional taxes and applicable surtaxes, where supported.
+- Tax payments and federal withholding.
+
+Use the actual rules applicable to the selected tax year.
+
+Do not calculate federal tax by multiplying total income by a single marginal rate. Apply the correct progressive calculation and relevant rules.
+
+Do not implement every possible federal tax provision unless it can be supported accurately. Clearly identify any unsupported situations.
+
+### D. Federal filing status
+
+Support the applicable IRS filing statuses:
+
+1. Single.
+2. Married Filing Jointly.
+3. Married Filing Separately.
+4. Head of Household.
+5. Qualifying Surviving Spouse, where applicable.
+
+Apply the correct eligibility requirements and tax calculations for the selected status.
+
+Do not allow users to select a filing status that the calculator automatically treats as valid without collecting the necessary eligibility information.
+
+Where the eligibility decision requires detailed legal analysis, provide appropriate guidance and clearly explain any limitations.
+
+### E. State income tax
+
+Calculate state income tax according to the selected state's actual rules for the selected tax year.
+
+Important requirements:
+
+- Do not assume every state has an individual income tax.
+- Do not assign the same tax rate or tax brackets to every state.
+- Do not automatically add a state tax where no applicable individual income tax is imposed.
+- Account for state-specific tax brackets, deductions, exemptions, credits, and filing rules where applicable.
+- Account for state-specific treatment of federal deductions or income adjustments where relevant.
+- Apply state rules using the correct taxable income definition and calculation sequence.
+- Use verified state rules for the selected tax year.
+- Clearly identify states whose calculations are not yet supported.
+
+Maintain a jurisdiction-specific state tax module rather than placing all state tax logic inside a single UI component.
+
+### F. Local income taxes
+
+Where applicable, support local income taxes, including relevant city, county, or other local income taxes.
+
+Examples of jurisdictions that may require additional consideration include New York City, certain municipalities in Pennsylvania, and other localities with applicable income taxes.
+
+These are examples only, not a complete list.
+
+Requirements:
+
+- Determine whether a local income tax applies to the selected jurisdiction and taxpayer.
+- Use verified local rules and the correct tax year.
+- Determine the correct tax base, rate structure, eligibility, and residency or workplace requirements.
+- Avoid double-counting a tax already included in another calculation.
+- Do not apply a local tax solely because a user enters a city name.
+- Do not invent a local tax rate or assume a city follows another city's rules.
+
+If the selected locality is not supported, explain that the local tax component cannot currently be calculated reliably.
+
+### G. Other applicable taxes
+
+Where required and supported by verified rules, account for relevant additional components, such as:
+
+- Net Investment Income Tax.
+- Additional Medicare Tax.
+- Self-employment tax.
+- Additional state-level taxes or surcharges.
+- Other applicable individual income-related taxes.
+
+Do not automatically include every tax component for every taxpayer.
+
+Apply the correct eligibility requirements, thresholds, tax bases, and interactions. Clearly distinguish regular income tax from other taxes and contributions.
+
+Do not add payroll taxes or other charges merely because they exist; include them only when relevant to the requested estimate and supported by the calculator.
+
+### H. Tax year and official rules
+
+Allow the user to select a tax year supported by the calculator.
+
+Use authoritative sources:
+
+- IRS: https://www.irs.gov/
+- IRS tax forms and instructions: https://www.irs.gov/forms-instructions
+- Federation of Tax Administrators and state tax agency resources: https://taxadmin.org/state-tax-agencies/
+- Relevant official state and local tax authority websites.
+
+Verify the applicable tax rules, effective dates, thresholds, deductions, credits, and filing requirements for the selected year.
+
+Record:
+
+- Applicable tax year.
+- Rule version.
+- Official source references.
+- Date of verification.
+- Supported jurisdictions.
+- Known limitations.
+
+Do not assume that the current year's rules apply to prior years.
+
+Do not fabricate tax brackets, deductions, credits, or rates.
+
+If the tax rules cannot be verified, do not silently approximate them.
+
+### I. Calculator interface
+
+Create a professional, interactive, easy-to-understand calculator that fits the existing STE design system.
+
+Use a guided, multi-step flow:
+
+1. Tax year and state/local jurisdiction.
+2. Filing status and taxpayer details.
+3. Income information.
+4. Deductions and adjustments.
+5. Tax credits and other relevant provisions.
+6. Tax already paid or withheld.
+7. Review of entered information.
+8. Results and a detailed calculation breakdown.
+
+The exact questions must depend on the selected tax year, filing status, and supported tax rules.
+
+Include a progress indicator and allow the user to return to earlier steps without losing entered information.
+
+Validate required fields and provide clear error messages.
+
+### J. Income collection
+
+Where relevant to the supported calculation, collect:
+
+- Wages and salaries.
+- Self-employment income.
+- Business income.
+- Interest and dividend income.
+- Capital gains.
+- Rental income.
+- Retirement income.
+- Other supported income categories.
+- Relevant adjustments and deductions.
+- Federal and state withholding.
+- Estimated tax payments.
+
+Do not treat every income category identically. Apply the correct tax treatment where implemented and verified.
+
+Clearly distinguish income values from tax payments, deductions, and credits.
+
+### K. Realistic taxpayer visuals
+
+Provide engaging, professional visual elements based on the selected filing status.
+
+Where appropriate, include:
+
+- Individual taxpayer visual.
+- Married couple visual.
+- Family or household visual.
+- Professional or business-owner visual.
+
+Use realistic, non-cartoonish illustrations or appropriately licensed imagery.
+
+Do not simply insert static photographs and call them live animations.
+
+Add subtle, purposeful motion using layered illustrations, SVG, CSS transitions, or lightweight animation.
+
+The visual may change based on filing status, but the filing status must be determined by the actual tax rules, not by the selected character image.
+
+Do not imply that every married person qualifies for joint filing or that every household qualifies for Head of Household status.
+
+Keep the visuals secondary to the calculator and prioritize usability.
+
+### L. Calculator logic — highest priority
+
+Implement a deterministic, reusable, testable calculation engine.
+
+Separate the tax calculation logic from the UI components.
+
+The calculation engine must:
+
+- Apply progressive federal tax brackets correctly.
+- Use the correct filing-status-specific rates and thresholds.
+- Apply the correct standard deduction or supported itemized deduction logic.
+- Calculate taxable income using the applicable rules.
+- Apply eligible credits, adjustments, and other provisions in the correct order.
+- Calculate state income tax separately using the selected state's rules.
+- Calculate local income tax separately when applicable.
+- Apply additional taxes only when eligibility requirements are met.
+- Avoid double-counting deductions, income, credits, or taxes.
+- Distinguish marginal tax rate from effective tax rate.
+- Use appropriate monetary precision and rounding.
+- Validate empty, zero, negative, invalid, and out-of-range inputs.
+- Distinguish missing information from a genuine zero value.
+- Recalculate when relevant inputs change.
+- Preserve user-entered data when navigating between steps.
+- Explain how the final estimate was calculated.
+
+Use integer cents, a decimal arithmetic library, or another appropriate monetary calculation method to avoid floating-point errors.
+
+Never use random values, mock results, hardcoded example results presented as live calculations, or AI-generated tax amounts.
+
+Do not calculate a result for an unsupported scenario by substituting another jurisdiction's rules.
+
+### M. Result dashboard
+
+Display a polished result screen that explains the estimate.
+
+Where supported, include:
+
+- Total reported income.
+- Adjustments and deductions.
+- Federal taxable income.
+- Estimated federal income tax before credits.
+- Applicable federal credits and adjustments.
+- Estimated federal income tax after applicable adjustments.
+- State taxable income and state income tax, where applicable.
+- Local income tax, where applicable.
+- Other applicable taxes, shown separately.
+- Total estimated tax liability.
+- Federal and state withholding, where applicable.
+- Estimated refund or balance payable, where supported.
+- Effective tax rate and its calculation basis.
+- An itemized tax breakdown.
+- Selected filing status.
+- Selected tax year and jurisdiction.
+- Official sources and rule verification date.
+
+Do not display irrelevant fields or unsupported calculations as zero.
+
+Distinguish total tax liability from the remaining balance after payments.
+
+If insufficient information is available, identify the missing information and explain why it matters.
+
+The refund or balance payable must be calculated using the applicable liability and supported payments or withholding. Do not invent a refund.
+
+Include a clear disclaimer explaining that this is an estimate and not a substitute for a complete tax return or qualified tax advice.
+
+### N. Testing and accuracy verification
+
+Create automated tests for:
+
+- Each supported federal tax bracket.
+- Values immediately below, at, and above tax thresholds.
+- Every supported filing status.
+- Standard deduction and supported itemized deductions.
+- Eligible credits and applicable limits.
+- State tax brackets and state-specific provisions.
+- Local tax calculations where supported.
+- Additional applicable taxes.
+- Zero income and high income.
+- Multiple income sources.
+- Withholding and estimated payments.
+- Negative or invalid input.
+- Decimal precision and rounding.
+- Eligibility requirements.
+- Supported historical tax years.
+- Unsupported states, localities, and complex scenarios.
+
+Compare results against official IRS examples, official state guidance, and independently calculated test cases.
+
+Do not claim a calculation is verified unless it has actually been tested.
+
+### O. Supported-jurisdiction behavior
+
+Do not claim all 50 states, the District of Columbia, or all US localities are fully supported unless their relevant rules have been implemented and verified.
+
+Maintain an explicit registry of supported states and local jurisdictions.
+
+For unsupported locations:
+
+- Explain which component is unsupported.
+- Do not invent a tax estimate.
+- Do not silently use another state's tax rules.
+- Display any federal estimate separately only if the federal portion can be calculated accurately.
+- Clearly mark the overall result as incomplete if applicable state or local tax is missing.
+
+The calculator must be architected to allow additional states and localities to be added without redesigning the entire interface.
+
+---
+
+## 7. CHANGE 6 — RIGHT-SIDE BOOKING POPUP AFTER 15 SECONDS
+
+Implement a compact, non-intrusive booking invitation on the right side of the screen.
+
+The popup must not cover the entire viewport or behave like a full-screen modal.
+
+### Trigger
+
+- Display the popup after 15 seconds on the relevant existing Contact Us and Book Consultant pages.
+- Do not show it immediately on page load.
+- Use a single, consistent trigger implementation.
+- Do not create multiple simultaneous popups.
+- Do not reset the timer repeatedly because of ordinary component rerenders.
+- Clean up timers and event listeners correctly.
+- Handle client-side route changes appropriately.
+- Do not repeatedly show the popup after dismissal during the same session, unless explicitly required.
+
+### Popup appearance
+
+- Position it on the right side of the viewport.
+- Use a compact floating card.
+- Use the STE logo colors.
+- Include a subtle entrance animation.
+- Keep the existing page visible and usable.
+- Provide a clear close button.
+- Ensure the popup does not block important content.
+- On small screens, adapt its position and width to prevent overflow.
+
+### Popup content
+
+Heading: "Book an Instant Call"
+
+Supporting text: "Have questions about your tax needs? Schedule a quick consultation with our team."
+
+Primary button: "Book Instant Call"
+
+The primary button must redirect to the actual Calendly URL supplied by me.
+
+Do not invent a Calendly URL. If the real URL is unavailable, create a clearly named configuration setting and ask me for the correct link.
+
+### Popup behavior
+
+- Closing the popup must work.
+- Clicking the primary button must open the correct Calendly destination.
+- Use an appropriate secure link-opening method.
+- Avoid intrusive behavior and respect reduced-motion preferences.
+
+---
+
+## 8. CHANGE 7 — UPDATE THE HOMEPAGE FULL CATALOG SECTION
+
+Modify only the existing "Full Catalog" section on the homepage so it uses a blog-inspired presentation.
+
+Do not convert the entire homepage into a blog.
+
+Requirements:
+
+- Use a polished editorial layout.
+- Introduce a clear section heading and concise supporting text.
+- Use visually organized content cards.
+- Use appropriate typography, imagery, spacing, and subtle hover interactions.
+- Maintain the existing STE brand.
+- Preserve existing content and valid links wherever possible.
+- Use existing catalog information instead of inventing new content.
+- Maintain both light and dark themes.
+- Make the section fully responsive.
+
+The goal is to make the existing Full Catalog section more engaging and editorial, without redesigning unrelated homepage sections.
+
+---
+
+## 9. CHANGE 8 — FULL RESPONSIVENESS
+
+Audit the entire existing website for responsive issues and correct them without unnecessarily changing the approved desktop design.
+
+The website must work across:
+
+- Small and large mobile phones.
+- Portrait and landscape phone orientations.
+- Small and large tablets.
+- Compact laptops.
+- Standard laptops.
+- Large desktop monitors.
+- Ultrawide displays.
+- Large TVs and projector displays.
+
+Requirements:
+
+- Use responsive layouts and appropriate breakpoints.
+- Avoid horizontal overflow.
+- Prevent stretched, cramped, or overlapping content.
+- Preserve appropriate image aspect ratios.
+- Make text readable at all supported sizes.
+- Keep navigation and interactive controls accessible.
+- Ensure the calculator fits small screens.
+- Ensure the booking popup adapts appropriately.
+- Prevent charts and diagrams from becoming unreadable.
+- Keep forms usable without clipped controls.
+- Avoid fixed dimensions that break on different viewports.
+- Preserve a balanced content width on large screens.
+- Ensure touch targets are sufficiently large.
+- Check all existing pages, not just the homepage.
+
+Use fluid sizing and responsive containers where appropriate.
+
+Do not add unnecessary empty space or create a different design for each screen size. Preserve the approved design's visual hierarchy.
+
+---
+
+## 10. IMPLEMENTATION AND CODE QUALITY
+
+Before editing:
+
+1. Inspect the project structure.
+2. Identify the framework, routing system, theme implementation, animation libraries, reusable components, and styling approach.
+3. Identify the exact homepage diagram and Full Catalog section.
+4. Locate all service detail pages.
+5. Locate the Contact Us and Book Consultant pages.
+6. Determine how the existing theme and assets are managed.
+7. Identify whether a tax calculator or booking popup already exists.
+8. Identify the existing supported US tax logic, if any.
+9. Record the files that actually need modification.
+
+Then implement the changes in the existing architecture.
+
+### Technical expectations
+
+- Reuse the existing framework and installed dependencies.
+- Do not migrate the project to a different framework.
+- Avoid unnecessary package installations.
+- Avoid duplicate animation systems.
+- Keep code modular and maintainable.
+- Keep the tax calculation engine separate from presentation logic.
+- Keep brand colors centralized in the existing design-token or theme system.
+- Ensure both themes work correctly.
+- Avoid console errors, broken imports, and missing assets.
+- Avoid regressions in existing functionality.
+
+Create a clear separation between the calculator's interface, federal tax rules, state tax rules, local tax rules, and automated tests.
+
+Do not assume the project uses a particular framework until you have inspected it.
+
+---
+
+## 11. REQUIRED VERIFICATION BEFORE COMPLETION
+
+After implementation, run the available project checks and verify the actual changes.
+
+### Visual checks
+
+- Light theme.
+- Dark theme.
+- Homepage diagram.
+- Full Catalog section.
+- Every existing service detail page.
+- Calculator entry point and complete calculator flow.
+- Booking popup on both relevant pages.
+- Mobile and tablet layouts.
+- Large-screen layouts.
+
+### Functional checks
+
+- Existing navigation and links.
+- Every existing service page.
+- Service-specific animations.
+- Theme switching.
+- Calculator input validation.
+- Federal tax calculations against verified test cases.
+- Supported state tax calculations.
+- Supported local tax calculations.
+- Filing-status-specific calculations.
+- Tax-year selection.
+- Withholding and refund/balance calculations.
+- Unsupported-jurisdiction behavior.
+- Calendly redirection.
+- Popup timing and dismissal.
+- Keyboard navigation.
+- Reduced-motion behavior.
+
+### Technical checks
+
+- Build and type checks, if supported.
+- Lint checks, if configured.
+- Browser console errors.
+- Missing images and assets.
+- Broken routes.
+- Horizontal overflow.
+- Unexpected layout shifts.
+- Animation performance.
+- Regressions in existing working functionality.
+
+Do not report a test as passed unless it was actually run or otherwise verified.
+
+If a test cannot be performed, state that limitation clearly.
+
+---
+
+## 12. STRICT SCOPE CONTROL
+
+Only implement these requested changes:
+
+1. Logo-based brand color refinements for both themes.
+2. Professional live animations across existing pages, including every service detail page.
+3. Improvement of the exact homepage diagram supplied in the screenshot.
+4. A homepage button that opens the US tax calculator.
+5. A functional US tax calculator with verified federal, applicable state, and applicable local income tax calculations.
+6. A compact right-side booking popup after 15 seconds on Contact Us and Book Consultant pages, linking to my real Calendly URL.
+7. A blog-inspired layout for the existing Full Catalog section on the homepage.
+8. Responsive fixes across all existing pages and screen sizes.
+
+Everything else must remain as approved.
+
+Do not change unrelated page layouts, content, section order, typography, navigation, footer, existing business information, or branding.
+
+Do not remove working features or introduce new sections outside the specified scope.
+
+If a requested change conflicts with the existing implementation, make the smallest possible modification that fulfills the requirement while preserving the approved design.
+
+If an essential input is missing, such as the real Calendly URL or verified tax rules for a selected jurisdiction, identify it clearly instead of inventing information.
+
+---
+
+## 13. FINAL DELIVERY REPORT
+
+When finished, provide a concise implementation report containing:
+
+1. The exact changes implemented.
+2. The files modified and the reason for each modification.
+3. The animation approach used.
+4. The logo assets created or updated.
+5. The supported US federal, state, and local tax jurisdictions.
+6. The applicable tax years, official rule sources, and verification dates.
+7. The calculation tests actually completed and their results.
+8. The actual Calendly URL configured.
+9. The responsive viewports checked.
+10. Build and test results.
+11. Any remaining issue that genuinely requires my input.
+
+Start by inspecting the existing project. Implement the specified changes directly, preserve the approved design, and verify the result before declaring the task complete.
+
+**FINAL INSTRUCTION: Change only what I explicitly requested. The existing website is already client-approved. Do not redesign it. Do not fabricate tax rules, results, links, or test outcomes.**

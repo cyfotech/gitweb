@@ -1,0 +1,1070 @@
+# MASTER FRONTEND DEVELOPMENT PROMPT
+## Preferred Tax Consultancy — Premium Interactive Website
+
+### ROLE AND OBJECTIVE
+
+Act as a world-class Senior Frontend Engineer, Creative Director, UI/UX Designer, Motion Designer, and React/TypeScript Architect.
+
+Your task is to transform the existing **Preferred Tax Consultancy** website into an exceptional, production-quality, visually immersive, fully responsive website.
+
+This is not a basic landing page project.
+
+The final result must combine:
+
+1. The exact visual direction of the **user-approved light and dark theme screenshot**.
+2. The existing Preferred Tax Consultancy project's content, functionality, and established spacing.
+3. The interaction quality, scrolling experience, layered demonstrations, and visual storytelling inspired by **https://askairank.com/**.
+
+The final website must feel sophisticated, cinematic, modern, interactive, and professionally engineered.
+
+It must not look like a generic AI-generated template.
+
+**IMPORTANT: The supplied screenshot is the final approved design direction. Do not replace it with a completely different concept.**
+
+---
+
+# PHASE 1 — ANALYZE BEFORE DEVELOPING
+
+Before modifying any code:
+
+- Inspect the complete existing React project.
+- Review all pages, components, routes, styles, assets, forms, and dependencies.
+- Inspect the user-approved design screenshot.
+- Inspect any additional project ZIP supplied by the user.
+- Study https://askairank.com/ as an animation and interaction reference.
+- Identify existing working features that must remain intact.
+- Identify existing content and service categories.
+- Identify any existing API or data integrations.
+- Identify all original blog article URLs.
+
+Create an internal implementation plan before making changes.
+
+Do not immediately replace the project with a new starter template.
+
+Preserve and improve the existing architecture wherever practical.
+
+## Reference priority
+
+If design references conflict, use this priority:
+
+1. User-approved screenshot for appearance.
+2. Existing project for actual business content and functionality.
+3. Additional supplied ZIP for permitted supplementary assets and content.
+4. AskAiRank for animation, scrolling, interaction patterns, and visual inspiration.
+
+Never copy AskAiRank's business content, branding, analytics data, or proprietary assets.
+
+---
+
+# PHASE 2 — TECHNOLOGY STACK
+
+Continue using the existing stack:
+
+- React
+- Vite
+- TypeScript
+- Tailwind CSS
+- shadcn/ui
+- React Router
+
+For animation, use:
+
+- GSAP
+- GSAP ScrollTrigger
+- Motion for React where appropriate
+- CSS transitions
+- SVG animations
+- Intersection Observer where appropriate
+
+For dynamic charts, use a suitable React charting library such as Recharts.
+
+Use Lenis only if it can be integrated without breaking native scrolling, accessibility, browser navigation, or ScrollTrigger.
+
+Do not install multiple libraries that duplicate the same responsibility unnecessarily.
+
+Use proper cleanup for every animation and scroll listener.
+
+Avoid memory leaks, duplicate animation initialization, and unnecessary rerenders.
+
+---
+
+# PHASE 3 — IMPLEMENT THE APPROVED DESIGN
+
+Recreate the visual structure of the approved screenshot as closely as practical.
+
+The screenshot contains:
+
+- Premium floating navigation
+- Two-theme visual system
+- Editorial hero typography
+- Financial dashboard composition
+- Floating information cards
+- Service cards with supporting visuals
+- Partnership storytelling
+- Interactive financial charts
+- Trust and credibility panels
+- Cinematic consultation CTA
+- Rounded containers
+- Refined shadows and glass effects
+- Balanced spacing and visual hierarchy
+
+Match its:
+
+- Layout proportions
+- Typography hierarchy
+- Card geometry
+- Component positioning
+- Border radii
+- Visual depth
+- Theme-specific surfaces
+- Accent treatments
+- Responsive composition
+
+Use the existing brand logo and business identity.
+
+Do not replace existing company information with fictional content.
+
+## LIGHT THEME
+
+Create a premium light theme with:
+
+- Soft white and ivory backgrounds
+- Refined charcoal typography
+- Muted teal accents
+- Pale cyan highlights
+- Frosted-glass surfaces
+- Soft natural shadows
+- Subtle background gradients
+- Professional business imagery
+
+Suggested tokens:
+
+Background: #F7F9F8
+
+Surface: #FFFFFF
+
+Primary text: #17252B
+
+Secondary text: #526168
+
+Primary teal: #315F69
+
+Border: #DCE5E2
+
+Accent tint: #E4F0EE
+
+Use the screenshot as the primary visual authority rather than forcing these exact values everywhere.
+
+## DARK THEME
+
+Match the dark theme in the approved screenshot, with additional inspiration from AskAiRank's premium technology-oriented visual presentation.
+
+Suggested tokens:
+
+Background: #031117
+
+Secondary background: #071C24
+
+Card surface: #0B2530
+
+Elevated surface: #10313C
+
+Primary text: #F3FBFC
+
+Secondary text: #A8C0C6
+
+Cyan accent: #79F1E8
+
+Teal accent: #2CCFC5
+
+Subtle border: rgba(121, 241, 232, 0.18)
+
+Use:
+
+- Deep near-black navy backgrounds
+- Rich teal-tinted glass panels
+- Controlled cyan glow
+- Fine luminous borders
+- Dimensional shadows
+- Subtle grid and light-trail details
+- Premium contrast
+
+Avoid overwhelming neon effects.
+
+The dark theme must feel luxurious, not like a gaming website.
+
+## THEME SWITCHING
+
+Add a fully functional light/dark theme toggle.
+
+Requirements:
+
+- Accessible theme control
+- Immediate theme transition
+- Persist user preference in localStorage
+- Respect system preference when no choice exists
+- Prevent initial theme flashing
+- Apply themes to every page and component
+- Theme charts, forms, menus, videos, and overlays consistently
+
+Do not implement the toggle only on the homepage.
+
+---
+
+# PHASE 4 — CINEMATIC HERO SECTION
+
+Recreate the approved hero composition.
+
+### Left side
+
+Use the existing approved business heading and supporting content.
+
+Keep text concise.
+
+Include:
+
+- Small professional eyebrow label
+- Large premium heading
+- Short supporting description
+- Primary consultation CTA
+- Existing secondary CTA if present
+- Appropriate trust indicators
+
+### Right side
+
+Build a premium layered financial dashboard composition.
+
+Include:
+
+- Main financial overview panel
+- Animated graph
+- Tax preparation information card
+- Secure collaboration indicator
+- Floating document card
+- Supporting accounting-related micro-interactions
+
+The dashboard must look polished and dimensional.
+
+Use subtle depth, shadows, perspective, and glassmorphism.
+
+Do not copy AskAiRank's AI-ranking dashboard content.
+
+## HERO ANIMATION
+
+On initial load:
+
+1. Background reveals smoothly.
+2. Heading appears through staggered line animation.
+3. Supporting text fades upward.
+4. CTA buttons enter.
+5. Dashboard panels appear in sequence.
+6. Floating cards settle into position.
+7. Chart draws progressively.
+
+Keep the entrance elegant and performant.
+
+The hero must remain usable before animations finish.
+
+Do not block interaction with a long introductory animation.
+
+---
+
+# PHASE 5 — ADVANCED SCROLL ANIMATION SYSTEM
+
+This is one of the most important requirements.
+
+Study the interaction quality of AskAiRank and create a similarly polished scrolling experience adapted to this website.
+
+**Every major section must have a meaningful scroll-based interaction.**
+
+However, animations must not be excessive or repetitive.
+
+## A. SCROLL-TRIGGERED REVEALS
+
+Implement:
+
+- Staggered card entrances
+- Heading reveals
+- Image masking
+- Soft fade and translate
+- Layered panel transitions
+- Controlled parallax
+- Animated SVG lines
+- Graph drawing
+- Timeline progression
+- Background depth changes
+
+Each section should have a distinctive animation treatment appropriate to its content.
+
+## B. PINNED SCROLL STORYTELLING
+
+For the partnership and process sections:
+
+Create an interactive pinned-scroll experience.
+
+As the user scrolls:
+
+- The main visual remains temporarily pinned.
+- Supporting steps change progressively.
+- The relevant step becomes highlighted.
+- Associated imagery transitions smoothly.
+- Supporting graphics respond to scroll progress.
+
+Use a measured scroll distance.
+
+Do not create unnecessarily long pinned sections.
+
+On mobile, simplify or disable pinning when appropriate.
+
+## C. FAST AND SLOW SCROLL SAFETY
+
+This requirement is mandatory.
+
+Whether the visitor scrolls slowly, quickly, uses a trackpad, mouse wheel, keyboard, scrollbar dragging, or touch gestures:
+
+**No content may be permanently skipped, clipped, hidden, or inaccessible.**
+
+Implement the following:
+
+- Use native scrolling as the foundation.
+- Avoid forced full-page scroll snapping.
+- Avoid scroll-wheel hijacking.
+- Do not prevent default scrolling unnecessarily.
+- Avoid large artificial delays.
+- Use scrubbed animations where appropriate.
+- Ensure animations resolve to their correct state when scrolling rapidly.
+- Support reverse scrolling.
+- Ensure content is visible when returning to a section.
+- Avoid relying on a single intersection event to reveal essential content.
+- Use ScrollTrigger refresh after significant layout changes.
+- Account for dynamic image loading and responsive layout changes.
+- Avoid fixed heights that clip text.
+- Use appropriate min-height and natural content flow.
+- Ensure sticky and pinned sections release correctly.
+- Provide sensible non-animated fallbacks.
+
+If a user jumps directly to a section, its content must still be accessible.
+
+Do not leave elements stuck at opacity: 0.
+
+## D. ANIMATION ON RE-ENTRY
+
+Where appropriate, animations should respond again when the user scrolls back into a section.
+
+Use scroll direction and progress intelligently.
+
+Do not endlessly replay distracting animations.
+
+For scrubbed interactions, the visual state should follow scroll position in both directions.
+
+## E. REDUCED MOTION
+
+Respect prefers-reduced-motion.
+
+Provide simplified transitions or static content when requested by the operating system.
+
+Never make important content dependent on animation.
+
+---
+
+# PHASE 6 — SERVICES SECTION
+
+Use the approved screenshot's service-card layout.
+
+Include the existing business services, including:
+
+- Tax Preparation
+- Accounting Services
+- Bookkeeping
+- Payroll Management
+- CPA Outsourcing
+
+Preserve all additional services already present in the project.
+
+Do not remove services to make the design look cleaner.
+
+Use a compact, premium card layout with:
+
+- Appropriate service imagery
+- Professional icons
+- Concise existing descriptions
+- Subtle image overlays
+- Clear navigation controls
+- Smooth hover effects
+- Distinct light and dark styling
+
+## INTERACTIONS
+
+On hover:
+
+- Image subtly zooms
+- Border becomes more prominent
+- Arrow moves slightly
+- Card gains depth
+- Accent lighting responds gently
+
+For horizontal service carousels:
+
+- Provide working next/previous controls
+- Support touch swiping
+- Support keyboard navigation
+- Prevent cards from being partially inaccessible
+- Preserve readable card widths
+
+All service links must navigate correctly.
+
+---
+
+# PHASE 7 — PARTNERSHIP STORYTELLING
+
+Create the approved section:
+
+**A Partnership Built Around You**
+
+Use the existing business content.
+
+Layout:
+
+- Left: Heading, short description, CTA
+- Center: Premium professional image or video
+- Right: Animated process steps
+
+Use the approved visual direction.
+
+### Scroll behavior
+
+As the user scrolls through the section:
+
+1. Strategy becomes active.
+2. Execution becomes active.
+3. Ongoing Support becomes active.
+
+Animate the corresponding visual and progress indicator.
+
+Keep the content readable throughout.
+
+The animation must work in both scrolling directions.
+
+If the user scrolls rapidly, the correct final step must appear.
+
+## VIDEO
+
+If a working company video exists, integrate it.
+
+Provide:
+
+- Working play/pause
+- Accessible controls
+- Poster image
+- Proper loading behavior
+- Mobile compatibility
+
+If no video asset exists, use a high-quality poster and do not pretend a nonexistent video is playable.
+
+---
+
+# PHASE 8 — DYNAMIC GRAPHS AND DATA VISUALIZATION
+
+All business data displayed in charts must come from real, identifiable data sources.
+
+**Never hardcode invented revenue, customer growth, tax filing, retention, or performance statistics as if they are real.**
+
+This rule applies across the entire website.
+
+## DATA ARCHITECTURE
+
+First inspect the existing project for:
+
+- APIs
+- CMS integrations
+- Data files
+- Approved business metrics
+- Existing backend endpoints
+
+Create a reusable data-access layer for charts.
+
+Use typed interfaces.
+
+Implement loading, error, empty, and success states.
+
+Use real API data when an endpoint is available.
+
+If an API is not available, do not invent one or silently create fake business figures.
+
+Instead:
+
+- Show a professional empty state.
+- Use approved static business information where suitable.
+- Or build a clearly labeled interactive calculator based on user-entered values.
+
+## INTERACTIVE CHARTS
+
+Where supported by real data, include:
+
+- Animated line charts
+- Bar charts
+- Donut charts
+- Financial breakdowns
+- Trend indicators
+- Tooltips
+- Period selectors
+- Legends
+- Responsive chart resizing
+
+Charts should animate when visible.
+
+Users should be able to inspect values.
+
+Period selectors must actually change the dataset displayed.
+
+Do not add fake filters that only change a label.
+
+## DATA UPDATES
+
+When connected to an API:
+
+- Fetch data asynchronously.
+- Handle request failures.
+- Prevent stale updates.
+- Use appropriate caching or refetching.
+- Format values correctly.
+- Handle missing values safely.
+
+Never claim that data is live unless it genuinely updates from a live source.
+
+Do not expose private client financial information on the public website.
+
+---
+
+# PHASE 9 — BLOG AND ORIGINAL ARTICLE REDIRECTS
+
+Preserve the existing blog section and its current articles.
+
+The website may display blog previews with:
+
+- Featured image
+- Title
+- Category
+- Short excerpt
+- Publication date where available
+- Read More link
+
+## CRITICAL REDIRECT REQUIREMENT
+
+When a visitor clicks **Read More**, redirect them to the article's actual original website.
+
+Do not automatically open an internally generated article page if the article is externally sourced.
+
+Each blog entry must have its own verified original URL.
+
+Example data structure:
+
+```ts
+type BlogPost = {
+  id: string;
+  title: string;
+  excerpt: string;
+  image: string;
+  category?: string;
+  publishedAt?: string;
+  originalUrl: string;
+};
+```
+
+For external links:
+
+- Use the actual article URL.
+- Open it in a new tab.
+- Use rel="noopener noreferrer".
+- Do not route every article to the same destination.
+- Do not use placeholder links.
+- Do not invent source URLs.
+
+If the original URL is missing, disable the Read More link or show an appropriate unavailable state until a valid source is provided.
+
+Do not silently redirect to the publication homepage.
+
+For original articles hosted by Preferred Tax Consultancy, retain their correct internal routes.
+
+Preserve any existing blog filters, search, or category functionality.
+
+---
+
+# PHASE 10 — SMART CONSULTATION FORM
+
+Preserve and improve the existing Book Consultation form.
+
+This form must be fully functional and dynamically filter services based on the selected client category.
+
+## STEP 1 — CLIENT CATEGORY
+
+The user selects one of:
+
+- Individual / Family
+- Company / Business
+- CPA Firm
+
+## STEP 2 — DYNAMIC SERVICE OPTIONS
+
+Once the category is selected, display only the services relevant to that category.
+
+### Individual / Family
+
+Show only relevant existing services, such as:
+
+- Individual Tax Preparation
+- Family Tax Planning
+- Personal Tax Consultation
+- IRS Assistance
+
+Include these only if they exist in the approved business service catalog.
+
+### Company / Business
+
+Show only relevant existing business services, such as:
+
+- Business Tax Preparation
+- Accounting Services
+- Bookkeeping
+- Payroll Management
+- Financial Reporting
+- Business Tax Planning
+
+Again, use the actual approved service catalog.
+
+### CPA Firm
+
+Show only CPA Outsourcing services.
+
+Use the existing 10 CPA Outsourcing offerings from the project, including:
+
+- Tax Preparation Outsourcing
+- Bookkeeping Outsourcing
+- Accounting Outsourcing
+- Payroll Processing
+- Audit Support
+- Financial Statement Preparation
+- Tax Review Support
+- Year-End Cleanup
+- Write-up Services
+- The existing tenth CPA offering
+
+Do not invent or rename services.
+
+## FORM LOGIC
+
+Implement a single source of truth for category-to-service mapping.
+
+When the user changes category:
+
+1. Update the service dropdown immediately.
+2. Remove unrelated service options.
+3. Clear a previously selected service if it no longer belongs to the new category.
+4. Preserve unrelated form inputs.
+5. Keep validation working.
+
+If the user selects CPA Firm, individual and business-only services must not appear.
+
+If the user selects Individual / Family, CPA-only services must not appear.
+
+## PRESELECT SERVICE FROM CARDS
+
+Preserve the previously requested behavior:
+
+Clicking **Request scope details** on a CPA Outsourcing service card must open the form with that specific service selected.
+
+Prefer stable URL parameters, for example:
+
+```text
+/contact?category=cpa&service=audit-support
+```
+
+Validate the parameters.
+
+If the category and service do not match, use a safe default.
+
+The preselection must survive page refresh.
+
+Users must be able to change the selection manually.
+
+## FORM SUBMISSION
+
+Preserve existing submission functionality.
+
+Include:
+
+- Required field validation
+- Clear error messages
+- Loading state
+- Success state
+- Duplicate-submission prevention
+- Accessible labels
+- Mobile-friendly inputs
+
+Do not show a false success message when no submission has occurred.
+
+Do not claim that consultation details have been sent if the backend request fails.
+
+---
+
+# PHASE 11 — IMAGES, VIDEO AND MOTION GRAPHICS
+
+The website must feel visually engaging throughout.
+
+Use a balanced combination of:
+
+- Professional photography
+- Cinematic video
+- Financial dashboards
+- SVG illustrations
+- Animated charts
+- Layered visual cards
+- Subtle 3D-style depth
+- Micro-interactions
+- Scroll-based storytelling
+
+Avoid repeated stock images across unrelated pages.
+
+Every page should have a distinct visual identity while maintaining the same brand system.
+
+Do not insert unrelated imagery simply to fill space.
+
+## ASSET REQUIREMENTS
+
+- Prefer supplied and licensed assets.
+- Use optimized WebP/AVIF images where supported.
+- Use compressed video with poster images.
+- Lazy-load below-the-fold media.
+- Avoid layout shifts.
+- Respect autoplay restrictions.
+- Mute decorative autoplay videos.
+- Pause or reduce expensive media when appropriate.
+- Never use broken image URLs.
+
+Do not include unnecessary decorative videos that slow down the website.
+
+---
+
+# PHASE 12 — HOVER AND MICRO-INTERACTIONS
+
+Add refined hover interactions to appropriate elements across every page.
+
+### Cards
+
+- Subtle upward movement
+- Smooth shadow transition
+- Gentle border glow
+- Minor image scaling
+
+### Buttons
+
+- Soft background transition
+- Arrow movement
+- Pressed state
+- Visible keyboard focus
+
+### Navigation
+
+- Underline reveal
+- Active page indicator
+- Smooth dropdown transitions
+
+### Charts
+
+- Interactive tooltips
+- Point highlighting
+- Smooth dataset transitions
+
+### Process steps
+
+- Active-state transitions
+- Progress indicators
+- Contextual visual changes
+
+Do not animate every paragraph or static container.
+
+The website should feel alive without becoming visually chaotic.
+
+---
+
+# PHASE 13 — RESPONSIVE DESIGN
+
+The website must work beautifully on:
+
+- 320px smartphones
+- 375px smartphones
+- 390px smartphones
+- Tablets
+- 1024px screens
+- 1280×720 laptops
+- 1366×768 laptops
+- 1440×900 laptops
+- 1536×864 laptops
+- Large desktops
+- Ultrawide displays
+- 4K screens
+
+Pay special attention to 125% and 150% browser or Windows display scaling.
+
+Use:
+
+- Fluid typography
+- CSS clamp()
+- Responsive grids
+- Flexible containers
+- Appropriate max-widths
+- Content-driven section heights
+- Responsive image cropping
+- Safe text wrapping
+
+Avoid:
+
+- Fixed heights that clip content
+- Overlapping text
+- Horizontal overflow
+- Hidden CTA buttons
+- Cut-off cards
+- Unreadable charts
+- Excessive mobile whitespace
+
+The desktop experience should be visually impressive.
+
+The mobile experience must be equally functional, not merely a compressed desktop layout.
+
+---
+
+# PHASE 14 — COMPLETE WEBSITE COVERAGE
+
+Implement the design system across all existing pages:
+
+1. Home
+2. About Us
+3. Services
+4. CPA Outsourcing
+5. Hire Professionals
+6. Tax Resources
+7. Blog
+8. Contact Us
+9. Book Consultation
+10. Existing service detail pages
+11. Existing blog detail pages where applicable
+12. Any additional existing routes
+
+Every page must have:
+
+- Correct light/dark styling
+- Purpose-specific layout
+- Appropriate motion
+- Functional navigation
+- Responsive behavior
+- Clear content hierarchy
+
+Do not make every page use the exact same section structure.
+
+Do not redesign only the homepage and leave other pages unfinished.
+
+---
+
+# PHASE 15 — CONTENT AND SPACING RULES
+
+The user has approved the current website's content and spacing.
+
+Preserve them.
+
+## CONTENT
+
+Do not:
+
+- Replace business content with AskAiRank content.
+- Invent services.
+- Invent testimonials.
+- Invent customer counts.
+- Invent revenue or performance figures.
+- Add fake client logos.
+- Add unsupported certifications.
+- Add fictional financial claims.
+
+Keep visible text concise.
+
+Where content is too long, improve its presentation through:
+
+- Cards
+- Tabs
+- Accordions
+- Progressive disclosure
+- Visual summaries
+
+Do not remove legally or commercially important information merely to reduce text.
+
+If additional approved content is needed, use the supplied project files.
+
+## SPACING
+
+Maintain the approved spacing system.
+
+Use consistent:
+
+- Container widths
+- Section padding
+- Card gaps
+- Heading margins
+- Grid spacing
+- Responsive breakpoints
+
+Do not create unnecessarily tall empty sections.
+
+Avoid excessive whitespace that makes the page feel unfinished.
+
+---
+
+# PHASE 16 — PERFORMANCE AND ACCESSIBILITY
+
+Target a production-quality frontend.
+
+Use:
+
+- Route-level code splitting
+- Lazy-loaded heavy components
+- Image optimization
+- Efficient animation transforms
+- Proper scroll cleanup
+- Memoization where beneficial
+- Accessible semantic HTML
+- Visible keyboard focus
+- Appropriate ARIA labels
+- Correct color contrast
+- Reduced-motion support
+
+Avoid animation-related layout thrashing.
+
+Avoid scroll listeners that trigger React state updates on every pixel unless necessary.
+
+Prevent cumulative layout shift.
+
+Maintain native browser navigation and scrolling.
+
+Ensure text selection remains visible in both themes.
+
+Use accessible selection colors rather than white-on-white highlights.
+
+---
+
+# PHASE 17 — QUALITY ASSURANCE
+
+Before declaring completion, test the entire website.
+
+## VISUAL TESTS
+
+Compare the homepage against the approved screenshot in both themes.
+
+Check:
+
+- Hero proportions
+- Dashboard composition
+- Service cards
+- Partnership section
+- Graph presentation
+- Consultation CTA
+- Typography
+- Spacing
+- Color consistency
+
+## SCROLL TESTS
+
+Test:
+
+- Very slow scrolling
+- Rapid mouse-wheel scrolling
+- Trackpad scrolling
+- Touch scrolling
+- Keyboard scrolling
+- Scrollbar dragging
+- Scrolling backward
+- Direct navigation to anchors
+- Browser back and forward
+- Page refresh during a scroll position
+
+Verify no section is permanently hidden or skipped.
+
+## FUNCTIONAL TESTS
+
+Test:
+
+- Theme switching
+- All navbar links
+- All CTAs
+- All service cards
+- All dropdowns
+- Consultation category filtering
+- CPA service preselection
+- Form validation
+- Form submission
+- Blog original-source redirects
+- Chart controls
+- Video controls
+- Mobile menu
+- Carousels
+
+## BUILD VERIFICATION
+
+Run:
+
+```bash
+npm install
+npm run build
+```
+
+Fix all TypeScript errors, broken imports, and build failures.
+
+Do not claim a test passed unless it was actually executed.
+
+---
+
+# PHASE 18 — IMPLEMENTATION DELIVERABLES
+
+Deliver:
+
+1. The completed React frontend.
+2. Fully implemented light and dark themes.
+3. Reusable animation components and utilities.
+4. ScrollTrigger-based storytelling where appropriate.
+5. Functional consultation form filtering.
+6. Correct service preselection.
+7. Dynamic chart data architecture.
+8. Original blog article redirects.
+9. Responsive layouts.
+10. Working navigation and interactions.
+11. Clean, maintainable source code.
+12. README with installation and running instructions.
+13. A concise list of files changed.
+14. A list of any missing assets, API endpoints, or original article URLs that require the user's input.
+
+Do not hide incomplete functionality behind visual placeholders.
+
+---
+
+# FINAL NON-NEGOTIABLE REQUIREMENTS
+
+The final Preferred Tax Consultancy website must:
+
+- Closely follow the user-approved design screenshot.
+- Use AskAiRank as a reference for premium interactive presentation and scrolling.
+- Support complete light and dark themes.
+- Preserve existing business content.
+- Maintain approved spacing.
+- Contain professional images, videos, motion graphics, and appropriate charts.
+- Use real data for all factual business statistics.
+- Never fabricate financial metrics.
+- Keep all content accessible during fast and slow scrolling.
+- Provide meaningful animation throughout the website.
+- Redirect externally sourced blog articles to their actual original URLs.
+- Filter consultation services by Individual / Family, Company / Business, or CPA Firm.
+- Preserve CPA Outsourcing service preselection.
+- Work properly on mobile, tablet, laptop, and desktop.
+- Remain fast, accessible, and maintainable.
+
+**Do not deliver a generic website. Do not change the approved design direction. Do not sacrifice functionality for animation.**
+
+Build a distinctive, premium, highly interactive financial-services website that looks impressive, feels smooth, and works reliably.
+
+**SUCCESS CRITERION: The result should closely match the approved visual design while delivering an engaging, polished, and reliable scrolling experience inspired by AskAiRank.**

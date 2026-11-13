@@ -1,0 +1,172 @@
+/* ==========================================================================
+   US Tax Calculator Modal - Viewport & Portal Positioning System
+   Guaranteed stacking priority above navbar (z-index: 99999),
+   responsive centering, safe viewport margins, internal scrolling.
+   ========================================================================== */
+
+.ste-calc-portal-overlay {
+  position: fixed;
+  inset: 0;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  width: 100%;
+  height: 100vh;
+  height: 100dvh;
+  z-index: 99999 !important;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: clamp(8px, 2vw, 24px);
+  background-color: rgba(3, 14, 20, 0.72);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  box-sizing: border-box;
+}
+
+/* On short viewports or small mobile landscape, pin safely to top instead of vertical overflow */
+@media (max-height: 740px) {
+  .ste-calc-portal-overlay {
+    align-items: flex-start;
+    padding-top: 8px;
+    padding-bottom: 8px;
+  }
+}
+
+.ste-calc-modal-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  width: min(100%, 920px);
+  height: auto;
+  max-height: calc(100vh - 24px);
+  max-height: calc(100dvh - 24px);
+  margin: auto;
+  border-radius: clamp(16px, 2vw, 26px);
+  background-color: #ffffff;
+  color: #12242B;
+  border: 1px solid rgba(22, 167, 101, 0.35);
+  box-shadow:
+    0 25px 70px -10px rgba(0, 0, 0, 0.45),
+    0 10px 25px -5px rgba(22, 167, 101, 0.15),
+    0 0 0 1px rgba(0, 0, 0, 0.05);
+  overflow: hidden;
+  box-sizing: border-box;
+  animation: steCalcModalEnter 180ms cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes steCalcModalEnter {
+  from {
+    opacity: 0;
+    transform: scale(0.97) translateY(6px);
+  }
+
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+/* Dark mode styling support while keeping default light mode pristine */
+:root[data-theme="dark"] .ste-calc-modal-card,
+html[data-theme="dark"] .ste-calc-modal-card,
+body[data-theme="dark"] .ste-calc-modal-card,
+html.dark .ste-calc-modal-card,
+body.dark .ste-calc-modal-card,
+.dark .ste-calc-modal-card {
+  background-color: #071C25;
+  color: #F4FBFC;
+  border-color: rgba(53, 224, 146, 0.35);
+  box-shadow:
+    0 25px 80px -10px rgba(0, 0, 0, 0.75),
+    0 10px 30px -5px rgba(53, 224, 146, 0.12),
+    0 0 0 1px rgba(255, 255, 255, 0.06);
+}
+
+/* Header: Pinned at top */
+.ste-calc-header {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: clamp(12px, 1.8vw, 18px) clamp(14px, 2.5vw, 28px);
+  background-color: #F8FAF9;
+  border-bottom: 1px solid #DCECE3;
+  box-sizing: border-box;
+}
+
+:root[data-theme="dark"] .ste-calc-header,
+html.dark .ste-calc-header,
+.dark .ste-calc-header {
+  background-color: #092226;
+  border-bottom-color: rgba(53, 224, 146, 0.18);
+}
+
+/* Multi-Step Tracker: Pinned below header */
+.ste-calc-progress {
+  flex-shrink: 0;
+  padding: 10px clamp(14px, 2.5vw, 28px);
+  background-color: #FAFDFB;
+  border-bottom: 1px solid #DCECE3;
+  box-sizing: border-box;
+}
+
+:root[data-theme="dark"] .ste-calc-progress,
+html.dark .ste-calc-progress,
+.dark .ste-calc-progress {
+  background-color: #06181F;
+  border-bottom-color: rgba(53, 224, 146, 0.14);
+}
+
+/* Body: Scrollable internal content area with min-height: 0 */
+.ste-calc-body {
+  flex: 1 1 0%;
+  min-height: 0;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  padding: clamp(16px, 2.5vw, 28px);
+  box-sizing: border-box;
+}
+
+/* Custom smooth scrollbar for internal body */
+.ste-calc-body::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+.ste-calc-body::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.ste-calc-body::-webkit-scrollbar-thumb {
+  background-color: rgba(22, 167, 101, 0.28);
+  border-radius: 9999px;
+}
+
+.ste-calc-body::-webkit-scrollbar-thumb:hover {
+  background-color: rgba(22, 167, 101, 0.5);
+}
+
+/* Footer: Pinned at bottom */
+.ste-calc-footer {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: clamp(12px, 1.8vw, 16px) clamp(14px, 2.5vw, 28px);
+  background-color: #F8FAF9;
+  border-top: 1px solid #DCECE3;
+  box-sizing: border-box;
+}
+
+:root[data-theme="dark"] .ste-calc-footer,
+html.dark .ste-calc-footer,
+.dark .ste-calc-footer {
+  background-color: #092226;
+  border-top-color: rgba(53, 224, 146, 0.18);
+}

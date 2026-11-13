@@ -1,0 +1,329 @@
+/* ==========================================================================
+   PREFERRED TAX CONSULTANCY — IMPORTED PAGES THEME & ALIGNMENT STYLESHEET
+   Harmonizes the 5 reference pages with the website's exact theme, color palette,
+   typography, and layout alignment for BOTH Light Mode and Dark Mode.
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   1. HIDE INTERNAL STANDALONE HEADERS & FOOTERS
+   The host website provides its own floating Navbar and comprehensive Footer.
+   -------------------------------------------------------------------------- */
+[data-document-role="page"] > header,
+[data-document-role="page"] header:first-of-type,
+[data-document-role="page"] header[style*="sticky"],
+div.r > header,
+div.stp > header,
+div.stx > header {
+  display: none !important;
+}
+
+[data-document-role="page"] > footer,
+[data-document-role="page"] footer:last-of-type,
+div.r > footer,
+div.stp > footer,
+div.stx > footer {
+  display: none !important;
+}
+
+/* Ensure the host website's floating Navbar stays elevated */
+.ptc-navbar {
+  z-index: 100 !important;
+}
+
+/* --------------------------------------------------------------------------
+   2. TYPOGRAPHY & FONT STYLES
+   Harmonize all text with the site's primary and serif typography.
+   -------------------------------------------------------------------------- */
+[data-document-role="page"],
+div.r,
+div.stp,
+div.stx {
+  font-family: "Plus Jakarta Sans", "Manrope", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif !important;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Display serif headings and accents */
+[data-document-role="page"] .serif,
+[data-document-role="page"] em,
+[data-document-role="page"] .disp,
+[data-document-role="page"] [class*="serif"],
+div.r .serif,
+div.stp .serif,
+div.stx .serif {
+  font-family: "Playfair Display", "Instrument Serif", "Cormorant Garamond", Georgia, serif !important;
+}
+
+/* Monospace stats, codes, and badges */
+[data-document-role="page"] .mono,
+[data-document-role="page"] [class*="mono"],
+[data-document-role="page"] code,
+div.r code,
+div.r .mono {
+  font-family: "DM Mono", "JetBrains Mono", ui-monospace, monospace !important;
+}
+
+/* --------------------------------------------------------------------------
+   3. HERO PADDING & NAVBAR CLEARANCE
+   Ensures the hero content and headlines start with comfortable breathing room
+   below the host site's floating Navbar (~96px tall).
+   -------------------------------------------------------------------------- */
+/* MainServicesPage */
+[data-document-role="page"] section#top > div[style*="max-width"] {
+  padding-top: clamp(100px, 11vw, 132px) !important;
+}
+
+/* TaxPlanningPage & TaxPreparationPage */
+div.stp section#top > div[style*="max-width"],
+div.stx section#top > div[style*="max-width"] {
+  padding-top: clamp(100px, 11vw, 132px) !important;
+}
+
+/* BookkeepingPage */
+div.r section#top > div.wrap,
+div.r section#top > div[style*="clamp"] {
+  padding-top: clamp(100px, 11vw, 132px) !important;
+}
+
+/* ContactPage */
+[data-document-role="page"] section#top > div[style*="1320px"],
+[data-document-role="page"] section#top > div.pad,
+[data-document-role="page"] section#top > div[style*="padding"] {
+  padding-top: clamp(100px, 11vw, 132px) !important;
+}
+
+/* Sticky sub-navigation (e.g. in MainServicesPage) docks below website navbar */
+[data-document-role="page"] div[style*="position: sticky"][style*="top:"],
+[data-document-role="page"] div[style*="position:sticky"][style*="top:"] {
+  top: 86px !important;
+  z-index: 45 !important;
+}
+
+/* --------------------------------------------------------------------------
+   4. LIGHT MODE STYLING & ACCENTS
+   Crisp readability, high contrast, signature emerald & mint buttons.
+   -------------------------------------------------------------------------- */
+[data-document-role="page"] .btn-mint,
+[data-document-role="page"] .btn-p,
+[data-document-role="page"] a[class*="btn-mint"],
+[data-document-role="page"] a[class*="btn-p"] {
+  background: #22af68 !important;
+  color: #ffffff !important;
+  transition: all 0.25s ease !important;
+}
+
+[data-document-role="page"] .btn-mint:hover,
+[data-document-role="page"] .btn-p:hover,
+[data-document-role="page"] a[class*="btn-mint"]:hover,
+[data-document-role="page"] a[class*="btn-p"]:hover {
+  background: #1a8650 !important;
+  box-shadow: 0 8px 24px rgba(34, 175, 104, 0.35) !important;
+  transform: translateY(-1px);
+}
+
+/* --------------------------------------------------------------------------
+   5. COMPLETE DARK MODE ENGINE (.dark)
+   Converts all sections, cards, questions, badges, and text into a cohesive,
+   ultra-readable luxury dark palette with 100% text contrast.
+   -------------------------------------------------------------------------- */
+.dark [data-document-role="page"],
+.dark div.r,
+.dark div.stp,
+.dark div.stx {
+  background: #030F14 !important;
+  color: #F4FBFC !important;
+}
+
+/* Dark mode section backgrounds */
+.dark [data-document-role="page"] section {
+  background: #030F14 !important;
+  border-color: rgba(45, 212, 199, 0.12) !important;
+}
+
+.dark [data-document-role="page"] section[style*="#FFFFFF"],
+.dark [data-document-role="page"] section[style*="#ffffff"],
+.dark [data-document-role="page"] section[style*="#F7F5F0"],
+.dark [data-document-role="page"] section[style*="#f7f5f0"],
+.dark [data-document-role="page"] section[style*="#F4F5F1"],
+.dark [data-document-role="page"] section[style*="#f4f5f1"],
+.dark [data-document-role="page"] section[style*="#F2F5F3"],
+.dark [data-document-role="page"] section[style*="#f2f5f3"],
+.dark [data-document-role="page"] section[style*="#EAE3D5"],
+.dark [data-document-role="page"] section[style*="#FFFDF8"] {
+  background: #071F22 !important;
+  border-color: rgba(45, 212, 199, 0.15) !important;
+}
+
+/* Keep designated dark hero / consult sections in deep midnight */
+.dark [data-document-role="page"] section#top,
+.dark [data-document-role="page"] section#consult,
+.dark [data-document-role="page"] section#forms,
+.dark [data-document-role="page"] section#process,
+.dark [data-document-role="page"] section#lab,
+.dark [data-document-role="page"] section#outsourcing,
+.dark [data-document-role="page"] section#close,
+.dark [data-document-role="page"] section#quality,
+.dark [data-document-role="page"] section#who,
+.dark [data-document-role="page"] section#start,
+.dark [data-document-role="page"] section#paths {
+  background: #030F14 !important;
+}
+
+/* Dark mode cards, panels, and containers (fixing the STILL WONDERING card & others) */
+.dark [data-document-role="page"] div[style*="border-radius: 24px"],
+.dark [data-document-role="page"] div[style*="border-radius:24px"],
+.dark [data-document-role="page"] div[style*="border-radius: 28px"],
+.dark [data-document-role="page"] div[style*="border-radius:28px"],
+.dark [data-document-role="page"] div[style*="border-radius: 32px"],
+.dark [data-document-role="page"] div[style*="border-radius:32px"],
+.dark [data-document-role="page"] div[style*="border-radius: 20px"],
+.dark [data-document-role="page"] div[style*="border-radius:20px"],
+.dark [data-document-role="page"] div[style*="border-radius: 18px"],
+.dark [data-document-role="page"] div[style*="border-radius:18px"],
+.dark [data-document-role="page"] div[style*="border-radius: 16px"],
+.dark [data-document-role="page"] div[style*="border-radius:16px"],
+.dark [data-document-role="page"] div[style*="background: #F7F5F0"],
+.dark [data-document-role="page"] div[style*="background:#F7F5F0"],
+.dark [data-document-role="page"] div[style*="background: #FFFFFF"],
+.dark [data-document-role="page"] div[style*="background:#FFFFFF"],
+.dark [data-document-role="page"] div[style*="background: #fff"],
+.dark [data-document-role="page"] div[style*="background:#fff"],
+.dark [data-document-role="page"] div[style*="background: #F4F5F1"],
+.dark [data-document-role="page"] div[style*="background:#F4F5F1"],
+.dark [data-document-role="page"] div[style*="background: #F2F5F3"],
+.dark [data-document-role="page"] div[style*="background:#F2F5F3"],
+.dark [data-document-role="page"] div[style*="background: #FFFDF8"],
+.dark [data-document-role="page"] div[style*="background:#FFFDF8"],
+.dark [data-document-role="page"] div[style*="background: #EAE3D5"],
+.dark [data-document-role="page"] div[style*="background:#EAE3D5"],
+.dark [data-document-role="page"] .card,
+.dark [data-document-role="page"] .box,
+.dark [data-document-role="page"] .panel {
+  background: #072226 !important;
+  color: #F4FBFC !important;
+  border-color: rgba(45, 212, 199, 0.2) !important;
+}
+
+/* STILL WONDERING card in #explorer — full fix */
+.dark #explorer div[style*="flex: 1 1 300px"],
+.dark #explorer div[style*="border-radius: 24px"],
+.dark #explorer div[style*="border-radius:24px"] {
+  background: #072226 !important;
+  border: 1px solid rgba(45, 212, 199, 0.25) !important;
+  color: #F4FBFC !important;
+}
+
+/* High-contrast headings in dark mode */
+.dark [data-document-role="page"] .h,
+.dark [data-document-role="page"] h1,
+.dark [data-document-role="page"] h2,
+.dark [data-document-role="page"] h3,
+.dark [data-document-role="page"] h4,
+.dark [data-document-role="page"] .disp {
+  color: #F4FBFC !important;
+}
+
+/* Questions and title text */
+.dark #explorer .h,
+.dark #explorer div[style*="font-size: 24px"],
+.dark #explorer div[style*="font-size:24px"] {
+  color: #F4FBFC !important;
+}
+
+/* Eyebrows and mono labels (e.g. STILL WONDERING?, LIVE VIEW, etc.) */
+.dark [data-document-role="page"] .mono[style*="#0D7A63"],
+.dark [data-document-role="page"] [style*="color: #0D7A63"],
+.dark [data-document-role="page"] [style*="color:#0D7A63"],
+.dark [data-document-role="page"] [style*="color: #0B7A44"],
+.dark [data-document-role="page"] [style*="color:#0B7A44"] {
+  color: #37E191 !important;
+}
+
+/* Muted / secondary copy — ensure high contrast silver-mint */
+.dark [data-document-role="page"] div[style*="color: #4C5654"],
+.dark [data-document-role="page"] div[style*="color:#4C5654"],
+.dark [data-document-role="page"] div[style*="color: #5A6472"],
+.dark [data-document-role="page"] div[style*="color:#5A6472"],
+.dark [data-document-role="page"] div[style*="color: #6B7280"],
+.dark [data-document-role="page"] div[style*="color:#6B7280"],
+.dark [data-document-role="page"] div[style*="color: #3A4555"],
+.dark [data-document-role="page"] div[style*="color:#3A4555"],
+.dark [data-document-role="page"] p[style*="color: #4C5654"],
+.dark [data-document-role="page"] p[style*="color:#4C5654"] {
+  color: #A3C4BF !important;
+}
+
+/* Interactive card buttons and action pills */
+.dark [data-document-role="page"] .doubt,
+.dark #explorer .doubt {
+  background: #03181E !important;
+  color: #37E191 !important;
+  border: 1px solid rgba(55, 225, 145, 0.35) !important;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.4) !important;
+}
+
+.dark [data-document-role="page"] .doubt:hover,
+.dark #explorer .doubt:hover {
+  background: #072A2E !important;
+  color: #49E3D6 !important;
+  border-color: #49E3D6 !important;
+}
+
+/* Text links */
+.dark [data-document-role="page"] .lnk,
+.dark #explorer .lnk {
+  color: #49E3D6 !important;
+}
+
+/* Small tags, chips, and key forms */
+.dark [data-document-role="page"] span[style*="background: #F7F5F0"],
+.dark [data-document-role="page"] span[style*="background:#F7F5F0"],
+.dark [data-document-role="page"] span[style*="background: #FFFFFF"],
+.dark [data-document-role="page"] span[style*="background:#FFFFFF"],
+.dark [data-document-role="page"] span[style*="background: #fff"],
+.dark [data-document-role="page"] span[style*="background:#fff"],
+.dark [data-document-role="page"] span.mono {
+  background: #0B282C !important;
+  color: #37E191 !important;
+  border-color: rgba(45, 212, 199, 0.25) !important;
+}
+
+/* Form inputs & textareas in dark mode */
+.dark [data-document-role="page"] input,
+.dark [data-document-role="page"] textarea,
+.dark [data-document-role="page"] select {
+  background: #072226 !important;
+  color: #F4FBFC !important;
+  border-color: rgba(45, 212, 199, 0.3) !important;
+}
+
+.dark [data-document-role="page"] input::placeholder,
+.dark [data-document-role="page"] textarea::placeholder {
+  color: #6C8E8B !important;
+}
+
+/* Primary buttons in dark mode glow in mint/cyan */
+.dark [data-document-role="page"] .btn-mint,
+.dark [data-document-role="page"] .btn-p,
+.dark [data-document-role="page"] a[class*="btn-mint"],
+.dark [data-document-role="page"] a[class*="btn-p"] {
+  background: #37E191 !important;
+  color: #03181E !important;
+}
+
+.dark [data-document-role="page"] .btn-mint:hover,
+.dark [data-document-role="page"] .btn-p:hover,
+.dark [data-document-role="page"] a[class*="btn-mint"]:hover,
+.dark [data-document-role="page"] a[class*="btn-p"]:hover {
+  background: #49E3D6 !important;
+  box-shadow: 0 8px 24px rgba(73, 227, 214, 0.45) !important;
+}
+
+/* Table rows and borders in dark mode */
+.dark [data-document-role="page"] table,
+.dark [data-document-role="page"] tr,
+.dark [data-document-role="page"] td,
+.dark [data-document-role="page"] th {
+  border-color: rgba(45, 212, 199, 0.15) !important;
+  color: #F4FBFC !important;
+}

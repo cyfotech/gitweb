@@ -1,0 +1,67 @@
+// VISITOR TRACKING MODELS TO APPEND TO schema.prisma
+// Add these at the end of the existing schema.prisma file
+
+model visitor {
+  id                   String           @id @default(uuid())
+  visitorUuid          String           @unique @db.VarChar(36)
+  displayName          String?          @db.VarChar(255)
+  email                String?          @db.VarChar(255)
+  identificationStatus String           @default("anonymous") @db.VarChar(50)
+  firstVisit           DateTime         @default(now())
+  lastVisit            DateTime         @default(now())
+  totalVisits          Int              @default(1)
+  createdAt            DateTime         @default(now())
+  updatedAt            DateTime         @updatedAt
+  devices              visitordevice[]
+  activityLogs         visitoractivitylog[]
+  formSubmissions      formsubmission[]
+}
+
+model visitordevice {
+  id               String   @id @default(uuid())
+  visitorId        String
+  deviceIdentifier String   @db.VarChar(64)
+  browser          String?  @db.VarChar(100)
+  operatingSystem  String?  @db.VarChar(100)
+  deviceType       String?  @db.VarChar(50)
+  createdAt        DateTime @default(now())
+  lastSeenAt       DateTime @updatedAt
+  visitor          visitor  @relation(fields: [visitorId], references: [id])
+
+  @@index([visitorId])
+}
+
+model visitoractivitylog {
+  id           String   @id @default(uuid())
+  visitorId    String?
+  activityType String   @db.VarChar(100)
+  page         String?  @db.VarChar(255)
+  pageUrl      String?  @db.VarChar(500)
+  description  String?  @db.Text
+  ipAddress    String?  @db.VarChar(45)
+  userAgent    String?  @db.VarChar(500)
+  metadata     Json?
+  status       String   @default("success") @db.VarChar(50)
+  createdAt    DateTime @default(now())
+  visitor      visitor? @relation(fields: [visitorId], references: [id])
+
+  @@index([visitorId])
+  @@index([createdAt])
+  @@index([activityType])
+}
+
+model formsubmission {
+  id               String   @id @default(uuid())
+  visitorId        String?
+  formType         String   @db.VarChar(100)
+  submittedName    String?  @db.VarChar(255)
+  submittedEmail   String?  @db.VarChar(255)
+  submissionStatus String   @default("success") @db.VarChar(50)
+  metadata         Json?
+  createdAt        DateTime @default(now())
+  visitor          visitor? @relation(fields: [visitorId], references: [id])
+
+  @@index([visitorId])
+  @@index([formType])
+}
+

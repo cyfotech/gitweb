@@ -1,0 +1,13 @@
+
+{
+  "name": "preferred-tax-consultancy",
+  "private": true,
+  "version": "1.0.0",
+  
+  "scripts": {
+    "dev": "cd frontend && bun install && bun run dev",
+    "build": "cd frontend && bun install && bun run build",
+    "preview": "cd frontend && bun install && bun run preview",
+    "lint": "cd frontend && bun install && bun run lint"
+  }
+}

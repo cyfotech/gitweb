@@ -1,0 +1,533 @@
+/* Preferred Tax Consultancy — responsive layout patch
+   Import this file LAST in src/main.tsx so it overrides earlier desktop rules.
+   Preserves existing content, colors, typography and animation theme. */
+
+*, *::before, *::after { box-sizing: border-box; }
+html { width: 100%; max-width: 100%; overflow-x: clip; scroll-padding-top: 90px; }
+body, #root { width: 100%; max-width: 100%; min-height: 100%; margin: 0; overflow-x: clip; }
+img, svg, video, canvas, iframe { max-width: 100%; }
+button, input, select, textarea { max-width: 100%; }
+
+/* Avoid fixed desktop widths forcing the page wider than the viewport. */
+.preferred-home,
+.preferred-home main,
+.preferred-home section,
+.ct-hero,
+.ct-hero__container,
+.ct-hero__copy,
+.ct-hero__visual-wrap,
+.ct-dashboard-stage {
+  min-width: 0;
+  max-width: 100%;
+}
+
+@media (max-width: 1024px) {
+  .preferred-home { padding-inline: clamp(14px, 3vw, 24px); }
+  .hero-content { grid-template-columns: minmax(0, 1fr) !important; width: 100%; gap: 28px; }
+  .hero-copy, .telemetry-card { width: 100%; max-width: 100%; min-width: 0; }
+  .trust-strip { grid-template-columns: repeat(2, minmax(0, 1fr)); width: 100%; }
+
+  .ct-hero__container {
+    width: 100% !important;
+    max-width: 100% !important;
+    grid-template-columns: minmax(0, 1fr) !important;
+    gap: clamp(24px, 4vw, 42px) !important;
+    padding-inline: clamp(20px, 4vw, 40px) !important;
+  }
+  .ct-hero__copy, .ct-hero__visual-wrap { width: 100%; min-width: 0; }
+  .ct-hero__visual-wrap { margin-inline: auto; }
+  .ct-dashboard-stage { width: 100%; min-width: 0; }
+}
+
+@media (max-width: 767px) {
+  html { scroll-padding-top: 76px; }
+  .preferred-home { padding: 10px 12px 26px !important; }
+  .site-header {
+    position: relative;
+    top: auto;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 9px;
+    width: 100%;
+    max-width: 100%;
+    padding: 10px 12px;
+    border-radius: 28px;
+  }
+  .brand, .brand-link, .brand-lockup { min-width: 0; max-width: 100%; }
+  .brand-words { min-width: 0; }
+  .brand-words strong { font-size: clamp(11px, 3vw, 14px); }
+  .brand-words small { font-size: clamp(7px, 2vw, 9px); letter-spacing: .12em; }
+  .header-actions { display: flex; align-items: center; gap: 7px; margin-left: auto; min-width: 0; }
+  .header-cta { white-space: normal; text-align: center; padding: 10px 12px; font-size: 11px; }
+  .theme-toggle { flex: 0 0 auto; }
+  .main-nav {
+    order: 5;
+    display: flex;
+    flex: 1 0 100%;
+    width: 100%;
+    max-width: 100%;
+    gap: 18px;
+    overflow-x: auto;
+    overflow-y: hidden;
+    padding: 9px 2px 5px;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+  }
+  .main-nav::-webkit-scrollbar { display: none; }
+  .main-nav a { flex: 0 0 auto; white-space: nowrap; }
+
+  .hero-content { margin-top: 24px !important; min-height: 0 !important; gap: 24px !important; }
+  .hero-copy { padding: 0 !important; }
+  .hero-copy h1 { max-width: 100%; font-size: clamp(36px, 10.5vw, 56px) !important; line-height: 1.08; overflow-wrap: anywhere; }
+  .hero-description { width: 100%; max-width: 100%; padding: 15px 16px; font-size: clamp(14px, 3.8vw, 17px); line-height: 1.6; overflow-wrap: anywhere; }
+  .hero-buttons { display: grid; grid-template-columns: minmax(0, 1fr); gap: 10px; margin-top: 22px; }
+  .primary-button, .secondary-button { width: 100%; min-width: 0; justify-content: center; white-space: normal; }
+  .telemetry-card { padding: 15px; border-radius: 20px; }
+  .telemetry-visual { width: 100%; max-width: 100%; min-width: 0; height: clamp(210px, 62vw, 290px); }
+  .telemetry-heading { gap: 8px; flex-wrap: wrap; }
+  .realtime-pill { max-width: 100%; }
+  .trust-strip { grid-template-columns: minmax(0, 1fr) !important; gap: 11px; margin-top: 22px; }
+  .trust-card { width: 100%; min-width: 0; }
+
+  .ct-hero { width: 100%; min-height: 0 !important; overflow: clip; }
+  .ct-hero__container {
+    display: grid !important;
+    grid-template-columns: minmax(0, 1fr) !important;
+    gap: 25px !important;
+    width: 100% !important;
+    padding: 34px 16px 28px !important;
+    margin-inline: auto !important;
+  }
+  .ct-hero__title {
+    max-width: 100%;
+    font-size: clamp(36px, 10vw, 58px) !important;
+    line-height: 1.05 !important;
+    letter-spacing: -.035em;
+    overflow-wrap: anywhere;
+  }
+  .ct-hero__description { max-width: 100%; font-size: clamp(14px, 3.8vw, 17px) !important; line-height: 1.6; }
+  .ct-hero__actions { display: grid !important; grid-template-columns: minmax(0, 1fr); gap: 10px !important; width: 100%; }
+  .ct-hero__button { width: 100%; min-width: 0; min-height: 48px; justify-content: center; white-space: normal; }
+  .ct-hero__trust-row { display: grid !important; grid-template-columns: repeat(2, minmax(0, 1fr)) !important; gap: 12px !important; width: 100%; }
+  .ct-trust-item { min-width: 0; padding: 10px 8px; gap: 8px; }
+  .ct-trust-item__icon { flex: 0 0 auto; }
+  .ct-trust-item__copy, .ct-trust-item__content { min-width: 0; overflow-wrap: anywhere; }
+  .ct-hero__visual-heading { flex-wrap: wrap; gap: 8px; }
+  .ct-dashboard-stage { width: 100% !important; max-width: 100% !important; min-width: 0 !important; transform: none !important; }
+  .ct-chart-panel, .ct-pie-panel { width: 100%; max-width: 100%; min-width: 0; padding: clamp(12px, 3.5vw, 20px) !important; border-radius: 18px; }
+  .ct-chart-panel__heading, .ct-pie-panel__heading { flex-wrap: wrap; gap: 8px; }
+  .ct-chart-summary { flex-wrap: wrap; gap: 12px; }
+  .ct-chart-plot, .ct-pie-panel__body { width: 100%; min-width: 0; }
+  .ct-chart-svg, .ct-pie-chart-svg { display: block; width: 100% !important; max-width: 100%; height: auto; }
+  .ct-pie-legend { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; }
+  .ct-pie-legend__item { min-width: 0; overflow-wrap: anywhere; }
+  .ct-scene { transform: scale(.78); transform-origin: center top; }
+  .ct-float-card { max-width: min(72vw, 250px); }
+  .ct-hero__scroll-cue { display: none; }
+}
+
+@media (max-width: 420px) {
+  .preferred-home { padding-inline: 9px !important; }
+  .site-header { padding: 9px 10px; gap: 7px; }
+  .brand-mark { width: 20px; }
+  .brand-words strong { font-size: 10px; }
+  .brand-words small { font-size: 7px; }
+  .header-cta { padding: 9px 10px; font-size: 10px; }
+  .theme-toggle { width: 32px; height: 32px; }
+  .hero-copy h1 { font-size: clamp(33px, 10vw, 43px) !important; }
+  .ct-hero__container { padding-inline: 12px !important; }
+  .ct-hero__title { font-size: clamp(32px, 9.5vw, 42px) !important; }
+  .ct-hero__trust-row { grid-template-columns: minmax(0, 1fr) !important; }
+  .ct-chart-panel__footer, .ct-pie-panel__footer { flex-wrap: wrap; gap: 8px; }
+  .ct-pie-legend { grid-template-columns: minmax(0, 1fr); }
+  .ct-float-card { display: none; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { scroll-behavior: auto !important; }
+}
+
+
+
+/* ============================================================
+   MOBILE RESPONSIVENESS — CLEAN FINAL OVERRIDES
+   Load this file after index.css.
+   ============================================================ */
+
+:root {
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+
+html,
+body,
+#root {
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+  overflow-x: clip;
+}
+
+#root *,
+#root *::before,
+#root *::after {
+  box-sizing: border-box;
+}
+
+#root img,
+#root video,
+#root iframe,
+#root canvas,
+#root svg {
+  max-width: 100%;
+}
+
+/* Tablet and mobile */
+@media (max-width: 1023px) {
+  /* Allow Navbar.css to control the header and mobile panel styles cleanly */
+  #root header.fixed {
+    z-index: 10002 !important;
+  }
+
+  .preferred-home,
+  .preferred-home main,
+  .preferred-home section,
+  .preferred-home article,
+  .ct-hero,
+  .ct-hero__container,
+  .ct-hero__copy,
+  .ct-hero__visual-wrap,
+  .ct-dashboard-stage {
+    width: 100%;
+    min-width: 0;
+    max-width: 100%;
+  }
+
+  .ct-hero__container {
+    grid-template-columns: minmax(0, 1fr) !important;
+    gap: clamp(22px, 5vw, 36px) !important;
+    padding-inline: clamp(16px, 4vw, 30px) !important;
+  }
+
+  .ct-hero__copy,
+  .ct-hero__visual-wrap,
+  .ct-dashboard-stage,
+  .ct-chart-panel,
+  .ct-pie-panel {
+    min-width: 0 !important;
+    max-width: 100% !important;
+  }
+
+  .ct-dashboard-stage {
+    transform: none !important;
+  }
+
+  .ct-hero__title {
+    max-width: 100%;
+    font-size: clamp(34px, 7.5vw, 54px) !important;
+    line-height: 1.08 !important;
+    overflow-wrap: anywhere;
+  }
+
+  .ct-hero__description {
+    max-width: 100%;
+    font-size: clamp(14px, 3.8vw, 17px) !important;
+    line-height: 1.65;
+    overflow-wrap: anywhere;
+  }
+
+  .ct-hero__actions {
+    display: grid !important;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 10px !important;
+    width: 100%;
+  }
+
+  .ct-hero__button {
+    width: 100%;
+    min-width: 0;
+    min-height: 46px;
+    justify-content: center;
+    white-space: normal;
+  }
+
+  .ct-hero__trust-row {
+    display: grid !important;
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    gap: 10px !important;
+    width: 100%;
+  }
+
+  .ct-trust-item,
+  .ct-trust-item__copy,
+  .ct-trust-item__content {
+    min-width: 0;
+    overflow-wrap: anywhere;
+  }
+
+  .ct-chart-panel,
+  .ct-pie-panel {
+    padding: clamp(12px, 3.5vw, 20px) !important;
+  }
+
+  .ct-chart-panel__heading,
+  .ct-pie-panel__heading,
+  .ct-chart-summary,
+  .ct-hero__visual-heading {
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .ct-chart-plot,
+  .ct-pie-panel__body {
+    width: 100%;
+    min-width: 0;
+  }
+
+  .ct-chart-svg,
+  .ct-pie-chart-svg {
+    display: block;
+    width: 100% !important;
+    height: auto;
+  }
+
+  #root main > *,
+  #root main section,
+  #root main article {
+    min-width: 0;
+    max-width: 100%;
+  }
+
+  #root main [class*="grid"] {
+    min-width: 0;
+  }
+
+  #root main [class*="card"],
+  #root main [class*="panel"] {
+    min-width: 0;
+    max-width: 100%;
+  }
+
+  #root main h1,
+  #root main h2,
+  #root main h3,
+  #root main p,
+  #root main a,
+  #root main button {
+    overflow-wrap: anywhere;
+  }
+}
+
+/* Phones */
+@media (max-width: 767px) {
+  html {
+    scroll-padding-top: 72px;
+  }
+
+  .preferred-home {
+    padding: 10px 12px 26px !important;
+  }
+
+  .hero-content {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) !important;
+    width: 100%;
+    min-height: 0 !important;
+    gap: 24px !important;
+    margin-top: 24px !important;
+  }
+
+  .hero-copy,
+  .telemetry-card {
+    width: 100%;
+    min-width: 0;
+    max-width: 100%;
+  }
+
+  .hero-copy {
+    padding: 0 !important;
+  }
+
+  .hero-copy h1 {
+    max-width: 100%;
+    font-size: clamp(34px, 9vw, 50px) !important;
+    line-height: 1.08;
+    overflow-wrap: anywhere;
+  }
+
+  .hero-description {
+    width: 100%;
+    max-width: 100%;
+    padding: 14px;
+    font-size: clamp(14px, 3.8vw, 17px);
+    line-height: 1.6;
+    overflow-wrap: anywhere;
+  }
+
+  .hero-buttons {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 10px;
+    margin-top: 20px;
+  }
+
+  .primary-button,
+  .secondary-button {
+    width: 100%;
+    min-width: 0;
+    justify-content: center;
+    white-space: normal;
+  }
+
+  .telemetry-card {
+    padding: 14px;
+    border-radius: 20px;
+  }
+
+  .telemetry-visual {
+    width: 100%;
+    min-width: 0;
+    max-width: 100%;
+    height: clamp(210px, 62vw, 290px);
+  }
+
+  .telemetry-heading {
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .trust-strip {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    width: 100%;
+    gap: 10px;
+  }
+
+  .trust-card {
+    width: 100%;
+    min-width: 0;
+  }
+
+  .ct-hero {
+    width: 100%;
+    min-height: 0 !important;
+    overflow: clip;
+  }
+
+  .ct-hero__container {
+    gap: 24px !important;
+    padding: 28px 14px 24px !important;
+    margin-inline: auto !important;
+  }
+
+  .ct-hero__title {
+    font-size: clamp(32px, 9vw, 46px) !important;
+    line-height: 1.08 !important;
+  }
+
+  .ct-hero__trust-row {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  }
+
+  .ct-trust-item {
+    padding: 10px 8px;
+    gap: 8px;
+  }
+
+  .ct-trust-item__icon {
+    flex: 0 0 auto;
+  }
+
+  .ct-scene {
+    max-width: 100%;
+    transform: scale(.88);
+    transform-origin: center top;
+  }
+
+  .ct-float-card {
+    max-width: min(72vw, 250px);
+  }
+
+  .ct-hero__scroll-cue {
+    display: none;
+  }
+
+  /* General section padding stays fluid instead of forcing desktop widths. */
+  #root main section {
+    padding-left: clamp(12px, 4vw, 20px);
+    padding-right: clamp(12px, 4vw, 20px);
+  }
+
+  #root main img {
+    height: auto;
+  }
+
+  #root main button,
+  #root main a {
+    max-width: 100%;
+    touch-action: manipulation;
+  }
+}
+
+/* Small phones */
+@media (max-width: 420px) {
+  .preferred-home {
+    padding-inline: 8px !important;
+  }
+
+  .ct-hero__container {
+    padding-inline: 12px !important;
+  }
+
+  .ct-hero__title {
+    font-size: clamp(30px, 8.8vw, 39px) !important;
+  }
+
+  .ct-hero__trust-row,
+  .trust-strip {
+    grid-template-columns: minmax(0, 1fr) !important;
+  }
+
+  .ct-chart-panel__footer,
+  .ct-pie-panel__footer {
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .ct-pie-legend {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .ct-float-card {
+    display: none;
+  }
+}
+
+/* Very small phones */
+@media (max-width: 360px) {
+  .preferred-home {
+    padding-inline: 6px !important;
+  }
+
+  .ct-hero__container {
+    padding-inline: 10px !important;
+  }
+
+  #root main section {
+    padding-left: 10px;
+    padding-right: 10px;
+  }
+}
+
+/* Respect reduced-motion preferences */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}

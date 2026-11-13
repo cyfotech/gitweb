@@ -1,0 +1,984 @@
+/* ==========================================================================
+   SERVICE HERO ANIMATIONS SUITE — 20 BESPOKE HERO ANIMATIONS
+   High-performance, Day/Night compatible, accessible, responsive CSS.
+   ========================================================================== */
+
+:root {
+  --sha-teal: #1b9b77;
+  --sha-teal-bright: #25d39e;
+  --sha-teal-glow: rgba(37, 211, 158, 0.22);
+  --sha-cyan: #3cd4cb;
+  --sha-gold: #e5b75b;
+  --sha-gold-bright: #f5c868;
+  --sha-blue: #4f8bf9;
+  --sha-purple: #9b72ff;
+  --sha-emerald: #10b981;
+  --sha-rose: #f43f5e;
+  
+  /* Light theme */
+  --sha-bg: rgba(255, 255, 255, 0.92);
+  --sha-card-bg: rgba(255, 255, 255, 0.85);
+  --sha-card-subtle: rgba(243, 248, 246, 0.8);
+  --sha-border: rgba(20, 153, 153, 0.18);
+  --sha-border-strong: rgba(27, 155, 119, 0.35);
+  --sha-text: #10292f;
+  --sha-text-soft: #25454a;
+  --sha-text-muted: #5c7478;
+  --sha-shadow: 0 24px 60px rgba(18, 61, 67, 0.12), 0 2px 8px rgba(18, 61, 67, 0.05);
+}
+
+.dark, [data-theme="dark"] {
+  --sha-bg: rgba(7, 28, 37, 0.92);
+  --sha-card-bg: rgba(10, 38, 50, 0.82);
+  --sha-card-subtle: rgba(14, 46, 60, 0.75);
+  --sha-border: rgba(73, 227, 214, 0.18);
+  --sha-border-strong: rgba(73, 227, 214, 0.4);
+  --sha-text: #f0fcf9;
+  --sha-text-soft: #d3ede9;
+  --sha-text-muted: #8aa9af;
+  --sha-shadow: 0 28px 70px rgba(0, 0, 0, 0.45), 0 2px 10px rgba(0, 0, 0, 0.25);
+}
+
+/* Base Terminal Container */
+.sha-terminal {
+  position: relative;
+  width: 100%;
+  border-radius: 24px;
+  background: var(--sha-bg);
+  border: 1px solid var(--sha-border);
+  box-shadow: var(--sha-shadow);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  padding: clamp(16px, 2.2vw, 24px);
+  overflow: hidden;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+  font-family: inherit;
+  color: var(--sha-text);
+  box-sizing: border-box;
+}
+
+.sha-terminal::before {
+  content: "";
+  position: absolute;
+  top: -40%;
+  right: -30%;
+  width: 320px;
+  height: 320px;
+  border-radius: 50%;
+  background: radial-gradient(circle, var(--sha-teal-glow), transparent 70%);
+  pointer-events: none;
+  z-index: 0;
+  opacity: 0.7;
+}
+
+.sha-terminal > * {
+  position: relative;
+  z-index: 1;
+}
+
+/* Terminal Header */
+.sha-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-bottom: 12px;
+  margin-bottom: 14px;
+  border-bottom: 1px solid var(--sha-border);
+  gap: 10px;
+}
+
+.sha-header-brand {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 11px;
+  font-weight: 850;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--sha-text);
+}
+
+.sha-header-gem {
+  width: 9px;
+  height: 9px;
+  border-radius: 3px;
+  transform: rotate(45deg);
+  background: linear-gradient(135deg, var(--sha-teal-bright), var(--sha-gold));
+  box-shadow: 0 0 10px var(--sha-teal-glow);
+}
+
+.sha-header-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.sha-status-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 3px 9px;
+  border-radius: 999px;
+  font-size: 9px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  background: rgba(37, 211, 158, 0.12);
+  border: 1px solid rgba(37, 211, 158, 0.28);
+  color: var(--sha-teal-bright);
+}
+
+.sha-status-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--sha-teal-bright);
+  box-shadow: 0 0 8px var(--sha-teal-bright);
+  animation: sha-pulse 2s infinite ease-in-out;
+}
+
+@keyframes sha-pulse {
+  0%, 100% { transform: scale(1); opacity: 1; }
+  50% { transform: scale(1.4); opacity: 0.6; }
+}
+
+.sha-step-indicators {
+  display: flex;
+  gap: 4px;
+}
+
+.sha-step-dot {
+  width: 18px;
+  height: 4px;
+  border-radius: 3px;
+  background: var(--sha-border);
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.sha-step-dot.active {
+  background: var(--sha-teal-bright);
+  box-shadow: 0 0 8px var(--sha-teal-glow);
+  width: 26px;
+}
+
+/* Card Surface Utility */
+.sha-card {
+  background: var(--sha-card-bg);
+  border: 1px solid var(--sha-border);
+  border-radius: 14px;
+  padding: 12px;
+  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.04);
+  transition: all 0.25s ease;
+}
+
+.sha-card:hover {
+  border-color: var(--sha-border-strong);
+  box-shadow: 0 6px 22px rgba(0, 0, 0, 0.08);
+}
+
+/* Floating interactive pill */
+.sha-floating-badge {
+  position: absolute;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 7px 12px;
+  border-radius: 12px;
+  background: var(--sha-card-bg);
+  border: 1px solid var(--sha-border-strong);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+  font-size: 10px;
+  font-weight: 750;
+  color: var(--sha-text);
+  backdrop-filter: blur(14px);
+  animation: sha-float 5s ease-in-out infinite alternate;
+}
+
+@keyframes sha-float {
+  0% { transform: translateY(0); }
+  100% { transform: translateY(-7px); }
+}
+
+/* --------------------------------------------------------------------------
+   1. Individual Tax Prep Animation
+   -------------------------------------------------------------------------- */
+.sha-itp-grid {
+  display: grid;
+  grid-template-columns: 1fr 1.25fr;
+  gap: 12px;
+}
+
+.sha-doc-queue {
+  display: grid;
+  gap: 7px;
+}
+
+.sha-doc-card {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 10px;
+  border-radius: 10px;
+  background: var(--sha-card-subtle);
+  border: 1px solid var(--sha-border);
+  font-size: 10px;
+  transition: all 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.sha-doc-card.is-processing {
+  border-color: var(--sha-teal-bright);
+  background: color-mix(in srgb, var(--sha-teal-bright) 10%, var(--sha-card-bg));
+  transform: translateX(4px);
+}
+
+.sha-doc-badge {
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-weight: 850;
+  padding: 2px 5px;
+  border-radius: 4px;
+  background: rgba(37, 211, 158, 0.15);
+  color: var(--sha-teal-bright);
+  font-size: 9px;
+}
+
+.sha-1040-sheet {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 12px;
+  border-radius: 14px;
+  background: var(--sha-card-bg);
+  border: 1px solid var(--sha-border);
+}
+
+.sha-sheet-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-bottom: 6px;
+  border-bottom: 1px solid var(--sha-border);
+  font-size: 9.5px;
+  font-weight: 800;
+}
+
+.sha-calc-line {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 9.5px;
+  padding: 3px 0;
+  border-bottom: 1px dashed var(--sha-border);
+}
+
+.sha-calc-line.highlight {
+  color: var(--sha-teal-bright);
+  font-weight: 850;
+  border-bottom: 1px solid var(--sha-teal-bright);
+}
+
+.sha-refund-box {
+  margin-top: 8px;
+  padding: 8px 10px;
+  border-radius: 10px;
+  background: linear-gradient(135deg, rgba(37, 211, 158, 0.16), rgba(229, 183, 91, 0.12));
+  border: 1px solid var(--sha-teal-bright);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+/* --------------------------------------------------------------------------
+   2. Family Tax Planning Animation
+   -------------------------------------------------------------------------- */
+.sha-ftp-profile {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 14px;
+  background: var(--sha-card-subtle);
+  border-radius: 12px;
+  border: 1px solid var(--sha-border);
+  margin-bottom: 12px;
+}
+
+.sha-ftp-pillars {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+  margin-bottom: 12px;
+}
+
+.sha-pillar-box {
+  padding: 9px;
+  border-radius: 10px;
+  background: var(--sha-card-bg);
+  border: 1px solid var(--sha-border);
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  transition: transform 0.2s ease;
+}
+
+.sha-pillar-box:hover {
+  transform: translateY(-2px);
+  border-color: var(--sha-teal-bright);
+}
+
+.sha-timeline-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 10px;
+  background: var(--sha-card-subtle);
+  border-radius: 10px;
+  font-size: 9px;
+}
+
+/* --------------------------------------------------------------------------
+   3. Personal Tax Consultation Animation
+   -------------------------------------------------------------------------- */
+.sha-ptc-desk {
+  display: grid;
+  grid-template-columns: 1fr 1.2fr;
+  gap: 12px;
+}
+
+.sha-call-box {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 12px;
+  border-radius: 14px;
+  background: var(--sha-card-subtle);
+  border: 1px solid var(--sha-border);
+}
+
+.sha-sound-wave {
+  display: flex;
+  align-items: center;
+  gap: 3px;
+  height: 22px;
+  padding: 0 4px;
+}
+
+.sha-sound-wave i {
+  flex: 1;
+  background: var(--sha-teal-bright);
+  border-radius: 2px;
+  animation: sha-wave 1.2s infinite ease-in-out alternate;
+}
+
+@keyframes sha-wave {
+  0% { height: 20%; }
+  100% { height: 95%; }
+}
+
+.sha-roadmap-list {
+  display: grid;
+  gap: 6px;
+}
+
+.sha-roadmap-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 10px;
+  border-radius: 8px;
+  background: var(--sha-card-bg);
+  border: 1px solid var(--sha-border);
+  font-size: 9.5px;
+}
+
+/* --------------------------------------------------------------------------
+   4. IRS Assistance Animation
+   -------------------------------------------------------------------------- */
+.sha-irs-banner {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 12px;
+  border-radius: 12px;
+  background: rgba(244, 63, 94, 0.1);
+  border: 1px solid rgba(244, 63, 94, 0.3);
+  margin-bottom: 12px;
+  font-size: 10px;
+}
+
+.sha-irs-phases {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 6px;
+  margin-bottom: 12px;
+}
+
+.sha-phase-step {
+  padding: 8px 6px;
+  border-radius: 8px;
+  background: var(--sha-card-bg);
+  border: 1px solid var(--sha-border);
+  text-align: center;
+  font-size: 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.sha-phase-step.active {
+  border-color: var(--sha-teal-bright);
+  background: color-mix(in srgb, var(--sha-teal-bright) 12%, var(--sha-card-bg));
+  font-weight: 800;
+}
+
+/* --------------------------------------------------------------------------
+   5. Business Tax Preparation Animation
+   -------------------------------------------------------------------------- */
+.sha-biz-inputs {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+  margin-bottom: 12px;
+}
+
+.sha-biz-box {
+  padding: 8px;
+  border-radius: 10px;
+  background: var(--sha-card-subtle);
+  border: 1px solid var(--sha-border);
+  font-size: 9px;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.sha-m1-adjustments {
+  display: grid;
+  gap: 5px;
+  padding: 10px;
+  border-radius: 12px;
+  background: var(--sha-card-bg);
+  border: 1px solid var(--sha-border);
+  font-size: 9.5px;
+  margin-bottom: 10px;
+}
+
+/* --------------------------------------------------------------------------
+   6. Accounting Services Animation (Ledger Balance)
+   -------------------------------------------------------------------------- */
+.sha-ledger-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 9.5px;
+  margin-bottom: 10px;
+}
+
+.sha-ledger-table th {
+  text-align: left;
+  padding: 6px 8px;
+  border-bottom: 1px solid var(--sha-border);
+  color: var(--sha-text-muted);
+  font-weight: 800;
+  text-transform: uppercase;
+  font-size: 8px;
+}
+
+.sha-ledger-table td {
+  padding: 5px 8px;
+  border-bottom: 1px dashed var(--sha-border);
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+}
+
+.sha-ledger-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 12px;
+  border-radius: 10px;
+  background: rgba(16, 185, 129, 0.12);
+  border: 1px solid rgba(16, 185, 129, 0.3);
+  font-weight: 850;
+  font-size: 10px;
+  color: var(--sha-emerald);
+}
+
+/* --------------------------------------------------------------------------
+   7. Bookkeeping (Bank Rec 2-Sided Match)
+   -------------------------------------------------------------------------- */
+.sha-rec-split {
+  display: grid;
+  grid-template-columns: 1fr 28px 1fr;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+
+.sha-rec-col {
+  display: grid;
+  gap: 6px;
+}
+
+.sha-rec-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 7px 9px;
+  border-radius: 8px;
+  background: var(--sha-card-bg);
+  border: 1px solid var(--sha-border);
+  font-size: 9px;
+  transition: all 0.3s ease;
+}
+
+.sha-rec-row.matched {
+  border-color: var(--sha-teal-bright);
+  background: color-mix(in srgb, var(--sha-teal-bright) 10%, var(--sha-card-bg));
+}
+
+.sha-rec-beam {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  color: var(--sha-teal-bright);
+}
+
+/* --------------------------------------------------------------------------
+   8. Payroll Management (Gross to Net Calculator)
+   -------------------------------------------------------------------------- */
+.sha-payroll-waterfall {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-bottom: 12px;
+}
+
+.sha-pay-bar-row {
+  display: grid;
+  grid-template-columns: 100px 1fr 75px;
+  align-items: center;
+  gap: 8px;
+  font-size: 9.5px;
+}
+
+.sha-bar-track {
+  height: 8px;
+  background: var(--sha-border);
+  border-radius: 4px;
+  overflow: hidden;
+  position: relative;
+}
+
+.sha-bar-fill {
+  height: 100%;
+  border-radius: 4px;
+  transition: width 0.6s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+/* --------------------------------------------------------------------------
+   9. Financial Reporting (Dashboard & Charts)
+   -------------------------------------------------------------------------- */
+.sha-kpi-row {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+  margin-bottom: 12px;
+}
+
+.sha-kpi-card {
+  padding: 8px 10px;
+  border-radius: 10px;
+  background: var(--sha-card-subtle);
+  border: 1px solid var(--sha-border);
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.sha-chart-visual {
+  position: relative;
+  height: 110px;
+  border-radius: 12px;
+  background: var(--sha-card-bg);
+  border: 1px solid var(--sha-border);
+  padding: 10px 12px 6px;
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.sha-chart-col {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  height: 100%;
+  justify-content: flex-end;
+}
+
+.sha-chart-bar-group {
+  display: flex;
+  align-items: flex-end;
+  gap: 3px;
+  width: 100%;
+  max-width: 24px;
+  height: 85%;
+}
+
+.sha-bar-rev {
+  flex: 1;
+  background: linear-gradient(180deg, var(--sha-teal-bright), var(--sha-teal));
+  border-radius: 3px 3px 0 0;
+  transition: height 0.6s ease;
+}
+
+.sha-bar-exp {
+  flex: 1;
+  background: linear-gradient(180deg, var(--sha-gold), rgba(229, 183, 91, 0.4));
+  border-radius: 3px 3px 0 0;
+  transition: height 0.6s ease;
+}
+
+/* --------------------------------------------------------------------------
+   10. Business Tax Planning (12-Month Calendar)
+   -------------------------------------------------------------------------- */
+.sha-calendar-quarters {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 6px;
+  margin-bottom: 12px;
+}
+
+.sha-quarter-card {
+  padding: 8px 6px;
+  border-radius: 10px;
+  background: var(--sha-card-bg);
+  border: 1px solid var(--sha-border);
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.25s ease;
+}
+
+.sha-quarter-card.active {
+  border-color: var(--sha-teal-bright);
+  background: color-mix(in srgb, var(--sha-teal-bright) 12%, var(--sha-card-bg));
+  box-shadow: 0 4px 14px var(--sha-teal-glow);
+}
+
+/* --------------------------------------------------------------------------
+   11. Tax Prep Outsourcing (Workflow Pipe)
+   -------------------------------------------------------------------------- */
+.sha-tpo-stages {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 4px;
+  margin-bottom: 12px;
+}
+
+.sha-tpo-stage {
+  flex: 1;
+  padding: 7px 4px;
+  border-radius: 8px;
+  background: var(--sha-card-bg);
+  border: 1px solid var(--sha-border);
+  text-align: center;
+  font-size: 8px;
+  font-weight: 750;
+  transition: all 0.3s ease;
+}
+
+.sha-tpo-stage.active {
+  border-color: var(--sha-teal-bright);
+  color: var(--sha-teal-bright);
+  background: color-mix(in srgb, var(--sha-teal-bright) 12%, var(--sha-card-bg));
+}
+
+/* --------------------------------------------------------------------------
+   12. Bookkeeping Outsourcing (Rules Engine)
+   -------------------------------------------------------------------------- */
+.sha-rules-grid {
+  display: grid;
+  gap: 6px;
+  margin-bottom: 12px;
+}
+
+.sha-rule-row {
+  display: grid;
+  grid-template-columns: 85px 1fr auto;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 10px;
+  border-radius: 8px;
+  background: var(--sha-card-bg);
+  border: 1px solid var(--sha-border);
+  font-size: 9px;
+}
+
+/* --------------------------------------------------------------------------
+   13. Accounting Outsourcing (Task Allocation)
+   -------------------------------------------------------------------------- */
+.sha-team-lanes {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+  margin-bottom: 12px;
+}
+
+.sha-lane-box {
+  padding: 8px;
+  border-radius: 10px;
+  background: var(--sha-card-subtle);
+  border: 1px solid var(--sha-border);
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.sha-lane-task {
+  padding: 5px 7px;
+  border-radius: 6px;
+  background: var(--sha-card-bg);
+  border: 1px solid var(--sha-border);
+  font-size: 8.5px;
+  font-weight: 750;
+}
+
+/* --------------------------------------------------------------------------
+   14. Payroll Processing (Multi-State Run)
+   -------------------------------------------------------------------------- */
+.sha-state-pills {
+  display: flex;
+  gap: 6px;
+  margin-bottom: 10px;
+}
+
+.sha-state-pill {
+  padding: 4px 10px;
+  border-radius: 8px;
+  font-size: 9px;
+  font-weight: 800;
+  background: var(--sha-card-bg);
+  border: 1px solid var(--sha-border);
+  cursor: pointer;
+}
+
+.sha-state-pill.active {
+  border-color: var(--sha-teal-bright);
+  color: var(--sha-teal-bright);
+  background: color-mix(in srgb, var(--sha-teal-bright) 12%, var(--sha-card-bg));
+}
+
+/* --------------------------------------------------------------------------
+   15. Audit Support (PBC Checklist & Evidence)
+   -------------------------------------------------------------------------- */
+.sha-pbc-list {
+  display: grid;
+  gap: 5px;
+  margin-bottom: 12px;
+}
+
+.sha-pbc-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 6px 10px;
+  border-radius: 8px;
+  background: var(--sha-card-bg);
+  border: 1px solid var(--sha-border);
+  font-size: 9px;
+}
+
+.sha-tickmark {
+  display: inline-block;
+  padding: 1px 5px;
+  border-radius: 4px;
+  font-size: 8px;
+  font-weight: 900;
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  background: rgba(37, 211, 158, 0.15);
+  color: var(--sha-teal-bright);
+}
+
+/* --------------------------------------------------------------------------
+   16. Financial Statement Prep (Tabs: BS, IS, CF)
+   -------------------------------------------------------------------------- */
+.sha-stmt-tabs {
+  display: flex;
+  gap: 6px;
+  margin-bottom: 10px;
+}
+
+.sha-stmt-tab {
+  flex: 1;
+  padding: 6px 4px;
+  border-radius: 8px;
+  background: var(--sha-card-bg);
+  border: 1px solid var(--sha-border);
+  text-align: center;
+  font-size: 9px;
+  font-weight: 800;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.sha-stmt-tab.active {
+  border-color: var(--sha-teal-bright);
+  color: var(--sha-teal-bright);
+  background: color-mix(in srgb, var(--sha-teal-bright) 12%, var(--sha-card-bg));
+}
+
+.sha-stmt-body {
+  padding: 10px;
+  border-radius: 12px;
+  background: var(--sha-card-subtle);
+  border: 1px solid var(--sha-border);
+  font-size: 9px;
+  display: grid;
+  gap: 5px;
+}
+
+/* --------------------------------------------------------------------------
+   17. Tax Review Support (Diagnostic Scanner)
+   -------------------------------------------------------------------------- */
+.sha-diag-lines {
+  display: grid;
+  gap: 6px;
+  margin-bottom: 12px;
+}
+
+.sha-diag-row {
+  display: grid;
+  grid-template-columns: 85px 1fr auto;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 10px;
+  border-radius: 8px;
+  background: var(--sha-card-bg);
+  border: 1px solid var(--sha-border);
+  font-size: 9px;
+}
+
+.sha-signoff-stamp {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 10px;
+  border-radius: 6px;
+  background: rgba(37, 211, 158, 0.15);
+  border: 1px solid var(--sha-teal-bright);
+  color: var(--sha-teal-bright);
+  font-weight: 850;
+  font-size: 9px;
+}
+
+/* --------------------------------------------------------------------------
+   18. Year-End Cleanup (Inbox -> Clean Books)
+   -------------------------------------------------------------------------- */
+.sha-cleanup-split {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  margin-bottom: 12px;
+}
+
+.sha-cleanup-box {
+  padding: 8px;
+  border-radius: 10px;
+  background: var(--sha-card-subtle);
+  border: 1px solid var(--sha-border);
+  font-size: 8.5px;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+/* --------------------------------------------------------------------------
+   19. Write-up Services (OCR -> Journal -> Ledger)
+   -------------------------------------------------------------------------- */
+.sha-writeup-flow {
+  display: grid;
+  grid-template-columns: 1fr 1.3fr;
+  gap: 10px;
+  margin-bottom: 12px;
+}
+
+.sha-source-doc {
+  padding: 10px;
+  border-radius: 10px;
+  background: var(--sha-card-subtle);
+  border: 1px solid var(--sha-border);
+  font-size: 8.5px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+/* --------------------------------------------------------------------------
+   20. Dedicated Staff Augmentation (Team Pod)
+   -------------------------------------------------------------------------- */
+.sha-pod-members {
+  display: grid;
+  gap: 6px;
+  margin-bottom: 12px;
+}
+
+.sha-pod-row {
+  display: grid;
+  grid-template-columns: 34px 1fr 65px;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 10px;
+  border-radius: 9px;
+  background: var(--sha-card-bg);
+  border: 1px solid var(--sha-border);
+  font-size: 9px;
+}
+
+/* Responsive & Mobile Constraints */
+@media (max-width: 640px) {
+  .sha-itp-grid,
+  .sha-ptc-desk,
+  .sha-rec-split,
+  .sha-cleanup-split,
+  .sha-writeup-flow {
+    grid-template-columns: 1fr;
+    gap: 8px;
+  }
+  
+  .sha-rec-split {
+    grid-template-columns: 1fr;
+  }
+  
+  .sha-rec-beam {
+    display: none;
+  }
+  
+  .sha-ftp-pillars,
+  .sha-kpi-row,
+  .sha-team-lanes,
+  .sha-biz-inputs {
+    grid-template-columns: 1fr;
+  }
+  
+  .sha-irs-phases,
+  .sha-calendar-quarters {
+    grid-template-columns: 1fr 1fr;
+  }
+  
+  .sha-floating-badge {
+    display: none; /* Hide floating badge on small mobile to avoid text overlap */
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sha-status-dot,
+  .sha-floating-badge,
+  .sha-sound-wave i,
+  .sha-bar-fill {
+    animation: none !important;
+    transition: none !important;
+  }
+}
