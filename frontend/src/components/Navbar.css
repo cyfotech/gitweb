@@ -1,4 +1,3 @@
-
 /* =========================================================
    PREFERRED TAX CONSULTANCY — NAVBAR
    Desktop navigation + premium floating mobile menu.
@@ -618,6 +617,7 @@
 
 /* Accessibility: respect reduced motion preferences. */
 @media (prefers-reduced-motion: reduce) {
+
   .ptc-navbar *,
   .ptc-navbar *::before,
   .ptc-navbar *::after,
@@ -780,9 +780,303 @@
 /* Respect reduced-motion preferences */
 
 @media (prefers-reduced-motion: reduce) {
+
   .ptc-mobile-theme-row,
   .ptc-theme-switch,
   .ptc-theme-switch-thumb {
     transition: none !important;
+  }
+}
+
+/* =========================================================
+   SERVICES MEGA-DROPDOWN (DESKTOP)
+   ========================================================= */
+
+.ptc-nav-services-row {
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
+}
+
+.ptc-nav-dropdown-trigger {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 26px;
+  height: 26px;
+  padding: 0;
+  margin-left: -4px;
+  border: none;
+  border-radius: 999px;
+  background: transparent;
+  cursor: pointer;
+  font-family: inherit;
+  color: #476067;
+  transition:
+    background 180ms ease,
+    color 180ms ease;
+}
+
+.ptc-nav-dropdown-trigger:hover {
+  background: rgba(34, 175, 104, 0.12);
+  color: #1a8650;
+}
+
+.dark .ptc-nav-dropdown-trigger {
+  color: #a9c1c8;
+}
+
+.dark .ptc-nav-dropdown-trigger:hover {
+  background: rgba(34, 175, 104, 0.18);
+  color: #35e092;
+}
+
+.ptc-nav-chevron {
+  transition: transform 220ms cubic-bezier(0.22, 1, 0.36, 1);
+  opacity: 0.65;
+}
+
+.ptc-nav-dropdown-trigger-open .ptc-nav-chevron {
+  transform: rotate(180deg);
+  opacity: 1;
+}
+
+.ptc-services-dropdown {
+  position: absolute;
+  top: calc(100% + 12px);
+  left: 50%;
+  transform: translateX(-50%) translateY(-8px);
+
+  min-width: 340px;
+  padding-top: 6px;
+
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+
+  transition:
+    opacity 200ms cubic-bezier(0.16, 1, 0.3, 1),
+    transform 200ms cubic-bezier(0.16, 1, 0.3, 1),
+    visibility 200ms ease;
+
+  z-index: 70;
+}
+
+.ptc-services-dropdown-open {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transform: translateX(-50%) translateY(0);
+}
+
+.ptc-services-dropdown-inner {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4px;
+
+  padding: 12px;
+
+  border: 1px solid #dde4e1;
+  border-radius: 18px;
+
+  background: #ffffff;
+  box-shadow: 0 24px 60px rgba(16, 34, 40, 0.16);
+}
+
+.dark .ptc-services-dropdown-inner {
+  background: #0a1a20;
+  border-color: rgba(121, 241, 232, 0.18);
+  box-shadow: 0 28px 64px rgba(0, 0, 0, 0.5);
+}
+
+.ptc-services-dropdown-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+
+  min-height: 46px;
+  padding: 9px 11px;
+
+  border-radius: 12px;
+
+  color: #2a4147;
+  font-size: 12.5px;
+  font-weight: 600;
+  line-height: 1.3;
+  text-decoration: none;
+
+  transition:
+    background 180ms ease,
+    color 180ms ease,
+    transform 180ms ease;
+}
+
+.dark .ptc-services-dropdown-item {
+  color: #c6dadd;
+}
+
+.ptc-services-dropdown-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 32px;
+  height: 32px;
+  flex-shrink: 0;
+
+  border-radius: 10px;
+
+  background: rgba(23, 56, 63, 0.06);
+  color: #315f69;
+
+  transition: background 180ms ease, color 180ms ease;
+}
+
+.dark .ptc-services-dropdown-icon {
+  background: rgba(73, 227, 214, 0.1);
+  color: #49e3d6;
+}
+
+.ptc-services-dropdown-item:hover,
+.ptc-services-dropdown-item-active {
+  background: rgba(23, 56, 63, 0.06);
+  color: #12242b;
+  transform: translateX(2px);
+}
+
+.dark .ptc-services-dropdown-item:hover,
+.dark .ptc-services-dropdown-item-active {
+  background: rgba(73, 227, 214, 0.08);
+  color: #f4fbfc;
+}
+
+.ptc-services-dropdown-item:hover .ptc-services-dropdown-icon,
+.ptc-services-dropdown-item-active .ptc-services-dropdown-icon {
+  background: rgba(22, 167, 101, 0.14);
+  color: #16a765;
+}
+
+.dark .ptc-services-dropdown-item:hover .ptc-services-dropdown-icon,
+.dark .ptc-services-dropdown-item-active .ptc-services-dropdown-icon {
+  background: rgba(73, 227, 214, 0.2);
+  color: #7df5e8;
+}
+
+.ptc-services-dropdown-item:focus-visible {
+  outline: 2px solid #16a765;
+  outline-offset: -2px;
+}
+
+/* =========================================================
+   MOBILE SERVICES ACCORDION
+   ========================================================= */
+
+@media (max-width: 1023px) {
+  .ptc-mobile-accordion {
+    margin-bottom: 6px;
+  }
+
+  .ptc-mobile-accordion .ptc-mobile-link {
+    width: 100%;
+    border: 0;
+    background: #f8fafc;
+    text-align: left;
+    font-family: inherit;
+    cursor: pointer;
+  }
+
+  .dark .ptc-mobile-accordion .ptc-mobile-link {
+    background: #0b222a;
+  }
+
+  .ptc-mobile-accordion .ptc-mobile-arrow {
+    transition: transform 220ms cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  .ptc-mobile-accordion-open .ptc-mobile-arrow {
+    transform: rotate(180deg);
+  }
+
+  .ptc-mobile-submenu {
+    display: grid;
+    gap: 4px;
+
+    margin: 6px 0 2px 38px;
+    padding-left: 4px;
+
+    border-left: 1px solid rgba(220, 229, 226, 0.9);
+
+    max-height: 0;
+    overflow: hidden;
+    opacity: 0;
+
+    transition:
+      max-height 260ms cubic-bezier(0.16, 1, 0.3, 1),
+      opacity 220ms ease;
+  }
+
+  .dark .ptc-mobile-submenu {
+    border-left-color: rgba(121, 241, 232, 0.2);
+  }
+
+  .ptc-mobile-submenu-open {
+    max-height: 460px;
+    opacity: 1;
+  }
+
+  .ptc-mobile-submenu-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+
+    min-height: 44px;
+    padding: 10px 12px;
+
+    border-radius: 10px;
+
+    color: #1e293b;
+    background: #f8fafc;
+    font-size: 12.5px;
+    font-weight: 600;
+    text-decoration: none;
+
+    transition: background 180ms ease, color 180ms ease;
+  }
+
+  .dark .ptc-mobile-submenu-item {
+    color: #f1f5f9;
+    background: #0b222a;
+  }
+
+  .ptc-mobile-submenu-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 28px;
+    height: 28px;
+    flex-shrink: 0;
+
+    border-radius: 8px;
+
+    background: rgba(23, 56, 63, 0.06);
+    color: #315f69;
+  }
+
+  .dark .ptc-mobile-submenu-icon {
+    background: rgba(73, 227, 214, 0.1);
+    color: #49e3d6;
+  }
+
+  .ptc-mobile-submenu-item:hover,
+  .ptc-mobile-submenu-item-active {
+    background: #eef4f5;
+    color: #0e3a42;
+  }
+
+  .dark .ptc-mobile-submenu-item:hover,
+  .dark .ptc-mobile-submenu-item-active {
+    background: #112f38;
+    color: #49e3d6;
   }
 }

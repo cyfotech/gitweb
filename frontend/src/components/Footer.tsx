@@ -23,8 +23,18 @@ export function Footer() {
   return (
     <footer className="site-footer" aria-label="Site footer">
       <div className="site-footer__inner">
+
+        {/* Live status ticker */}
+        <div className="site-footer__live-bar" aria-hidden="true">
+          <span className="site-footer__live-dot" />
+          <span className="site-footer__live-text">
+            Accepting new clients &nbsp;·&nbsp; Year-round US tax &amp; accounting &nbsp;·&nbsp; Federal &amp; State &nbsp;·&nbsp; Secure file transfer &nbsp;·&nbsp; IRS Circular 230 compliant
+          </span>
+        </div>
+
         {/* Main footer grid */}
         <div className="site-footer__grid">
+
           {/* Brand and contact information */}
           <section className="site-footer__brand" aria-label={settings.brandName}>
             <Link to="/" className="site-footer__logo" aria-label={`${settings.brandName} home`}>
@@ -50,7 +60,6 @@ export function Footer() {
               </div>
             </address>
 
-            {/* Dynamic Social Media Profiles */}
             <SocialLinksBar
               channels={settings.socialChannels}
               fallbackLinks={{
@@ -69,26 +78,14 @@ export function Footer() {
           <nav className="site-footer__column" aria-label="Core advisory services">
             <h2 className="site-footer__heading">Core Advisory</h2>
             <ul className="site-footer__links">
-              <li><Link to="/services/business-tax-preparation">Business Tax Preparation</Link></li>
-              <li><Link to="/services/individual-tax-prep">Individual Form 1040 Advisory</Link></li>
-              <li><Link to="/services/accounting-services">GAAP Accounting &amp; Close</Link></li>
-              <li><Link to="/services/bookkeeping">Full-Charge Bookkeeping</Link></li>
-              <li><Link to="/services/payroll-management">Multi-State Payroll</Link></li>
-              <li><Link to="/services/irs-assistance">IRS Audit Representation</Link></li>
+              <li><Link to="/usa-tax-preparation-services">USA Tax Preparation</Link></li>
+              <li><Link to="/services/bookkeeping">Bookkeeping &amp; Accounting</Link></li>
+              <li><Link to="/services/payroll-management">Payroll Management</Link></li>
+              <li><Link to="/us-tax-planning-services">Tax Planning &amp; Advisory</Link></li>
             </ul>
-          </nav>
-
-          {/* CPA outsourcing */}
-          <nav className="site-footer__column" aria-label="CPA outsourcing services">
-            <h2 className="site-footer__heading">CPA Outsourcing</h2>
-            <ul className="site-footer__links">
-              <li><Link to="/services/tax-prep-outsourcing">Tax Prep Outsourcing</Link></li>
-              <li><Link to="/services/bookkeeping-outsourcing">Bookkeeping Outsourcing</Link></li>
-              <li><Link to="/services/audit-support">Audit Support &amp; Workpapers</Link></li>
-              <li><Link to="/services/financial-statement-prep">Financial Statement Compilation</Link></li>
-              <li><Link to="/services/tax-review-support">Diagnostic Tax Review Support</Link></li>
-              <li><Link className="site-footer__featured-link" to="/hire-professionals">Hire Dedicated Accountants <ArrowUpRight aria-hidden="true" /></Link></li>
-            </ul>
+            <Link className="site-footer__featured-link" to="/hire-professionals">
+              Hire Professionals <ArrowUpRight aria-hidden="true" />
+            </Link>
           </nav>
 
           {/* Resources and firm */}
@@ -112,6 +109,7 @@ export function Footer() {
               </button>
             </div>
           </nav>
+
         </div>
 
         {/* Circular 230 disclosure */}
@@ -139,6 +137,7 @@ export function Footer() {
             <Link to="/about">SOC 2 Type II Certified</Link>
           </nav>
         </div>
+
       </div>
     </footer>
   );

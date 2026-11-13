@@ -26,9 +26,9 @@ import { NotFoundPage } from './pages/NotFoundPage';
 
 // Imported Reference Pages
 import MainServicesPage from './pages/MainServicesPage.jsx';
-import TaxPlanningPage from './pages/TaxPlanningPage.jsx';
-import TaxPreparationPage from './pages/TaxPreparationPage.jsx';
-import BookkeepingPage from './pages/BookkeepingPage.jsx';
+import TaxPlanningPage from './pages/services/TaxPlanningPage.jsx';
+import TaxPreparationPage from './pages/services/USATaxPreparationPage.jsx';
+import BookkeepingPage from './pages/services/BookkeepingPage.jsx';
 import ContactPage from './pages/ContactPage.jsx';
 import './pages/ImportedPages.css';
 
@@ -90,12 +90,12 @@ function ScrollToTop() {
       analyticsApi.initSession().then(() => {
         const slug = pathname === '/' ? 'home' : pathname.replace(/^\//, '');
         analyticsApi.trackPageView(pathname, slug, document.referrer);
-      }).catch(() => {});
+      }).catch(() => { });
 
       // Visitor Activity Tracking with automatic Device & UUID recognition
       const pageTitle = document.title || (pathname === '/' ? 'Home Page' : pathname.replace(/^\//, ''));
       visitorApi.identify(pathname, pageTitle).then((visitor) => {
-        const desc = visitor.displayName 
+        const desc = visitor.displayName
           ? `Identified Visitor (${visitor.displayName}) navigated to ${pageTitle}`
           : `Visitor viewed ${pageTitle}`;
         visitorApi.trackActivity({
@@ -104,7 +104,7 @@ function ScrollToTop() {
           pageUrl: pathname,
           description: desc,
         });
-      }).catch(() => {});
+      }).catch(() => { });
     }
   }, [pathname, search]);
 
@@ -117,136 +117,136 @@ export default function App() {
       <GlobalSettingsProvider>
         <AnimationSettingsProvider>
           <BackendStatusProvider>
-          <AdminAuthProvider>
-            <VisualEditorProvider>
-              <BrowserRouter>
-              <BackendStatusIndicator />
-              <Routes>
-            {/* ============================================================
+            <AdminAuthProvider>
+              <VisualEditorProvider>
+                <BrowserRouter>
+                  <BackendStatusIndicator />
+                  <Routes>
+                    {/* ============================================================
                 ADMIN ROUTES — No Navbar/Footer, protected by auth
             ============================================================ */}
-            <Route path="/admin/login" element={<AdminLoginPage />} />
-            <Route path="/admin/dashboard" element={
-              <ProtectedAdminRoute><AdminDashboard /></ProtectedAdminRoute>
-            } />
-            <Route path="/admin/pages" element={
-              <ProtectedAdminRoute>
-                <AdminErrorBoundary fallbackTitle="Page Manager Unavailable">
-                  <EditingPagesIndex />
-                </AdminErrorBoundary>
-              </ProtectedAdminRoute>
-            } />
-            <Route path="/admin/pages/:pageId/sections" element={
-              <ProtectedAdminRoute>
-                <AdminErrorBoundary fallbackTitle="Section Editor Unavailable">
-                  <SectionEditorPage />
-                </AdminErrorBoundary>
-              </ProtectedAdminRoute>
-            } />
-            <Route path="/admin/pages/:pageId/content" element={
-              <ProtectedAdminRoute>
-                <AdminErrorBoundary fallbackTitle="Page Content Editor Unavailable">
-                  <PageContentEditor />
-                </AdminErrorBoundary>
-              </ProtectedAdminRoute>
-            } />
-            <Route path="/admin/seo" element={
-              <ProtectedAdminRoute><SEOManagerPage /></ProtectedAdminRoute>
-            } />
-            <Route path="/admin/analytics" element={
-              <ProtectedAdminRoute><ClickAnalyticsPage /></ProtectedAdminRoute>
-            } />
-            <Route path="/admin/analytics/clicks" element={
-              <ProtectedAdminRoute><ClickAnalyticsPage /></ProtectedAdminRoute>
-            } />
-            <Route path="/admin/logs" element={
-              <ProtectedAdminRoute><ActivityLogsPage /></ProtectedAdminRoute>
-            } />
-            <Route path="/admin/logs/system" element={
-              <ProtectedAdminRoute><ActivityLogsPage /></ProtectedAdminRoute>
-            } />
-            <Route path="/admin/visitors/:visitorId" element={
-              <ProtectedAdminRoute><VisitorDetailPage /></ProtectedAdminRoute>
-            } />
-            <Route path="/admin/media" element={
-              <ProtectedAdminRoute><MediaLibraryPage /></ProtectedAdminRoute>
-            } />
-            <Route path="/admin/services" element={
-              <ProtectedAdminRoute><ServiceManagerPage /></ProtectedAdminRoute>
-            } />
-            <Route path="/admin/animations" element={
-              <ProtectedAdminRoute><AnimationManagerPage /></ProtectedAdminRoute>
-            } />
-            <Route path="/admin/tax-intelligence" element={
-              <ProtectedAdminRoute><TaxIntelligenceManagerPage /></ProtectedAdminRoute>
-            } />
-            <Route path="/admin/production-dashboard" element={
-              <ProtectedAdminRoute><ProductionDashboardManagerPage /></ProtectedAdminRoute>
-            } />
-            <Route path="/admin/execution-map" element={
-              <ProtectedAdminRoute><ExecutionMapManagerPage /></ProtectedAdminRoute>
-            } />
-            <Route path="/admin/blog" element={
-              <ProtectedAdminRoute><BlogManagerPage /></ProtectedAdminRoute>
-            } />
-            <Route path="/admin/contact" element={
-              <ProtectedAdminRoute><ContactInquiriesPage /></ProtectedAdminRoute>
-            } />
-            <Route path="/admin/consultations" element={
-              <ProtectedAdminRoute><ConsultationsManagerPage /></ProtectedAdminRoute>
-            } />
-            <Route path="/admin/settings" element={
-              <ProtectedAdminRoute><GlobalSettingsPage /></ProtectedAdminRoute>
-            } />
-            {/* ============================================================
+                    <Route path="/admin/login" element={<AdminLoginPage />} />
+                    <Route path="/admin/dashboard" element={
+                      <ProtectedAdminRoute><AdminDashboard /></ProtectedAdminRoute>
+                    } />
+                    <Route path="/admin/pages" element={
+                      <ProtectedAdminRoute>
+                        <AdminErrorBoundary fallbackTitle="Page Manager Unavailable">
+                          <EditingPagesIndex />
+                        </AdminErrorBoundary>
+                      </ProtectedAdminRoute>
+                    } />
+                    <Route path="/admin/pages/:pageId/sections" element={
+                      <ProtectedAdminRoute>
+                        <AdminErrorBoundary fallbackTitle="Section Editor Unavailable">
+                          <SectionEditorPage />
+                        </AdminErrorBoundary>
+                      </ProtectedAdminRoute>
+                    } />
+                    <Route path="/admin/pages/:pageId/content" element={
+                      <ProtectedAdminRoute>
+                        <AdminErrorBoundary fallbackTitle="Page Content Editor Unavailable">
+                          <PageContentEditor />
+                        </AdminErrorBoundary>
+                      </ProtectedAdminRoute>
+                    } />
+                    <Route path="/admin/seo" element={
+                      <ProtectedAdminRoute><SEOManagerPage /></ProtectedAdminRoute>
+                    } />
+                    <Route path="/admin/analytics" element={
+                      <ProtectedAdminRoute><ClickAnalyticsPage /></ProtectedAdminRoute>
+                    } />
+                    <Route path="/admin/analytics/clicks" element={
+                      <ProtectedAdminRoute><ClickAnalyticsPage /></ProtectedAdminRoute>
+                    } />
+                    <Route path="/admin/logs" element={
+                      <ProtectedAdminRoute><ActivityLogsPage /></ProtectedAdminRoute>
+                    } />
+                    <Route path="/admin/logs/system" element={
+                      <ProtectedAdminRoute><ActivityLogsPage /></ProtectedAdminRoute>
+                    } />
+                    <Route path="/admin/visitors/:visitorId" element={
+                      <ProtectedAdminRoute><VisitorDetailPage /></ProtectedAdminRoute>
+                    } />
+                    <Route path="/admin/media" element={
+                      <ProtectedAdminRoute><MediaLibraryPage /></ProtectedAdminRoute>
+                    } />
+                    <Route path="/admin/services" element={
+                      <ProtectedAdminRoute><ServiceManagerPage /></ProtectedAdminRoute>
+                    } />
+                    <Route path="/admin/animations" element={
+                      <ProtectedAdminRoute><AnimationManagerPage /></ProtectedAdminRoute>
+                    } />
+                    <Route path="/admin/tax-intelligence" element={
+                      <ProtectedAdminRoute><TaxIntelligenceManagerPage /></ProtectedAdminRoute>
+                    } />
+                    <Route path="/admin/production-dashboard" element={
+                      <ProtectedAdminRoute><ProductionDashboardManagerPage /></ProtectedAdminRoute>
+                    } />
+                    <Route path="/admin/execution-map" element={
+                      <ProtectedAdminRoute><ExecutionMapManagerPage /></ProtectedAdminRoute>
+                    } />
+                    <Route path="/admin/blog" element={
+                      <ProtectedAdminRoute><BlogManagerPage /></ProtectedAdminRoute>
+                    } />
+                    <Route path="/admin/contact" element={
+                      <ProtectedAdminRoute><ContactInquiriesPage /></ProtectedAdminRoute>
+                    } />
+                    <Route path="/admin/consultations" element={
+                      <ProtectedAdminRoute><ConsultationsManagerPage /></ProtectedAdminRoute>
+                    } />
+                    <Route path="/admin/settings" element={
+                      <ProtectedAdminRoute><GlobalSettingsPage /></ProtectedAdminRoute>
+                    } />
+                    {/* ============================================================
                 PUBLIC ROUTES — With Navbar and Footer
             ============================================================ */}
-            <Route path="*" element={
-              <div className="min-h-screen bg-[#FAFCFB] dark:bg-[#030F14] text-[#12242B] dark:text-[#F4FBFC] transition-colors duration-300 selection:bg-[#49E3D6] selection:text-[#03181E] flex flex-col justify-between">
-                <ScrollToTop />
-                <Navbar />
-                <main className="flex-1">
-                  <Routes>
-                    <Route path="/" element={<Home />} />
-                    <Route path="/about" element={<AboutUs />} />
-                    <Route path="/services" element={<MainServicesPage />} />
-                    <Route path="/main-services" element={<MainServicesPage />} />
-                    <Route path="/tax-planning" element={<TaxPlanningPage />} />
-                    <Route path="/us-tax-planning-services" element={<TaxPlanningPage />} />
-                    <Route path="/us-tax-planning-services/*" element={<TaxPlanningPage />} />
-                    <Route path="/tax-preparation" element={<TaxPreparationPage />} />
-                    <Route path="/usa-tax-preparation-services" element={<TaxPreparationPage />} />
-                    <Route path="/usa-tax-preparation-services/*" element={<TaxPreparationPage />} />
-                    <Route path="/bookkeeping" element={<BookkeepingPage />} />
-                    <Route path="/bookkeeping-services-usa" element={<BookkeepingPage />} />
-                    <Route path="/bookkeeping-services-usa/*" element={<BookkeepingPage />} />
-                    <Route path="/services/tax-planning" element={<TaxPlanningPage />} />
-                    <Route path="/services/tax-preparation" element={<TaxPreparationPage />} />
-                    <Route path="/services/bookkeeping" element={<BookkeepingPage />} />
-                    <Route path="/services/:slug" element={<ServiceDetailRoute />} />
-                    <Route path="/cpa-outsourcing" element={<CpaOutsourcingPage />} />
-                    <Route path="/hire-professionals" element={<HireProfessionalsPage />} />
-                    <Route path="/hire-professionals/:roleSlug" element={<HireProfessionalRolePage />} />
-                    <Route path="/tax-resources" element={<TaxResourcesPage />} />
-                    <Route path="/blog" element={<BlogPage />} />
-                    <Route path="/blog/:slug" element={<BlogArticlePage />} />
-                    <Route path="/contact" element={<ContactPage />} />
-                    <Route path="/contact-us" element={<ContactPage />} />
-                    <Route path="/book-consultation" element={<BookConsultationPage />} />
-                    <Route path="/tax-calculator" element={<TaxCalculatorPage />} />
-                    <Route path="*" element={<NotFoundPage />} />
+                    <Route path="*" element={
+                      <div className="min-h-screen bg-[#FAFCFB] dark:bg-[#030F14] text-[#12242B] dark:text-[#F4FBFC] transition-colors duration-300 selection:bg-[#49E3D6] selection:text-[#03181E] flex flex-col justify-between">
+                        <ScrollToTop />
+                        <Navbar />
+                        <main className="flex-1">
+                          <Routes>
+                            <Route path="/" element={<Home />} />
+                            <Route path="/about" element={<AboutUs />} />
+                            <Route path="/services" element={<MainServicesPage />} />
+                            <Route path="/main-services" element={<MainServicesPage />} />
+                            <Route path="/tax-planning" element={<TaxPlanningPage />} />
+                            <Route path="/us-tax-planning-services" element={<TaxPlanningPage />} />
+                            <Route path="/us-tax-planning-services/*" element={<TaxPlanningPage />} />
+                            <Route path="/tax-preparation" element={<TaxPreparationPage />} />
+                            <Route path="/usa-tax-preparation-services" element={<TaxPreparationPage />} />
+                            <Route path="/usa-tax-preparation-services/*" element={<TaxPreparationPage />} />
+                            <Route path="/bookkeeping" element={<BookkeepingPage />} />
+                            <Route path="/bookkeeping-services-usa" element={<BookkeepingPage />} />
+                            <Route path="/bookkeeping-services-usa/*" element={<BookkeepingPage />} />
+                            <Route path="/services/tax-planning" element={<TaxPlanningPage />} />
+                            <Route path="/services/tax-preparation" element={<TaxPreparationPage />} />
+                            <Route path="/services/bookkeeping" element={<BookkeepingPage />} />
+                            <Route path="/services/:slug" element={<ServiceDetailRoute />} />
+                            <Route path="/cpa-outsourcing" element={<CpaOutsourcingPage />} />
+                            <Route path="/hire-professionals" element={<HireProfessionalsPage />} />
+                            <Route path="/hire-professionals/:roleSlug" element={<HireProfessionalRolePage />} />
+                            <Route path="/tax-resources" element={<TaxResourcesPage />} />
+                            <Route path="/blog" element={<BlogPage />} />
+                            <Route path="/blog/:slug" element={<BlogArticlePage />} />
+                            <Route path="/contact" element={<ContactPage />} />
+                            <Route path="/contact-us" element={<ContactPage />} />
+                            <Route path="/book-consultation" element={<BookConsultationPage />} />
+                            <Route path="/tax-calculator" element={<TaxCalculatorPage />} />
+                            <Route path="*" element={<NotFoundPage />} />
+                          </Routes>
+                        </main>
+                        <Footer />
+                      </div>
+                    } />
                   </Routes>
-                </main>
-                <Footer />
-              </div>
-            } />
-          </Routes>
-        </BrowserRouter>
-        </VisualEditorProvider>
-      </AdminAuthProvider>
-    </BackendStatusProvider>
-    </AnimationSettingsProvider>
-    </GlobalSettingsProvider>
-  </ThemeProvider>
-);
+                </BrowserRouter>
+              </VisualEditorProvider>
+            </AdminAuthProvider>
+          </BackendStatusProvider>
+        </AnimationSettingsProvider>
+      </GlobalSettingsProvider>
+    </ThemeProvider>
+  );
 }

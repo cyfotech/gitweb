@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import {
   Sun,
@@ -6,6 +6,11 @@ import {
   Menu,
   X,
   ArrowRight,
+  ChevronDown,
+  FileSpreadsheet,
+  BookOpen,
+  TrendingUp,
+  Wallet,
 } from 'lucide-react';
 
 import { useTheme } from '../context/ThemeContext';
@@ -21,6 +26,10 @@ export function Navbar() {
 
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [servicesOpen, setServicesOpen] = useState(false);
+  const [mobileServicesOpen, setMobileServicesOpen] = useState(false);
+  const servicesTriggerRef = useRef<HTMLButtonElement | null>(null);
+  const servicesPanelRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -57,6 +66,40 @@ export function Navbar() {
     };
   }, [mobileMenuOpen]);
 
+  // Close the desktop Services dropdown on navigation
+  useEffect(() => {
+    setServicesOpen(false);
+  }, [location.pathname]);
+
+  // Keyboard support for the Services dropdown
+  useEffect(() => {
+    if (!servicesOpen) return;
+
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') {
+        setServicesOpen(false);
+        servicesTriggerRef.current?.focus();
+      } else if (event.key === 'ArrowDown') {
+        event.preventDefault();
+        const items = servicesPanelRef.current?.querySelectorAll<HTMLElement>('a');
+        items?.[0]?.focus();
+      }
+    };
+
+    window.addEventListener('keydown', handleKeyDown);
+    return () => {
+      window.removeEventListener('keydown', handleKeyDown);
+    };
+  }, [servicesOpen]);
+
+  const toggleServices = () => {
+    setServicesOpen((open) => !open);
+  };
+
+  const closeServices = () => {
+    setServicesOpen(false);
+  };
+
   // Lock body scroll only while mobile menu is open, restore on close
   useEffect(() => {
     if (mobileMenuOpen) {
@@ -72,10 +115,16 @@ export function Navbar() {
     { name: 'Home', path: '/' },
     { name: 'About Us', path: '/about' },
     { name: 'Services', path: '/services' },
-    { name: 'CPA Outsourcing', path: '/cpa-outsourcing' },
     { name: 'Hire Professionals', path: '/hire-professionals' },
     { name: 'Blog', path: '/blog' },
     { name: 'Contact Us', path: '/contact' },
+  ];
+
+  const servicesMenu = [
+    { name: 'USA Tax Preparation', path: '/usa-tax-preparation-services', icon: FileSpreadsheet },
+    { name: 'Bookkeeping & Accounting', path: '/bookkeeping', icon: BookOpen },
+    { name: 'Payroll Management', path: '/services/payroll-management', icon: Wallet },
+    { name: 'Tax Planning & Advisory', path: '/tax-planning', icon: TrendingUp },
   ];
 
   const isActive = (path: string) => {
@@ -114,6 +163,64 @@ export function Navbar() {
           >
             {navLinks.map((link) => {
               const active = isActive(link.path);
+
+              if (link.name === 'Services') {
+                return (
+                  <div
+                    key={link.name}
+                    className="ptc-nav-item relative"
+                  >
+                    <div className="ptc-nav-services-row">
+                      <Link
+                        to={link.path}
+                        aria-current={active ? 'page' : undefined}
+                        className={`ptc-nav-link ${active ? 'ptc-nav-link-active' : ''}`}
+                      >
+                        <span>{link.name}</span>
+                        {active && <span className="ptc-nav-active-indicator" />}
+                      </Link>
+                      <button
+                        ref={servicesTriggerRef}
+                        type="button"
+                        onClick={toggleServices}
+                        aria-haspopup="true"
+                        aria-expanded={servicesOpen}
+                        aria-controls="ptc-services-dropdown"
+                        aria-label="Toggle services menu"
+                        className={`ptc-nav-dropdown-trigger ${servicesOpen ? 'ptc-nav-dropdown-trigger-open' : ''}`}
+                      >
+                        <ChevronDown className="ptc-nav-chevron" size={14} aria-hidden="true" />
+                      </button>
+                    </div>
+
+                    <div
+                      ref={servicesPanelRef}
+                      id="ptc-services-dropdown"
+                      className={`ptc-services-dropdown ${servicesOpen ? 'ptc-services-dropdown-open' : ''}`}
+                    >
+                      <div className="ptc-services-dropdown-inner">
+                        {servicesMenu.map((item) => {
+                          const itemActive = isActive(item.path);
+                          return (
+                            <Link
+                              key={item.name}
+                              to={item.path}
+                              onClick={closeServices}
+                              aria-current={itemActive ? 'page' : undefined}
+                              className={`ptc-services-dropdown-item ${itemActive ? 'ptc-services-dropdown-item-active' : ''}`}
+                            >
+                              <span className="ptc-services-dropdown-icon">
+                                <item.icon size={17} aria-hidden="true" />
+                              </span>
+                              <span className="ptc-services-dropdown-text">{item.name}</span>
+                            </Link>
+                          );
+                        })}
+                      </div>
+                    </div>
+                  </div>
+                );
+              }
 
               return (
                 <div key={link.name} className="ptc-nav-item relative">
@@ -193,38 +300,82 @@ export function Navbar() {
             }`}
         >
           <nav aria-label="Mobile navigation">
-            {navLinks.map((link, index) => (
-              <div key={link.name}>
-                <Link
-                  to={link.path}
-                  onClick={closeMobileMenu}
-                  aria-current={
-                    isActive(link.path) ? 'page' : undefined
-                  }
-                  className={`ptc-mobile-link ${isActive(link.path)
+            {navLinks.map((link, index) => {
+              if (link.name === 'Services') {
+                return (
+                  <div key={link.name} className="ptc-mobile-accordion">
+                    <button
+                      type="button"
+                      onClick={() => setMobileServicesOpen((open) => !open)}
+                      aria-expanded={mobileServicesOpen}
+                      aria-controls="ptc-mobile-services-submenu"
+                      className={`ptc-mobile-link ${isActive('/services') ? 'ptc-mobile-link-active' : ''
+                        } ${mobileServicesOpen ? 'ptc-mobile-accordion-open' : ''}`}
+                      style={{ transitionDelay: mobileMenuOpen ? `${index * 30}ms` : '0ms' }}
+                    >
+                      <span className="ptc-mobile-number">
+                        {String(index + 1).padStart(2, '0')}
+                      </span>
+                      <span>{link.name}</span>
+                      <ChevronDown className="ptc-mobile-arrow" size={15} aria-hidden="true" />
+                    </button>
+
+                    <div
+                      id="ptc-mobile-services-submenu"
+                      className={`ptc-mobile-submenu ${mobileServicesOpen ? 'ptc-mobile-submenu-open' : ''}`}
+                    >
+                      {servicesMenu.map((item) => (
+                        <Link
+                          key={item.name}
+                          to={item.path}
+                          onClick={closeMobileMenu}
+                          aria-current={isActive(item.path) ? 'page' : undefined}
+                          className={`ptc-mobile-submenu-item ${isActive(item.path) ? 'ptc-mobile-submenu-item-active' : ''}`}
+                        >
+                          <span className="ptc-mobile-submenu-icon">
+                            <item.icon size={15} aria-hidden="true" />
+                          </span>
+                          <span>{item.name}</span>
+                        </Link>
+                      ))}
+                    </div>
+                  </div>
+                );
+              }
+
+              return (
+                <div key={link.name}>
+                  <Link
+                    to={link.path}
+                    onClick={closeMobileMenu}
+                    aria-current={
+                      isActive(link.path) ? 'page' : undefined
+                    }
+                    className={`ptc-mobile-link ${isActive(link.path)
                       ? 'ptc-mobile-link-active'
                       : ''
-                    }`}
-                  style={{
-                    transitionDelay: mobileMenuOpen
-                      ? `${index * 30}ms`
-                      : '0ms',
-                  }}
-                >
-                  <span className="ptc-mobile-number">
-                    {String(index + 1).padStart(2, '0')}
-                  </span>
+                      }`}
+                    style={{
+                      transitionDelay: mobileMenuOpen
+                        ? `${index * 30}ms`
+                        : '0ms',
+                    }}
+                  >
+                    <span className="ptc-mobile-number">
+                      {String(index + 1).padStart(2, '0')}
+                    </span>
 
-                  <span>{link.name}</span>
+                    <span>{link.name}</span>
 
-                  <ArrowRight
-                    className="ptc-mobile-arrow"
-                    size={15}
-                  />
-                </Link>
+                    <ArrowRight
+                      className="ptc-mobile-arrow"
+                      size={15}
+                    />
+                  </Link>
 
-              </div>
-            ))}
+                </div>
+              );
+            })}
           </nav>
 
 
