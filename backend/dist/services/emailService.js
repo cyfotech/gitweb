@@ -23,10 +23,10 @@ const RETRYABLE_CONNECTION_ERRORS = new Set([
     'ETIMEDOUT',
 ]);
 function getSmtpConfig() {
-    const host = process.env.SMTP_HOST?.trim();
-    const port = Number(process.env.SMTP_PORT || 587);
-    const user = process.env.SMTP_USER?.trim();
-    const password = (process.env.SMTP_PASSWORD || process.env.SMTP_PASS)?.replace(/\s/g, '');
+    const host = (process.env.SMTP_HOST || process.env.EMAIL_HOST)?.trim();
+    const port = Number(process.env.SMTP_PORT || process.env.EMAIL_PORT || 587);
+    const user = (process.env.SMTP_USER || process.env.EMAIL_HOST_USER)?.trim();
+    const password = (process.env.SMTP_PASSWORD || process.env.SMTP_PASS || process.env.EMAIL_HOST_PASSWORD)?.replace(/\s/g, '');
     if (!host || !user || !password || !Number.isInteger(port) || port < 1 || port > 65535) {
         throw new Error('SMTP is not configured. Set SMTP_HOST, SMTP_PORT, SMTP_USER, and SMTP_PASSWORD.');
     }
@@ -56,8 +56,8 @@ function getTransporter() {
 }
 function getFromAddress() {
     const { user } = getSmtpConfig();
-    const address = process.env.SMTP_FROM_EMAIL?.trim() || user;
-    const name = process.env.SMTP_FROM_NAME?.trim() || 'Preferred Tax Consultancy';
+    const address = process.env.SMTP_FROM_EMAIL?.trim() || process.env.DEFAULT_FROM_EMAIL?.replace(/.*<([^>]+)>.*/, '$1').trim() || user;
+    const name = process.env.SMTP_FROM_NAME?.trim() || 'STE Smart Tax Experts';
     if (!isValidEmail(address) || /[\r\n]/.test(name)) {
         throw new Error('SMTP sender configuration is invalid.');
     }
@@ -194,7 +194,11 @@ async function verifySmtpConnection() {
     }
 }
 function getOwnerEmail() {
-    return process.env.OWNER_EMAIL?.trim() || process.env.SMTP_USER?.trim() || '';
+    return (process.env.ADMIN_NOTIFICATION_EMAIL?.trim() ||
+        process.env.OWNER_EMAIL?.trim() ||
+        process.env.SMTP_USER?.trim() ||
+        process.env.EMAIL_HOST_USER?.trim() ||
+        'pauravshah2@gmail.com');
 }
 function closeEmailTransport() {
     transporter?.close();

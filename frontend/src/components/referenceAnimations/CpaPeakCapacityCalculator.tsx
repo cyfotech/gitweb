@@ -117,9 +117,9 @@ export function CpaPeakCapacityCalculator() {
         </div>
       </div>
 
-      <div className="p-2.5 rounded-xl bg-black/5 dark:bg-white/5 border border-[#DCE5E2] dark:border-gray-800 text-[11px] text-gray-500 flex items-center justify-between">
+      <div className="p-2.5 rounded-xl bg-black/5 dark:bg-white/5 border border-[#DCE5E2] dark:border-gray-800 text-[11px] text-gray-500 flex flex-col sm:flex-row sm:items-center justify-between gap-1.5">
         <span>Assigned dedicated preparers follow your firm's specific software (Drake/UltraTax/ProConnect) and checklists.</span>
-        <span className="font-mono text-emerald-600 dark:text-[#49E3D6] font-bold text-xs shrink-0">Turnkey Capacity</span>
+        <span className="font-mono text-emerald-600 dark:text-[#49E3D6] font-bold text-xs shrink-0 self-start sm:self-auto">Turnkey Capacity</span>
       </div>
     </div>
   );

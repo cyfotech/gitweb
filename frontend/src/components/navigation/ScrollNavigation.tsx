@@ -47,7 +47,7 @@ export default function ScrollNavigation() {
     window.scrollTo({ top: doc.scrollHeight, behavior: 'smooth' });
   };
 
-  const baseBtn = {
+  const baseBtn: React.CSSProperties = {
     width: '46px',
     height: '46px',
     borderRadius: '14px',
@@ -67,7 +67,7 @@ export default function ScrollNavigation() {
     touchAction: 'manipulation',
   };
 
-  const btnVisible = {
+  const btnVisible: React.CSSProperties = {
     opacity: 1,
     pointerEvents: 'auto',
   };
@@ -97,12 +97,14 @@ export default function ScrollNavigation() {
         onMouseEnter={(e) => {
           e.currentTarget.style.transform = 'translateY(-2px)';
           e.currentTarget.style.borderColor = 'rgba(55,225,145,0.7)';
-          e.currentTarget.querySelector('span').style.transform = 'translateY(-2px)';
+          const span = e.currentTarget.querySelector('span');
+          if (span) span.style.transform = 'translateY(-2px)';
         }}
         onMouseLeave={(e) => {
           e.currentTarget.style.transform = 'translateY(0)';
           e.currentTarget.style.borderColor = 'rgba(255,255,255,0.14)';
-          e.currentTarget.querySelector('span').style.transform = 'translateY(0)';
+          const span = e.currentTarget.querySelector('span');
+          if (span) span.style.transform = 'translateY(0)';
         }}
       >
         <span style={{ display: 'inline-block', transition: 'transform .3s ease' }} aria-hidden="true">
@@ -121,12 +123,14 @@ export default function ScrollNavigation() {
         onMouseEnter={(e) => {
           e.currentTarget.style.transform = 'translateY(2px)';
           e.currentTarget.style.borderColor = 'rgba(55,225,145,0.7)';
-          e.currentTarget.querySelector('span').style.transform = 'translateY(2px)';
+          const span = e.currentTarget.querySelector('span');
+          if (span) span.style.transform = 'translateY(2px)';
         }}
         onMouseLeave={(e) => {
           e.currentTarget.style.transform = 'translateY(0)';
           e.currentTarget.style.borderColor = 'rgba(255,255,255,0.14)';
-          e.currentTarget.querySelector('span').style.transform = 'translateY(0)';
+          const span = e.currentTarget.querySelector('span');
+          if (span) span.style.transform = 'translateY(0)';
         }}
       >
         <span style={{ display: 'inline-block', transition: 'transform .3s ease' }} aria-hidden="true">

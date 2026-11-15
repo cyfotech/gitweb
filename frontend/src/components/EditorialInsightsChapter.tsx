@@ -20,29 +20,51 @@ export function EditorialInsightsChapter({ cmsContent }: EditorialInsightsChapte
   const [posts, setPosts] = useState<BlogPost[]>(BLOG_POSTS.slice(0, 4));
 
   useEffect(() => {
+    let active = true;
     blogApi.getAll(true, 1, 4)
       .then((res: any) => {
+        if (!active) return;
         const fetched = res?.posts || res?.data || res;
         if (Array.isArray(fetched) && fetched.length > 0) {
-          const mapped: BlogPost[] = fetched.map((p: any) => ({
-            id: p.id,
-            slug: p.slug,
-            title: p.title,
-            excerpt: p.excerpt || p.summary || '',
-            category: p.blogcategory?.name || p.category || 'Tax Strategy',
-            author: p.authorName || p.author || 'Senior Practice Leader',
-            date: p.publishedAt ? new Date(p.publishedAt).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }) : (p.date || 'Recent'),
-            readTime: p.readTimeMinutes ? `${p.readTimeMinutes} min read` : (p.readTime || '5 min read'),
-            featured: p.isFeatured ?? false,
-            coverImage: p.coverImage || p.featuredImage || '/assets/blog-default.jpg',
-            content: p.content || '',
-            keyTakeaways: p.keyTakeaways || [],
-            citations: p.citations || [],
-          }));
+          const mapped: BlogPost[] = fetched.map((p: any) => {
+            const date = p.publishedAt ? new Date(p.publishedAt) : null;
+            const formattedDate = date && !isNaN(date.valueOf())
+              ? date.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })
+              : (p.date || 'Recent');
+
+            const readTimeStr = typeof p.readTime === 'string' && p.readTime.trim()
+              ? p.readTime
+              : (p.readTimeMinutes ? `${p.readTimeMinutes} min read` : '5 min read');
+
+            const postImg = p.image || p.coverImage || p.featuredImage || '/assets/blog-default.jpg';
+
+            return {
+              id: p.id || p.slug,
+              slug: p.slug,
+              title: p.title,
+              excerpt: p.excerpt || p.summary || '',
+              category: (p.blogcategory?.name || p.categoryName || p.category || 'Tax Strategy') as BlogPost['category'],
+              author: {
+                name: p.authorName || (typeof p.author === 'string' ? p.author : p.author?.name) || 'Preferred Tax Consultancy',
+                role: p.authorRole || p.author?.role || 'Tax Advisory & Compliance',
+                avatar: p.authorAvatar || p.author?.avatar || 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=120&auto=format&fit=crop&q=80',
+              },
+              publishedAt: formattedDate,
+              readTime: readTimeStr,
+              featured: Boolean(p.featured ?? p.isFeatured),
+              image: postImg,
+              content: p.content || '',
+              sourceName: p.sourceName || 'Preferred Tax Analysis',
+            };
+          });
           setPosts(mapped);
         }
       })
       .catch((err) => console.warn('Could not fetch dynamic blog posts for Home Chapter:', err));
+
+    return () => {
+      active = false;
+    };
   }, []);
 
   const displayTitle = cmsContent?.title || 'Insights & intelligence.';
@@ -81,22 +103,33 @@ export function EditorialInsightsChapter({ cmsContent }: EditorialInsightsChapte
             </EditableElement>
           </div>
 
-          <EditableElement
-            sectionKey="editorial_insights"
-            elementKey="description"
-            elementType="paragraph"
-            label="Insights Description"
-            value={displayDescription}
-          >
-            <p className="text-xs sm:text-sm text-[#476067] dark:text-[#A8C0C6] max-w-md">
-              {displayDescription}
-            </p>
-          </EditableElement>
+          <div className="flex flex-col sm:flex-row sm:items-center gap-4">
+            <EditableElement
+              sectionKey="editorial_insights"
+              elementKey="description"
+              elementType="paragraph"
+              label="Insights Description"
+              value={displayDescription}
+            >
+              <p className="text-xs sm:text-sm text-[#476067] dark:text-[#A8C0C6] max-w-md">
+                {displayDescription}
+              </p>
+            </EditableElement>
+
+            <Link
+              to="/blog"
+              className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full text-xs font-bold bg-white dark:bg-[#071C25] border border-[#2AA499]/40 dark:border-[#49E3D6]/30 text-[#12242B] dark:text-[#F4FBFC] hover:bg-black/5 dark:hover:bg-white/10 transition-all shadow-sm shrink-0 self-start sm:self-auto group"
+            >
+              <BookOpen className="w-3.5 h-3.5 text-[#2AA499] dark:text-[#49E3D6]" />
+              <span>Explore All Publications</span>
+              <ArrowUpRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
+            </Link>
+          </div>
         </div>
 
         {/* Editorial Articles Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-          {posts.map((post, idx) => (
+          {posts.map((post) => (
             <article
               key={post.id}
               className="rounded-3xl p-6 sm:p-8 bg-white dark:bg-[#071C25] border border-[#DCE5E2] dark:border-[rgba(121,241,232,0.15)] shadow-md hover:shadow-xl transition-all duration-300 flex flex-col justify-between group"
@@ -105,9 +138,10 @@ export function EditorialInsightsChapter({ cmsContent }: EditorialInsightsChapte
                 {/* Visual Header */}
                 <div className="relative aspect-[16/9] rounded-2xl overflow-hidden mb-6 bg-slate-900">
                   <img
-                    src={post.image}
+                    src={post.image || '/assets/blog-default.jpg'}
                     alt={post.title}
                     className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 filter brightness-95"
+                    loading="lazy"
                   />
                   <div className="absolute top-3 left-3">
                     <span className="px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider bg-black/70 text-white backdrop-blur-md">
@@ -116,7 +150,7 @@ export function EditorialInsightsChapter({ cmsContent }: EditorialInsightsChapte
                   </div>
                   <div className="absolute bottom-3 right-3">
                     <span className="px-2.5 py-0.5 rounded-full text-[10px] font-semibold bg-white/90 text-slate-900 backdrop-blur-md flex items-center gap-1">
-                      <Clock className="w-3 h-3" />
+                      <Clock className="w-3 h-3 text-[#2AA499]" />
                       <span>{post.readTime}</span>
                     </span>
                   </div>

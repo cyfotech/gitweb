@@ -422,7 +422,7 @@ class MainServicesPage extends React.Component {
 
 
 
-        <div style={cssToStyle("font-family: Inter, sans-serif; color: #0B1A1E; background: #F7F5F0; min-height: 100vh")} data-canvas-width="1440" data-canvas-height="8000" data-document-role="page" data-label="Main services page — US Accounting & Tax">
+        <div className="main-services-page" style={cssToStyle("font-family: Inter, sans-serif; color: #0B1A1E; background: #F7F5F0; min-height: 100vh")} data-canvas-width="1440" data-canvas-height="8000" data-document-role="page" data-label="Main services page — US Accounting & Tax">
 
 
           {/*  ================= TOP BAR =================  */}
@@ -563,11 +563,11 @@ class MainServicesPage extends React.Component {
               {/*  Service orbit  */}
 
 
-              <div style={cssToStyle("flex: 1 1 440px; min-width: 0; display: flex; justify-content: center")}>
+              <div className="svc-orbit-wrap" style={cssToStyle("flex: 1 1 440px; min-width: 0; display: flex; justify-content: center")}>
 
-                <div style={cssToStyle("position: relative; width: 100%; max-width: 500px; aspect-ratio: 1 / 1")}>
+                <div className="svc-orbit-box" style={cssToStyle("position: relative; width: 100%; max-width: 500px; aspect-ratio: 1 / 1")}>
 
-                  <svg aria-hidden="true" style={cssToStyle("position: absolute; inset: 0; width: 100%; height: 100%")}>
+                  <svg viewBox="0 0 400 400" aria-hidden="true" style={cssToStyle("position: absolute; inset: 0; width: 100%; height: 100%")}>
 
                     <circle cx="200" cy="200" r="190" fill="none" stroke="rgba(255,255,255,0.06)"></circle>
 
@@ -740,11 +740,11 @@ class MainServicesPage extends React.Component {
 
 
 
-              <div className="rv" style={cssToStyle("margin-top: 56px; background: #FFFFFF; border: 1px solid #E4E0D6; border-radius: 32px; padding: 48px 36px 36px")}>
+              <div className="rv svc-flow-card" style={cssToStyle("margin-top: 56px; background: #FFFFFF; border: 1px solid #E4E0D6; border-radius: 32px; padding: 48px 36px 36px")}>
 
-                <div style={cssToStyle("position: relative; margin: 0 4% 0")}>
+                <div className="svc-flow-track-wrap" style={cssToStyle("position: relative; margin: 0 4% 0")}>
 
-                  <div aria-hidden="true" style={cssToStyle("position: absolute; left: 0; right: 0; top: 31px; height: 2px; background: #E4E0D6")}>
+                  <div className="svc-flow-track-line" aria-hidden="true" style={cssToStyle("position: absolute; left: 0; right: 0; top: 31px; height: 2px; background: #E4E0D6")}>
 
                     <span className="travel"></span>
                     <span className="travel" style={cssToStyle("animation-delay: -2.3s")}></span>
@@ -753,7 +753,7 @@ class MainServicesPage extends React.Component {
                   </div>
 
 
-                  <div style={cssToStyle("position: relative; display: grid; grid-template-columns: repeat(auto-fit, minmax(110px, 1fr)); gap: 12px")}>
+                  <div className="svc-flow-grid" style={cssToStyle("position: relative; display: grid; grid-template-columns: repeat(auto-fit, minmax(110px, 1fr)); gap: 12px")}>
 
                     {(v.flowNodes || []).map((f, index) => (
                       <React.Fragment key={index}>
@@ -1794,10 +1794,10 @@ class MainServicesPage extends React.Component {
 
               <div style={cssToStyle("position: relative; margin-top: 56px")}>
 
-                <div aria-hidden="true" style={cssToStyle("position: absolute; left: 3%; right: 3%; top: 27px; height: 2px; background: rgba(255,255,255,0.12)")}><div className="fill" style={cssToStyle(v.procBar)}></div></div>
+                <div aria-hidden="true" className="proc-line" style={cssToStyle("position: absolute; left: 3%; right: 3%; top: 27px; height: 2px; background: rgba(255,255,255,0.12)")}><div className="fill" style={cssToStyle(v.procBar)}></div></div>
 
 
-                <div style={cssToStyle("position: relative; display: grid; grid-template-columns: repeat(auto-fit, minmax(110px, 1fr)); gap: 10px")}>
+                <div className="proc-grid" style={cssToStyle("position: relative; display: grid; grid-template-columns: repeat(auto-fit, minmax(110px, 1fr)); gap: 10px")}>
 
                   {(v.procSteps || []).map((p, index) => (
                     <React.Fragment key={index}>
@@ -1805,10 +1805,10 @@ class MainServicesPage extends React.Component {
 
                       <button type="button" className="tab" onClick={p.pick} aria-pressed={p.pressed} style={cssToStyle("background: transparent; color: #FFFFFF; display: flex; flex-direction: column; align-items: center; gap: 12px; padding: 0; min-height: 110px")}>
 
-                        <span style={cssToStyle(p.dot)}>{p.n}</span>
+                        <span className="proc-dot" style={cssToStyle(p.dot)}>{p.n}</span>
 
 
-                        <span style={cssToStyle(p.lbl)}>{p.short}</span>
+                        <span className="proc-lbl" style={cssToStyle(p.lbl)}>{p.short}</span>
 
                       </button>
 
@@ -1846,7 +1846,7 @@ class MainServicesPage extends React.Component {
           {/*  ================= 8. TRUST BENTO =================  */}
 
 
-          <section style={cssToStyle("padding: 112px 32px 96px")}>
+          <section className="svc-trust-section" style={cssToStyle("padding: 112px 32px 96px")}>
 
             <div style={cssToStyle("max-width: 1240px; margin: 0 auto")}>
 
@@ -1855,15 +1855,15 @@ class MainServicesPage extends React.Component {
                 <p className="mono" style={cssToStyle("margin: 0 0 14px; font-size: 13px; letter-spacing: 0.14em; color: #0D7A63")}>ACCURACY · CONFIDENTIALITY · COMPLIANCE</p>
 
 
-                <h2 className="h" style={cssToStyle("margin: 0; font-size: clamp(34px, 4.4vw, 58px); line-height: 1.02; font-weight: 700")}>Financial information
+                <h2 className="h" style={cssToStyle("margin: 0; font-size: clamp(34px, 4.4vw, 58px); line-height: 1.02; font-weight: 700")}>Financial information{" "}
                   <span className="serif" style={cssToStyle("font-size: 1.1em")}>deserves careful handling.</span></h2>
 
               </div>
 
 
-              <div style={cssToStyle("display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px; margin-top: 48px")}>
+              <div className="svc-trust-grid" style={cssToStyle("display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px; margin-top: 48px")}>
 
-                <div className="rv lift" style={cssToStyle("grid-column: span 2; min-width: 0; background: #0B1A1E; color: #FFFFFF; border-radius: 28px; padding: 32px; display: flex; flex-wrap: wrap; gap: 28px; align-items: center")}>
+                <div className="rv lift svc-trust-lead" style={cssToStyle("grid-column: span 2; min-width: 0; background: #0B1A1E; color: #FFFFFF; border-radius: 28px; padding: 32px; display: flex; flex-wrap: wrap; gap: 28px; align-items: center")}>
 
                   <div style={cssToStyle("flex: 1 1 260px")}>
 
@@ -1977,7 +1977,7 @@ class MainServicesPage extends React.Component {
           {/*  ================= 9. DOUBT WALL =================  */}
 
 
-          <section id="doubts" style={cssToStyle("padding: 96px 32px 104px; background: #FFFFFF; border-top: 1px solid #E4E0D6")}>
+          <section id="doubts" className="svc-doubts-section" style={cssToStyle("padding: 96px 32px 104px; background: #FFFFFF; border-top: 1px solid #E4E0D6")}>
 
             <div style={cssToStyle("max-width: 1240px; margin: 0 auto")}>
 
@@ -1988,7 +1988,7 @@ class MainServicesPage extends React.Component {
                   <p className="mono" style={cssToStyle("margin: 0 0 14px; font-size: 13px; letter-spacing: 0.14em; color: #0D7A63")}>QUICK ANSWERS</p>
 
 
-                  <h2 className="h" style={cssToStyle("margin: 0; font-size: clamp(34px, 4.4vw, 58px); line-height: 1.02; font-weight: 700")}>Got a doubt?
+                  <h2 className="h" style={cssToStyle("margin: 0; font-size: clamp(34px, 4.4vw, 58px); line-height: 1.02; font-weight: 700")}>Got a doubt?{" "}
                     <span className="serif" style={cssToStyle("font-size: 1.1em")}>The answer is on the button.</span></h2>
 
                 </div>
@@ -1999,13 +1999,13 @@ class MainServicesPage extends React.Component {
               </div>
 
 
-              <div style={cssToStyle("display: grid; grid-template-columns: repeat(auto-fit, minmax(270px, 1fr)); gap: 14px; margin-top: 44px")}>
+              <div className="svc-doubts-grid" style={cssToStyle("display: grid; grid-template-columns: repeat(auto-fit, minmax(270px, 1fr)); gap: 14px; margin-top: 44px")}>
 
                 {(v.doubts || []).map((d, index) => (
                   <React.Fragment key={index}>
 
 
-                    <div className="lift" style={cssToStyle(d.card)}>
+                    <div className="lift svc-doubt-card" style={cssToStyle(d.card)}>
 
                       <div className="mono" style={cssToStyle(d.numStyle)}>{d.n}</div>
 
@@ -2044,7 +2044,7 @@ class MainServicesPage extends React.Component {
           {/*  ================= 10. FAQ =================  */}
 
 
-          <section id="faq" style={cssToStyle("padding: 104px 32px")}>
+          <section id="faq" className="svc-faq-section" style={cssToStyle("padding: 104px 32px")}>
 
             <div style={cssToStyle("max-width: 1240px; margin: 0 auto; display: flex; flex-wrap: wrap; gap: 56px")}>
 
@@ -2053,9 +2053,8 @@ class MainServicesPage extends React.Component {
                 <p className="mono" style={cssToStyle("margin: 0 0 14px; font-size: 13px; letter-spacing: 0.14em; color: #0D7A63")}>FREQUENTLY ASKED QUESTIONS</p>
 
 
-                <h2 className="h" style={cssToStyle("margin: 0; font-size: clamp(32px, 3.8vw, 48px); line-height: 1.05; font-weight: 700")}>Everything you'd ask
+                <h2 className="h" style={cssToStyle("margin: 0; font-size: clamp(32px, 3.8vw, 48px); line-height: 1.05; font-weight: 700")}>Everything you'd ask{" "}
                   <span className="serif" style={cssToStyle("font-size: 1.1em")}>on a first call.</span></h2>
-
 
                 <p style={cssToStyle("font-size: 16px; line-height: 1.6; color: #4C5654; margin: 18px 0 0")}>Can't find your question?</p>
 
@@ -2066,15 +2065,15 @@ class MainServicesPage extends React.Component {
               </div>
 
 
-              <div style={cssToStyle("flex: 2 1 560px; min-width: 0; display: grid; gap: 10px")}>
+              <div className="svc-faq-list" style={cssToStyle("flex: 2 1 560px; min-width: 0; display: grid; gap: 10px")}>
 
                 {(v.faqs || []).map((f, index) => (
                   <React.Fragment key={index}>
 
 
-                    <div style={cssToStyle("background: #FFFFFF; border: 1px solid #E4E0D6; border-radius: 20px")}>
+                    <div className="svc-faq-card" style={cssToStyle("background: #FFFFFF; border: 1px solid #E4E0D6; border-radius: 20px")}>
 
-                      <button type="button" className="tab" onClick={f.toggle} aria-expanded={f.expanded} style={cssToStyle("width: 100%; min-height: 64px; display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 16px 22px; background: transparent; color: #0B1A1E; text-align: left; font-size: 17px")}>
+                      <button type="button" className="tab svc-faq-btn" onClick={f.toggle} aria-expanded={f.expanded} style={cssToStyle("width: 100%; min-height: 64px; display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 16px 22px; background: transparent; color: #0B1A1E; text-align: left; font-size: 17px")}>
 
                         <span>{f.q}</span>
                         <span aria-hidden="true" style={cssToStyle(f.iconStyle)}>+</span>
@@ -2086,7 +2085,7 @@ class MainServicesPage extends React.Component {
                         <React.Fragment>
 
 
-                          <p className="panel-in" style={cssToStyle("margin: 0; padding: 0 22px 22px; font-size: 16px; line-height: 1.65; color: #4C5654")}>{f.a}</p>
+                          <p className="panel-in svc-faq-answer" style={cssToStyle("margin: 0; padding: 0 22px 22px; font-size: 16px; line-height: 1.65; color: #4C5654")}>{f.a}</p>
 
 
                         </React.Fragment>

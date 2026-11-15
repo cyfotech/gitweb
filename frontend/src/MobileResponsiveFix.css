@@ -2,11 +2,100 @@
    Import this file LAST in src/main.tsx so it overrides earlier desktop rules.
    Preserves existing content, colors, typography and animation theme. */
 
-*, *::before, *::after { box-sizing: border-box; }
-html { width: 100%; max-width: 100%; overflow-x: clip; scroll-padding-top: 90px; }
-body, #root { width: 100%; max-width: 100%; min-height: 100%; margin: 0; overflow-x: clip; }
-img, svg, video, canvas, iframe { max-width: 100%; }
-button, input, select, textarea { max-width: 100%; }
+:root {
+  --sat: env(safe-area-inset-top, 0px);
+  --sar: env(safe-area-inset-right, 0px);
+  --sab: env(safe-area-inset-bottom, 0px);
+  --sal: env(safe-area-inset-left, 0px);
+}
+
+/* Dark mode: enforce the site-wide dark surface on <body> so injected page
+   styles that hardcode a light body background (e.g. #F7F5F0 on the imported
+   service pages) can never leave dark-mode text sitting on a light backdrop. */
+html.dark body,
+.dark body {
+  background: var(--bg-main) !important;
+  background-color: var(--bg-main) !important;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  width: 100%;
+  max-width: 100%;
+  overflow-x: clip;
+  scroll-padding-top: 90px;
+}
+
+body,
+#root {
+  width: 100%;
+  max-width: 100%;
+  min-height: 100%;
+  margin: 0;
+  overflow-x: clip;
+  padding-left: var(--sal);
+  padding-right: var(--sar);
+  padding-bottom: var(--sab);
+}
+
+img,
+svg,
+video,
+canvas,
+iframe {
+  max-width: 100%;
+}
+
+button,
+input,
+select,
+textarea {
+  max-width: 100%;
+}
+
+/* Mobile input font-size 16px to prevent iOS auto-zoom */
+@media (max-width: 768px) {
+
+  input,
+  select,
+  textarea {
+    font-size: 16px !important;
+  }
+}
+
+/* Touch targets & manipulation */
+button,
+a.btn,
+a.btn-p,
+a.btn-l,
+a.btn-g,
+a.btn-mint,
+a.btn-ghost,
+a.btn-ink,
+a.dbtn,
+.tab,
+.navbtn {
+  min-height: 44px;
+  touch-action: manipulation;
+}
+
+/* Reduced motion preference */
+@media (prefers-reduced-motion: reduce) {
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
 
 /* Avoid fixed desktop widths forcing the page wider than the viewport. */
 .preferred-home,
@@ -22,10 +111,27 @@ button, input, select, textarea { max-width: 100%; }
 }
 
 @media (max-width: 1024px) {
-  .preferred-home { padding-inline: clamp(14px, 3vw, 24px); }
-  .hero-content { grid-template-columns: minmax(0, 1fr) !important; width: 100%; gap: 28px; }
-  .hero-copy, .telemetry-card { width: 100%; max-width: 100%; min-width: 0; }
-  .trust-strip { grid-template-columns: repeat(2, minmax(0, 1fr)); width: 100%; }
+  .preferred-home {
+    padding-inline: clamp(14px, 3vw, 24px);
+  }
+
+  .hero-content {
+    grid-template-columns: minmax(0, 1fr) !important;
+    width: 100%;
+    gap: 28px;
+  }
+
+  .hero-copy,
+  .telemetry-card {
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+  }
+
+  .trust-strip {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    width: 100%;
+  }
 
   .ct-hero__container {
     width: 100% !important;
@@ -34,14 +140,32 @@ button, input, select, textarea { max-width: 100%; }
     gap: clamp(24px, 4vw, 42px) !important;
     padding-inline: clamp(20px, 4vw, 40px) !important;
   }
-  .ct-hero__copy, .ct-hero__visual-wrap { width: 100%; min-width: 0; }
-  .ct-hero__visual-wrap { margin-inline: auto; }
-  .ct-dashboard-stage { width: 100%; min-width: 0; }
+
+  .ct-hero__copy,
+  .ct-hero__visual-wrap {
+    width: 100%;
+    min-width: 0;
+  }
+
+  .ct-hero__visual-wrap {
+    margin-inline: auto;
+  }
+
+  .ct-dashboard-stage {
+    width: 100%;
+    min-width: 0;
+  }
 }
 
 @media (max-width: 767px) {
-  html { scroll-padding-top: 76px; }
-  .preferred-home { padding: 10px 12px 26px !important; }
+  html {
+    scroll-padding-top: 76px;
+  }
+
+  .preferred-home {
+    padding: 10px 12px 26px !important;
+  }
+
   .site-header {
     position: relative;
     top: auto;
@@ -54,13 +178,46 @@ button, input, select, textarea { max-width: 100%; }
     padding: 10px 12px;
     border-radius: 28px;
   }
-  .brand, .brand-link, .brand-lockup { min-width: 0; max-width: 100%; }
-  .brand-words { min-width: 0; }
-  .brand-words strong { font-size: clamp(11px, 3vw, 14px); }
-  .brand-words small { font-size: clamp(7px, 2vw, 9px); letter-spacing: .12em; }
-  .header-actions { display: flex; align-items: center; gap: 7px; margin-left: auto; min-width: 0; }
-  .header-cta { white-space: normal; text-align: center; padding: 10px 12px; font-size: 11px; }
-  .theme-toggle { flex: 0 0 auto; }
+
+  .brand,
+  .brand-link,
+  .brand-lockup {
+    min-width: 0;
+    max-width: 100%;
+  }
+
+  .brand-words {
+    min-width: 0;
+  }
+
+  .brand-words strong {
+    font-size: clamp(11px, 3vw, 14px);
+  }
+
+  .brand-words small {
+    font-size: clamp(7px, 2vw, 9px);
+    letter-spacing: .12em;
+  }
+
+  .header-actions {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    margin-left: auto;
+    min-width: 0;
+  }
+
+  .header-cta {
+    white-space: normal;
+    text-align: center;
+    padding: 10px 12px;
+    font-size: 11px;
+  }
+
+  .theme-toggle {
+    flex: 0 0 auto;
+  }
+
   .main-nav {
     order: 5;
     display: flex;
@@ -74,23 +231,95 @@ button, input, select, textarea { max-width: 100%; }
     -webkit-overflow-scrolling: touch;
     scrollbar-width: none;
   }
-  .main-nav::-webkit-scrollbar { display: none; }
-  .main-nav a { flex: 0 0 auto; white-space: nowrap; }
 
-  .hero-content { margin-top: 24px !important; min-height: 0 !important; gap: 24px !important; }
-  .hero-copy { padding: 0 !important; }
-  .hero-copy h1 { max-width: 100%; font-size: clamp(36px, 10.5vw, 56px) !important; line-height: 1.08; overflow-wrap: anywhere; }
-  .hero-description { width: 100%; max-width: 100%; padding: 15px 16px; font-size: clamp(14px, 3.8vw, 17px); line-height: 1.6; overflow-wrap: anywhere; }
-  .hero-buttons { display: grid; grid-template-columns: minmax(0, 1fr); gap: 10px; margin-top: 22px; }
-  .primary-button, .secondary-button { width: 100%; min-width: 0; justify-content: center; white-space: normal; }
-  .telemetry-card { padding: 15px; border-radius: 20px; }
-  .telemetry-visual { width: 100%; max-width: 100%; min-width: 0; height: clamp(210px, 62vw, 290px); }
-  .telemetry-heading { gap: 8px; flex-wrap: wrap; }
-  .realtime-pill { max-width: 100%; }
-  .trust-strip { grid-template-columns: minmax(0, 1fr) !important; gap: 11px; margin-top: 22px; }
-  .trust-card { width: 100%; min-width: 0; }
+  .main-nav::-webkit-scrollbar {
+    display: none;
+  }
 
-  .ct-hero { width: 100%; min-height: 0 !important; overflow: clip; }
+  .main-nav a {
+    flex: 0 0 auto;
+    white-space: nowrap;
+  }
+
+  .hero-content {
+    margin-top: 24px !important;
+    min-height: 0 !important;
+    gap: 24px !important;
+  }
+
+  .hero-copy {
+    padding: 0 !important;
+  }
+
+  .hero-copy h1 {
+    max-width: 100%;
+    font-size: clamp(36px, 10.5vw, 56px) !important;
+    line-height: 1.08;
+    overflow-wrap: anywhere;
+  }
+
+  .hero-description {
+    width: 100%;
+    max-width: 100%;
+    padding: 15px 16px;
+    font-size: clamp(14px, 3.8vw, 17px);
+    line-height: 1.6;
+    overflow-wrap: anywhere;
+  }
+
+  .hero-buttons {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 10px;
+    margin-top: 22px;
+  }
+
+  .primary-button,
+  .secondary-button {
+    width: 100%;
+    min-width: 0;
+    justify-content: center;
+    white-space: normal;
+  }
+
+  .telemetry-card {
+    padding: 15px;
+    border-radius: 20px;
+  }
+
+  .telemetry-visual {
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+    height: clamp(210px, 62vw, 290px);
+  }
+
+  .telemetry-heading {
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+
+  .realtime-pill {
+    max-width: 100%;
+  }
+
+  .trust-strip {
+    grid-template-columns: minmax(0, 1fr) !important;
+    gap: 11px;
+    margin-top: 22px;
+  }
+
+  .trust-card {
+    width: 100%;
+    min-width: 0;
+  }
+
+  .ct-hero {
+    width: 100%;
+    min-height: 0 !important;
+    overflow: clip;
+  }
+
   .ct-hero__container {
     display: grid !important;
     grid-template-columns: minmax(0, 1fr) !important;
@@ -99,6 +328,7 @@ button, input, select, textarea { max-width: 100%; }
     padding: 34px 16px 28px !important;
     margin-inline: auto !important;
   }
+
   .ct-hero__title {
     max-width: 100%;
     font-size: clamp(36px, 10vw, 58px) !important;
@@ -106,46 +336,192 @@ button, input, select, textarea { max-width: 100%; }
     letter-spacing: -.035em;
     overflow-wrap: anywhere;
   }
-  .ct-hero__description { max-width: 100%; font-size: clamp(14px, 3.8vw, 17px) !important; line-height: 1.6; }
-  .ct-hero__actions { display: grid !important; grid-template-columns: minmax(0, 1fr); gap: 10px !important; width: 100%; }
-  .ct-hero__button { width: 100%; min-width: 0; min-height: 48px; justify-content: center; white-space: normal; }
-  .ct-hero__trust-row { display: grid !important; grid-template-columns: repeat(2, minmax(0, 1fr)) !important; gap: 12px !important; width: 100%; }
-  .ct-trust-item { min-width: 0; padding: 10px 8px; gap: 8px; }
-  .ct-trust-item__icon { flex: 0 0 auto; }
-  .ct-trust-item__copy, .ct-trust-item__content { min-width: 0; overflow-wrap: anywhere; }
-  .ct-hero__visual-heading { flex-wrap: wrap; gap: 8px; }
-  .ct-dashboard-stage { width: 100% !important; max-width: 100% !important; min-width: 0 !important; transform: none !important; }
-  .ct-chart-panel, .ct-pie-panel { width: 100%; max-width: 100%; min-width: 0; padding: clamp(12px, 3.5vw, 20px) !important; border-radius: 18px; }
-  .ct-chart-panel__heading, .ct-pie-panel__heading { flex-wrap: wrap; gap: 8px; }
-  .ct-chart-summary { flex-wrap: wrap; gap: 12px; }
-  .ct-chart-plot, .ct-pie-panel__body { width: 100%; min-width: 0; }
-  .ct-chart-svg, .ct-pie-chart-svg { display: block; width: 100% !important; max-width: 100%; height: auto; }
-  .ct-pie-legend { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; }
-  .ct-pie-legend__item { min-width: 0; overflow-wrap: anywhere; }
-  .ct-scene { transform: scale(.78); transform-origin: center top; }
-  .ct-float-card { max-width: min(72vw, 250px); }
-  .ct-hero__scroll-cue { display: none; }
+
+  .ct-hero__description {
+    max-width: 100%;
+    font-size: clamp(14px, 3.8vw, 17px) !important;
+    line-height: 1.6;
+  }
+
+  .ct-hero__actions {
+    display: grid !important;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 10px !important;
+    width: 100%;
+  }
+
+  .ct-hero__button {
+    width: 100%;
+    min-width: 0;
+    min-height: 48px;
+    justify-content: center;
+    white-space: normal;
+  }
+
+  .ct-hero__trust-row {
+    display: grid !important;
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    gap: 12px !important;
+    width: 100%;
+  }
+
+  .ct-trust-item {
+    min-width: 0;
+    padding: 10px 8px;
+    gap: 8px;
+  }
+
+  .ct-trust-item__icon {
+    flex: 0 0 auto;
+  }
+
+  .ct-trust-item__copy,
+  .ct-trust-item__content {
+    min-width: 0;
+    overflow-wrap: anywhere;
+  }
+
+  .ct-hero__visual-heading {
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .ct-dashboard-stage {
+    width: 100% !important;
+    max-width: 100% !important;
+    min-width: 0 !important;
+    transform: none !important;
+  }
+
+  .ct-chart-panel,
+  .ct-pie-panel {
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+    padding: clamp(12px, 3.5vw, 20px) !important;
+    border-radius: 18px;
+  }
+
+  .ct-chart-panel__heading,
+  .ct-pie-panel__heading {
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .ct-chart-summary {
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+
+  .ct-chart-plot,
+  .ct-pie-panel__body {
+    width: 100%;
+    min-width: 0;
+  }
+
+  .ct-chart-svg,
+  .ct-pie-chart-svg {
+    display: block;
+    width: 100% !important;
+    max-width: 100%;
+    height: auto;
+  }
+
+  .ct-pie-legend {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 8px;
+  }
+
+  .ct-pie-legend__item {
+    min-width: 0;
+    overflow-wrap: anywhere;
+  }
+
+  .ct-scene {
+    transform: scale(.78);
+    transform-origin: center top;
+  }
+
+  .ct-float-card {
+    max-width: min(72vw, 250px);
+  }
+
+  .ct-hero__scroll-cue {
+    display: none;
+  }
 }
 
 @media (max-width: 420px) {
-  .preferred-home { padding-inline: 9px !important; }
-  .site-header { padding: 9px 10px; gap: 7px; }
-  .brand-mark { width: 20px; }
-  .brand-words strong { font-size: 10px; }
-  .brand-words small { font-size: 7px; }
-  .header-cta { padding: 9px 10px; font-size: 10px; }
-  .theme-toggle { width: 32px; height: 32px; }
-  .hero-copy h1 { font-size: clamp(33px, 10vw, 43px) !important; }
-  .ct-hero__container { padding-inline: 12px !important; }
-  .ct-hero__title { font-size: clamp(32px, 9.5vw, 42px) !important; }
-  .ct-hero__trust-row { grid-template-columns: minmax(0, 1fr) !important; }
-  .ct-chart-panel__footer, .ct-pie-panel__footer { flex-wrap: wrap; gap: 8px; }
-  .ct-pie-legend { grid-template-columns: minmax(0, 1fr); }
-  .ct-float-card { display: none; }
+  .preferred-home {
+    padding-inline: 9px !important;
+  }
+
+  .site-header {
+    padding: 9px 10px;
+    gap: 7px;
+  }
+
+  .brand-mark {
+    width: 20px;
+  }
+
+  .brand-words strong {
+    font-size: 10px;
+  }
+
+  .brand-words small {
+    font-size: 7px;
+  }
+
+  .header-cta {
+    padding: 9px 10px;
+    font-size: 10px;
+  }
+
+  .theme-toggle {
+    width: 32px;
+    height: 32px;
+  }
+
+  .hero-copy h1 {
+    font-size: clamp(33px, 10vw, 43px) !important;
+  }
+
+  .ct-hero__container {
+    padding-inline: 12px !important;
+  }
+
+  .ct-hero__title {
+    font-size: clamp(32px, 9.5vw, 42px) !important;
+  }
+
+  .ct-hero__trust-row {
+    grid-template-columns: minmax(0, 1fr) !important;
+  }
+
+  .ct-chart-panel__footer,
+  .ct-pie-panel__footer {
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .ct-pie-legend {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .ct-float-card {
+    display: none;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  *, *::before, *::after { scroll-behavior: auto !important; }
+
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+  }
 }
 
 
@@ -185,6 +561,7 @@ body,
 
 /* Tablet and mobile */
 @media (max-width: 1023px) {
+
   /* Allow Navbar.css to control the header and mobile panel styles cleanly */
   #root header.fixed {
     z-index: 10002 !important;
@@ -292,7 +669,7 @@ body,
     height: auto;
   }
 
-  #root main > *,
+  #root main>*,
   #root main section,
   #root main article {
     min-width: 0;
@@ -522,6 +899,7 @@ body,
 
 /* Respect reduced-motion preferences */
 @media (prefers-reduced-motion: reduce) {
+
   *,
   *::before,
   *::after {
@@ -529,5 +907,1608 @@ body,
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
+  }
+}
+
+/* ==========================================================================
+   LARGE MONITORS, QHD (2560px), 4K UHD (3840px), ULTRA-WIDE & SMART TV DISPLAYS
+   Prevents excessive stretching of content, caps line length for readable
+   typography, maintains proportionate whitespace and visual balance.
+   ========================================================================== */
+@media (min-width: 1920px) {
+
+  /* Container bounds */
+  .preferred-home,
+  .preferred-home main,
+  .wrap,
+  .site-footer__inner,
+  .ptc-navbar-container,
+  .tax-resources-premium__container,
+  .about-page-container,
+  .cpa-container,
+  .hire-pro-container {
+    max-width: 1680px !important;
+    margin-inline: auto !important;
+  }
+
+  /* Keep paragraph line length comfortable for reading */
+  p,
+  .hero-description,
+  .ct-hero__description {
+    max-width: 780px;
+  }
+}
+
+@media (min-width: 2560px) {
+
+  /* QHD / 2K screens */
+  .preferred-home,
+  .preferred-home main,
+  .wrap,
+  .site-footer__inner,
+  .ptc-navbar-container,
+  .tax-resources-premium__container,
+  .about-page-container,
+  .cpa-container,
+  .hire-pro-container {
+    max-width: 1920px !important;
+    margin-inline: auto !important;
+  }
+
+  /* Proportional fluid scaling for TV and distant reading */
+  body {
+    font-size: 17px;
+  }
+}
+
+@media (min-width: 3840px) {
+
+  /* 4K UHD & Smart TVs */
+  .preferred-home,
+  .preferred-home main,
+  .wrap,
+  .site-footer__inner,
+  .ptc-navbar-container,
+  .tax-resources-premium__container,
+  .about-page-container,
+  .cpa-container,
+  .hire-pro-container {
+    max-width: 2280px !important;
+    margin-inline: auto !important;
+  }
+
+  body {
+    font-size: 19px;
+  }
+
+  h1,
+  .h-xl {
+    font-size: clamp(48px, 4vw, 84px) !important;
+  }
+}
+
+/* ==========================================================================
+   IMPORTED SERVICE PAGES — HERO COLLAGE / LIVE-ANIMATION MOBILE FIXES
+   ========================================================================== */
+
+.stx h1,
+.stp h1,
+.r h1,
+.stx h2,
+.stp h2,
+.r h2,
+.stx h3,
+.stp h3,
+.r h3 {
+  text-wrap: balance;
+  overflow-wrap: anywhere;
+  hyphens: manual;
+  max-width: 100%;
+}
+
+.stx h1 span,
+.stp h1 span,
+.r h1 span {
+  display: inline;
+  margin-left: 0 !important;
+  white-space: normal;
+}
+
+.stx p,
+.stp p,
+.r p,
+.stx li,
+.stp li,
+.r li {
+  overflow-wrap: anywhere;
+}
+
+.stx section#top,
+.stp section#top,
+.r section#top {
+  width: 100% !important;
+  max-width: 100% !important;
+  margin: 0 !important;
+  overflow: clip !important;
+}
+
+.stx [style*="flex:"],
+.stp [style*="flex:"],
+.r [style*="flex:"],
+.stx [style*="grid-template-columns:"],
+.stp [style*="grid-template-columns:"],
+.r [style*="grid-template-columns:"] {
+  min-width: 0;
+  max-width: 100%;
+}
+
+@media (max-width: 859px) {
+
+  /* The hero collage is the role="img" layer inside the flex-wrap row.
+     Convert it into a stacked vertical flow. */
+  .stx section#top div[role="img"],
+  .stp section#top div[role="img"],
+  .r section#top div[role="img"] {
+    height: auto !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: stretch !important;
+    justify-content: flex-start !important;
+    gap: clamp(14px, 4vw, 22px) !important;
+    padding: clamp(10px, 3vw, 18px) !important;
+    width: 100% !important;
+    min-width: 0 !important;
+    max-width: 100% !important;
+  }
+
+  /* Flatten every absolutely-positioned layer into normal flow */
+  .stx section#top div[role="img"]>*,
+  .stp section#top div[role="img"]>*,
+  .r section#top div[role="img"]>* {
+    position: static !important;
+    left: auto !important;
+    right: auto !important;
+    top: auto !important;
+    bottom: auto !important;
+    transform: none !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    min-width: 0 !important;
+    margin: 0 !important;
+    z-index: 1 !important;
+  }
+
+  /* Decorative floating tilted cards: keep small, faint, behind the content */
+  .stx section#top div[role="img"]>div[style*="floatA"],
+  .stx section#top div[role="img"]>div[style*="floatB"],
+  .stp section#top div[role="img"]>div[style*="floatA"],
+  .stp section#top div[role="img"]>div[style*="floatB"],
+  .r section#top div[role="img"]>div[style*="floatA"],
+  .r section#top div[role="img"]>div[style*="floatB"] {
+    position: absolute !important;
+    left: 6% !important;
+    right: auto !important;
+    top: 0 !important;
+    bottom: auto !important;
+    width: 56% !important;
+    height: 60px !important;
+    opacity: 0.32 !important;
+    z-index: 0 !important;
+    pointer-events: none !important;
+  }
+
+  /* Mascot / character: keep a reasonable centered size inside the flow */
+  .stp section#top div[role="img"]>div[style*="bottom: 112px"] {
+    width: min(176px, 52%) !important;
+    margin: 0 auto !important;
+  }
+
+  /* Stepper / backdrop panels: drop blur overlap on mobile */
+  .stx section#top div[role="img"]>div[style*="backdrop-filter"],
+  .stx section#top div[role="img"]>div[style*="backdropFilter"],
+  .stp section#top div[role="img"]>div[style*="backdrop-filter"],
+  .stp section#top div[role="img"]>div[style*="backdropFilter"],
+  .r section#top div[role="img"]>div[style*="backdrop-filter"],
+  .r section#top div[role="img"]>div[style*="backdropFilter"] {
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+  }
+
+  /* Charts inside the collage scale to the container width */
+  .stx section#top div[role="img"] svg,
+  .stp section#top div[role="img"] svg,
+  .r section#top div[role="img"] svg {
+    width: 100% !important;
+    height: auto !important;
+  }
+
+  /* Payroll floating pills: pull inside the viewport */
+  .hero-pill-fica {
+    left: 0px !important;
+  }
+
+  .hero-pill-ot {
+    right: 12px !important;
+    bottom: -14px !important;
+  }
+}
+
+@media (max-width: 380px) {
+
+  .stx section#top div[role="img"],
+  .stp section#top div[role="img"],
+  .r section#top div[role="img"] {
+    padding: 8px !important;
+    gap: 12px !important;
+  }
+}
+
+
+/* ==========================================================================
+   MOBILE VISUAL OVERLAPS & ALIGNMENT PATCHES
+   ========================================================================== */
+
+/* 1. FAQ Item Numbers: prevent digits from breaking into vertical letters */
+.faq-q .mono,
+.faq-q>span>span:first-child,
+.fqn {
+  white-space: nowrap !important;
+  word-break: keep-all !important;
+  overflow-wrap: normal !important;
+  min-width: 2.2rem !important;
+  display: inline-block !important;
+  flex-shrink: 0 !important;
+}
+
+/* 2. Hero Audience Toggle Pill: clean responsive button layout */
+@media (max-width: 640px) {
+
+  [aria-label="Choose who you are"],
+  [aria-label="Choose your audience"] {
+    display: flex !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    border-radius: 16px !important;
+    padding: 4px !important;
+    gap: 4px !important;
+    flex-direction: row !important;
+  }
+
+  [aria-label="Choose who you are"] button,
+  [aria-label="Choose your audience"] button {
+    flex: 1 1 0 !important;
+    min-height: 44px !important;
+    padding: 8px 12px !important;
+    font-size: 13px !important;
+    line-height: 1.25 !important;
+    border-radius: 12px !important;
+    text-align: center !important;
+    white-space: normal !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+  }
+}
+
+/* 3. Floating Action Controls: stack cleanly without overlap */
+@media (max-width: 640px) {
+  .scrollnav {
+    right: 12px !important;
+    bottom: 80px !important;
+    gap: 8px !important;
+    z-index: 45 !important;
+  }
+
+  .scrollnav button {
+    width: 40px !important;
+    height: 40px !important;
+    font-size: 15px !important;
+    border-radius: 10px !important;
+  }
+
+  .fixed.bottom-4.right-4 {
+    bottom: 12px !important;
+    right: 12px !important;
+    z-index: 40 !important;
+  }
+}
+
+
+/* ==========================================================================
+   MOBILE VISUAL OVERLAPS & ALIGNMENT PATCHES
+   ========================================================================== */
+
+/* 1. FAQ Item Numbers: prevent digits from breaking into vertical letters */
+.faq-q .mono,
+.faq-q>span>span:first-child,
+.fqn {
+  white-space: nowrap !important;
+  word-break: keep-all !important;
+  overflow-wrap: normal !important;
+  min-width: 2.2rem !important;
+  display: inline-block !important;
+  flex-shrink: 0 !important;
+}
+
+/* 2. Hero Audience Toggle Pill: clean responsive button layout */
+@media (max-width: 640px) {
+
+  [aria-label="Choose who you are"],
+  [aria-label="Choose your audience"] {
+    display: flex !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    border-radius: 16px !important;
+    padding: 4px !important;
+    gap: 4px !important;
+    flex-direction: row !important;
+  }
+
+  [aria-label="Choose who you are"] button,
+  [aria-label="Choose your audience"] button {
+    flex: 1 1 0 !important;
+    min-height: 44px !important;
+    padding: 8px 12px !important;
+    font-size: 13px !important;
+    line-height: 1.25 !important;
+    border-radius: 12px !important;
+    text-align: center !important;
+    white-space: normal !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+  }
+}
+
+/* 3. Floating Action Controls: stack cleanly without overlap */
+@media (max-width: 640px) {
+  .scrollnav {
+    right: 12px !important;
+    bottom: 80px !important;
+    gap: 8px !important;
+    z-index: 45 !important;
+  }
+
+  .scrollnav button {
+    width: 40px !important;
+    height: 40px !important;
+    font-size: 15px !important;
+    border-radius: 10px !important;
+  }
+
+  .fixed.bottom-4.right-4 {
+    bottom: 12px !important;
+    right: 12px !important;
+    z-index: 40 !important;
+  }
+}
+
+
+/* ==========================================================================
+   GLOBAL STANDARDIZED BUTTON STYLING, PADDING, SHAPE, AND RESPONSIVE POLISH
+   ========================================================================== */
+
+/* 1. Global Core Button & Interactive Link Defaults */
+button,
+[role="button"],
+.btn,
+.primary-button,
+.secondary-button,
+.premium-button,
+.about-button,
+.cpa-button,
+.hp-button,
+.ct-hero__button,
+.contact-premium__button,
+.service-reference-primary-button {
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+  user-select: none;
+  font-family: inherit;
+  box-sizing: border-box;
+}
+
+/* 2. Main Call-to-Action Pill Buttons (.btn, .b1, .b2, .b3, .b4, .btn-p, .btn-l, .btn-g, .btn-mint, .btn-ghost, .btn-ink, .btn-light, .btn-acc) */
+.btn,
+.btn-p,
+.btn-l,
+.btn-g,
+.btn-gd,
+.btn-mint,
+.btn-ghost,
+.btn-ink,
+.btn-light,
+.btn-acc,
+.btn-line,
+.dbtn,
+.primary-button,
+.premium-button {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  min-height: 46px !important;
+  padding: 10px clamp(18px, 3.5vw, 26px) !important;
+  border-radius: 9999px !important;
+  font-size: clamp(13px, 1.2vw, 15px) !important;
+  font-weight: 600 !important;
+  line-height: 1.25 !important;
+  letter-spacing: -0.01em !important;
+  text-align: center !important;
+  text-decoration: none !important;
+  transition: all 0.22s cubic-bezier(0.16, 1, 0.3, 1) !important;
+  cursor: pointer !important;
+  white-space: nowrap !important;
+  max-width: 100% !important;
+}
+
+/* Ensure icons inside CTA buttons align vertically */
+.btn svg,
+.btn-p svg,
+.btn-l svg,
+.btn-mint svg,
+.primary-button svg {
+  flex-shrink: 0 !important;
+  transition: transform 0.2s ease !important;
+}
+
+/* Button hover and active press feel */
+@media (hover: hover) {
+
+  .btn:hover,
+  .btn-p:hover,
+  .btn-l:hover,
+  .btn-mint:hover,
+  .primary-button:hover,
+  .about-button:hover,
+  .cpa-button:hover,
+  .hp-button:hover,
+  .ct-hero__button:hover {
+    transform: translateY(-1.5px) !important;
+    filter: brightness(1.05) !important;
+  }
+}
+
+.btn:active,
+.btn-p:active,
+.btn-l:active,
+.btn-mint:active,
+.primary-button:active,
+.about-button:active,
+.cpa-button:active,
+.hp-button:active,
+.ct-hero__button:active {
+  transform: scale(0.97) !important;
+}
+
+.btn:focus-visible,
+.btn-p:focus-visible,
+button:focus-visible {
+  outline: 2px solid #37E191 !important;
+  outline-offset: 3px !important;
+}
+
+/* 3. Small & Medium Utility Buttons (.tab, .tabd, .chip, .rnd, .rowbtn, .seg, .stepb) */
+.tab,
+.tabd,
+.seg {
+  min-height: 38px !important;
+  padding: 8px 16px !important;
+  border-radius: 9999px !important;
+  font-size: 13px !important;
+  font-weight: 500 !important;
+  line-height: 1.2 !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  transition: all 0.2s ease !important;
+  cursor: pointer !important;
+}
+
+.chip {
+  min-height: 34px !important;
+  padding: 6px 14px !important;
+  border-radius: 9999px !important;
+  font-size: 12px !important;
+  font-weight: 500 !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  transition: all 0.2s ease !important;
+}
+
+/* Active segment control: dark text on the white active pill (the generic .seg
+   rule above was turning it light, making it invisible on white). */
+.seg.on,
+.dark .seg.on,
+button.seg.on {
+  color: #0C1A22 !important;
+}
+
+/* Text/icons sitting on the mint callout chips must be dark for contrast.
+   (matches the saturated #37E191 / mint backgrounds across service pages) */
+.dark [style*="background:#37E191"] span,
+.dark [style*="background: #37E191"] span,
+.dark [style*="background:#37E191"] p,
+.dark [style*="background: #37E191"] p,
+.dark [style*="background:#37E191"] a,
+.dark [style*="background: #37E191"] a {
+  color: #03181E !important;
+}
+
+/* Round icon / arrow navigation buttons */
+button.rnd,
+.rnd {
+  min-width: 42px !important;
+  min-height: 42px !important;
+  width: 42px !important;
+  height: 42px !important;
+  border-radius: 50% !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  padding: 0 !important;
+  cursor: pointer !important;
+  transition: transform 0.2s ease, background-color 0.2s ease !important;
+}
+
+button.rnd:active {
+  transform: scale(0.92) !important;
+}
+
+/* 4. Service Detail Buttons & Cards */
+.hp-detail-button,
+.cpa-details-button,
+.cpa-scope-button {
+  min-height: 44px !important;
+  padding: 10px 20px !important;
+  border-radius: 12px !important;
+  font-size: 13px !important;
+  font-weight: 600 !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 8px !important;
+  transition: all 0.2s ease !important;
+  cursor: pointer !important;
+}
+
+/* 5. Mobile Layout & Full Width Adaptive Stacking for Buttons */
+@media (max-width: 540px) {
+
+  /* Action button containers should stack cleanly with consistent gap */
+  .hero-cta,
+  .hero-actions,
+  .cta-group,
+  .btn-group,
+  .actions-wrap {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: stretch !important;
+    width: 100% !important;
+    gap: 12px !important;
+  }
+
+  /* Make hero & CTA buttons full-width on narrow mobile so they are easy to tap and never wrap text awkwardly */
+  .hero-cta .btn,
+  .hero-actions .btn,
+  .cta-group .btn,
+  .btn-group .btn,
+  .ct-hero__button,
+  .about-button,
+  .cpa-button-cta,
+  .hp-button-cta {
+    width: 100% !important;
+    min-height: 48px !important;
+    padding: 12px 20px !important;
+    font-size: 15px !important;
+  }
+
+  /* Compact secondary chips / tabs so they scroll or wrap gracefully */
+  .tabs-wrap,
+  .chip-group {
+    display: flex !important;
+    flex-wrap: wrap !important;
+    gap: 8px !important;
+  }
+
+  .chip,
+  .tab,
+  .tabd {
+    min-height: 38px !important;
+    padding: 6px 12px !important;
+    font-size: 12px !important;
+  }
+}
+
+/* Ensure no button causes layout shift or text cut off */
+button,
+a.btn,
+.lnk {
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+
+
+/* ==========================================================================
+   USA TAX PREPARATION WORKFLOW SWITCHER CONTROLS
+   ========================================================================== */
+
+/* Circular arrow controls in the illustrative workflow floating bar */
+button[aria-label="Previous document"],
+button[aria-label="Next document"],
+button[aria-label="Previous use case"],
+button[aria-label="Next use case"],
+button[aria-label="Previous step"],
+button[aria-label="Next step"] {
+  flex: none !important;
+  width: 42px !important;
+  height: 42px !important;
+  min-width: 42px !important;
+  min-height: 42px !important;
+  max-width: 42px !important;
+  max-height: 42px !important;
+  padding: 0 !important;
+  border-radius: 50% !important;
+  display: inline-grid !important;
+  place-items: center !important;
+  overflow: visible !important;
+}
+
+button[aria-label="Previous document"] svg,
+button[aria-label="Next document"] svg,
+button[aria-label="Previous use case"] svg,
+button[aria-label="Next use case"] svg,
+button[aria-label="Previous step"] svg,
+button[aria-label="Next step"] svg {
+  width: 16px !important;
+  height: 16px !important;
+  display: block !important;
+  margin: auto !important;
+}
+
+/* Ensure document text row in workflow bar does not wrap or truncate awkwardly */
+div:has(> button[aria-label="Previous document"]) {
+  display: flex !important;
+  flex-direction: row !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  width: 100% !important;
+  gap: 8px !important;
+}
+
+div:has(> button[aria-label="Previous document"])>span.mono {
+  text-align: center !important;
+  flex: 1 1 auto !important;
+  white-space: nowrap !important;
+  font-size: clamp(10px, 2.8vw, 11px) !important;
+  letter-spacing: 0.06em !important;
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+}
+
+
+/* ==========================================================================
+   MAIN SERVICES PAGE (/services) MOBILE RESPONSIVENESS & OVERLAP PREVENTION
+   ========================================================================== */
+
+/* 1. Hero Service Orbit Animation container: responsive scaling & overlap prevention */
+.svc-orbit-wrap {
+  width: 100% !important;
+  max-width: 100% !important;
+  overflow: visible !important;
+}
+
+@media (max-width: 640px) {
+  .svc-orbit-box {
+    max-width: 330px !important;
+    width: 330px !important;
+    height: 330px !important;
+    margin: 0 auto !important;
+  }
+
+  /* Center circle typography and sizing */
+  .svc-orbit-box>div:nth-child(2) {
+    width: 52% !important;
+    padding: 10px !important;
+  }
+
+  .svc-orbit-box>div:nth-child(2) .h {
+    font-size: 14px !important;
+    line-height: 1.2 !important;
+    margin-top: 4px !important;
+  }
+
+  .svc-orbit-box>div:nth-child(2) .lnk {
+    font-size: 11px !important;
+    min-height: 28px !important;
+    margin-top: 2px !important;
+  }
+
+  /* Orbit nodes (01-07 circular buttons) on mobile */
+  .svc-orbit-box button.tab {
+    width: 48px !important;
+    height: 48px !important;
+    min-width: 48px !important;
+    min-height: 48px !important;
+    font-size: 10px !important;
+    padding: 0 !important;
+    box-shadow: 0 0 0 4px rgba(110, 231, 194, 0.15) !important;
+  }
+
+  /* Floating badges: reposition safely on mobile so they don't cover orbit nodes or each other */
+  .svc-orbit-box .float1 {
+    top: -12px !important;
+    right: 2% !important;
+    padding: 6px 10px !important;
+    border-radius: 10px !important;
+    font-size: 11px !important;
+    z-index: 5 !important;
+    transform: scale(0.88) !important;
+    transform-origin: top right !important;
+  }
+
+  .svc-orbit-box .float2 {
+    bottom: -16px !important;
+    left: 0% !important;
+    padding: 6px 10px !important;
+    border-radius: 10px !important;
+    font-size: 11px !important;
+    z-index: 5 !important;
+    transform: scale(0.88) !important;
+    transform-origin: bottom left !important;
+  }
+
+  .svc-orbit-box .float3 {
+    bottom: -16px !important;
+    right: 0% !important;
+    padding: 6px 10px !important;
+    border-radius: 10px !important;
+    font-size: 11px !important;
+    z-index: 5 !important;
+    transform: scale(0.88) !important;
+    transform-origin: bottom right !important;
+  }
+}
+
+@media (max-width: 380px) {
+  .svc-orbit-box {
+    max-width: 290px !important;
+    width: 290px !important;
+    height: 290px !important;
+  }
+
+  .svc-orbit-box button.tab {
+    width: 42px !important;
+    height: 42px !important;
+    min-width: 42px !important;
+    min-height: 42px !important;
+    font-size: 9px !important;
+  }
+
+  .svc-orbit-box .float1,
+  .svc-orbit-box .float2,
+  .svc-orbit-box .float3 {
+    transform: scale(0.78) !important;
+  }
+}
+
+/* 2. Lifecycle 7-Stage Flow Sequence (Transactions -> Bookkeeping -> Payroll -> Statements -> Planning -> Prep -> Filing) */
+@media (max-width: 768px) {
+  .svc-flow-card {
+    padding: 24px 16px 20px !important;
+    border-radius: 20px !important;
+    margin-top: 36px !important;
+  }
+
+  .svc-flow-track-wrap {
+    margin: 0 !important;
+  }
+
+  /* Hide the horizontal track line when scrolling horizontally */
+  .svc-flow-track-line {
+    display: none !important;
+  }
+
+  /* Clean horizontal touch carousel with snap for the 7 stages */
+  .svc-flow-grid {
+    display: flex !important;
+    flex-direction: row !important;
+    overflow-x: auto !important;
+    scroll-snap-type: x mandatory !important;
+    -webkit-overflow-scrolling: touch !important;
+    gap: 16px !important;
+    padding: 8px 4px 16px !important;
+    scrollbar-width: none !important;
+  }
+
+  .svc-flow-grid::-webkit-scrollbar {
+    display: none !important;
+  }
+
+  /* Individual stage items */
+  .svc-flow-grid>button.tab {
+    flex: 0 0 88px !important;
+    min-width: 88px !important;
+    min-height: 110px !important;
+    scroll-snap-align: center !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    gap: 10px !important;
+  }
+
+  .svc-flow-grid>button.tab>span:first-child {
+    width: 52px !important;
+    height: 52px !important;
+    font-size: 18px !important;
+  }
+
+  .svc-flow-grid>button.tab>span:last-child {
+    font-size: 12px !important;
+    line-height: 1.25 !important;
+  }
+}
+
+
+/* 3. Trust Bento & Careful Handling Section: Mobile Layout & Overlap Protection */
+@media (max-width: 768px) {
+  .svc-trust-section {
+    padding: clamp(48px, 10vw, 72px) clamp(16px, 4vw, 24px) !important;
+    overflow: hidden !important;
+  }
+
+  /* Inner wrapper must not overflow */
+  .svc-trust-section>div {
+    max-width: 100% !important;
+    overflow: hidden !important;
+  }
+
+  .svc-trust-grid {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 16px !important;
+    margin-top: 32px !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    box-sizing: border-box !important;
+  }
+
+  .svc-trust-lead {
+    grid-column: auto !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    box-sizing: border-box !important;
+    padding: 24px 20px !important;
+    border-radius: 20px !important;
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 20px !important;
+    flex-wrap: nowrap !important;
+  }
+
+  .svc-trust-lead>div:first-child {
+    flex: none !important;
+    width: 100% !important;
+    min-width: 0 !important;
+  }
+
+  .svc-trust-lead>div:last-child {
+    flex: none !important;
+    width: 100% !important;
+    min-width: 0 !important;
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 8px !important;
+  }
+
+  /* Row items (Prepared / Checked / Approved) must not overflow */
+  .svc-trust-lead>div:last-child>div {
+    width: 100% !important;
+    box-sizing: border-box !important;
+    min-width: 0 !important;
+    overflow: hidden !important;
+  }
+
+  .svc-trust-grid>.rv.lift:not(.svc-trust-lead) {
+    width: 100% !important;
+    max-width: 100% !important;
+    box-sizing: border-box !important;
+    padding: 24px 20px !important;
+    border-radius: 20px !important;
+    overflow: hidden !important;
+  }
+
+  /* Paragraph text in trust cards should wrap, not overflow */
+  .svc-trust-grid p {
+    overflow-wrap: break-word !important;
+    word-break: break-word !important;
+  }
+}
+
+/* 4. Quick Answers (Doubt Wall) & FAQ: Mobile Stacking, Button Sizing & Visibility */
+@media (max-width: 768px) {
+
+  .svc-doubts-section,
+  .svc-faq-section {
+    padding: clamp(48px, 10vw, 72px) clamp(16px, 4vw, 24px) !important;
+  }
+
+  .svc-doubts-grid {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 14px !important;
+    margin-top: 28px !important;
+  }
+
+  .svc-doubt-card {
+    width: 100% !important;
+    min-height: auto !important;
+    padding: 20px !important;
+    border-radius: 18px !important;
+    box-sizing: border-box !important;
+  }
+
+  /* Keep question and answer button aligned and well-padded without clipping */
+  .svc-doubt-card button.tab {
+    width: 100% !important;
+    min-height: 48px !important;
+    padding: 10px 16px !important;
+    border-radius: 12px !important;
+    font-size: 13.5px !important;
+    font-weight: 600 !important;
+    line-height: 1.3 !important;
+    white-space: normal !important;
+    text-align: left !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    box-sizing: border-box !important;
+  }
+
+  .svc-faq-list {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 10px !important;
+    width: 100% !important;
+  }
+
+  .svc-faq-card {
+    border-radius: 16px !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
+  }
+
+  .svc-faq-btn {
+    width: 100% !important;
+    min-height: 56px !important;
+    padding: 14px 18px !important;
+    font-size: 15px !important;
+    line-height: 1.35 !important;
+    border-radius: 16px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    white-space: normal !important;
+    text-align: left !important;
+    box-sizing: border-box !important;
+  }
+
+  .svc-faq-answer {
+    padding: 0 18px 18px !important;
+    font-size: 14px !important;
+    line-height: 1.6 !important;
+  }
+}
+
+
+/* ==========================================================================
+   5. WORKING PROCESS 7 STEPS CAROUSEL (From first call to final delivery)
+   ========================================================================== */
+
+@media (max-width: 768px) {
+
+  /* Hide static line on mobile horizontal carousel */
+  .proc-line {
+    display: none !important;
+  }
+
+  /* Make the 7 process steps a smooth horizontal touch carousel with snap */
+  .proc-grid {
+    display: flex !important;
+    flex-direction: row !important;
+    overflow-x: auto !important;
+    scroll-snap-type: x mandatory !important;
+    -webkit-overflow-scrolling: touch !important;
+    gap: 16px !important;
+    padding: 10px 4px 18px !important;
+    scrollbar-width: none !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    box-sizing: border-box !important;
+  }
+
+  .proc-grid::-webkit-scrollbar {
+    display: none !important;
+  }
+
+  /* Individual step buttons */
+  .proc-grid>button.tab {
+    flex: 0 0 88px !important;
+    min-width: 88px !important;
+    min-height: 105px !important;
+    scroll-snap-align: center !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    justify-content: flex-start !important;
+    gap: 10px !important;
+    padding: 0 !important;
+    background: transparent !important;
+    border: none !important;
+  }
+
+  .proc-grid .proc-dot {
+    width: 52px !important;
+    height: 52px !important;
+    min-width: 52px !important;
+    min-height: 52px !important;
+    font-size: 18px !important;
+    display: grid !important;
+    place-items: center !important;
+    border-radius: 50% !important;
+    flex-shrink: 0 !important;
+  }
+
+  .proc-grid .proc-lbl {
+    font-size: 12px !important;
+    line-height: 1.25 !important;
+    text-align: center !important;
+    white-space: nowrap !important;
+    overflow: visible !important;
+    text-overflow: clip !important;
+    display: block !important;
+    width: 100% !important;
+  }
+}
+
+
+/* ==========================================================================
+   SERVICES PAGE (/services) DUAL-THEME FONT VISIBILITY & HIGH CONTRAST
+   ========================================================================== */
+
+/* 1. LIGHT THEME ENHANCEMENTS for .main-services-page */
+:root:not(.dark) .main-services-page {
+  background: #F7F5F0 !important;
+  color: #0B1A1E !important;
+}
+
+:root:not(.dark) .main-services-page h1,
+:root:not(.dark) .main-services-page h2,
+:root:not(.dark) .main-services-page h3,
+:root:not(.dark) .main-services-page .h {
+  color: inherit;
+}
+
+/* Light sections: ensure paragraph text has high contrast */
+:root:not(.dark) .main-services-page section:not(#top):not(#forms):not(#process):not(#consult) p {
+  color: #374151;
+}
+
+/* Subheadings & labels in light sections */
+:root:not(.dark) .main-services-page section:not(#top):not(#forms):not(#process):not(#consult) .mono {
+  color: #0D7A63;
+}
+
+/* FAQ question text in light mode */
+:root:not(.dark) .svc-faq-btn {
+  color: #0B1A1E !important;
+  background: #FFFFFF !important;
+}
+
+:root:not(.dark) .svc-faq-answer {
+  color: #374151 !important;
+}
+
+/* Doubt card text in light mode */
+:root:not(.dark) .svc-doubt-card p {
+  color: #374151 !important;
+}
+
+
+/* 2. DARK THEME COMPLETE ADAPTATION for .main-services-page */
+.dark .main-services-page {
+  background: #041416 !important;
+  color: #F2FBF7 !important;
+}
+
+/* Light-background sections inverted to dark surfaces */
+.dark .main-services-page section#flow,
+.dark .main-services-page section#software,
+.dark .main-services-page section.svc-trust-section,
+.dark .main-services-page section.svc-faq-section {
+  background: #041416 !important;
+  color: #F2FBF7 !important;
+}
+
+.dark .main-services-page section#explorer,
+.dark .main-services-page section#builder,
+.dark .main-services-page section#doubts {
+  background: #081E22 !important;
+  color: #F2FBF7 !important;
+  border-color: rgba(53, 224, 146, 0.15) !important;
+}
+
+/* Headings in dark mode */
+.dark .main-services-page h1,
+.dark .main-services-page h2,
+.dark .main-services-page h3,
+.dark .main-services-page .h {
+  color: #F2FBF7 !important;
+}
+
+/* Paragraphs & body copy in dark mode */
+.dark .main-services-page p {
+  color: #B6CAD0 !important;
+}
+
+/* Monospace tags, labels & accents */
+.dark .main-services-page .mono {
+  color: #49E3D6 !important;
+}
+
+/* Cards & containers in dark mode */
+.dark .main-services-page .rv,
+.dark .main-services-page .svc-flow-card,
+.dark .main-services-page .svc-faq-card,
+.dark .main-services-page .svc-doubt-card {
+  border-color: rgba(121, 241, 232, 0.18) !important;
+}
+
+.dark .main-services-page .svc-flow-card {
+  background: #092127 !important;
+  border-color: rgba(121, 241, 232, 0.2) !important;
+}
+
+.dark .main-services-page .svc-flow-card .panel-in {
+  background: #0D282E !important;
+}
+
+.dark .main-services-page .svc-flow-card .panel-in p {
+  color: #B6CAD0 !important;
+}
+
+/* Trust Bento cards in dark mode */
+.dark .svc-trust-grid>.rv.lift {
+  background: #092127 !important;
+  border-color: rgba(121, 241, 232, 0.2) !important;
+}
+
+.dark .svc-trust-grid>.rv.lift p {
+  color: #B6CAD0 !important;
+}
+
+/* Doubt cards in dark mode */
+.dark .svc-doubt-card {
+  background: #092127 !important;
+  border-color: rgba(121, 241, 232, 0.2) !important;
+  color: #F2FBF7 !important;
+}
+
+.dark .svc-doubt-card .h {
+  color: #F2FBF7 !important;
+}
+
+.dark .svc-doubt-card p {
+  color: #B6CAD0 !important;
+}
+
+.dark .svc-doubt-card button.tab {
+  background: #11343C !important;
+  color: #49E3D6 !important;
+  border: 1px solid rgba(73, 227, 214, 0.25) !important;
+}
+
+/* FAQ cards and buttons in dark mode */
+.dark .svc-faq-card {
+  background: #092127 !important;
+  border-color: rgba(121, 241, 232, 0.18) !important;
+}
+
+.dark .svc-faq-btn {
+  background: transparent !important;
+  color: #F2FBF7 !important;
+}
+
+.dark .svc-faq-btn span:first-child {
+  color: #F2FBF7 !important;
+}
+
+.dark .svc-faq-answer {
+  color: #B6CAD0 !important;
+}
+
+/* Service Explorer tab panel in dark mode */
+.dark #explorer [role="tablist"] button.tab {
+  background: #0D282E !important;
+  color: #F2FBF7 !important;
+  border: 1px solid rgba(121, 241, 232, 0.15) !important;
+}
+
+.dark #explorer [role="tablist"] button.tab[aria-selected="true"] {
+  background: #164048 !important;
+  color: #49E3D6 !important;
+  border-color: #35E092 !important;
+}
+
+/* Scope builder tabs & preview box in dark mode */
+.dark #builder .panel-in {
+  background: #0D282E !important;
+  border-color: rgba(121, 241, 232, 0.2) !important;
+}
+
+.dark #builder [role="group"] button.tab {
+  background: #0D282E !important;
+  color: #F2FBF7 !important;
+  border: 1px solid rgba(121, 241, 232, 0.15) !important;
+}
+
+.dark #builder [role="group"] button.tab[aria-pressed="true"] {
+  background: #35E092 !important;
+  color: #03181E !important;
+}
+
+/* =====================================================
+   SOFTWARE PLATFORM CARDS — DARK MODE COMPLETE FIX
+   ===================================================== */
+
+/* Inactive card in dark mode */
+.dark .main-services-page #software button.tab.lift {
+  background: #092127 !important;
+  border: 1px solid rgba(121, 241, 232, 0.2) !important;
+  color: #F2FBF7 !important;
+}
+
+/* Active card in dark mode */
+.dark .main-services-page #software button.tab.lift[aria-pressed="true"] {
+  background: #0E323A !important;
+  box-shadow: 0 12px 32px rgba(73, 227, 214, 0.22), inset 0 0 0 1.5px #49E3D6 !important;
+  color: #FFFFFF !important;
+}
+
+/* Name + type label spans — white text in dark mode */
+.dark .main-services-page #software button.tab.lift span:not(:first-child) {
+  color: #F2FBF7 !important;
+}
+
+/* Inactive monogram badge in dark mode — dark bg + teal text */
+.dark .main-services-page #software button.tab.lift[aria-pressed="false"] span:first-child,
+.dark .main-services-page #software button.tab.lift[aria-pressed=""] span:first-child {
+  background: #0B2830 !important;
+  color: #49E3D6 !important;
+  border: 1px solid rgba(73, 227, 214, 0.3) !important;
+}
+
+/* Active monogram badge in dark mode — teal bg + dark text */
+.dark .main-services-page #software button.tab.lift[aria-pressed="true"] span:first-child {
+  background: #6EE7C2 !important;
+  color: #0B1A1E !important;
+  border: none !important;
+}
+
+/* Links and inline links in dark mode */
+.dark .main-services-page a.lnk,
+.dark .main-services-page a.doubt {
+  color: #49E3D6 !important;
+}
+
+
+/* ==========================================================================
+   CPA ENQUIRY ROUTING & DATA FLOW DIAGRAM MOBILE RESPONSIVENESS
+   ========================================================================== */
+
+/* Outer container centering & padding */
+.cpa-enquiry-routing {
+  width: 100% !important;
+  max-width: 100% !important;
+  box-sizing: border-box !important;
+}
+
+@media (max-width: 640px) {
+  .cpa-enquiry-routing {
+    padding: 20px 14px !important;
+    border-radius: 20px !important;
+  }
+
+  .cpa-enquiry-routing__canvas {
+    width: 100% !important;
+    max-width: 100% !important;
+    height: 330px !important;
+    margin: 12px auto 0 !important;
+    display: flex !important;
+    justify-content: center !important;
+    align-items: flex-start !important;
+    overflow: visible !important;
+  }
+
+  .cpa-enquiry-routing__map {
+    transform-origin: center top !important;
+    transform: scale(0.64) !important;
+    margin: 0 auto !important;
+    flex-shrink: 0 !important;
+  }
+
+  .cpa-enquiry-routing__caption {
+    bottom: 4px !important;
+    font-size: 11px !important;
+    font-weight: 700 !important;
+    left: 20px !important;
+  }
+
+  .cpa-enquiry-routing__selection {
+    font-size: 12px !important;
+    margin-top: 10px !important;
+    line-height: 1.4 !important;
+    padding: 0 4px !important;
+  }
+}
+
+@media (max-width: 480px) {
+  .cpa-enquiry-routing__canvas {
+    height: 300px !important;
+  }
+
+  .cpa-enquiry-routing__map {
+    transform: scale(0.58) !important;
+  }
+}
+
+@media (max-width: 410px) {
+  .cpa-enquiry-routing__canvas {
+    height: 275px !important;
+  }
+
+  .cpa-enquiry-routing__map {
+    transform: scale(0.52) !important;
+  }
+}
+
+@media (max-width: 360px) {
+  .cpa-enquiry-routing__canvas {
+    height: 250px !important;
+  }
+
+  .cpa-enquiry-routing__map {
+    transform: scale(0.47) !important;
+  }
+}
+
+/* 4 Metrics below routing diagram (Average Turnaround, Diagnostic Accuracy, etc.) */
+@media (max-width: 640px) {
+
+  .cpa-enquiry-routing .grid.grid-cols-2.sm\:grid-cols-4,
+  .cpa-enquiry-routing [class*="grid-cols-2"] {
+    display: grid !important;
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    gap: 10px !important;
+    width: 100% !important;
+  }
+
+  .cpa-enquiry-routing [class*="grid-cols-2"]>div {
+    padding: 12px 8px !important;
+    border-radius: 14px !important;
+    box-sizing: border-box !important;
+  }
+
+  .cpa-enquiry-routing [class*="grid-cols-2"]>div>div:first-child {
+    font-size: 10.5px !important;
+    line-height: 1.3 !important;
+    letter-spacing: 0.04em !important;
+  }
+
+  .cpa-enquiry-routing [class*="grid-cols-2"]>div>div:last-child {
+    font-size: 13.5px !important;
+    font-weight: 700 !important;
+    line-height: 1.25 !important;
+    margin-top: 4px !important;
+  }
+}
+
+
+/* ==========================================================================
+   SERVICES PAGE — COMPREHENSIVE REMAINING MOBILE FIXES (PHASE 2)
+   ========================================================================== */
+
+/* ── 1. GLOBAL: prevent any section on /services from overflowing viewport ── */
+.main-services-page {
+  overflow-x: hidden !important;
+  max-width: 100vw !important;
+  box-sizing: border-box !important;
+}
+
+.main-services-page section {
+  max-width: 100% !important;
+  box-sizing: border-box !important;
+  overflow-x: hidden !important;
+}
+
+/* ── 2. SUPPORTING DOCUMENTS COUNTER (04/04) — fix truncation ── */
+/* Row containing Prev / "DOCUMENT TITLE · N/M" / Next */
+div:has(> button[aria-label="Previous document"]) {
+  min-width: 0 !important;
+  box-sizing: border-box !important;
+}
+
+div:has(> button[aria-label="Previous document"])>span.mono {
+  min-width: 0 !important;
+  max-width: calc(100% - 100px) !important;
+  /* leave room for the two buttons */
+  white-space: nowrap !important;
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+}
+
+@media (max-width: 480px) {
+  div:has(> button[aria-label="Previous document"])>span.mono {
+    font-size: 9.5px !important;
+    letter-spacing: 0.04em !important;
+    max-width: calc(100% - 92px) !important;
+  }
+}
+
+/* ── 3. PROCESS STEPS BAR — prevent 7-step row from clipping ── */
+@media (max-width: 640px) {
+
+  /* Outer section padding fix so steps don't touch screen edges */
+  .main-services-page section:has(.proc-grid) {
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+  }
+
+  /* Step label text: allow wrapping, prevent clipping */
+  .proc-grid .proc-lbl {
+    white-space: normal !important;
+    word-break: break-word !important;
+    font-size: 11px !important;
+    line-height: 1.2 !important;
+    max-width: 80px !important;
+    text-align: center !important;
+  }
+}
+
+/* ── 4. FAQ VISIBILITY — ensure question text is never invisible ── */
+/* Light theme: strong dark text on white card */
+:root:not(.dark) .svc-faq-btn {
+  color: #0B1A1E !important;
+  background: transparent !important;
+}
+
+:root:not(.dark) .svc-faq-btn span:first-child {
+  color: #0B1A1E !important;
+}
+
+/* Dark theme: white text on dark card, with explicit override of inline color */
+.dark .svc-faq-btn {
+  color: #F2FBF7 !important;
+  background: transparent !important;
+}
+
+.dark .svc-faq-btn>span:first-child {
+  color: #F2FBF7 !important;
+}
+
+/* The + / × icon keeps its own colour */
+.dark .svc-faq-btn>span:last-child {
+  color: #49E3D6 !important;
+}
+
+.dark .svc-faq-card {
+  background: #0A2228 !important;
+  border-color: rgba(73, 227, 214, 0.2) !important;
+}
+
+/* ── 5. TRUST SECTION HEADING — prevent clipping on narrow screens ── */
+@media (max-width: 480px) {
+
+  .svc-trust-section .rv h2,
+  .svc-trust-section .rv .h {
+    font-size: clamp(28px, 7vw, 40px) !important;
+    line-height: 1.1 !important;
+    word-break: break-word !important;
+  }
+
+  .svc-trust-section .rv p.mono {
+    font-size: 11px !important;
+    letter-spacing: 0.08em !important;
+    white-space: normal !important;
+  }
+}
+
+/* ── 6. TRUST BENTO CARDS — additional width guard for all screen sizes ── */
+.svc-trust-grid {
+  width: 100% !important;
+  max-width: 100% !important;
+  box-sizing: border-box !important;
+}
+
+@media (max-width: 600px) {
+
+  /* Force single-column on very narrow screens */
+  .svc-trust-grid {
+    grid-template-columns: 1fr !important;
+  }
+
+  .svc-trust-lead {
+    grid-column: 1 !important;
+  }
+}
+
+/* ── 7. SOFTWARE SECTION — mobile layout for .main-services-page ── */
+@media (max-width: 640px) {
+
+  /* Section padding */
+  .main-services-page #software {
+    padding: 64px 16px !important;
+  }
+
+  /* Cards grid: 2 columns on mobile */
+  .main-services-page #software div[style*="grid-template-columns"] {
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 10px !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
+  }
+
+  /* Cards: smaller padding, full width */
+  .main-services-page #software button.tab.lift {
+    padding: 14px 12px !important;
+    min-height: 120px !important;
+    border-radius: 16px !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
+  }
+
+  /* Name text smaller */
+  .main-services-page #software button.tab.lift>span:nth-child(2) {
+    font-size: 13px !important;
+    line-height: 1.25 !important;
+    margin-top: 10px !important;
+  }
+
+  /* Type label smaller */
+  .main-services-page #software button.tab.lift>span:nth-child(3) {
+    font-size: 10px !important;
+  }
+
+  /* Cards + detail panel: stack vertically */
+  .main-services-page #software div[style*="flex-wrap: wrap"] {
+    flex-direction: column !important;
+    gap: 16px !important;
+  }
+
+  /* Right-side service list panel: full width */
+  .main-services-page #software div[style*="flex: 1 1 400px"] {
+    flex: none !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
+    border-radius: 20px !important;
+    padding: 20px !important;
+  }
+}
+
+/* ── 8. ORBIT HERO — prevent label bubbles from overlapping each other ── */
+@media (max-width: 480px) {
+
+  .svc-orbit-box .float1,
+  .svc-orbit-box .float2,
+  .svc-orbit-box .float3 {
+    display: none !important;
+  }
+}
+
+/* ── 9. GLOBAL SECTION PADDING — fix sections on ultra-narrow screens ── */
+@media (max-width: 360px) {
+  .main-services-page section {
+    padding-left: 12px !important;
+    padding-right: 12px !important;
   }
 }

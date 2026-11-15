@@ -4,7 +4,6 @@ import { useNavigate } from 'react-router-dom';
 import { CinematicHeroChapter } from '../components/CinematicHeroChapter';
 import { EditorialServiceShowcase } from '../components/EditorialServiceShowcase';
 import { FinancialClarityChapter } from '../components/FinancialClarityChapter';
-import { HumanExpertiseChapter } from '../components/HumanExpertiseChapter';
 import { CpaCollaborationPipeline } from '../components/CpaCollaborationPipeline';
 import { EditorialInsightsChapter } from '../components/EditorialInsightsChapter';
 import { CinematicClosingChapter } from '../components/CinematicClosingChapter';
@@ -171,98 +170,79 @@ export function Home() {
 
       {/* FINANCIAL INTELLIGENCE MEDIA SHOWCASE */}
       <EditableSectionContainer sectionKey="media_showcase" sectionTitle="Financial Intelligence Media" isEnabled={isSectionEnabled('media_showcase')} sectionData={getSection('media_showcase')}>
-      <section
-        className="home-premium__chapter home-premium__media scroll-reveal-depth"
-        data-home-section="media"
-        aria-label="Financial intelligence media showcase"
-      >
-        <div
-          className="home-premium__ambient home-premium__ambient--media"
-          aria-hidden="true"
-        />
-        <div className="home-premium__content mx-auto w-full max-w-7xl px-4 py-16 sm:px-6 lg:px-8">
-          <VideoShowcase
-            title={getSection('media_showcase')?.title || 'Financial Intelligence in Real-Time Motion'}
-            subtitle={getSection('media_showcase')?.description || 'Explore the operational rhythm of our dual-review diagnostic preparation pipeline and multi-tier tax compliance engine.'}
-            onExploreWork={() => navigate('/services')}
-            cmsContent={getSection('media_showcase')}
+        <section
+          className="home-premium__chapter home-premium__media scroll-reveal-depth"
+          data-home-section="media"
+          aria-label="Financial intelligence media showcase"
+        >
+          <div
+            className="home-premium__ambient home-premium__ambient--media"
+            aria-hidden="true"
           />
-        </div>
-      </section>
+          <div className="home-premium__content mx-auto w-full max-w-7xl px-4 py-16 sm:px-6 lg:px-8">
+            <VideoShowcase
+              title={getSection('media_showcase')?.title || 'Financial Intelligence in Real-Time Motion'}
+              subtitle={getSection('media_showcase')?.description || 'Explore the operational rhythm of our dual-review diagnostic preparation pipeline and multi-tier tax compliance engine.'}
+              onExploreWork={() => navigate('/services')}
+              cmsContent={getSection('media_showcase')}
+            />
+          </div>
+        </section>
       </EditableSectionContainer>
 
       {/* CHAPTER 3 — FINANCIAL CLARITY */}
       <EditableSectionContainer sectionKey="financial_clarity" sectionTitle="Financial Clarity & Calculators" isEnabled={isSectionEnabled('financial_clarity')} sectionData={getSection('financial_clarity')}>
         <EditableSectionContainer sectionKey="data_flow" sectionTitle="Secure Data Flow" isEnabled={isSectionEnabled('data_flow')} sectionData={getSection('data_flow')}>
+          <section
+            className="home-premium__chapter home-premium__clarity scroll-reveal-depth"
+            data-home-section="financial-clarity"
+          >
+            <div
+              className="home-premium__ambient home-premium__ambient--clarity"
+              aria-hidden="true"
+            />
+            <FinancialClarityChapter
+              cmsContent={getSection('financial_clarity')}
+              onOpenConsultation={(cat, srv) =>
+                handleOpenConsultation(cat as ClientCategory, srv)
+              }
+            />
+          </section>
+        </EditableSectionContainer>
+
+        {/* CHAPTER 5 — CPA COLLABORATION */}
+        <EditableSectionContainer sectionKey="cpa_pipeline" sectionTitle="CPA Collaboration Pipeline" isEnabled={isSectionEnabled('cpa_pipeline')} sectionData={getSection('cpa_pipeline')}>
+          <section
+            className="home-premium__chapter home-premium__collaboration scroll-reveal-depth"
+            data-home-section="cpa-collaboration"
+          >
+            <div
+              className="home-premium__ambient home-premium__ambient--collaboration"
+              aria-hidden="true"
+            />
+            <CpaCollaborationPipeline
+              cmsContent={getSection('cpa_pipeline')}
+              onRequestPilot={() =>
+                handleOpenConsultation('cpa', 'tax-prep-outsourcing')
+              }
+            />
+          </section>
+        </EditableSectionContainer>
+
+        {/* ENCRYPTED DATA FLOW VISUALIZATION */}
         <section
-          className="home-premium__chapter home-premium__clarity scroll-reveal-depth"
-          data-home-section="financial-clarity"
+          className="home-premium__chapter home-premium__data-flow scroll-reveal-depth"
+          data-home-section="data-flow"
+          aria-label="Data flow visualization"
         >
           <div
-            className="home-premium__ambient home-premium__ambient--clarity"
+            className="home-premium__ambient home-premium__ambient--data-flow"
             aria-hidden="true"
           />
-          <FinancialClarityChapter
-            cmsContent={getSection('financial_clarity')}
-            onOpenConsultation={(cat, srv) =>
-              handleOpenConsultation(cat as ClientCategory, srv)
-            }
-          />
+          <div className="home-premium__content mx-auto w-full max-w-7xl px-4 py-16 sm:px-6 lg:px-8">
+            <DataFlowDiagram cmsContent={getSection('data_flow')} />
+          </div>
         </section>
-      </EditableSectionContainer>
-
-      {/* CHAPTER 4 — HUMAN EXPERTISE */}
-      <EditableSectionContainer sectionKey="human_expertise" sectionTitle="Human Expertise Chapter" isEnabled={isSectionEnabled('human_expertise')} sectionData={getSection('human_expertise')}>
-        <section
-          className="home-premium__chapter home-premium__expertise scroll-reveal-depth"
-          data-home-section="human-expertise"
-        >
-          <div
-            className="home-premium__ambient home-premium__ambient--expertise"
-            aria-hidden="true"
-          />
-          <HumanExpertiseChapter
-            cmsContent={getSection('human_expertise')}
-            onOpenConsultation={(cat, srv) =>
-              handleOpenConsultation(cat as ClientCategory, srv)
-            }
-          />
-        </section>
-      </EditableSectionContainer>
-
-      {/* CHAPTER 5 — CPA COLLABORATION */}
-      <EditableSectionContainer sectionKey="cpa_pipeline" sectionTitle="CPA Collaboration Pipeline" isEnabled={isSectionEnabled('cpa_pipeline')} sectionData={getSection('cpa_pipeline')}>
-        <section
-          className="home-premium__chapter home-premium__collaboration scroll-reveal-depth"
-          data-home-section="cpa-collaboration"
-        >
-          <div
-            className="home-premium__ambient home-premium__ambient--collaboration"
-            aria-hidden="true"
-          />
-          <CpaCollaborationPipeline
-            cmsContent={getSection('cpa_pipeline')}
-            onRequestPilot={() =>
-              handleOpenConsultation('cpa', 'tax-prep-outsourcing')
-            }
-          />
-        </section>
-      </EditableSectionContainer>
-
-      {/* ENCRYPTED DATA FLOW VISUALIZATION */}
-      <section
-        className="home-premium__chapter home-premium__data-flow scroll-reveal-depth"
-        data-home-section="data-flow"
-        aria-label="Data flow visualization"
-      >
-        <div
-          className="home-premium__ambient home-premium__ambient--data-flow"
-          aria-hidden="true"
-        />
-        <div className="home-premium__content mx-auto w-full max-w-7xl px-4 py-16 sm:px-6 lg:px-8">
-          <DataFlowDiagram cmsContent={getSection('data_flow')} />
-        </div>
-      </section>
       </EditableSectionContainer>
 
       {/* CHAPTER 6 — INSIGHTS */}

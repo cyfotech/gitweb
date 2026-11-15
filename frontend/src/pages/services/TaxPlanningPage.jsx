@@ -1,6 +1,7 @@
 import React from 'react';
 import BackToServices from '../../components/navigation/BackToServices';
 import ScrollNavigation from '../../components/navigation/ScrollNavigation';
+import { inquiriesApi } from '../../api/inquiries';
 
 
 function cssToStyle(input) {
@@ -366,8 +367,55 @@ class TaxPlanningPage extends React.Component {
       whoAm: whoAm, whenOpts: whenOpts,
       msgPh: curWho.ph, submitLabel: curWho.sub,
       sent: s.sent, notSent: !s.sent,
-      submit: function (e) { if (e && e.preventDefault) e.preventDefault(); self.setState({ sent: true }); },
-      reset: function () { self.setState({ sent: false }); }
+      submitting: s.submitting,
+      submitError: s.submitError,
+      submit: async function (e) {
+        if (e && e.preventDefault) e.preventDefault();
+        if (self.state && self.state.submitting) return;
+
+        const nameInput = document.getElementById("f-name");
+        const emailInput = document.getElementById("f-email");
+        const msgInput = document.getElementById("f-msg");
+
+        const name = (nameInput && nameInput.value || "").trim();
+        const email = (emailInput && emailInput.value || "").trim();
+        const msg = (msgInput && msgInput.value || "").trim();
+
+        if (!name) {
+          self.setState({ submitError: "Please enter your name." });
+          if (nameInput) nameInput.focus();
+          return;
+        }
+        if (!email || !/.+@.+\..+/.test(email)) {
+          self.setState({ submitError: "Please enter a valid email address." });
+          if (emailInput) emailInput.focus();
+          return;
+        }
+
+        self.setState({ submitting: true, submitError: "" });
+        try {
+          const whoObj = (WHO_AM || []).find(w => w.id === s.whoAm) || {};
+          const whoLabel = whoObj.t || "Individual";
+          const whenObj = (WHEN || []).find(w => w.id === s.when) || {};
+          const whenLabel = whenObj.t || "Right away";
+          await inquiriesApi.submit({
+            name,
+            email,
+            inquiryType: "US Tax Planning Inquiry",
+            subject: "Tax Planning - " + whoLabel,
+            message: [
+              "Client Profile: " + whoLabel,
+              "Preferred Start: " + whenLabel,
+              msg ? "Details / What's changing: " + msg : ""
+            ].filter(Boolean).join("\n") || "Tax planning review request.",
+            sourcePage: "/services/tax-planning"
+          });
+          self.setState({ sent: true, submitting: false, submitError: "" });
+        } catch (err) {
+          self.setState({ submitting: false, submitError: err?.message || "Submission failed. Please try again." });
+        }
+      },
+      reset: function () { self.setState({ sent: false, submitting: false, submitError: "" }); }
     };
   }
 
@@ -382,6 +430,657 @@ class TaxPlanningPage extends React.Component {
 
         <link rel="preconnect" href="https://fonts.googleapis.com" />
 
+
+        
+        <style>{`
+/* Smart Tax Expertss (STE) Master Brand Theme & Text Contrast */
+.stp > header {
+  display: none !important;
+}
+
+.stp {
+  width: 100% !important;
+  max-width: 100% !important;
+  min-width: 0 !important;
+  overflow-x: clip !important;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.stp *, .stp *::before, .stp *::after {
+  box-sizing: border-box;
+}
+
+/* ================= DARK THEME PALETTE ================= */
+html.dark .stp,
+html[data-theme="dark"] .stp,
+body.dark .stp,
+.dark .stp,
+[data-mode="dark"] .stp {
+  --acc: #35e092 !important;
+  --acc-l: #64f4b8 !important;
+  --hz: #E3A33B !important;
+  --hz-d: #F0C47A !important;
+  background-color: #041416 !important;
+  color: #F2FBF7 !important;
+  color-scheme: dark;
+}
+
+html.dark .stp h1, html.dark .stp h2, html.dark .stp h3, html.dark .stp h4,
+html[data-theme="dark"] .stp h1, html[data-theme="dark"] .stp h2, html[data-theme="dark"] .stp h3, html[data-theme="dark"] .stp h4,
+.dark .stp h1, .dark .stp h2, .dark .stp h3, .dark .stp h4 {
+  color: #FFFFFF !important;
+}
+
+/* ========================================================
+   LIGHT & CREAM CARDS CONTRAST FIX ACROSS ENTIRE PAGE
+   (Why carousel, Trust bento, and any other light card)
+   ======================================================== */
+.stp article.lift[style*="background: #FFFDF8"],
+.stp article.lift[style*="background: #E2D9C7"],
+.stp article.lift[style*="background: #F3EFE6"],
+.stp article.lift[style*="background: #F7F3EA"],
+.stp article[style*="background: #FFFDF8"],
+.stp article[style*="background: #F7F3EA"],
+.stp article[style*="background: rgb(255, 253, 248)"],
+.stp article[style*="background: rgb(247, 243, 234)"],
+html.dark .stp article[style*="background: #FFFDF8"],
+html.dark .stp article[style*="background: #F7F3EA"],
+html[data-theme="dark"] .stp article[style*="background: #FFFDF8"],
+html[data-theme="dark"] .stp article[style*="background: #F7F3EA"],
+.dark .stp article[style*="background: #FFFDF8"],
+.dark .stp article[style*="background: #F7F3EA"] {
+  color: #0C1A22 !important;
+}
+
+.stp article[style*="background: #FFFDF8"] p,
+.stp article[style*="background: #F7F3EA"] p,
+html.dark .stp article[style*="background: #FFFDF8"] p,
+html.dark .stp article[style*="background: #F7F3EA"] p,
+html[data-theme="dark"] .stp article[style*="background: #FFFDF8"] p,
+html[data-theme="dark"] .stp article[style*="background: #F7F3EA"] p,
+.dark .stp article[style*="background: #FFFDF8"] p,
+.dark .stp article[style*="background: #F7F3EA"] p {
+  color: #0C1A22 !important;
+}
+
+.stp article[style*="background: #FFFDF8"] .serif,
+.stp article[style*="background: #F7F3EA"] .serif,
+html.dark .stp article[style*="background: #FFFDF8"] .serif,
+html.dark .stp article[style*="background: #F7F3EA"] .serif,
+html[data-theme="dark"] .stp article[style*="background: #FFFDF8"] .serif,
+html[data-theme="dark"] .stp article[style*="background: #F7F3EA"] .serif,
+.dark .stp article[style*="background: #FFFDF8"] .serif,
+.dark .stp article[style*="background: #F7F3EA"] .serif {
+  color: #0C1A22 !important;
+}
+
+.stp article[style*="background: #FFFDF8"] p.mono,
+.stp article[style*="background: #F7F3EA"] p.mono,
+html.dark .stp article[style*="background: #FFFDF8"] p.mono,
+html.dark .stp article[style*="background: #F7F3EA"] p.mono,
+html[data-theme="dark"] .stp article[style*="background: #FFFDF8"] p.mono,
+html[data-theme="dark"] .stp article[style*="background: #F7F3EA"] p.mono,
+.dark .stp article[style*="background: #FFFDF8"] p.mono,
+.dark .stp article[style*="background: #F7F3EA"] p.mono {
+  color: #925805 !important;
+}
+
+/* Software Experience Bar */
+.stp div[style*="background: rgba(255,255,255,0.5)"],
+html.dark .stp div[style*="background: rgba(255,255,255,0.5)"],
+html[data-theme="dark"] .stp div[style*="background: rgba(255,255,255,0.5)"],
+.dark .stp div[style*="background: rgba(255,255,255,0.5)"] {
+  background: rgba(255,255,255,0.92) !important;
+}
+
+.stp div[style*="background: rgba(255,255,255,0.5)"] p,
+html.dark .stp div[style*="background: rgba(255,255,255,0.5)"] p,
+html[data-theme="dark"] .stp div[style*="background: rgba(255,255,255,0.5)"] p,
+.dark .stp div[style*="background: rgba(255,255,255,0.5)"] p {
+  color: #0C1A22 !important;
+}
+
+/* Section 09 background handling in dark mode */
+html.dark .stp section[style*="background: #EAE3D5"],
+html[data-theme="dark"] .stp section[style*="background: #EAE3D5"],
+.dark .stp section[style*="background: #EAE3D5"] {
+  background: #06191C !important;
+}
+html.dark .stp section[style*="background: #EAE3D5"] h2,
+html[data-theme="dark"] .stp section[style*="background: #EAE3D5"] h2,
+.dark .stp section[style*="background: #EAE3D5"] h2 {
+  color: #FFFFFF !important;
+}
+
+
+/* ========================================================
+   WHY SECTION CAROUSEL CARD CONTRAST FIX FOR LIGHT & DARK
+   ======================================================== */
+.stp section#why article.lift {
+  box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.15) !important;
+}
+
+/* Light/Cream cards in #why section MUST always have dark/black text */
+.stp section#why article.lift[style*="background: #FFFDF8"],
+.stp section#why article.lift[style*="background: #E2D9C7"],
+.stp section#why article.lift[style*="background: #F3EFE6"],
+.stp section#why article.lift[style*="background: rgb(255, 253, 248)"],
+.stp section#why article.lift[style*="background: rgb(226, 217, 199)"],
+html.dark .stp section#why article.lift[style*="background: #FFFDF8"],
+html.dark .stp section#why article.lift[style*="background: #E2D9C7"],
+html.dark .stp section#why article.lift[style*="background: #F3EFE6"],
+html[data-theme="dark"] .stp section#why article.lift[style*="background: #FFFDF8"],
+html[data-theme="dark"] .stp section#why article.lift[style*="background: #E2D9C7"],
+html[data-theme="dark"] .stp section#why article.lift[style*="background: #F3EFE6"],
+.dark .stp section#why article.lift[style*="background: #FFFDF8"],
+.dark .stp section#why article.lift[style*="background: #E2D9C7"],
+.dark .stp section#why article.lift[style*="background: #F3EFE6"] {
+  color: #0C1A22 !important;
+}
+
+.stp section#why article.lift[style*="background: #FFFDF8"] h3,
+.stp section#why article.lift[style*="background: #E2D9C7"] h3,
+.stp section#why article.lift[style*="background: #F3EFE6"] h3,
+html.dark .stp section#why article.lift[style*="background: #FFFDF8"] h3,
+html.dark .stp section#why article.lift[style*="background: #E2D9C7"] h3,
+html.dark .stp section#why article.lift[style*="background: #F3EFE6"] h3,
+html[data-theme="dark"] .stp section#why article.lift[style*="background: #FFFDF8"] h3,
+html[data-theme="dark"] .stp section#why article.lift[style*="background: #E2D9C7"] h3,
+html[data-theme="dark"] .stp section#why article.lift[style*="background: #F3EFE6"] h3,
+.dark .stp section#why article.lift[style*="background: #FFFDF8"] h3,
+.dark .stp section#why article.lift[style*="background: #E2D9C7"] h3,
+.dark .stp section#why article.lift[style*="background: #F3EFE6"] h3 {
+  color: #0C1A22 !important;
+  font-weight: 700 !important;
+}
+
+.stp section#why article.lift[style*="background: #FFFDF8"] p,
+.stp section#why article.lift[style*="background: #E2D9C7"] p,
+.stp section#why article.lift[style*="background: #F3EFE6"] p,
+html.dark .stp section#why article.lift[style*="background: #FFFDF8"] p,
+html.dark .stp section#why article.lift[style*="background: #E2D9C7"] p,
+html.dark .stp section#why article.lift[style*="background: #F3EFE6"] p,
+html[data-theme="dark"] .stp section#why article.lift[style*="background: #FFFDF8"] p,
+html[data-theme="dark"] .stp section#why article.lift[style*="background: #E2D9C7"] p,
+html[data-theme="dark"] .stp section#why article.lift[style*="background: #F3EFE6"] p,
+.dark .stp section#why article.lift[style*="background: #FFFDF8"] p,
+.dark .stp section#why article.lift[style*="background: #E2D9C7"] p,
+.dark .stp section#why article.lift[style*="background: #F3EFE6"] p {
+  color: #1A2830 !important;
+  opacity: 0.95 !important;
+}
+
+.stp section#why article.lift[style*="background: #FFFDF8"] p.mono,
+.stp section#why article.lift[style*="background: #E2D9C7"] p.mono,
+.stp section#why article.lift[style*="background: #F3EFE6"] p.mono,
+html.dark .stp section#why article.lift[style*="background: #FFFDF8"] p.mono,
+html.dark .stp section#why article.lift[style*="background: #E2D9C7"] p.mono,
+html.dark .stp section#why article.lift[style*="background: #F3EFE6"] p.mono,
+html[data-theme="dark"] .stp section#why article.lift[style*="background: #FFFDF8"] p.mono,
+html[data-theme="dark"] .stp section#why article.lift[style*="background: #E2D9C7"] p.mono,
+html[data-theme="dark"] .stp section#why article.lift[style*="background: #F3EFE6"] p.mono,
+.dark .stp section#why article.lift[style*="background: #FFFDF8"] p.mono,
+.dark .stp section#why article.lift[style*="background: #E2D9C7"] p.mono,
+.dark .stp section#why article.lift[style*="background: #F3EFE6"] p.mono {
+  color: #3E4D54 !important;
+  opacity: 0.85 !important;
+}
+
+/* Also for the Golden card #6 (bg: HZ = #E3A33B) in #why section */
+.stp section#why article.lift[style*="background: #E3A33B"],
+html.dark .stp section#why article.lift[style*="background: #E3A33B"],
+html[data-theme="dark"] .stp section#why article.lift[style*="background: #E3A33B"],
+.dark .stp section#why article.lift[style*="background: #E3A33B"] {
+  color: #0C1A22 !important;
+}
+.stp section#why article.lift[style*="background: #E3A33B"] h3,
+html.dark .stp section#why article.lift[style*="background: #E3A33B"] h3,
+html[data-theme="dark"] .stp section#why article.lift[style*="background: #E3A33B"] h3,
+.dark .stp section#why article.lift[style*="background: #E3A33B"] h3 {
+  color: #0C1A22 !important;
+}
+.stp section#why article.lift[style*="background: #E3A33B"] p,
+html.dark .stp section#why article.lift[style*="background: #E3A33B"] p,
+html[data-theme="dark"] .stp section#why article.lift[style*="background: #E3A33B"] p,
+.dark .stp section#why article.lift[style*="background: #E3A33B"] p {
+  color: #1A2830 !important;
+}
+
+
+html.dark .stp p,
+html[data-theme="dark"] .stp p,
+.dark .stp p {
+  color: #E5EDF5;
+}
+
+html.dark .stp .eyebrow,
+html[data-theme="dark"] .stp .eyebrow,
+.dark .stp .eyebrow {
+  color: #35e092 !important;
+}
+
+html.dark .stp .mono,
+html[data-theme="dark"] .stp .mono,
+.dark .stp .mono {
+  color: #E5EDF5;
+}
+
+/* Sections */
+html.dark .stp section#top,
+html[data-theme="dark"] .stp section#top,
+.dark .stp section#top,
+html.dark .stp section#compare,
+html[data-theme="dark"] .stp section#compare,
+.dark .stp section#compare,
+html.dark .stp section#why,
+html[data-theme="dark"] .stp section#why,
+.dark .stp section#why,
+html.dark .stp section#lab,
+html[data-theme="dark"] .stp section#lab,
+.dark .stp section#lab,
+html.dark .stp section#process,
+html[data-theme="dark"] .stp section#process,
+.dark .stp section#process,
+html.dark .stp section#faq,
+html[data-theme="dark"] .stp section#faq,
+.dark .stp section#faq,
+html.dark .stp section#contact,
+html[data-theme="dark"] .stp section#contact,
+.dark .stp section#contact {
+  background: #041416 !important;
+}
+
+html.dark .stp section#year,
+html[data-theme="dark"] .stp section#year,
+.dark .stp section#year,
+html.dark .stp section#covers,
+html[data-theme="dark"] .stp section#covers,
+.dark .stp section#covers,
+html.dark .stp section#who,
+html[data-theme="dark"] .stp section#who,
+.dark .stp section#who {
+  background: #081E22 !important;
+  border-color: rgba(53, 224, 146, 0.15) !important;
+}
+
+/* Year Month Dial Action Items */
+html.dark .stp #year li,
+html[data-theme="dark"] .stp #year li,
+.dark .stp #year li {
+  background: #0D282E !important;
+  color: #FFFFFF !important;
+  border: 1px solid rgba(53, 224, 146, 0.22) !important;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3) !important;
+}
+
+html.dark .stp #year li span,
+html[data-theme="dark"] .stp #year li span,
+.dark .stp #year li span {
+  background: #35e092 !important;
+  color: #041416 !important;
+  font-weight: 700 !important;
+}
+
+html.dark .stp #year .mbtn,
+html[data-theme="dark"] .stp #year .mbtn,
+.dark .stp #year .mbtn {
+  color: #E5EDF5 !important;
+}
+
+html.dark .stp #year .mbtn.act,
+html[data-theme="dark"] .stp #year .mbtn.act,
+.dark .stp #year .mbtn.act {
+  color: #35e092 !important;
+}
+
+/* Covers Accordion */
+html.dark .stp .idx,
+html[data-theme="dark"] .stp .idx,
+.dark .stp .idx {
+  background: #0A2328 !important;
+  border: 1px solid rgba(255, 255, 255, 0.1) !important;
+  color: #FFFFFF !important;
+}
+
+html.dark .stp .idx .idx-t,
+html[data-theme="dark"] .stp .idx .idx-t,
+.dark .stp .idx .idx-t {
+  color: #FFFFFF !important;
+  font-weight: 600 !important;
+}
+
+html.dark .stp .idx .mono,
+html[data-theme="dark"] .stp .idx .mono,
+.dark .stp .idx .mono {
+  color: #35e092 !important;
+  font-weight: 700 !important;
+}
+
+html.dark .stp .idx .idx-ic,
+html[data-theme="dark"] .stp .idx .idx-ic,
+.dark .stp .idx .idx-ic {
+  border-color: rgba(53, 224, 146, 0.3) !important;
+  color: #35e092 !important;
+  background: rgba(53, 224, 146, 0.08) !important;
+}
+
+html.dark .stp .idx[aria-expanded="true"],
+html[data-theme="dark"] .stp .idx[aria-expanded="true"],
+.dark .stp .idx[aria-expanded="true"] {
+  background: #0E2E35 !important;
+  border-color: #35e092 !important;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.35) !important;
+}
+
+html.dark .stp .idx-panel,
+html[data-theme="dark"] .stp .idx-panel,
+.dark .stp .idx-panel {
+  color: #E5EDF5 !important;
+}
+
+/* FAQ */
+html.dark .stp .faq-c,
+html[data-theme="dark"] .stp .faq-c,
+.dark .stp .faq-c {
+  background: #0A2328 !important;
+  border: 1px solid rgba(255, 255, 255, 0.12) !important;
+}
+
+html.dark .stp .faq-q,
+html[data-theme="dark"] .stp .faq-q,
+.dark .stp .faq-q {
+  color: #FFFFFF !important;
+  font-weight: 600 !important;
+}
+
+html.dark .stp .faq-c p,
+html.dark .stp .faq-c div,
+html[data-theme="dark"] .stp .faq-c p,
+html[data-theme="dark"] .stp .faq-c div,
+.dark .stp .faq-c p,
+.dark .stp .faq-c div {
+  color: #E5EDF5 !important;
+}
+
+html.dark .stp .srch,
+html[data-theme="dark"] .stp .srch,
+.dark .stp .srch {
+  background: #081E22 !important;
+  color: #FFFFFF !important;
+  border: 1px solid rgba(53, 224, 146, 0.25) !important;
+}
+
+html.dark .stp .srch input,
+html[data-theme="dark"] .stp .srch input,
+.dark .stp .srch input {
+  color: #FFFFFF !important;
+}
+
+/* Contact form */
+html.dark .stp .chk,
+html[data-theme="dark"] .stp .chk,
+.dark .stp .chk {
+  background: rgba(255, 255, 255, 0.05) !important;
+  color: #E5EDF5 !important;
+  border: 1px solid rgba(255, 255, 255, 0.15) !important;
+}
+
+html.dark .stp .chk.on,
+html[data-theme="dark"] .stp .chk.on,
+.dark .stp .chk.on {
+  background: rgba(53, 224, 146, 0.15) !important;
+  border-color: #35e092 !important;
+  color: #FFFFFF !important;
+}
+
+html.dark .stp .field input,
+html.dark .stp .field textarea,
+html.dark .stp .field select,
+html[data-theme="dark"] .stp .field input,
+html[data-theme="dark"] .stp .field textarea,
+html[data-theme="dark"] .stp .field select,
+.dark .stp .field input,
+.dark .stp .field textarea,
+.dark .stp .field select {
+  background: #081E22 !important;
+  color: #FFFFFF !important;
+  border: 1px solid rgba(255, 255, 255, 0.2) !important;
+}
+
+html.dark .stp .field label,
+html[data-theme="dark"] .stp .field label,
+.dark .stp .field label {
+  color: #E5EDF5 !important;
+}
+
+/* Cash Flow & Deduction lab cards */
+html.dark .stp section#lab [style*="background: #F7F3EA"],
+html.dark .stp section#lab [style*="background: #FFFDF8"],
+html.dark .stp section#lab [style*="background: #F3EFE6"],
+html[data-theme="dark"] .stp section#lab [style*="background: #F7F3EA"],
+html[data-theme="dark"] .stp section#lab [style*="background: #FFFDF8"],
+html[data-theme="dark"] .stp section#lab [style*="background: #F3EFE6"],
+.dark .stp section#lab [style*="background: #F7F3EA"],
+.dark .stp section#lab [style*="background: #FFFDF8"],
+.dark .stp section#lab [style*="background: #F3EFE6"] {
+  background: #081E22 !important;
+  color: #F2FBF7 !important;
+  border: 1px solid rgba(53, 224, 146, 0.2) !important;
+}
+
+html.dark .stp section#lab [style*="background: #F7F3EA"] h3,
+html[data-theme="dark"] .stp section#lab [style*="background: #F7F3EA"] h3,
+.dark .stp section#lab [style*="background: #F7F3EA"] h3 {
+  color: #FFFFFF !important;
+}
+
+html.dark .stp section#lab [style*="background: #F7F3EA"] p,
+html[data-theme="dark"] .stp section#lab [style*="background: #F7F3EA"] p,
+.dark .stp section#lab [style*="background: #F7F3EA"] p {
+  color: #E5EDF5 !important;
+}
+
+
+/* ================= HERO SECTION RESPONSIVE & CHARACTER POSITIONING ================= */
+
+/* Desktop & Laptop layout for Hero illustration container */
+@media (min-width: 769px) {
+  .stp #top div.in.d3 {
+    position: relative !important;
+    min-height: 540px !important;
+  }
+  /* Place character standing clearly in front/beside the projection card */
+  .stp #top div.in.d3 > div:first-child {
+    position: absolute !important;
+    left: 0 !important;
+    bottom: 120px !important;
+    width: 200px !important;
+    max-width: 36% !important;
+    z-index: 3 !important;
+  }
+  .stp #top div.in.d3 > div:first-child svg.hc {
+    width: 100% !important;
+    height: auto !important;
+    display: block !important;
+  }
+  /* Projection card */
+  .stp #top div.in.d3 > div:nth-child(2) {
+    position: absolute !important;
+    right: 0 !important;
+    top: 20px !important;
+    width: min(340px, 66%) !important;
+    z-index: 1 !important;
+  }
+  /* Timeline bar at bottom */
+  .stp #top div.in.d3 > div:nth-child(3) {
+    position: absolute !important;
+    left: 0 !important;
+    right: 0 !important;
+    bottom: 6px !important;
+    margin: 0 auto !important;
+    width: min(460px, 100%) !important;
+    z-index: 2 !important;
+  }
+}
+
+/* Tablet & Mobile layout (stacked, perfectly aligned, no overlapping or clipping) */
+@media (max-width: 768px) {
+  .stp #top > div:last-of-type > div:first-of-type {
+    flex-basis: 100% !important;
+  }
+
+  .stp #top div.in.d3 {
+    height: auto !important;
+    min-height: auto !important;
+    position: relative !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    gap: 24px !important;
+    width: 100% !important;
+    margin-top: 20px !important;
+    padding-top: 20px !important;
+  }
+
+  /* Character container on mobile */
+  .stp #top div.in.d3 > div:first-child {
+    position: relative !important;
+    left: auto !important;
+    bottom: auto !important;
+    right: auto !important;
+    top: auto !important;
+    width: 180px !important;
+    max-width: 60% !important;
+    margin: 0 auto !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    z-index: 2 !important;
+  }
+
+  /* Speech bubbles centered above character */
+  .stp #top div.in.d3 > div:first-child .mono {
+    position: absolute !important;
+    left: 50% !important;
+    transform: translateX(-50%) !important;
+    top: -12px !important;
+    width: max-content !important;
+    text-align: center !important;
+    z-index: 5 !important;
+  }
+
+  .stp #top div.in.d3 > div:first-child svg.hc {
+    width: 100% !important;
+    height: auto !important;
+    display: block !important;
+  }
+
+  /* Projection card on mobile */
+  .stp #top div.in.d3 > div:nth-child(2) {
+    position: relative !important;
+    right: auto !important;
+    top: auto !important;
+    left: auto !important;
+    bottom: auto !important;
+    width: 100% !important;
+    max-width: 360px !important;
+    margin: 0 auto !important;
+    z-index: 1 !important;
+  }
+
+  /* Timeline bar on mobile */
+  .stp #top div.in.d3 > div:nth-child(3) {
+    position: relative !important;
+    left: auto !important;
+    right: auto !important;
+    bottom: auto !important;
+    top: auto !important;
+    width: 100% !important;
+    max-width: 360px !important;
+    margin: 0 auto !important;
+    z-index: 1 !important;
+  }
+
+  /* ILLUSTRATIVE PROJECTION text */
+  .stp #top div.in.d3 > p:last-child {
+    position: relative !important;
+    right: auto !important;
+    top: auto !important;
+    width: 100% !important;
+    text-align: center !important;
+    margin-top: 4px !important;
+  }
+}
+
+/* ================= ANIMATION RESPONSIVENESS (PREVENT CROPPING) ================= */
+
+/* 1. Payment Approach Toggle Buttons */
+.stp [role="group"][aria-label="Payment approach"] {
+  display: inline-flex !important;
+  padding: 5px !important;
+  border-radius: 999px !important;
+  max-width: 100% !important;
+  box-sizing: border-box !important;
+  gap: 4px !important;
+}
+
+html.dark .stp [role="group"][aria-label="Payment approach"],
+html[data-theme="dark"] .stp [role="group"][aria-label="Payment approach"],
+.dark .stp [role="group"][aria-label="Payment approach"] {
+  background: #0D282E !important;
+  border: 1px solid rgba(53, 224, 146, 0.2) !important;
+}
+
+html.dark .stp [role="group"][aria-label="Payment approach"] .pill,
+html[data-theme="dark"] .stp [role="group"][aria-label="Payment approach"] .pill,
+.dark .stp [role="group"][aria-label="Payment approach"] .pill {
+  color: #E5EDF5 !important;
+  background: transparent !important;
+}
+
+html.dark .stp [role="group"][aria-label="Payment approach"] .pill.on,
+html[data-theme="dark"] .stp [role="group"][aria-label="Payment approach"] .pill.on,
+.dark .stp [role="group"][aria-label="Payment approach"] .pill.on {
+  background: #35e092 !important;
+  color: #041416 !important;
+  font-weight: 700 !important;
+}
+
+@media (max-width: 640px) {
+  .stp [role="group"][aria-label="Payment approach"] {
+    display: flex !important;
+    flex-direction: column !important;
+    border-radius: 18px !important;
+    width: 100% !important;
+  }
+  .stp [role="group"][aria-label="Payment approach"] .pill {
+    width: 100% !important;
+    text-align: center !important;
+    justify-content: center !important;
+    white-space: normal !important;
+    height: auto !important;
+    min-height: 44px !important;
+    padding: 10px 16px !important;
+  }
+}
+
+/* 2. Animation Stages & SVGs */
+.stp svg {
+  max-width: 100% !important;
+  height: auto !important;
+}
+
+/* Ensure animation stage backgrounds look rich in dark mode */
+html.dark .stp [style*="border-radius: 22px; background: #F3EFE6"],
+html[data-theme="dark"] .stp [style*="border-radius: 22px; background: #F3EFE6"],
+.dark .stp [style*="border-radius: 22px; background: #F3EFE6"],
+html.dark .stp [style*="border-radius: 20px; background: #EFE8DA"],
+html[data-theme="dark"] .stp [style*="border-radius: 20px; background: #EFE8DA"],
+.dark .stp [style*="border-radius: 20px; background: #EFE8DA"] {
+  background: #081E22 !important;
+  border: 1px solid rgba(53, 224, 146, 0.2) !important;
+}
+`}</style>
 
         <style>{"/* latin-ext */\n@font-face {\n  font-family: 'Instrument Serif';\n  font-style: italic;\n  font-weight: 400;\n  font-display: swap;\n  src: url(https://fonts.gstatic.com/s/instrumentserif/v5/jizHRFtNs2ka5fXjeivQ4LroWlx-6zAjgn7MsNo.woff2) format('woff2');\n  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C4, U+2113, U+2C60-2C7F, U+A720-A7FF;\n}\n/* latin */\n@font-face {\n  font-family: 'Instrument Serif';\n  font-style: italic;\n  font-weight: 400;\n  font-display: swap;\n  src: url(\"/page-assets/ec9030dd-6444-48f1-905b-cd0db85bd970\") format('woff2');\n  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;\n}\n/* latin-ext */\n@font-face {\n  font-family: 'Instrument Serif';\n  font-style: normal;\n  font-weight: 400;\n  font-display: swap;\n  src: url(https://fonts.gstatic.com/s/instrumentserif/v5/jizBRFtNs2ka5fXjeivQ4LroWlx-6zsTjmbI.woff2) format('woff2');\n  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C4, U+2113, U+2C60-2C7F, U+A720-A7FF;\n}\n/* latin */\n@font-face {\n  font-family: 'Instrument Serif';\n  font-style: normal;\n  font-weight: 400;\n  font-display: swap;\n  src: url(https://fonts.gstatic.com/s/instrumentserif/v5/jizBRFtNs2ka5fXjeivQ4LroWlx-6zUTjg.woff2) format('woff2');\n  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;\n}\n/* cyrillic-ext */\n@font-face {\n  font-family: 'Inter Tight';\n  font-style: normal;\n  font-weight: 400;\n  font-display: swap;\n  src: url(https://fonts.gstatic.com/s/intertight/v9/NGSwv5HMAFg6IuGlBNMjxLsK8ah8QA.woff2) format('woff2');\n  unicode-range: U+0460-052F, U+1C80-1C8A, U+20B4, U+2DE0-2DFF, U+A640-A69F, U+FE2E-FE2F;\n}\n/* cyrillic */\n@font-face {\n  font-family: 'Inter Tight';\n  font-style: normal;\n  font-weight: 400;\n  font-display: swap;\n  src: url(https://fonts.gstatic.com/s/intertight/v9/NGSwv5HMAFg6IuGlBNMjxLsD8ah8QA.woff2) format('woff2');\n  unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;\n}\n/* greek-ext */\n@font-face {\n  font-family: 'Inter Tight';\n  font-style: normal;\n  font-weight: 400;\n  font-display: swap;\n  src: url(https://fonts.gstatic.com/s/intertight/v9/NGSwv5HMAFg6IuGlBNMjxLsL8ah8QA.woff2) format('woff2');\n  unicode-range: U+1F00-1FFF;\n}\n/* greek */\n@font-face {\n  font-family: 'Inter Tight';\n  font-style: normal;\n  font-weight: 400;\n  font-display: swap;\n  src: url(https://fonts.gstatic.com/s/intertight/v9/NGSwv5HMAFg6IuGlBNMjxLsE8ah8QA.woff2) format('woff2');\n  unicode-range: U+0370-0377, U+037A-037F, U+0384-038A, U+038C, U+038E-03A1, U+03A3-03FF;\n}\n/* vietnamese */\n@font-face {\n  font-family: 'Inter Tight';\n  font-style: normal;\n  font-weight: 400;\n  font-display: swap;\n  src: url(https://fonts.gstatic.com/s/intertight/v9/NGSwv5HMAFg6IuGlBNMjxLsI8ah8QA.woff2) format('woff2');\n  unicode-range: U+0102-0103, U+0110-0111, U+0128-0129, U+0168-0169, U+01A0-01A1, U+01AF-01B0, U+0300-0301, U+0303-0304, U+0308-0309, U+0323, U+0329, U+1EA0-1EF9, U+20AB;\n}\n/* latin-ext */\n@font-face {\n  font-family: 'Inter Tight';\n  font-style: normal;\n  font-weight: 400;\n  font-display: swap;\n  src: url(https://fonts.gstatic.com/s/intertight/v9/NGSwv5HMAFg6IuGlBNMjxLsJ8ah8QA.woff2) format('woff2');\n  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C4, U+2113, U+2C60-2C7F, U+A720-A7FF;\n}\n/* latin */\n@font-face {\n  font-family: 'Inter Tight';\n  font-style: normal;\n  font-weight: 400;\n  font-display: swap;\n  src: url(\"/page-assets/8a8f8ab4-a84c-42fa-966b-84806416a6dd\") format('woff2');\n  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;\n}\n/* cyrillic-ext */\n@font-face {\n  font-family: 'Inter Tight';\n  font-style: normal;\n  font-weight: 500;\n  font-display: swap;\n  src: url(https://fonts.gstatic.com/s/intertight/v9/NGSwv5HMAFg6IuGlBNMjxLsK8ah8QA.woff2) format('woff2');\n  unicode-range: U+0460-052F, U+1C80-1C8A, U+20B4, U+2DE0-2DFF, U+A640-A69F, U+FE2E-FE2F;\n}\n/* cyrillic */\n@font-face {\n  font-family: 'Inter Tight';\n  font-style: normal;\n  font-weight: 500;\n  font-display: swap;\n  src: url(https://fonts.gstatic.com/s/intertight/v9/NGSwv5HMAFg6IuGlBNMjxLsD8ah8QA.woff2) format('woff2');\n  unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;\n}\n/* greek-ext */\n@font-face {\n  font-family: 'Inter Tight';\n  font-style: normal;\n  font-weight: 500;\n  font-display: swap;\n  src: url(https://fonts.gstatic.com/s/intertight/v9/NGSwv5HMAFg6IuGlBNMjxLsL8ah8QA.woff2) format('woff2');\n  unicode-range: U+1F00-1FFF;\n}\n/* greek */\n@font-face {\n  font-family: 'Inter Tight';\n  font-style: normal;\n  font-weight: 500;\n  font-display: swap;\n  src: url(https://fonts.gstatic.com/s/intertight/v9/NGSwv5HMAFg6IuGlBNMjxLsE8ah8QA.woff2) format('woff2');\n  unicode-range: U+0370-0377, U+037A-037F, U+0384-038A, U+038C, U+038E-03A1, U+03A3-03FF;\n}\n/* vietnamese */\n@font-face {\n  font-family: 'Inter Tight';\n  font-style: normal;\n  font-weight: 500;\n  font-display: swap;\n  src: url(https://fonts.gstatic.com/s/intertight/v9/NGSwv5HMAFg6IuGlBNMjxLsI8ah8QA.woff2) format('woff2');\n  unicode-range: U+0102-0103, U+0110-0111, U+0128-0129, U+0168-0169, U+01A0-01A1, U+01AF-01B0, U+0300-0301, U+0303-0304, U+0308-0309, U+0323, U+0329, U+1EA0-1EF9, U+20AB;\n}\n/* latin-ext */\n@font-face {\n  font-family: 'Inter Tight';\n  font-style: normal;\n  font-weight: 500;\n  font-display: swap;\n  src: url(https://fonts.gstatic.com/s/intertight/v9/NGSwv5HMAFg6IuGlBNMjxLsJ8ah8QA.woff2) format('woff2');\n  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C4, U+2113, U+2C60-2C7F, U+A720-A7FF;\n}\n/* latin */\n@font-face {\n  font-family: 'Inter Tight';\n  font-style: normal;\n  font-weight: 500;\n  font-display: swap;\n  src: url(\"/page-assets/8a8f8ab4-a84c-42fa-966b-84806416a6dd\") format('woff2');\n  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;\n}\n/* cyrillic-ext */\n@font-face {\n  font-family: 'Inter Tight';\n  font-style: normal;\n  font-weight: 600;\n  font-display: swap;\n  src: url(https://fonts.gstatic.com/s/intertight/v9/NGSwv5HMAFg6IuGlBNMjxLsK8ah8QA.woff2) format('woff2');\n  unicode-range: U+0460-052F, U+1C80-1C8A, U+20B4, U+2DE0-2DFF, U+A640-A69F, U+FE2E-FE2F;\n}\n/* cyrillic */\n@font-face {\n  font-family: 'Inter Tight';\n  font-style: normal;\n  font-weight: 600;\n  font-display: swap;\n  src: url(https://fonts.gstatic.com/s/intertight/v9/NGSwv5HMAFg6IuGlBNMjxLsD8ah8QA.woff2) format('woff2');\n  unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;\n}\n/* greek-ext */\n@font-face {\n  font-family: 'Inter Tight';\n  font-style: normal;\n  font-weight: 600;\n  font-display: swap;\n  src: url(https://fonts.gstatic.com/s/intertight/v9/NGSwv5HMAFg6IuGlBNMjxLsL8ah8QA.woff2) format('woff2');\n  unicode-range: U+1F00-1FFF;\n}\n/* greek */\n@font-face {\n  font-family: 'Inter Tight';\n  font-style: normal;\n  font-weight: 600;\n  font-display: swap;\n  src: url(https://fonts.gstatic.com/s/intertight/v9/NGSwv5HMAFg6IuGlBNMjxLsE8ah8QA.woff2) format('woff2');\n  unicode-range: U+0370-0377, U+037A-037F, U+0384-038A, U+038C, U+038E-03A1, U+03A3-03FF;\n}\n/* vietnamese */\n@font-face {\n  font-family: 'Inter Tight';\n  font-style: normal;\n  font-weight: 600;\n  font-display: swap;\n  src: url(https://fonts.gstatic.com/s/intertight/v9/NGSwv5HMAFg6IuGlBNMjxLsI8ah8QA.woff2) format('woff2');\n  unicode-range: U+0102-0103, U+0110-0111, U+0128-0129, U+0168-0169, U+01A0-01A1, U+01AF-01B0, U+0300-0301, U+0303-0304, U+0308-0309, U+0323, U+0329, U+1EA0-1EF9, U+20AB;\n}\n/* latin-ext */\n@font-face {\n  font-family: 'Inter Tight';\n  font-style: normal;\n  font-weight: 600;\n  font-display: swap;\n  src: url(https://fonts.gstatic.com/s/intertight/v9/NGSwv5HMAFg6IuGlBNMjxLsJ8ah8QA.woff2) format('woff2');\n  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C4, U+2113, U+2C60-2C7F, U+A720-A7FF;\n}\n/* latin */\n@font-face {\n  font-family: 'Inter Tight';\n  font-style: normal;\n  font-weight: 600;\n  font-display: swap;\n  src: url(\"/page-assets/8a8f8ab4-a84c-42fa-966b-84806416a6dd\") format('woff2');\n  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;\n}\n/* cyrillic-ext */\n@font-face {\n  font-family: 'Inter Tight';\n  font-style: normal;\n  font-weight: 700;\n  font-display: swap;\n  src: url(https://fonts.gstatic.com/s/intertight/v9/NGSwv5HMAFg6IuGlBNMjxLsK8ah8QA.woff2) format('woff2');\n  unicode-range: U+0460-052F, U+1C80-1C8A, U+20B4, U+2DE0-2DFF, U+A640-A69F, U+FE2E-FE2F;\n}\n/* cyrillic */\n@font-face {\n  font-family: 'Inter Tight';\n  font-style: normal;\n  font-weight: 700;\n  font-display: swap;\n  src: url(https://fonts.gstatic.com/s/intertight/v9/NGSwv5HMAFg6IuGlBNMjxLsD8ah8QA.woff2) format('woff2');\n  unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;\n}\n/* greek-ext */\n@font-face {\n  font-family: 'Inter Tight';\n  font-style: normal;\n  font-weight: 700;\n  font-display: swap;\n  src: url(https://fonts.gstatic.com/s/intertight/v9/NGSwv5HMAFg6IuGlBNMjxLsL8ah8QA.woff2) format('woff2');\n  unicode-range: U+1F00-1FFF;\n}\n/* greek */\n@font-face {\n  font-family: 'Inter Tight';\n  font-style: normal;\n  font-weight: 700;\n  font-display: swap;\n  src: url(https://fonts.gstatic.com/s/intertight/v9/NGSwv5HMAFg6IuGlBNMjxLsE8ah8QA.woff2) format('woff2');\n  unicode-range: U+0370-0377, U+037A-037F, U+0384-038A, U+038C, U+038E-03A1, U+03A3-03FF;\n}\n/* vietnamese */\n@font-face {\n  font-family: 'Inter Tight';\n  font-style: normal;\n  font-weight: 700;\n  font-display: swap;\n  src: url(https://fonts.gstatic.com/s/intertight/v9/NGSwv5HMAFg6IuGlBNMjxLsI8ah8QA.woff2) format('woff2');\n  unicode-range: U+0102-0103, U+0110-0111, U+0128-0129, U+0168-0169, U+01A0-01A1, U+01AF-01B0, U+0300-0301, U+0303-0304, U+0308-0309, U+0323, U+0329, U+1EA0-1EF9, U+20AB;\n}\n/* latin-ext */\n@font-face {\n  font-family: 'Inter Tight';\n  font-style: normal;\n  font-weight: 700;\n  font-display: swap;\n  src: url(https://fonts.gstatic.com/s/intertight/v9/NGSwv5HMAFg6IuGlBNMjxLsJ8ah8QA.woff2) format('woff2');\n  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C4, U+2113, U+2C60-2C7F, U+A720-A7FF;\n}\n/* latin */\n@font-face {\n  font-family: 'Inter Tight';\n  font-style: normal;\n  font-weight: 700;\n  font-display: swap;\n  src: url(\"/page-assets/8a8f8ab4-a84c-42fa-966b-84806416a6dd\") format('woff2');\n  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;\n}\n/* cyrillic-ext */\n@font-face {\n  font-family: 'JetBrains Mono';\n  font-style: normal;\n  font-weight: 400;\n  font-display: swap;\n  src: url(\"/page-assets/ed35b871-4bce-46d9-b17a-dd4ab5e59f8c\") format('woff2');\n  unicode-range: U+0460-052F, U+1C80-1C8A, U+20B4, U+2DE0-2DFF, U+A640-A69F, U+FE2E-FE2F;\n}\n/* cyrillic */\n@font-face {\n  font-family: 'JetBrains Mono';\n  font-style: normal;\n  font-weight: 400;\n  font-display: swap;\n  src: url(\"/page-assets/98887c4f-4cc4-4926-bb46-fe2ff298e4e8\") format('woff2');\n  unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;\n}\n/* greek */\n@font-face {\n  font-family: 'JetBrains Mono';\n  font-style: normal;\n  font-weight: 400;\n  font-display: swap;\n  src: url(\"/page-assets/080f18be-ad4e-4d6c-98d0-bd05abb31303\") format('woff2');\n  unicode-range: U+0370-0377, U+037A-037F, U+0384-038A, U+038C, U+038E-03A1, U+03A3-03FF;\n}\n/* vietnamese */\n@font-face {\n  font-family: 'JetBrains Mono';\n  font-style: normal;\n  font-weight: 400;\n  font-display: swap;\n  src: url(\"/page-assets/a43547b8-ce06-49fa-84b3-be5fcbc6e32d\") format('woff2');\n  unicode-range: U+0102-0103, U+0110-0111, U+0128-0129, U+0168-0169, U+01A0-01A1, U+01AF-01B0, U+0300-0301, U+0303-0304, U+0308-0309, U+0323, U+0329, U+1EA0-1EF9, U+20AB;\n}\n/* latin-ext */\n@font-face {\n  font-family: 'JetBrains Mono';\n  font-style: normal;\n  font-weight: 400;\n  font-display: swap;\n  src: url(\"/page-assets/402d3988-77bc-4611-b365-1da433c5f5ec\") format('woff2');\n  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C4, U+2113, U+2C60-2C7F, U+A720-A7FF;\n}\n/* latin */\n@font-face {\n  font-family: 'JetBrains Mono';\n  font-style: normal;\n  font-weight: 400;\n  font-display: swap;\n  src: url(\"/page-assets/8e584030-7dd1-49cf-a40a-c28cfeffdc6b\") format('woff2');\n  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;\n}\n/* cyrillic-ext */\n@font-face {\n  font-family: 'JetBrains Mono';\n  font-style: normal;\n  font-weight: 500;\n  font-display: swap;\n  src: url(\"/page-assets/ed35b871-4bce-46d9-b17a-dd4ab5e59f8c\") format('woff2');\n  unicode-range: U+0460-052F, U+1C80-1C8A, U+20B4, U+2DE0-2DFF, U+A640-A69F, U+FE2E-FE2F;\n}\n/* cyrillic */\n@font-face {\n  font-family: 'JetBrains Mono';\n  font-style: normal;\n  font-weight: 500;\n  font-display: swap;\n  src: url(\"/page-assets/98887c4f-4cc4-4926-bb46-fe2ff298e4e8\") format('woff2');\n  unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;\n}\n/* greek */\n@font-face {\n  font-family: 'JetBrains Mono';\n  font-style: normal;\n  font-weight: 500;\n  font-display: swap;\n  src: url(\"/page-assets/080f18be-ad4e-4d6c-98d0-bd05abb31303\") format('woff2');\n  unicode-range: U+0370-0377, U+037A-037F, U+0384-038A, U+038C, U+038E-03A1, U+03A3-03FF;\n}\n/* vietnamese */\n@font-face {\n  font-family: 'JetBrains Mono';\n  font-style: normal;\n  font-weight: 500;\n  font-display: swap;\n  src: url(\"/page-assets/a43547b8-ce06-49fa-84b3-be5fcbc6e32d\") format('woff2');\n  unicode-range: U+0102-0103, U+0110-0111, U+0128-0129, U+0168-0169, U+01A0-01A1, U+01AF-01B0, U+0300-0301, U+0303-0304, U+0308-0309, U+0323, U+0329, U+1EA0-1EF9, U+20AB;\n}\n/* latin-ext */\n@font-face {\n  font-family: 'JetBrains Mono';\n  font-style: normal;\n  font-weight: 500;\n  font-display: swap;\n  src: url(\"/page-assets/402d3988-77bc-4611-b365-1da433c5f5ec\") format('woff2');\n  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C4, U+2113, U+2C60-2C7F, U+A720-A7FF;\n}\n/* latin */\n@font-face {\n  font-family: 'JetBrains Mono';\n  font-style: normal;\n  font-weight: 500;\n  font-display: swap;\n  src: url(\"/page-assets/8e584030-7dd1-49cf-a40a-c28cfeffdc6b\") format('woff2');\n  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;\n}\n"}</style>
 
@@ -581,7 +1280,7 @@ class TaxPlanningPage extends React.Component {
                   </div>
 
 
-                  <svg className="hc" width="100%" fill="none" style={cssToStyle("display: block; overflow: visible;")}>
+                  <svg className="hc" width="100%" height="400" viewBox="0 -60 320 460" fill="none" style={cssToStyle("display: block; overflow: visible;")}>
 
                     <ellipse cx="160" cy="392" rx="84" ry="10" fill="rgba(0,0,0,0.38)"></ellipse>
 
@@ -822,7 +1521,7 @@ class TaxPlanningPage extends React.Component {
 
                   <div style={cssToStyle("padding: 8px 14px 0;")}>
 
-                    <svg width="100%" height="170" fill="none">
+                    <svg width="100%" height="170" viewBox="0 0 360 170" fill="none" style={cssToStyle("display: block; width: 100%; max-width: 100%;")}>
 
                       <path d="M10 30H350M10 70H350M10 110H350M10 150H350" stroke="rgba(12,26,34,0.07)" strokeWidth="1"></path>
 
@@ -1776,7 +2475,7 @@ class TaxPlanningPage extends React.Component {
 
                   <div aria-hidden="true" style={cssToStyle("border-radius: 20px; background: #EFE8DA; overflow: hidden;")}>
 
-                    <svg width="100%" fill="none" style={cssToStyle("display: block;")}>
+                    <svg width="100%" viewBox="0 0 640 180" fill="none" style={cssToStyle("display: block; width: 100%; height: auto;")}>
 
                       <path d="M0 156 H640" stroke="rgba(12,26,34,0.15)" strokeWidth="2"></path>
 
@@ -2028,7 +2727,7 @@ class TaxPlanningPage extends React.Component {
                   <React.Fragment>
 
 
-                    <svg width="100%" fill="none" style={cssToStyle("display: block;")}>
+                    <svg width="100%" viewBox="0 -45 900 220" fill="none" style={cssToStyle("display: block; width: 100%; height: auto;")}>
 
                       <circle className="sunp" cx="840" cy="-14" r="18" fill="var(--hz)" fillOpacity="0.7"></circle>
 
@@ -2112,7 +2811,7 @@ class TaxPlanningPage extends React.Component {
                       </g></g></g>
 
 
-                      <text x="20" y="-24" fontFamily="JetBrains Mono, monospace" fontSize="12" fill="#4F5B60">Four lighter steps · {v.cfQuarter} each</text>
+                      <text x="20" y="-18" fontFamily="JetBrains Mono, monospace" fontSize="13" fontWeight="600" fill="#35e092">Four lighter steps · {v.cfQuarter} each</text>
 
                     </svg>
 
@@ -2208,7 +2907,7 @@ class TaxPlanningPage extends React.Component {
                       </g></g>
 
 
-                      <text x="20" y="-24" fontFamily="JetBrains Mono, monospace" fontSize="12" fill="#4F5B60">One heavy lift · all at once</text>
+                      <text x="20" y="-18" fontFamily="JetBrains Mono, monospace" fontSize="13" fontWeight="600" fill="#E3A33B">One heavy lift · all at once</text>
 
                     </svg>
 
@@ -3238,7 +3937,12 @@ class TaxPlanningPage extends React.Component {
                           <textarea id="f-msg" rows="3" placeholder={v.msgPh} style={cssToStyle("min-height: 110px; resize: vertical;")}></textarea></div>
 
 
-                        <button type="submit" className="btn btn-ink" style={cssToStyle("width: 100%; min-height: 58px; font-size: 16px;")}>{v.submitLabel}
+                        {v.submitError && (
+                        <div style={{ color: "#EF4444", fontSize: "13px", fontWeight: 600, marginBottom: "8px" }}>
+                          {v.submitError}
+                        </div>
+                      )}
+                      <button type="submit" disabled={v.submitting} className="btn btn-ink" style={cssToStyle("width: 100%; min-height: 58px; font-size: 16px; opacity: " + (v.submitting ? "0.7" : "1") + ";")}>{v.submitting ? "Sending..." : v.submitLabel}
                           <svg width="16" height="16" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"></path></svg></button>
 
 

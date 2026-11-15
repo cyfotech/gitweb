@@ -5,6 +5,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = require("express");
 const express_rate_limit_1 = __importDefault(require("express-rate-limit"));
+const crypto_1 = __importDefault(require("crypto"));
 const prisma_1 = __importDefault(require("../utils/prisma"));
 const auth_1 = require("../middleware/auth");
 const uuid_1 = require("uuid");
@@ -29,12 +30,9 @@ function getRouteParam(value) {
     return Array.isArray(value) ? value[0] : value;
 }
 function generateInquiryNumber() {
-    const chars = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ';
-    let rand = '';
-    for (let i = 0; i < 6; i++) {
-        rand += chars.charAt(Math.floor(Math.random() * chars.length));
-    }
-    return `INQ-${rand}`;
+    const ts = Date.now().toString(36).toUpperCase();
+    const rand = crypto_1.default.randomBytes(3).toString('hex').toUpperCase();
+    return `INQ-${ts}-${rand}`;
 }
 // ----------------------------------------------------
 // PUBLIC ROUTE: POST /api/v1/inquiries
@@ -203,10 +201,16 @@ router.post('/', publicInquiryLimiter, async (req, res) => {
                 error: emailResult.ownerError,
             },
         ];
-        await prisma_1.default.contactinquiry.update({
-            where: { id: inquiry.id },
-            data: { communicationHistory: JSON.stringify(communicationHistory) },
-        });
+        try {
+            await prisma_1.default.contactinquiry.update({
+                where: { id: inquiry.id },
+                data: { communicationHistory: JSON.stringify(communicationHistory) },
+            });
+        }
+        catch (updateError) {
+            console.warn('Failed to update inquiry communication history', updateError);
+            // Continue - inquiry is saved, just without communication history
+        }
         return res.status(201).json({
             success: true,
             submissionReceived: true,
@@ -220,12 +224,19 @@ router.post('/', publicInquiryLimiter, async (req, res) => {
                 customerConfirmation: emailResult.customerError,
                 ownerNotification: emailResult.ownerError,
             },
-            message: 'Your inquiry has been successfully submitted. We will contact you soon.',
+            message: emailResult.customerSent && emailResult.ownerSent
+                ? 'Your inquiry has been successfully submitted. We will contact you soon.'
+                : 'Your inquiry has been saved. We will contact you soon.',
         });
     }
     catch (err) {
         console.error('Submit inquiry error:', err);
-        res.status(500).json({ error: 'Failed to submit inquiry' });
+        // Return proper error response with available context
+        res.status(500).json({
+            error: 'Failed to submit inquiry. Please try again later.',
+            submissionReceived: false,
+            inquiryId: undefined,
+        });
     }
 });
 // ----------------------------------------------------
@@ -787,7 +798,11 @@ router.delete('/:id/notes/:noteId', auth_1.authenticate, async (req, res) => {
 // ----------------------------------------------------
 router.post('/:id/reply', auth_1.authenticate, inquiryReplyLimiter, async (req, res) => {
     try {
-        const { subject, message, updateStatusToResponded = true } = req.body;
+        const { to, subject, message, updateStatusToResponded = true } = req.body;
+        const recipient = typeof to === 'string' ? to.trim().toLowerCase() : '';
+        if (!(0, emailService_1.isValidEmail)(recipient)) {
+            return res.status(400).json({ error: 'A valid recipient email address is required.' });
+        }
         if (typeof subject !== 'string' || !subject.trim() || subject.length > 200 || /[\r\n]/.test(subject)) {
             return res.status(400).json({ error: 'Email subject is required.' });
         }
@@ -799,12 +814,12 @@ router.post('/:id/reply', auth_1.authenticate, inquiryReplyLimiter, async (req, 
         if (!current) {
             return res.status(404).json({ error: 'Inquiry not found' });
         }
-        const adminName = req.adminUser?.name || 'Preferred Tax Consultancy Team';
+        const adminName = req.adminUser?.name || 'STE Smart Tax Experts Team';
         const nowIso = new Date().toISOString();
         // Send email to customer
         const brand = (0, emailTemplateService_1.getBrandContext)();
         const delivery = await (0, emailService_1.sendEmail)({
-            to: current.email,
+            to: recipient,
             subject: subject.trim(),
             replyTo: process.env.SMTP_FROM_EMAIL || process.env.SMTP_USER,
             html: (0, emailTemplateService_1.buildAdminReplyEmail)({
@@ -826,7 +841,7 @@ router.post('/:id/reply', auth_1.authenticate, inquiryReplyLimiter, async (req, 
             subject: subject.trim(),
             body: message.trim(),
             sender: adminName,
-            recipient: current.email,
+            recipient,
             timestamp: nowIso,
             deliveryStatus: delivery.success ? 'accepted_by_smtp' : 'not_accepted',
             messageId: delivery.messageId,

@@ -11,7 +11,148 @@ const jwt_1 = require("../utils/jwt");
 const auth_1 = require("../middleware/auth");
 const activityLog_1 = require("../services/activityLog");
 const uuid_1 = require("uuid");
+const express_rate_limit_1 = __importDefault(require("express-rate-limit"));
+const adminOtpService_1 = require("../services/adminOtpService");
 const router = (0, express_1.Router)();
+// Rate limiter for OTP requests: max 5 requests per IP every 5 minutes
+const otpRequestRateLimiter = (0, express_rate_limit_1.default)({
+    windowMs: 5 * 60 * 1000,
+    max: 10,
+    standardHeaders: true,
+    legacyHeaders: false,
+    message: { error: 'Too many login code requests. Please wait a few minutes before trying again.' },
+});
+// Rate limiter for OTP verifications: max 15 attempts per IP every 5 minutes
+const otpVerifyRateLimiter = (0, express_rate_limit_1.default)({
+    windowMs: 5 * 60 * 1000,
+    max: 20,
+    standardHeaders: true,
+    legacyHeaders: false,
+    message: { error: 'Too many verification attempts. Please wait a few minutes.' },
+});
+const requestOtpSchema = zod_1.z.object({
+    username: zod_1.z.string().min(1, 'Username is required'),
+});
+const verifyOtpSchema = zod_1.z.object({
+    username: zod_1.z.string().min(1, 'Username is required'),
+    otp: zod_1.z.string().regex(/^\d{8}$/, 'Temporary password must be 8 digits'),
+});
+// POST /api/v1/auth/request-otp (Step 1: Enter Username & Send 8-digit temporary password via SMTP)
+router.post('/request-otp', otpRequestRateLimiter, async (req, res) => {
+    try {
+        const { username } = requestOtpSchema.parse(req.body);
+        const ipAddress = req.ip || req.socket.remoteAddress;
+        const userAgent = req.headers['user-agent'];
+        // Trigger non-blocking cleanup of stale OTPs
+        void (0, adminOtpService_1.cleanupExpiredOtps)();
+        const result = await (0, adminOtpService_1.requestAdminOtp)({
+            usernameOrEmail: username,
+            ipAddress,
+            userAgent,
+        });
+        if (!result.success) {
+            return res.status(400).json({
+                error: result.message,
+                userExists: result.userExists,
+                cooldownSeconds: result.cooldownSeconds,
+            });
+        }
+        await (0, activityLog_1.logActivity)({
+            action: 'admin_otp_requested',
+            details: { username, maskedEmail: result.maskedEmail },
+            ipAddress,
+            severity: 'info',
+        });
+        res.json({
+            success: true,
+            userExists: true,
+            message: result.message,
+            maskedEmail: result.maskedEmail,
+            expiresInSeconds: result.expiresInSeconds,
+            cooldownSeconds: result.cooldownSeconds,
+        });
+    }
+    catch (err) {
+        if (err.name === 'ZodError') {
+            return res.status(400).json({ error: 'Username is required', details: err.errors });
+        }
+        res.status(500).json({ error: 'Server error processing temporary password request' });
+    }
+});
+// POST /api/v1/auth/verify-otp (Step 2 & 3: Email Verification & Successful Login)
+router.post('/verify-otp', otpVerifyRateLimiter, async (req, res) => {
+    try {
+        const { username, otp } = verifyOtpSchema.parse(req.body);
+        const ipAddress = req.ip || req.socket.remoteAddress;
+        const userAgent = req.headers['user-agent'];
+        const result = await (0, adminOtpService_1.verifyAdminOtp)({
+            usernameOrEmail: username,
+            otp,
+            ipAddress,
+            userAgent,
+        });
+        if (!result.success || !result.admin) {
+            await (0, activityLog_1.logActivity)({
+                action: 'admin_otp_failed',
+                details: { username, error: result.error, attemptsRemaining: result.attemptsRemaining },
+                ipAddress,
+                severity: 'warning',
+            });
+            return res.status(401).json({
+                error: result.error || 'Invalid or expired temporary password',
+                attemptsRemaining: result.attemptsRemaining,
+            });
+        }
+        const admin = result.admin;
+        const isSuperAdmin = admin.adminrole?.name === 'SUPER_ADMIN';
+        const payload = {
+            adminId: admin.id,
+            email: admin.email,
+            isSuperAdmin,
+            roleId: admin.roleId || undefined,
+        };
+        const accessToken = (0, jwt_1.signAccessToken)(payload);
+        const refreshToken = (0, jwt_1.signRefreshToken)({ adminId: admin.id });
+        // Set secure session cookies (no maxAge or expires set -> session cookie, deleted on browser close)
+        res.cookie('admin_access_token', accessToken, {
+            httpOnly: true,
+            secure: process.env.NODE_ENV === 'production',
+            sameSite: 'lax',
+        });
+        res.cookie('admin_refresh_token', refreshToken, {
+            httpOnly: true,
+            secure: process.env.NODE_ENV === 'production',
+            sameSite: 'lax',
+        });
+        await (0, activityLog_1.logActivity)({
+            adminId: admin.id,
+            action: 'admin_otp_login_success',
+            details: { username: admin.name, email: admin.email },
+            ipAddress,
+            severity: 'info',
+        });
+        const nameParts = admin.name.split(' ');
+        res.json({
+            success: true,
+            accessToken,
+            refreshToken,
+            admin: {
+                id: admin.id,
+                email: admin.email,
+                firstName: nameParts[0] || 'Admin',
+                lastName: nameParts.slice(1).join(' ') || '',
+                avatar: admin.image,
+                isSuperAdmin,
+            },
+        });
+    }
+    catch (err) {
+        if (err.name === 'ZodError') {
+            return res.status(400).json({ error: 'Invalid input. Please provide username and 8-digit code.', details: err.errors });
+        }
+        res.status(500).json({ error: 'Server error verifying temporary password' });
+    }
+});
 const loginSchema = zod_1.z.object({
     email: zod_1.z.string().email(),
     password: zod_1.z.string().min(1),

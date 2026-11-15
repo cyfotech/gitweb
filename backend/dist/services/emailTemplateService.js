@@ -222,7 +222,7 @@ function buildOwnerNotification(data, brand = getBrandContext()) {
       <div style="display:inline-flex;align-items:center;gap:12px;background:linear-gradient(135deg,${BRAND.emerald} 0%,${BRAND.mint} 100%);color:${BRAND.white};font-size:12px;font-weight:800;letter-spacing:1.5px;text-transform:uppercase;padding:10px 20px;border-radius:999px;margin-bottom:20px;box-shadow:0 4px 12px rgba(15,94,59,0.3);">
         <span style="font-size:16px;">⚡</span> New Website Enquiry
       </div>
-      <h2 style="margin:0 0 12px 0;font-size:24px;color:${BRAND.emerald};font-weight:800;letter-spacing:-0.5px;">${escapeHtml(heading)}</h2>
+      <h2 style="margin:0 0 12px 0;font-size:24px;color:#0F172A;font-weight:800;letter-spacing:-0.5px;">${escapeHtml(heading)}</h2>
       <div style="background:linear-gradient(135deg,#FFF8E1 0%,#FFF3C7 100%);border:2px solid #FFD54F;padding:12px 16px;border-radius:8px;margin-bottom:24px;">
         <p style="font-size:14px;color:${BRAND.textPrimary};margin:0;font-weight:600;">Reference: <strong style="color:${BRAND.emerald};font-size:16px;font-family:monospace;">${escapeHtml(data.referenceNumber)}</strong></p>
       </div>
@@ -370,7 +370,7 @@ function buildCareerApplicationNotification(data, brand = getBrandContext()) {
       <div style="display:inline-flex;align-items:center;gap:12px;background:linear-gradient(135deg,${BRAND.emerald} 0%,${BRAND.mint} 100%);color:${BRAND.white};font-size:12px;font-weight:800;letter-spacing:1.5px;text-transform:uppercase;padding:10px 20px;border-radius:999px;margin-bottom:20px;box-shadow:0 4px 12px rgba(15,94,59,0.3);">
         <span style="font-size:16px;">💼</span> New Career Application
       </div>
-      <h2 style="margin:0 0 12px 0;font-size:24px;color:${BRAND.emerald};font-weight:800;letter-spacing:-0.5px;">${escapeHtml(data.customerName)} - ${escapeHtml(data.position)}</h2>
+      <h2 style="margin:0 0 12px 0;font-size:24px;color:#0F172A;font-weight:800;letter-spacing:-0.5px;">${escapeHtml(data.customerName)} - ${escapeHtml(data.position)}</h2>
       <div style="background:linear-gradient(135deg,#FFF8E1 0%,#FFF3C7 100%);border:2px solid #FFD54F;padding:12px 16px;border-radius:8px;margin-bottom:24px;">
         <p style="font-size:14px;color:${BRAND.textPrimary};margin:0;font-weight:600;">Application ID: <strong style="color:${BRAND.emerald};font-size:16px;font-family:monospace;">${escapeHtml(data.referenceNumber)}</strong></p>
       </div>

@@ -1,6 +1,7 @@
 import React from 'react';
 import BackToServices from '../../components/navigation/BackToServices';
 import ScrollNavigation from '../../components/navigation/ScrollNavigation';
+import { inquiriesApi } from '../../api/inquiries';
 
 /**
  * Bookkeeping & Accounting Support page.
@@ -12,7 +13,7 @@ import ScrollNavigation from '../../components/navigation/ScrollNavigation';
 class BookkeepingPage extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { aud: 0, mix: 50, svc: 0, phase: 0, rep: 0, ans: [null, null, null, null, null, null], model: 0, who: 0, faq: 0, fa: 0, need: { 0: true }, sent: false };
+    this.state = { aud: 0, mix: 50, svc: 0, phase: 0, rep: 0, ans: [null, null, null, null, null, null], model: 0, who: 0, faq: 0, fa: 0, need: { 0: true }, sent: false, submitting: false, submitError: "" };
     this.timer = null;
   }
   componentDidMount() {
@@ -241,7 +242,56 @@ class BookkeepingPage extends React.Component {
       whoPrev: () => goWho((s.who + 3) % 4), whoNext: () => goWho((s.who + 1) % 4),
       faqs, fq,
       formAud, needs, submitLabel, sent: s.sent,
-      onSubmit: (e) => { if (e && e.preventDefault) e.preventDefault(); set({ sent: true }); }
+      submitting: s.submitting,
+      submitError: s.submitError,
+      onSubmit: async (e) => {
+        if (e && e.preventDefault) e.preventDefault();
+        if (s.submitting) return;
+
+        const nameInput = document.getElementById("bk-name");
+        const emailInput = document.getElementById("bk-email");
+        const swInput = document.getElementById("bk-sw");
+        const msgInput = document.getElementById("bk-msg");
+
+        const name = (nameInput && nameInput.value || "").trim();
+        const email = (emailInput && emailInput.value || "").trim();
+        const software = (swInput && swInput.value || "").trim();
+        const msg = (msgInput && msgInput.value || "").trim();
+
+        if (!name) {
+          set({ submitError: "Please enter your name." });
+          if (nameInput) nameInput.focus();
+          return;
+        }
+        if (!email || !/.+@.+\..+/.test(email)) {
+          set({ submitError: "Please enter a valid email address." });
+          if (emailInput) emailInput.focus();
+          return;
+        }
+
+        set({ submitting: true, submitError: "" });
+        try {
+          const audLabels = ["Business", "Self-employed", "CPA firm"];
+          const audLabel = audLabels[s.aud] || "Business";
+          const selectedNeeds = (needs || []).filter(n => n.pressed).map(n => n.label);
+          await inquiriesApi.submit({
+            name,
+            email,
+            inquiryType: "Bookkeeping & Accounting Inquiry",
+            subject: "Bookkeeping - " + audLabel,
+            message: [
+              "Client Profile: " + audLabel,
+              selectedNeeds.length > 0 ? "Support Needed: " + selectedNeeds.join(", ") : "",
+              software ? "Accounting Software: " + software : "",
+              msg ? "Details: " + msg : ""
+            ].filter(Boolean).join("\n") || "Bookkeeping enquiry request.",
+            sourcePage: "/services/bookkeeping"
+          });
+          set({ sent: true, submitting: false, submitError: "" });
+        } catch (err) {
+          set({ submitting: false, submitError: err?.message || "Submission failed. Please try again." });
+        }
+      }
     };
   }
 
@@ -252,7 +302,7 @@ class BookkeepingPage extends React.Component {
       phases, arcs, ph, repTabs, repTitle, repQ, repA, r0, r1, r2, pl, assets, liabs, wf,
       qs, answered, score, verdict, verdictD, verdictCta, gaugeCol, gaugeOff, resetQs,
       models, payroll, steps, quality, conf, who, whoDots, whoX, whoPrev, whoNext,
-      faqs, fq, formAud, needs, submitLabel, sent, onSubmit,
+      faqs, fq, formAud, needs, submitLabel, sent, submitting, submitError, onSubmit,
       v0, v1, v2, v3, v4, v5, v6, v7, ...vflags
     } = this.renderVals();
     return (
@@ -3330,8 +3380,13 @@ class BookkeepingPage extends React.Component {
                 <div style={{ display: "flex", flexWrap: "wrap", gap: "12px", alignItems: "center" }}>
 
 
-                  <button type="submit" className="b b-mint" style={{ paddingRight: "10px" }}>
-                    {submitLabel}
+                  {submitError && (
+                    <div style={{ color: "#EF4444", fontSize: "13px", fontWeight: 600, width: "100%", marginBottom: "4px" }}>
+                      {submitError}
+                    </div>
+                  )}
+                  <button type="submit" disabled={submitting} className="b b-mint" style={{ paddingRight: "10px", opacity: submitting ? 0.7 : 1 }}>
+                    {submitting ? "Sending..." : submitLabel}
                     <span className="ar">
                       <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.6" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
                         <path d="M5 12h14M13 6l6 6-6 6"></path>

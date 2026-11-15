@@ -19,7 +19,7 @@ export default function BackToServices() {
   const navigate = useNavigate();
   const location = useLocation();
 
-  const handleClick = (e) => {
+  const handleClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
     e.preventDefault();
     const fromCore = location.state && location.state.fromCore === true;
     if (fromCore) {

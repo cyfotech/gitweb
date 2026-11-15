@@ -93,12 +93,12 @@ router.get('/:id', auth_1.authenticate, async (req, res) => {
 // GET /api/v1/pages/slug/:slug - get by slug (for public frontend)
 router.get('/slug/:slug', async (req, res) => {
     try {
+        res.set('Cache-Control', 'no-store');
         const slug = String(req.params.slug);
         const page = await prisma_1.default.websitepage.findFirst({
             where: { slug, status: 'published' },
             include: {
                 pagesection: {
-                    where: { isEnabled: true },
                     orderBy: { displayOrder: 'asc' },
                 },
                 pageseo: true,
@@ -108,7 +108,19 @@ router.get('/slug/:slug', async (req, res) => {
             return res.status(404).json({ error: 'Page not found' });
         // Public endpoint: strip draftData and revision internals so unpublished
         // content is never exposed to the public site.
-        const cleanSections = page.pagesection.map(({ draftData, revisionId, parentSectionId, updatedAt, ...rest }) => rest);
+        const cleanSections = page.pagesection.map(({ draftData, revisionId, parentSectionId, updatedAt, ...section }) => (section.isEnabled
+            ? section
+            : {
+                ...section,
+                title: null,
+                subheading: null,
+                description: null,
+                content: null,
+                backgroundImage: null,
+                backgroundVideo: null,
+                imagePosition: null,
+                imageAltText: null,
+            }));
         res.json({
             id: page.id,
             slug: page.slug,

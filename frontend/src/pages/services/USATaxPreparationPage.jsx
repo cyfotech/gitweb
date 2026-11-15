@@ -1,6 +1,7 @@
 import React from 'react';
 import BackToServices from '../../components/navigation/BackToServices';
 import ScrollNavigation from '../../components/navigation/ScrollNavigation';
+import { inquiriesApi } from '../../api/inquiries';
 
 
 function cssToStyle(input) {
@@ -306,8 +307,47 @@ class TaxPreparationPage extends React.Component {
       enq: enq,
       msgLabel: cur.label, msgPh: cur.ph, submitLabel: cur.submit,
       sent: s.sent, notSent: !s.sent,
-      submit: function (e) { if (e && e.preventDefault) e.preventDefault(); self.setState({ sent: true }); },
-      reset: function () { self.setState({ sent: false }); }
+      submitting: s.submitting,
+      submitError: s.submitError,
+      submit: async function (e) {
+        if (e && e.preventDefault) e.preventDefault();
+        if (self.state && self.state.submitting) return;
+
+        const nameInput = document.getElementById('f-name');
+        const emailInput = document.getElementById('f-email');
+        const msgInput = document.getElementById('f-msg');
+
+        const name = (nameInput && nameInput.value || '').trim();
+        const email = (emailInput && emailInput.value || '').trim();
+        const msg = (msgInput && msgInput.value || '').trim();
+
+        if (!name) {
+          self.setState({ submitError: 'Please enter your name.' });
+          if (nameInput) nameInput.focus();
+          return;
+        }
+        if (!email || !/.+@.+\..+/.test(email)) {
+          self.setState({ submitError: 'Please enter a valid email address.' });
+          if (emailInput) emailInput.focus();
+          return;
+        }
+
+        self.setState({ submitting: true, submitError: '' });
+        try {
+          await inquiriesApi.submit({
+            name,
+            email,
+            inquiryType: 'USA Tax Preparation Inquiry',
+            subject: 'Tax Prep - ' + cur.t,
+            message: msg || `Looking for ${cur.t} support.`,
+            sourcePage: '/services/usa-tax-preparation'
+          });
+          self.setState({ sent: true, submitting: false, submitError: '' });
+        } catch (err) {
+          self.setState({ submitting: false, submitError: err?.message || 'Submission failed. Please try again.' });
+        }
+      },
+      reset: function () { self.setState({ sent: false, submitting: false, submitError: '' }); }
     };
   }
 
@@ -756,7 +796,7 @@ class TaxPreparationPage extends React.Component {
 
                         <div style={cssToStyle("flex: 1; display: flex; flex-direction: column; padding: clamp(28px, 4vw, 52px); position: relative;")}>
 
-                          <p className="mono outline-num slide-in" aria-hidden="true" style={cssToStyle("position: absolute; right: clamp(16px, 3vw, 40px); top: 6px; font-size: clamp(90px, 13vw, 190px); font-weight: 500; letter-spacing: -0.05em; line-height: 1; pointer-events: none; color: rgb(255, 255, 255); -webkit-text-fill-color: rgb(255, 255, 255); -webkit-text-stroke: 0; opacity: 0.12;")}>{s.form}</p>
+                          <p className="mono outline-num slide-in" aria-hidden="true" style={cssToStyle("position: absolute; right: clamp(16px, 3vw, 40px); top: 6px; font-size: clamp(90px, 13vw, 190px); font-weight: 500; letter-spacing: -0.05em; line-height: 1; pointer-events: none;")}>{s.form}</p>
 
 
                           <p className="mono slide-in" style={cssToStyle("position: relative; font-size: 12px; letter-spacing: 0.14em; color: var(--acc); text-transform: uppercase;")}>{s.num} / 06 · {s.tag}</p>
@@ -1764,7 +1804,14 @@ class TaxPreparationPage extends React.Component {
                         <textarea id="f-msg" rows="4" placeholder={v.msgPh} style={cssToStyle("min-height: 120px; resize: vertical;")}></textarea></div>
 
 
-                      <button type="submit" className="btn btn-acc" style={cssToStyle("width: 100%; min-height: 56px; font-size: 16px;")}>{v.submitLabel}
+                      {v.submitError && (
+                        <div style={{ color: '#F87171', fontSize: '13px', fontWeight: 600 }}>
+                          {v.submitError}
+                        </div>
+                      )}
+
+                      <button type="submit" disabled={v.submitting} className="btn btn-acc" style={cssToStyle("width: 100%; min-height: 56px; font-size: 16px; opacity: " + (v.submitting ? '0.7' : '1') + ";")}>
+                        {v.submitting ? 'Sending...' : v.submitLabel}
                         <svg width="16" height="16" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"></path></svg></button>
 
 

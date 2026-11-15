@@ -1,6 +1,7 @@
 import React, { Fragment, useCallback, useEffect, useState } from 'react';
 import BackToServices from '../../components/navigation/BackToServices';
 import ScrollNavigation from '../../components/navigation/ScrollNavigation';
+import { inquiriesApi } from '../../api/inquiries';
 
 /**
  * USA Payroll Management — main service page
@@ -82,6 +83,492 @@ input,select,textarea{font:400 15px Inter,sans-serif}
 .grow-x{transform-origin:left;animation:grow linear both;animation-timeline:view();animation-range:entry 10% cover 40%}
 .progress{animation:grow linear both;animation-timeline:scroll(root)}
 }
+@media (max-width: 640px){
+  .hero-pill-fica{left: 0px !important; top: -14px !important;}
+  .hero-pill-ot{right: 12px !important; bottom: -20px !important; left: auto !important;}
+  .conveyor-track, .conveyor-token { display: none !important; }
+  .stations-grid {
+    display: flex !important;
+    overflow-x: auto !important;
+    scroll-snap-type: x mandatory !important;
+    gap: 16px !important;
+    padding: 8px 4px 18px !important;
+    -webkit-overflow-scrolling: touch !important;
+    scrollbar-width: thin !important;
+  }
+  .stations-grid > a {
+    flex: 0 0 140px !important;
+    scroll-snap-align: start !important;
+  }
+  section {
+    padding-left: 18px !important;
+    padding-right: 18px !important;
+    padding-top: clamp(48px, 12vw, 72px) !important;
+    padding-bottom: clamp(48px, 12vw, 72px) !important;
+  }
+  section#top {
+    padding-top: calc(72px + 20px) !important;
+  }
+  .wrap {
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+  }
+  .h {
+    word-break: break-word;
+  }
+  .doubt {
+    border-radius: 20px !important;
+    padding: 16px !important;
+    flex-direction: column !important;
+    align-items: stretch !important;
+    gap: 14px !important;
+    max-width: 100% !important;
+    box-sizing: border-box !important;
+  }
+  .dq {
+    flex: none !important;
+    width: 100% !important;
+    font-size: 15px !important;
+  }
+  .dbtn {
+    width: 100% !important;
+    justify-content: center !important;
+    text-align: center !important;
+    box-sizing: border-box !important;
+    white-space: normal !important;
+    padding: 12px 18px !important;
+    min-height: 48px !important;
+    line-height: 1.3 !important;
+  }
+  .perf {
+    background-size: 12px 8px !important;
+  }
+  .card, .rv {
+    max-width: 100% !important;
+    box-sizing: border-box !important;
+  }
+  table {
+    display: block !important;
+    overflow-x: auto !important;
+    max-width: 100% !important;
+    -webkit-overflow-scrolling: touch !important;
+  }
+}
+
+/* ===== Responsive layout + theme-aware corrections ===== */
+/* Hide the page-internal header — the global site header handles navigation */
+.stx > header {
+  display: none !important;
+}
+.stx {
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+  overflow-x: clip;
+  color: #0B1A1E;
+  background: #F1F4F2;
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+.stx *, .stx *::before, .stx *::after { box-sizing: border-box; }
+.stx .wrap { width: 100%; max-width: 1240px; min-width: 0; }
+.stx :where(div, section, article, aside, nav, main, header, footer, form) { min-width: 0; }
+.stx :where(img, video, iframe, canvas, svg) { max-width: 100%; }
+.stx :where(h1,h2,h3,h4,h5,h6,p,li,a,button,label,span) { overflow-wrap: anywhere; }
+.stx :where(p,li) { text-wrap: pretty; }
+.stx button, .stx input, .stx select, .stx textarea { max-width: 100%; }
+.stx input, .stx select, .stx textarea { min-width: 0; }
+.stx .btn, .stx .dbtn, .stx .tab { max-width: 100%; }
+.stx .subnav { max-width: 100%; }
+.stx .subnav > .wrap { min-width: 0; }
+.stx .card-h, .stx .rv, .stx .panel-in { min-width: 0; }
+.stx .card-h { overflow-wrap: anywhere; }
+.stx .marquee { will-change: transform; }
+.stx .tile:hover, .stx .card-h:hover { transform: none; }
+.stx :target { scroll-margin-top: 86px; }
+
+/* Support the common theme-switching patterns used by the parent application. */
+html[data-theme="dark"] body,
+body[data-theme="dark"],
+html.dark body,
+body.dark,
+body.dark-theme,
+.dark-theme body,
+.dark-mode body,
+html[data-theme="dark"] .stx,
+body[data-theme="dark"] .stx,
+html.dark .stx,
+body.dark .stx,
+.dark .stx,
+.theme-dark .stx,
+[data-mode="dark"] .stx,
+body.dark-theme .stx,
+.dark-theme .stx,
+body.dark-mode .stx,
+.dark-mode .stx,
+.stx[data-theme="dark"] {
+  background: #08131F !important;
+  color: #E5EDF5 !important;
+  color-scheme: dark;
+}
+html[data-theme="dark"] .stx #why,
+body[data-theme="dark"] .stx #why,
+html.dark .stx #why,
+body.dark .stx #why,
+.dark .stx #why,
+.theme-dark .stx #why,
+[data-mode="dark"] .stx #why,
+.stx[data-theme="dark"] #why {
+  background: #0F1E2C !important;
+  border-color: rgba(203,213,225,.16) !important;
+}
+html[data-theme="dark"] .stx .subnav,
+body[data-theme="dark"] .stx .subnav,
+html.dark .stx .subnav,
+body.dark .stx .subnav,
+.dark .stx .subnav,
+.theme-dark .stx .subnav,
+[data-mode="dark"] .stx .subnav,
+.stx[data-theme="dark"] .subnav {
+  background: rgba(8,19,31,.94) !important;
+  border-color: rgba(203,213,225,.18) !important;
+}
+html[data-theme="dark"] .stx .subnav a,
+body[data-theme="dark"] .stx .subnav a,
+html.dark .stx .subnav a,
+body.dark .stx .subnav a,
+.dark .stx .subnav a,
+.theme-dark .stx .subnav a,
+[data-mode="dark"] .stx .subnav a,
+.stx[data-theme="dark"] .subnav a { color: #CBD5E1 !important; }
+html[data-theme="dark"] .stx .subnav a:hover,
+body[data-theme="dark"] .stx .subnav a:hover,
+html.dark .stx .subnav a:hover,
+body.dark .stx .subnav a:hover,
+.dark .stx .subnav a:hover,
+.theme-dark .stx .subnav a:hover,
+[data-mode="dark"] .stx .subnav a:hover,
+.stx[data-theme="dark"] .subnav a:hover { color: #37E191 !important; background: rgba(55,225,145,.10) !important; }
+
+/* Turn pale, white panels into readable dark surfaces when the site is in dark mode. */
+html[data-theme="dark"] .stx [style*="background: rgb(255, 255, 255)"],
+body[data-theme="dark"] .stx [style*="background: rgb(255, 255, 255)"],
+html.dark .stx [style*="background: rgb(255, 255, 255)"],
+body.dark .stx [style*="background: rgb(255, 255, 255)"],
+.dark .stx [style*="background: rgb(255, 255, 255)"],
+.theme-dark .stx [style*="background: rgb(255, 255, 255)"],
+[data-mode="dark"] .stx [style*="background: rgb(255, 255, 255)"],
+.stx[data-theme="dark"] [style*="background: rgb(255, 255, 255)"],
+html[data-theme="dark"] .stx [style*="background:#FFFFFF"],
+body[data-theme="dark"] .stx [style*="background:#FFFFFF"],
+html.dark .stx [style*="background:#FFFFFF"],
+body.dark .stx [style*="background:#FFFFFF"],
+.dark .stx [style*="background:#FFFFFF"],
+.theme-dark .stx [style*="background:#FFFFFF"],
+[data-mode="dark"] .stx [style*="background:#FFFFFF"],
+.stx[data-theme="dark"] [style*="background:#FFFFFF"],
+html[data-theme="dark"] .stx [style*="background: rgb(247, 249, 248)"],
+body[data-theme="dark"] .stx [style*="background: rgb(247, 249, 248)"],
+html.dark .stx [style*="background: rgb(247, 249, 248)"],
+body.dark .stx [style*="background: rgb(247, 249, 248)"],
+.dark .stx [style*="background: rgb(247, 249, 248)"],
+.theme-dark .stx [style*="background: rgb(247, 249, 248)"],
+[data-mode="dark"] .stx [style*="background: rgb(247, 249, 248)"],
+.stx[data-theme="dark"] [style*="background: rgb(247, 249, 248)"],
+html[data-theme="dark"] .stx [style*="background: rgb(241, 244, 242)"],
+body[data-theme="dark"] .stx [style*="background: rgb(241, 244, 242)"],
+html.dark .stx [style*="background: rgb(241, 244, 242)"],
+body.dark .stx [style*="background: rgb(241, 244, 242)"],
+.dark .stx [style*="background: rgb(241, 244, 242)"],
+.theme-dark .stx [style*="background: rgb(241, 244, 242)"],
+[data-mode="dark"] .stx [style*="background: rgb(241, 244, 242)"],
+.stx[data-theme="dark"] [style*="background: rgb(241, 244, 242)"],
+html[data-theme="dark"] .stx [style*="background: rgb(227, 233, 230)"],
+body[data-theme="dark"] .stx [style*="background: rgb(227, 233, 230)"],
+html.dark .stx [style*="background: rgb(227, 233, 230)"],
+body.dark .stx [style*="background: rgb(227, 233, 230)"],
+.dark .stx [style*="background: rgb(227, 233, 230)"],
+.theme-dark .stx [style*="background: rgb(227, 233, 230)"],
+[data-mode="dark"] .stx [style*="background: rgb(227, 233, 230)"],
+.stx[data-theme="dark"] [style*="background: rgb(227, 233, 230)"],
+html[data-theme="dark"] .stx [style*="background: rgb(238, 242, 240)"],
+body[data-theme="dark"] .stx [style*="background: rgb(238, 242, 240)"],
+html.dark .stx [style*="background: rgb(238, 242, 240)"],
+body.dark .stx [style*="background: rgb(238, 242, 240)"],
+.dark .stx [style*="background: rgb(238, 242, 240)"],
+.theme-dark .stx [style*="background: rgb(238, 242, 240)"],
+[data-mode="dark"] .stx [style*="background: rgb(238, 242, 240)"],
+.stx[data-theme="dark"] [style*="background: rgb(238, 242, 240)"] {
+  background: #132433 !important;
+  color: #E5EDF5 !important;
+  border-color: rgba(203,213,225,.18) !important;
+}
+html[data-theme="dark"] .stx [style*="background: rgb(255, 255, 255)"] :is(h1,h2,h3,h4,h5,h6,p,li,label,small),
+html.dark .stx [style*="background: rgb(255, 255, 255)"] :is(h1,h2,h3,h4,h5,h6,p,li,label,small),
+body.dark .stx [style*="background: rgb(255, 255, 255)"] :is(h1,h2,h3,h4,h5,h6,p,li,label,small),
+.dark .stx [style*="background: rgb(255, 255, 255)"] :is(h1,h2,h3,h4,h5,h6,p,li,label,small),
+.theme-dark .stx [style*="background: rgb(255, 255, 255)"] :is(h1,h2,h3,h4,h5,h6,p,li,label,small),
+[data-mode="dark"] .stx [style*="background: rgb(255, 255, 255)"] :is(h1,h2,h3,h4,h5,h6,p,li,label,small),
+.stx[data-theme="dark"] [style*="background: rgb(255, 255, 255)"] :is(h1,h2,h3,h4,h5,h6,p,li,label,small) { color: #D5E0EA !important; }
+html[data-theme="dark"] .stx [style*="background: rgb(255, 255, 255)"] .h,
+html.dark .stx [style*="background: rgb(255, 255, 255)"] .h,
+body.dark .stx [style*="background: rgb(255, 255, 255)"] .h,
+.dark .stx [style*="background: rgb(255, 255, 255)"] .h,
+.theme-dark .stx [style*="background: rgb(255, 255, 255)"] .h,
+[data-mode="dark"] .stx [style*="background: rgb(255, 255, 255)"] .h,
+.stx[data-theme="dark"] [style*="background: rgb(255, 255, 255)"] .h { color: #F8FAFC !important; }
+html[data-theme="dark"] .stx [style*="color: rgb(74, 90, 94)"],
+body[data-theme="dark"] .stx [style*="color: rgb(74, 90, 94)"],
+html.dark .stx [style*="color: rgb(74, 90, 94)"],
+body.dark .stx [style*="color: rgb(74, 90, 94)"],
+.dark .stx [style*="color: rgb(74, 90, 94)"],
+.theme-dark .stx [style*="color: rgb(74, 90, 94)"],
+[data-mode="dark"] .stx [style*="color: rgb(74, 90, 94)"],
+.stx[data-theme="dark"] [style*="color: rgb(74, 90, 94)"],
+html[data-theme="dark"] .stx [style*="color:#4A5A5E"],
+html.dark .stx [style*="color:#4A5A5E"],
+body.dark .stx [style*="color:#4A5A5E"],
+.dark .stx [style*="color:#4A5A5E"],
+.theme-dark .stx [style*="color:#4A5A5E"],
+[data-mode="dark"] .stx [style*="color:#4A5A5E"],
+.stx[data-theme="dark"] [style*="color:#4A5A5E"] { color: #C2CFDC !important; }
+html[data-theme="dark"] .stx .lnk,
+body[data-theme="dark"] .stx .lnk,
+html.dark .stx .lnk,
+body.dark .stx .lnk,
+.dark .stx .lnk,
+.theme-dark .stx .lnk,
+[data-mode="dark"] .stx .lnk,
+.stx[data-theme="dark"] .lnk { color: #55E6A1 !important; }
+html[data-theme="dark"] .stx input:not([type="range"]),
+html[data-theme="dark"] .stx select,
+html[data-theme="dark"] .stx textarea,
+html.dark .stx input:not([type="range"]),
+html.dark .stx select,
+html.dark .stx textarea,
+body.dark .stx input:not([type="range"]),
+body.dark .stx select,
+body.dark .stx textarea,
+.dark .stx input:not([type="range"]),
+.dark .stx select,
+.dark .stx textarea,
+.theme-dark .stx input:not([type="range"]),
+.theme-dark .stx select,
+.theme-dark .stx textarea,
+[data-mode="dark"] .stx input:not([type="range"]),
+[data-mode="dark"] .stx select,
+[data-mode="dark"] .stx textarea,
+.stx[data-theme="dark"] input:not([type="range"]),
+.stx[data-theme="dark"] select,
+.stx[data-theme="dark"] textarea {
+  color: #F1F5F9 !important;
+  background: #0D1B28 !important;
+  border-color: #526273 !important;
+}
+html[data-theme="dark"] .stx input::placeholder,
+html.dark .stx input::placeholder,
+body.dark .stx input::placeholder,
+.dark .stx input::placeholder,
+.theme-dark .stx input::placeholder,
+[data-mode="dark"] .stx input::placeholder,
+.stx[data-theme="dark"] input::placeholder,
+html[data-theme="dark"] .stx textarea::placeholder,
+html.dark .stx textarea::placeholder,
+body.dark .stx textarea::placeholder,
+.dark .stx textarea::placeholder,
+.theme-dark .stx textarea::placeholder,
+[data-mode="dark"] .stx textarea::placeholder,
+.stx[data-theme="dark"] textarea::placeholder { color: #AAB8C7 !important; opacity: 1; }
+
+
+/* FAQ Section Theme Overrides */
+.stx #faq {
+  background: var(--bg-main, #F1F4F2) !important;
+}
+.stx #faq .eyebrow {
+  color: var(--primary-accent, #37E191) !important;
+}
+.stx #faq h2, .stx #faq .h {
+  color: var(--text-primary, #0B1A1E) !important;
+}
+.stx #faq .faq-card {
+  background: var(--card-surface, #FFFFFF) !important;
+  border: 1px solid var(--border-color, #DCE3E1) !important;
+  border-radius: 20px !important;
+  transition: all .25s ease;
+}
+.stx #faq .faq-btn {
+  color: var(--text-primary, #0B1A1E) !important;
+}
+.stx #faq .faq-btn span:first-child {
+  color: inherit !important;
+}
+.stx #faq .faq-ans {
+  color: var(--text-secondary, #4A5A5E) !important;
+}
+.stx #faq .faq-icon {
+  background: var(--bg-secondary, #E3E9E6) !important;
+  color: var(--text-primary, #0B1A1E) !important;
+}
+.stx #faq .faq-icon.open {
+  background: var(--primary-accent, #37E191) !important;
+  color: #0B1A1E !important;
+  transform: rotate(45deg);
+}
+
+/* Dark Theme specific rules for #faq */
+html[data-theme="dark"] .stx #faq,
+html.dark .stx #faq,
+body.dark .stx #faq,
+.dark .stx #faq,
+.stx[data-theme="dark"] #faq {
+  background: #08131F !important;
+}
+html[data-theme="dark"] .stx #faq h2,
+html.dark .stx #faq h2,
+body.dark .stx #faq h2,
+.dark .stx #faq h2,
+.stx[data-theme="dark"] #faq h2,
+html[data-theme="dark"] .stx #faq .h,
+html.dark .stx #faq .h,
+body.dark .stx #faq .h,
+.dark .stx #faq .h,
+.stx[data-theme="dark"] #faq .h {
+  color: #FFFFFF !important;
+}
+html[data-theme="dark"] .stx #faq .faq-card,
+html.dark .stx #faq .faq-card,
+body.dark .stx #faq .faq-card,
+.dark .stx #faq .faq-card,
+.stx[data-theme="dark"] #faq .faq-card {
+  background: #102434 !important;
+  border-color: rgba(55, 225, 145, 0.22) !important;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25) !important;
+}
+html[data-theme="dark"] .stx #faq .faq-btn,
+html.dark .stx #faq .faq-btn,
+body.dark .stx #faq .faq-btn,
+.dark .stx #faq .faq-btn,
+.stx[data-theme="dark"] #faq .faq-btn,
+html[data-theme="dark"] .stx #faq .faq-btn span,
+html.dark .stx #faq .faq-btn span,
+body.dark .stx #faq .faq-btn span,
+.dark .stx #faq .faq-btn span,
+.stx[data-theme="dark"] #faq .faq-btn span {
+  color: #FFFFFF !important;
+  font-weight: 600 !important;
+}
+html[data-theme="dark"] .stx #faq .faq-ans,
+html.dark .stx #faq .faq-ans,
+body.dark .stx #faq .faq-ans,
+.dark .stx #faq .faq-ans,
+.stx[data-theme="dark"] #faq .faq-ans {
+  color: #CBD5E1 !important;
+  line-height: 1.7 !important;
+}
+html[data-theme="dark"] .stx #faq .faq-icon,
+html.dark .stx #faq .faq-icon,
+body.dark .stx #faq .faq-icon,
+.dark .stx #faq .faq-icon,
+.stx[data-theme="dark"] #faq .faq-icon {
+  background: rgba(255, 255, 255, 0.12) !important;
+  color: #FFFFFF !important;
+}
+html[data-theme="dark"] .stx #faq .faq-icon.open,
+html.dark .stx #faq .faq-icon.open,
+body.dark .stx #faq .faq-icon.open,
+.dark .stx #faq .faq-icon.open,
+.stx[data-theme="dark"] #faq .faq-icon.open {
+  background: #37E191 !important;
+  color: #0B1A1E !important;
+}
+
+@media (max-width: 1024px) {
+  .stx .wrap { max-width: 100%; }
+  .stx .acc { min-width: min(100%, 280px) !important; }
+  .stx #cpa [style*="grid-template-columns: repeat(5"] { grid-template-columns: repeat(3, minmax(0,1fr)) !important; }
+  .stx .months-grid { grid-template-columns: repeat(6, minmax(0,1fr)) !important; }
+}
+@media (max-width: 767px) {
+  .stx section { padding: 56px 18px !important; }
+  .stx section#top { padding: 0 !important; }
+  .stx section#top > .wrap { padding: 54px 18px 64px !important; gap: 34px !important; }
+  .stx section#top > div:first-of-type { padding: 22px 18px 0 !important; }
+  .stx header .wrap { padding: 14px 18px !important; gap: 14px !important; }
+  .stx header nav { width: 100%; gap: 18px !important; flex-wrap: nowrap !important; overflow-x: auto; padding: 4px 0 8px; scrollbar-width: thin; }
+  .stx header nav a { flex: 0 0 auto; white-space: nowrap; }
+  .stx header .btn { width: 100%; justify-content: center; }
+  .stx .wrap { padding-left: 0 !important; padding-right: 0 !important; }
+  .stx h1 { font-size: clamp(34px, 9vw, 54px) !important; line-height: 1.06 !important; }
+  .stx h2 { font-size: clamp(29px, 7.2vw, 42px) !important; line-height: 1.1 !important; }
+  .stx .eyebrow { font-size: 11px !important; letter-spacing: .11em !important; line-height: 1.5 !important; }
+  .stx p { font-size: clamp(14px, 3.8vw, 17px); line-height: 1.65 !important; }
+  .stx .btn, .stx .dbtn { white-space: normal; line-height: 1.35; }
+  .stx .doubt { width: 100%; }
+  .stx .doubt .dbtn { width: 100%; }
+  .stx .subnav > .wrap { padding: 8px 14px !important; }
+  .stx .subnav a { font-size: 12px !important; padding: 9px 11px !important; }
+  .stx .months-grid { grid-template-columns: repeat(4, minmax(0,1fr)) !important; }
+  .stx #multistate .state-map-grid { gap: 3px !important; }
+  .stx #multistate .state-map-grid .tile { min-height: 28px !important; font-size: 9px !important; border-radius: 6px !important; }
+  .stx #cpa [style*="grid-template-columns: repeat(5"] { grid-template-columns: 1fr !important; gap: 20px !important; }
+  .stx #cpa [style*="top: 36px"] , .stx #cpa [style*="top: 29px"] { display: none !important; }
+  .stx #accounting [style*="grid-template-columns: 1fr 96px 96px"] { grid-template-columns: minmax(0,1fr) 64px 64px !important; gap: 5px !important; padding-left: 10px !important; padding-right: 10px !important; font-size: 11px !important; }
+  .stx [style*="grid-template-columns: repeat(12"] { grid-template-columns: repeat(4, minmax(0,1fr)) !important; }
+  .stx .acc { flex: 1 1 100% !important; min-width: 0 !important; min-height: auto !important; padding: 22px !important; }
+  .stx .acc .h { font-size: 18px !important; }
+  .stx .card-h { border-radius: 20px !important; }
+  .stx [style*="padding: 44px"] { padding: 22px !important; }
+  .stx [style*="padding: 40px"] { padding: 22px !important; }
+  .stx [style*="padding: 36px"] { padding: 20px !important; }
+  .stx [style*="padding: 32px"] { padding: 20px !important; }
+  .stx [style*="padding: 30px"] { padding: 20px !important; }
+  .stx [style*="padding: 28px"] { padding: 18px !important; }
+  .stx [style*="padding: 24px"] { padding: 18px !important; }
+  .stx [style*="min-height: 420px"] { min-height: auto !important; }
+  .stx .rv { max-width: 100%; }
+  .stx .orbit button { min-height: 34px !important; max-width: 94px !important; padding: 4px 7px !important; font-size: 10px !important; white-space: normal !important; line-height: 1.15 !important; }
+  .stx .orbit .counter { white-space: normal !important; }
+  .stx .hero-pill-fica { left: 0 !important; top: -10px !important; }
+  .stx .hero-pill-ot { right: 6px !important; bottom: -14px !important; }
+  .stx .stamp { right: 10px !important; bottom: 10px !important; font-size: 10px !important; }
+  .stx .perf { background-size: 12px 8px !important; }
+  .stx table { display: block; width: 100%; max-width: 100%; overflow-x: auto; }
+  .stx .stations-grid { display: flex !important; overflow-x: auto !important; scroll-snap-type: x mandatory; padding: 8px 4px 16px !important; gap: 12px !important; }
+  .stx .stations-grid > a { flex: 0 0 138px !important; scroll-snap-align: start; }
+  .stx .tile:hover, .stx .card-h:hover { transform: none !important; }
+  .stx .rv { animation-range: entry 0% cover 18% !important; }
+  /* FAQ: un-stick the left panel on mobile so it doesn't overlap */
+  .stx #faq [style*="position: sticky"] { position: relative !important; top: auto !important; }
+  /* Also target by z-index approach - make FAQ flex container stack vertically */
+  .stx #faq > .wrap { flex-direction: column !important; }
+  .stx #faq > .wrap > div:first-child { position: relative !important; top: auto !important; flex: none !important; width: 100% !important; max-width: 100% !important; }
+  .stx #faq > .wrap > div:last-child { width: 100% !important; max-width: 100% !important; }
+  /* Reduce FAQ section padding on mobile */
+  .stx #faq { padding: 56px 18px !important; }
+  /* Who-is-it-for cards: on mobile, allow horizontal scroll for the card set */
+  .stx #who > .wrap > div[style*="display: flex"] { overflow-x: auto !important; scroll-snap-type: x mandatory !important; padding-bottom: 12px !important; }
+  .stx #who > .wrap > div[style*="display: flex"] > div { flex: 0 0 260px !important; scroll-snap-align: start !important; }
+  /* fit cards: single column on mobile */
+  .stx .fit-cards-grid { grid-template-columns: 1fr !important; }
+}
+@media (max-width: 420px) {
+  .stx section { padding-left: 14px !important; padding-right: 14px !important; }
+  .stx section#top > .wrap { padding-left: 14px !important; padding-right: 14px !important; }
+  .stx header .wrap { padding-left: 14px !important; padding-right: 14px !important; }
+  .stx .btn { width: 100%; justify-content: center; padding-left: 16px !important; padding-right: 16px !important; }
+  .stx .months-grid { gap: 4px !important; }
+  .stx #multistate [style*="grid-template-columns: repeat(2"] { grid-template-columns: 1fr !important; }
+  .stx .doubt { padding: 14px !important; }
+  .stx [style*="font-size: 88px"] { font-size: clamp(48px, 16vw, 68px) !important; }
+  .stx [style*="font-size: 200px"] { font-size: 120px !important; }
+}
+@media (min-width: 768px) and (max-width: 1024px) {
+  .stx section { padding-left: 24px !important; padding-right: 24px !important; }
+  .stx .wrap { padding-left: 0 !important; padding-right: 0 !important; }
+  .stx .months-grid { grid-template-columns: repeat(6, minmax(0,1fr)) !important; }
+}
+
 @media (prefers-reduced-motion: reduce){*{animation:none !important;transition:none !important}}
 `;
 
@@ -99,7 +586,7 @@ const css = (str) => {
   return o;
 };
 
-const INITIAL_STATE = { aud: 0, run: 0, view: 'emp', part: 3, wages: 85000, suta: 27, hours: 46, ytd: 120000, loc: 1, ded: 1, picked: ['CA', 'NY', 'FL'], focus: 'CA', form: 0, rec: false, w2: 0, step: 0, sw: 0, swSel: 0, fit: 0, faqCat: 0, faq: 0, ob: 0, doubt: 0, doubtOpen: false, who: 0, size: 1, sent: false };
+const INITIAL_STATE = { aud: 0, run: 0, view: 'emp', part: 3, wages: 85000, suta: 27, hours: 46, ytd: 120000, loc: 1, ded: 1, picked: ['CA', 'NY', 'FL'], focus: 'CA', form: 0, rec: false, w2: 0, step: 0, sw: 0, swSel: 0, fit: 0, faqCat: 0, faq: 0, ob: 0, doubt: 0, doubtOpen: false, who: 0, size: 1, sent: false, submitting: false, submitError: "" };
 
 // Derives every value/handler the markup needs from the current state.
 function buildVals(s, setState) {
@@ -395,7 +882,7 @@ function buildVals(s, setState) {
     const open = s.faq === f.i;
     return {
       q: f.q, a: f.a, open, expanded: String(open), toggle: () => setState({ faq: open ? -1 : f.i }),
-      iconStyle: 'flex:none;width:36px;height:36px;border-radius:50%;display:grid;place-items:center;font-size:22px;transition:transform .3s,background .3s;' + (open ? 'transform:rotate(45deg);background:#0B1A1E;color:#FFFFFF' : 'background:#E3E9E6;color:#0B1A1E')
+      iconStyle: 'flex:none;width:36px;height:36px;border-radius:50%;display:grid;place-items:center;font-size:22px;transition:transform .3s,background .3s;'
     };
   });
 
@@ -457,7 +944,55 @@ function buildVals(s, setState) {
     revealDoubt: () => setState(st => ({ doubtOpen: !st.doubtOpen })),
     whoChips, sizeChips,
     related,
-    notSent: !s.sent, sent: s.sent, onSubmit: (e) => { e.preventDefault(); setState({ sent: true }); }
+    notSent: !s.sent, sent: s.sent,
+    submitting: s.submitting, submitError: s.submitError,
+    onSubmit: async (e) => {
+      e.preventDefault();
+      if (s.submitting) return;
+      const form = e.target;
+      const nameInput = form.querySelector('input[type="text"][required]');
+      const emailInput = form.querySelector('input[type="email"][required]');
+      const statesInput = form.querySelector('input[placeholder*="Texas"]');
+      const msgInput = form.querySelector('textarea');
+
+      const name = (nameInput && nameInput.value || "").trim();
+      const email = (emailInput && emailInput.value || "").trim();
+      const states = (statesInput && statesInput.value || "").trim();
+      const msg = (msgInput && msgInput.value || "").trim();
+
+      if (!name) {
+        setState({ submitError: "Please enter your name." });
+        return;
+      }
+      if (!email || !/.+@.+\..+/.test(email)) {
+        setState({ submitError: "Please enter a valid email address." });
+        return;
+      }
+
+      setState({ submitting: true, submitError: "" });
+      try {
+        const whoObj = WHO_CHIPS[s.who] || {};
+        const whoLabel = whoObj.name || "Employer";
+        const sizeObj = SIZE_CHIPS[s.size] || {};
+        const sizeLabel = sizeObj.name || "Small team";
+        await inquiriesApi.submit({
+          name,
+          email,
+          inquiryType: "USA Payroll Management Inquiry",
+          subject: "Payroll - " + whoLabel + " (" + sizeLabel + ")",
+          message: [
+            "Client Type: " + whoLabel,
+            "Team Size: " + sizeLabel,
+            states ? "States with employees: " + states : "",
+            msg ? "Help requested: " + msg : ""
+          ].filter(Boolean).join("\n") || "Payroll consultation request.",
+          sourcePage: "/services/payroll-management"
+        });
+        setState({ sent: true, submitting: false, submitError: "" });
+      } catch (err) {
+        setState({ submitting: false, submitError: err?.message || "Submission failed. Please try again." });
+      }
+    }
   };
 }
 
@@ -486,14 +1021,14 @@ export default function PayrollManagementPage() {
   }, [setState]);
 
   const {
-    audTabs, heroText, heroCta, runLines, runPct, netShown, runDone, runStatus, runChipStyle, softwareLoop, isEmp, isEr, empPressed, erPressed, empTabStyle, erTabStyle, showEmp, showEr, parts, partN, partName, partText, partSvc, partHref, wages, wagesFmt, onWages, suta, sutaFmt, onSuta, erBars, erTotalFmt, erCostFmt, stations, procList, hours, onHours, hourBlocks, regPay, otPay, grossPay, ytd, ytdFmt, onYtd, fedMeters, fedList, locs, layers, stateList, deds, dedName, dedText, fitH, ficaH, fitLabel, ficaLabel, obFields, obPct, obList, tiles, stateCount, withholdCount, focusTag, focusName, focusRows, resetMap, monthCells, forms, formNote, stateForms, jeRows, recCols, reconcile, recLabel, recBtnStyle, acctList, w2Boxes, w2Tag, w2Title, w2Why, yeList, steps, stepBars, stepX, prevStep, nextStep, swFilters, swNodes, swName, swUse, flow, cpaList, cpaExpect, fits, faqCats, faqs, doubtN, doubtTotal, doubtQ, doubtBtn, doubtOpenStr, doubtBtnStyle, doubtDots, revealDoubt, whoChips, sizeChips, related, notSent, sent, onSubmit
+    audTabs, heroText, heroCta, runLines, runPct, netShown, runDone, runStatus, runChipStyle, softwareLoop, isEmp, isEr, empPressed, erPressed, empTabStyle, erTabStyle, showEmp, showEr, parts, partN, partName, partText, partSvc, partHref, wages, wagesFmt, onWages, suta, sutaFmt, onSuta, erBars, erTotalFmt, erCostFmt, stations, procList, hours, onHours, hourBlocks, regPay, otPay, grossPay, ytd, ytdFmt, onYtd, fedMeters, fedList, locs, layers, stateList, deds, dedName, dedText, fitH, ficaH, fitLabel, ficaLabel, obFields, obPct, obList, tiles, stateCount, withholdCount, focusTag, focusName, focusRows, resetMap, monthCells, forms, formNote, stateForms, jeRows, recCols, reconcile, recLabel, recBtnStyle, acctList, w2Boxes, w2Tag, w2Title, w2Why, yeList, steps, stepBars, stepX, prevStep, nextStep, swFilters, swNodes, swName, swUse, flow, cpaList, cpaExpect, fits, faqCats, faqs, doubtN, doubtTotal, doubtQ, doubtBtn, doubtOpenStr, doubtBtnStyle, doubtDots, revealDoubt, whoChips, sizeChips, related, notSent, sent, submitting, submitError, onSubmit
   } = buildVals(state, setState);
 
   return (
     <>
       <style>{PAGE_CSS}</style>
       <ScrollNavigation />
-      <div style={{ fontFamily: "Inter, sans-serif", color: "#0B1A1E", background: "#F1F4F2", minHeight: "100vh" }} data-label="USA Payroll Management — Main Service Page">
+      <div className="stx" style={{ fontFamily: "Inter, sans-serif", color: "#0B1A1E", background: "#F1F4F2", minHeight: "100vh" }} data-document-role="page" data-label="USA Payroll Management — Main Service Page">
         <div className="progress" aria-hidden="true"></div>
 
         {/* ================= TOP BAR ================= */}
@@ -574,11 +1109,11 @@ export default function PayrollManagementPage() {
                   <span style={{ fontWeight: "600" }}>Net pay</span>
                   <span className="h" style={{ fontSize: "30px", fontWeight: "800" }}>{netShown}</span>
                 </div>
-                <div className="float1" style={{ position: "absolute", top: "-18px", left: "-28px", background: "#12262B", border: "1px solid rgba(255,255,255,0.14)", borderRadius: "14px", padding: "12px 16px", color: "#FFFFFF" }}>
+                <div className="float1 hero-pill-fica" style={{ position: "absolute", top: "-18px", left: "-28px", background: "#12262B", border: "1px solid rgba(255,255,255,0.14)", borderRadius: "14px", padding: "12px 16px", color: "#FFFFFF" }}>
                   <div className="mono" style={{ fontSize: "11px", color: "#37E191" }}>FICA WAGES</div>
                   <div style={{ fontSize: "14px", fontWeight: "600", marginTop: "2px" }}>Section 125 applied</div>
                 </div>
-                <div className="float2" style={{ position: "absolute", bottom: "90px", right: "-30px", background: "#F2B544", color: "#0B1A1E", borderRadius: "14px", padding: "12px 16px", zIndex: "5", boxShadow: "0 4px 16px rgba(242,181,68,0.35)" }}>
+                <div className="float2 hero-pill-ot" style={{ position: "absolute", bottom: "-20px", right: "24px", background: "#F2B544", color: "#0B1A1E", borderRadius: "14px", padding: "12px 16px", zIndex: "5", boxShadow: "0 4px 16px rgba(242,181,68,0.35)" }}>
                   <div className="mono" style={{ fontSize: "11px" }}>OVERTIME</div>
                   <div style={{ fontSize: "14px", fontWeight: "600", marginTop: "2px" }}>4 hrs at 1.5×</div>
                 </div>
@@ -697,9 +1232,9 @@ export default function PayrollManagementPage() {
               <p style={{ flex: "1 1 380px", margin: "0", fontSize: "17px", lineHeight: "1.65", color: "#C9D6D8" }}>Engage one service or the whole cycle. Each station below opens a working model of the service, so you can see exactly what we do before you speak to us.</p>
             </div>
             <div className="rv" style={{ position: "relative", marginTop: "64px", padding: "0 8px" }}>
-              <div style={{ position: "absolute", left: "8px", right: "8px", top: "34px", height: "4px", borderRadius: "2px", background: "repeating-linear-gradient(90deg, rgba(255,255,255,0.18) 0 12px, transparent 12px 20px)" }}></div>
-              <div aria-hidden="true" className="token" style={{ position: "absolute", top: "22px", marginLeft: "-14px", width: "28px", height: "28px", borderRadius: "8px", background: "#37E191", boxShadow: "0 0 0 8px rgba(55,225,145,0.18), 0 0 30px rgba(55,225,145,0.6)", display: "grid", placeItems: "center", color: "#0B1A1E", font: "800 13px Manrope, sans-serif" }}>$</div>
-              <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(118px, 1fr))", gap: "12px", position: "relative" }}>
+              <div className="conveyor-track" style={{ position: "absolute", left: "8px", right: "8px", top: "34px", height: "4px", borderRadius: "2px", background: "repeating-linear-gradient(90deg, rgba(255,255,255,0.18) 0 12px, transparent 12px 20px)" }}></div>
+              <div aria-hidden="true" className="token conveyor-token" style={{ position: "absolute", top: "22px", marginLeft: "-14px", width: "28px", height: "28px", borderRadius: "8px", background: "#37E191", boxShadow: "0 0 0 8px rgba(55,225,145,0.18), 0 0 30px rgba(55,225,145,0.6)", display: "grid", placeItems: "center", color: "#0B1A1E", font: "800 13px Manrope, sans-serif" }}>$</div>
+              <div className="stations-grid" style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(118px, 1fr))", gap: "12px", position: "relative" }}>
                 {stations.map((st, _i) => (<Fragment key={_i}>
                   <a href={st.href} className="card-h" style={{ textDecoration: "none", color: "#FFFFFF", display: "flex", flexDirection: "column", alignItems: "center", textAlign: "center", gap: "12px", padding: "14px 8px 18px", borderRadius: "20px" }}>
                     <span className="h" style={{ width: "72px", height: "72px", borderRadius: "22px", background: "#12262B", border: "1.5px solid rgba(255,255,255,0.16)", display: "grid", placeItems: "center", fontSize: "22px", fontWeight: "800", color: "#37E191" }}>{st.n}</span>
@@ -946,7 +1481,7 @@ export default function PayrollManagementPage() {
             </div>
             <div className="rv" style={{ display: "flex", flexWrap: "wrap", gap: "32px", marginTop: "48px", alignItems: "stretch" }}>
               <div style={{ flex: "1.4 1 560px", minWidth: "0", background: "#12262B", borderRadius: "28px", padding: "28px", border: "1px solid rgba(255,255,255,0.08)" }}>
-                <div style={{ display: "grid", gridTemplateColumns: "repeat(11, minmax(0, 1fr))", gridTemplateRows: "repeat(8, auto)", gap: "6px" }} role="group" aria-label="US states, select to add a remote employee">
+                <div className="state-map-grid" style={{ display: "grid", gridTemplateColumns: "repeat(11, minmax(0, 1fr))", gridTemplateRows: "repeat(8, auto)", gap: "6px" }} role="group" aria-label="US states, select to add a remote employee">
                   {tiles.map((t, _i) => (<Fragment key={_i}>
                     <button className="tile mono" onClick={t.pick} aria-pressed={t.pressed} aria-label={t.aria} style={css(t.style)}>{t.code}</button>
                   </Fragment>))}
@@ -989,7 +1524,7 @@ export default function PayrollManagementPage() {
               <p style={{ flex: "1 1 400px", margin: "0", fontSize: "17px", lineHeight: "1.65", color: "#4A5A5E" }}>Select a form to light up its deadlines across the year. Every figure filed is reconciled back to the payroll register and the books first.</p>
             </div>
             <div className="rv" style={{ marginTop: "48px", background: "#FFFFFF", borderRadius: "28px", padding: "32px", border: "1px solid #DCE3E1" }}>
-              <div style={{ display: "grid", gridTemplateColumns: "repeat(12, minmax(0, 1fr))", gap: "6px" }}>
+              <div className="months-grid" style={{ display: "grid", gridTemplateColumns: "repeat(12, minmax(0, 1fr))", gap: "6px" }}>
                 {monthCells.map((mc, _i) => (<Fragment key={_i}>
                   <div className="fill" style={css(mc.style)}>
                     <div className="mono" style={{ fontSize: "11px", fontWeight: "600" }}>{mc.m}</div>
@@ -1241,7 +1776,7 @@ export default function PayrollManagementPage() {
           </div>
         </section>
 
-        {/* ================= WHO WE SUPPORT (ACCORDION) ================= */}
+        {/* ================= WHO WE SUPPORT (CARDS GRID) ================= */}
         <section id="fit" style={{ padding: "112px 32px" }}>
           <div className="wrap">
             <div className="rv" style={{ display: "flex", flexWrap: "wrap", gap: "32px", justifyContent: "space-between", alignItems: "flex-end" }}>
@@ -1249,21 +1784,15 @@ export default function PayrollManagementPage() {
                 <p className="eyebrow" style={{ color: "#0E7A49" }}>Designed around your business</p>
                 <h2 className="h" style={{ margin: "0", fontSize: "clamp(34px, 4.2vw, 56px)", lineHeight: "1.04", fontWeight: "800" }}>Payroll support at<br />the level you need.</h2>
               </div>
-              <p style={{ flex: "1 1 380px", margin: "0", fontSize: "17px", lineHeight: "1.65", color: "#4A5A5E" }}>Scope, responsibilities and delivery schedule are agreed before the engagement begins. Open a panel to see what support usually looks like.</p>
+              <p style={{ flex: "1 1 380px", margin: "0", fontSize: "17px", lineHeight: "1.65", color: "#4A5A5E" }}>Scope, responsibilities and delivery schedule are agreed before the engagement begins. See what support looks like for each type of business.</p>
             </div>
-            <div className="rv" style={{ display: "flex", gap: "10px", marginTop: "48px", minHeight: "420px", flexWrap: "wrap" }}>
+            <div className="rv fit-cards-grid" style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(220px, 1fr))", gap: "16px", marginTop: "48px" }}>
               {fits.map((f, _i) => (<Fragment key={_i}>
-                <div className="acc" style={css(f.style)}>
-                  <button className="tab" onClick={f.pick} aria-expanded={f.expanded} style={{ background: "transparent", color: "inherit", textAlign: "left", padding: "0", minHeight: "44px", display: "flex", gap: "14px", alignItems: "center", width: "100%" }}>
-                    <span className="mono" style={{ fontSize: "13px", opacity: "0.7" }}>{f.n}</span>
-                    <span className="h" style={{ fontSize: "20px", fontWeight: "800", lineHeight: "1.2" }}>{f.name}</span>
-                  </button>
-                  {f.open && (<>
-                    <div className="panel-in" style={{ marginTop: "auto", paddingTop: "24px" }}>
-                      <p style={{ fontSize: "17px", lineHeight: "1.6", margin: "0" }}>{f.text}</p>
-                      <a href={f.href} className="lnk" style={{ marginTop: "18px", color: "inherit" }}>{f.cta} <span className="arrow" aria-hidden="true">→</span></a>
-                    </div>
-                  </>)}
+                <div className="fit-card card-h" style={{ background: f.open ? "#0B1A1E" : "#FFFFFF", color: f.open ? "#FFFFFF" : "#0B1A1E", borderRadius: "24px", padding: "28px", border: f.open ? "none" : "1px solid #DCE3E1", display: "flex", flexDirection: "column", gap: "14px", cursor: "pointer" }} onClick={f.pick}>
+                  <span className="mono" style={{ fontSize: "13px", opacity: "0.6" }}>{f.n}</span>
+                  <div className="h" style={{ fontSize: "20px", fontWeight: "800", lineHeight: "1.2" }}>{f.name}</div>
+                  <p style={{ fontSize: "15px", lineHeight: "1.6", margin: "0", flex: "1", color: f.open ? "#C9D6D8" : "#4A5A5E" }}>{f.text}</p>
+                  <a href={f.href} className="lnk" style={{ color: f.open ? "#37E191" : "#0E7A49", fontSize: "14px", fontWeight: "600", display: "inline-flex", alignItems: "center", gap: "6px", textDecoration: "none" }} onClick={e => e.stopPropagation()}>{f.cta} <span className="arrow" aria-hidden="true">→</span></a>
                 </div>
               </Fragment>))}
             </div>
@@ -1317,12 +1846,12 @@ export default function PayrollManagementPage() {
             </div>
             <div className="rv" style={{ flex: "1.6 1 560px", minWidth: "0", display: "grid", gap: "10px" }}>
               {faqs.map((f, _i) => (<Fragment key={_i}>
-                <div style={{ background: "#FFFFFF", borderRadius: "20px", border: "1px solid #DCE3E1" }}>
-                  <button className="tab" onClick={f.toggle} aria-expanded={f.expanded} style={{ width: "100%", background: "transparent", color: "#0B1A1E", display: "flex", justifyContent: "space-between", alignItems: "center", gap: "16px", padding: "20px 22px", textAlign: "left", fontSize: "17px", minHeight: "64px" }}>
-                    <span>{f.q}</span><span aria-hidden="true" style={css(f.iconStyle)}>+</span>
+                <div className="faq-card">
+                  <button className="tab faq-btn" onClick={f.toggle} aria-expanded={f.expanded} style={{ width: "100%", background: "transparent", display: "flex", justifyContent: "space-between", alignItems: "center", gap: "16px", padding: "20px 22px", textAlign: "left", fontSize: "17px", minHeight: "64px" }}>
+                    <span>{f.q}</span><span aria-hidden="true" className={"faq-icon" + (f.open ? " open" : "")} style={css(f.iconStyle)}>{f.open ? "×" : "+"}</span>
                   </button>
                   {f.open && (<>
-                    <p className="panel-in" style={{ margin: "0", padding: "0 22px 22px", fontSize: "16px", lineHeight: "1.65", color: "#4A5A5E" }}>{f.a}</p>
+                    <p className="panel-in faq-ans" style={{ margin: "0", padding: "0 22px 22px", fontSize: "16px", lineHeight: "1.65" }}>{f.a}</p>
                   </>)}
                 </div>
               </Fragment>))}
@@ -1375,7 +1904,12 @@ export default function PayrollManagementPage() {
                   </div>
                   <label style={{ display: "grid", gap: "6px", fontSize: "14px", fontWeight: "600", marginTop: "14px" }}>States with employees<input type="text" placeholder="e.g. Texas, California" style={{ minHeight: "48px", borderRadius: "12px", border: "1.5px solid #B8C4C1", padding: "0 14px" }} /></label>
                   <label style={{ display: "grid", gap: "6px", fontSize: "14px", fontWeight: "600", marginTop: "14px" }}>What do you need help with?<textarea rows="3" style={{ borderRadius: "12px", border: "1.5px solid #B8C4C1", padding: "12px 14px", resize: "vertical" }}></textarea></label>
-                  <button type="submit" className="btn btn-ink" style={{ marginTop: "22px", width: "100%", justifyContent: "center" }}>Request a Payroll Consultation <span className="arrow" aria-hidden="true">→</span></button>
+                  {submitError && (
+                    <div style={{ color: "#EF4444", fontSize: "13px", fontWeight: 600, marginTop: "12px" }}>
+                      {submitError}
+                    </div>
+                  )}
+                  <button type="submit" disabled={submitting} className="btn btn-ink" style={{ marginTop: "22px", width: "100%", justifyContent: "center", opacity: submitting ? 0.7 : 1 }}>{submitting ? "Sending..." : "Request a Payroll Consultation"} <span className="arrow" aria-hidden="true">→</span></button>
                 </form>
               </>)}
               {sent && (<>

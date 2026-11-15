@@ -31,6 +31,7 @@ import TaxPreparationPage from './pages/services/USATaxPreparationPage.jsx';
 import BookkeepingPage from './pages/services/BookkeepingPage.jsx';
 import PayrollManagementPage from './pages/services/PayrollManagementPage.jsx';
 import ContactPage from './pages/ContactPage.jsx';
+import SmartTaxExpertssPage from './pages/SmartTaxExpertss.jsx';
 import './pages/ImportedPages.css';
 
 // Admin Pages
@@ -227,7 +228,7 @@ export default function App() {
                             <Route path="/services/payroll-management" element={<PayrollManagementPage />} />
                             <Route path="/services/:slug" element={<ServiceDetailRoute />} />
                             <Route path="/cpa-outsourcing" element={<CpaOutsourcingPage />} />
-                            <Route path="/hire-professionals" element={<HireProfessionalsPage />} />
+                            <Route path="/hire-professionals" element={<SmartTaxExpertssPage />} />
                             <Route path="/hire-professionals/:roleSlug" element={<HireProfessionalRolePage />} />
                             <Route path="/tax-resources" element={<TaxResourcesPage />} />
                             <Route path="/blog" element={<BlogPage />} />

@@ -16,6 +16,66 @@ const router = (0, express_1.Router)();
 function getRouteParam(value) {
     return Array.isArray(value) ? value[0] : value;
 }
+// GET /api/v1/services/page-config - Get Services main listing page and detail section headers
+router.get('/page-config', async (_req, res) => {
+    try {
+        const config = await prisma_1.default.globalsetting.findUnique({
+            where: { key: 'services_page_config' },
+        });
+        res.json(config ? config.value : {
+            badge: 'Practice Directory',
+            heading: 'Complete Practice Catalog',
+            description: 'Explore all specialized disciplines across personal tax compliance, corporate accounting, and dedicated white-label CPA firm capacity.',
+            searchPlaceholder: 'Search by service name, deliverable, or topic...',
+            emptyStateHeading: 'No services matched your query',
+            emptyStateSubtext: 'Try searching for 1040, 1120-S, bookkeeping, reconciliation, or audit.',
+            resetButtonText: 'Reset Filters',
+            exploreButtonText: 'Explore Service',
+            // Service detail section headers & badges (customizable firm-wide)
+            featuresSectionBadge: 'Comprehensive Scope',
+            featuresSectionHeading: "What This Service Includes",
+            featuresSectionSubtext: 'Every engagement is engineered for complete tax efficiency, zero filing errors, and audit-ready documentation.',
+            deliverablesBoxHeading: 'Official Deliverables You Receive:',
+            workflowSectionBadge: 'Structured Execution',
+            workflowSectionHeading: 'How This Service Works',
+            workflowSectionSubtext: 'A battle-tested 4-step framework from initial document intake to final certified filing.',
+            simulationBadge: 'Interactive service walkthrough',
+            simulationSubtext: 'Explore the stages, checkpoints, and handoffs that shape this service from start to delivery.',
+            benefitsSectionBadge: 'Measurable Value',
+            benefitsSectionHeading: 'Proven Benefits & Efficiency Gains',
+            faqsSectionBadge: 'Clarifications',
+            faqsSectionHeading: 'Frequently Asked Questions',
+            ctaBannerBadge: 'Ready to Engage?',
+            ctaBannerSubtext: 'Book a 1-on-1 discovery consultation. We will preselect this service, evaluate your filing deadlines, and provide a clear, transparent engagement proposal.',
+            ctaButtonText: 'Book Consultation Now',
+        });
+    }
+    catch {
+        res.status(500).json({ error: 'Failed to fetch services page configuration' });
+    }
+});
+// PUT /api/v1/services/page-config - Update Services main listing page content (admin)
+router.put('/page-config', auth_1.authenticate, async (req, res) => {
+    try {
+        const value = req.body;
+        const updated = await prisma_1.default.globalsetting.upsert({
+            where: { key: 'services_page_config' },
+            update: { value },
+            create: {
+                id: (0, uuid_1.v4)(),
+                key: 'services_page_config',
+                category: 'services',
+                description: 'Header, subtitles, search placeholder and empty state copy for Services Listing Page',
+                value,
+            },
+        });
+        await (0, activityLog_1.logActivity)({ adminId: req.admin?.adminId, action: 'SETTINGS_UPDATE', resource: 'ServicesPageConfig' });
+        res.json(updated.value);
+    }
+    catch {
+        res.status(500).json({ error: 'Failed to update services page configuration' });
+    }
+});
 // Ensure upload directory exists
 const UPLOAD_DIR = process.env.UPLOAD_DIR || './uploads';
 const SERVICE_DIR = path_1.default.join(UPLOAD_DIR, 'services');
@@ -98,7 +158,7 @@ router.get('/', (req, res, next) => {
         const services = await prisma_1.default.service.findMany({
             where,
             include: { servicecategory: true },
-            orderBy: [{ displayOrder: 'asc' }, { createdAt: 'asc' }],
+            orderBy: [{ displayOrder: 'asc' }, { name: 'asc' }],
         });
         res.json(services);
     }
@@ -217,7 +277,7 @@ async function buildServiceData(body, existingId) {
         features: parseJson(body.features, []),
         benefits: parseJson(body.benefits, []),
         deliverables: parseJson(body.deliverables, []),
-        workflow: parseJson(body.workflow, []),
+        workflow: parseJson(body.workflow || body.executionStages, []),
         faqs: parseJson(body.faqs, []),
         relatedSlugs: parseJson(body.relatedSlugs, []),
         idealFor: body.idealFor || null,
@@ -391,6 +451,92 @@ router.post('/:id/duplicate', auth_1.authenticate, async (req, res) => {
     }
     catch (err) {
         res.status(500).json({ error: 'Failed to duplicate service' });
+    }
+});
+// GET /api/v1/services/categories - Get all service categories
+router.get('/categories', async (_req, res) => {
+    try {
+        const categories = await prisma_1.default.servicecategory.findMany({
+            orderBy: { displayOrder: 'asc' },
+            include: {
+                _count: {
+                    select: { service: true }
+                }
+            }
+        });
+        res.json(categories);
+    }
+    catch (err) {
+        res.status(500).json({ error: 'Failed to fetch categories' });
+    }
+});
+// POST /api/v1/services/categories - Create category (admin)
+router.post('/categories', auth_1.authenticate, async (req, res) => {
+    try {
+        const { name, slug, description, icon, displayOrder } = req.body;
+        if (!name || typeof name !== 'string') {
+            return res.status(400).json({ error: 'Category name is required' });
+        }
+        const safeSlug = (slug || name.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '')).trim();
+        const existing = await prisma_1.default.servicecategory.findUnique({ where: { slug: safeSlug } });
+        if (existing) {
+            return res.status(400).json({ error: 'A category with this slug already exists' });
+        }
+        const category = await prisma_1.default.servicecategory.create({
+            data: {
+                id: (0, uuid_1.v4)(),
+                name: name.trim(),
+                slug: safeSlug,
+                description: description || null,
+                icon: icon || null,
+                displayOrder: typeof displayOrder === 'number' ? displayOrder : 0,
+                isEnabled: true,
+            },
+        });
+        await (0, activityLog_1.logActivity)({ adminId: req.admin?.adminId, action: 'CATEGORY_CREATE', resource: 'ServiceCategory', resourceId: category.id });
+        res.status(201).json(category);
+    }
+    catch (err) {
+        res.status(500).json({ error: 'Failed to create category' });
+    }
+});
+// PUT /api/v1/services/categories/:id - Update category (admin)
+router.put('/categories/:id', auth_1.authenticate, async (req, res) => {
+    try {
+        const id = getRouteParam(req.params.id);
+        const { name, slug, description, icon, displayOrder, isEnabled } = req.body;
+        const category = await prisma_1.default.servicecategory.update({
+            where: { id },
+            data: {
+                ...(name ? { name: name.trim() } : {}),
+                ...(slug ? { slug: slug.trim() } : {}),
+                ...(description !== undefined ? { description } : {}),
+                ...(icon !== undefined ? { icon } : {}),
+                ...(typeof displayOrder === 'number' ? { displayOrder } : {}),
+                ...(typeof isEnabled === 'boolean' ? { isEnabled } : {}),
+            },
+        });
+        await (0, activityLog_1.logActivity)({ adminId: req.admin?.adminId, action: 'CATEGORY_UPDATE', resource: 'ServiceCategory', resourceId: id });
+        res.json(category);
+    }
+    catch (err) {
+        res.status(500).json({ error: 'Failed to update category' });
+    }
+});
+// DELETE /api/v1/services/categories/:id - Delete category (admin)
+router.delete('/categories/:id', auth_1.authenticate, async (req, res) => {
+    try {
+        const id = getRouteParam(req.params.id);
+        const inUse = await prisma_1.default.service.count({ where: { categoryId: id } });
+        if (inUse > 0) {
+            return res.status(400).json({ error: `Cannot delete category because it is used by ${inUse} service(s).` });
+        }
+        await prisma_1.default.servicecategory.delete({ where: { id } });
+        await (0, activityLog_1.logActivity)({ adminId: req.admin?.adminId, action: 'CATEGORY_DELETE', resource: 'ServiceCategory', resourceId: id });
+        res.json({ success: true });
+    }
+    catch (err) {
+        res.status(500).json({ error: 'Failed to delete category' });
     }
 });
 // PUT /api/v1/services/reorder/bulk - Reorder services (admin)

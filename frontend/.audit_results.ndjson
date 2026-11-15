@@ -1,0 +1,88 @@
+{"innerWidth":320,"scrollWidth":320,"offRight":3,"offLeft":3,"clippedCards":3,"overflow":0,"consoleErrors":[]}
+{"innerWidth":360,"scrollWidth":360,"offRight":3,"offLeft":3,"clippedCards":3,"overflow":0,"consoleErrors":[]}
+{"innerWidth":390,"scrollWidth":390,"offRight":3,"offLeft":3,"clippedCards":3,"overflow":0,"consoleErrors":[]}
+{"innerWidth":430,"scrollWidth":430,"offRight":3,"offLeft":3,"clippedCards":3,"overflow":0,"consoleErrors":[]}
+{"innerWidth":768,"scrollWidth":768,"offRight":2,"offLeft":2,"clippedCards":2,"overflow":0,"consoleErrors":[]}
+{"innerWidth":1024,"scrollWidth":1024,"offRight":2,"offLeft":2,"clippedCards":2,"overflow":0,"consoleErrors":[]}
+{"innerWidth":1440,"scrollWidth":1440,"offRight":2,"offLeft":2,"clippedCards":2,"overflow":0,"consoleErrors":[]}
+{"innerWidth":1920,"scrollWidth":1920,"offRight":2,"offLeft":2,"clippedCards":1,"overflow":0,"consoleErrors":[]}
+{"innerWidth":320,"scrollWidth":320,"offRight":6,"offLeft":4,"clippedCards":5,"overflow":0,"consoleErrors":[]}
+{"innerWidth":360,"scrollWidth":360,"offRight":5,"offLeft":2,"clippedCards":5,"overflow":0,"consoleErrors":[]}
+{"innerWidth":390,"scrollWidth":390,"offRight":4,"offLeft":2,"clippedCards":3,"overflow":0,"consoleErrors":[]}
+{"innerWidth":430,"scrollWidth":430,"offRight":4,"offLeft":2,"clippedCards":3,"overflow":0,"consoleErrors":[]}
+{"innerWidth":768,"scrollWidth":768,"offRight":2,"offLeft":2,"clippedCards":1,"overflow":0,"consoleErrors":[]}
+{"innerWidth":1024,"scrollWidth":1024,"offRight":2,"offLeft":2,"clippedCards":0,"overflow":0,"consoleErrors":[]}
+{"innerWidth":1440,"scrollWidth":1440,"offRight":2,"offLeft":2,"clippedCards":0,"overflow":0,"consoleErrors":[]}
+{"innerWidth":1920,"scrollWidth":1920,"offRight":1,"offLeft":1,"clippedCards":0,"overflow":0,"consoleErrors":[]}
+{"innerWidth":320,"scrollWidth":320,"offRight":58,"offLeft":0,"clippedCards":24,"overflow":0,"consoleErrors":[]}
+{"innerWidth":360,"scrollWidth":360,"offRight":57,"offLeft":0,"clippedCards":22,"overflow":0,"consoleErrors":[]}
+{"innerWidth":390,"scrollWidth":390,"offRight":51,"offLeft":0,"clippedCards":20,"overflow":0,"consoleErrors":[]}
+{"innerWidth":430,"scrollWidth":430,"offRight":50,"offLeft":0,"clippedCards":18,"overflow":0,"consoleErrors":[]}
+{"innerWidth":768,"scrollWidth":768,"offRight":27,"offLeft":0,"clippedCards":1,"overflow":0,"consoleErrors":[]}
+{"innerWidth":1024,"scrollWidth":1024,"offRight":23,"offLeft":0,"clippedCards":1,"overflow":0,"consoleErrors":[]}
+{"innerWidth":1440,"scrollWidth":1440,"offRight":19,"offLeft":0,"clippedCards":1,"overflow":0,"consoleErrors":[]}
+{"innerWidth":1920,"scrollWidth":1920,"offRight":15,"offLeft":0,"clippedCards":1,"overflow":0,"consoleErrors":[]}
+{"innerWidth":320,"scrollWidth":320,"offRight":129,"offLeft":4,"clippedCards":55,"overflow":0,"consoleErrors":["Invalid DOM property `%s`. Did you mean `%s`? font-style fontStyle","Invalid DOM property `%s`. Did you mean `%s`? letter-spacing letterSpacing"]}
+{"innerWidth":360,"scrollWidth":360,"offRight":125,"offLeft":4,"clippedCards":51,"overflow":0,"consoleErrors":["Invalid DOM property `%s`. Did you mean `%s`? font-style fontStyle","Invalid DOM property `%s`. Did you mean `%s`? letter-spacing letterSpacing"]}
+{"innerWidth":390,"scrollWidth":390,"offRight":124,"offLeft":4,"clippedCards":51,"overflow":0,"consoleErrors":["Invalid DOM property `%s`. Did you mean `%s`? font-style fontStyle","Invalid DOM property `%s`. Did you mean `%s`? letter-spacing letterSpacing"]}
+{"innerWidth":430,"scrollWidth":430,"offRight":121,"offLeft":4,"clippedCards":49,"overflow":0,"consoleErrors":["Invalid DOM property `%s`. Did you mean `%s`? font-style fontStyle","Invalid DOM property `%s`. Did you mean `%s`? letter-spacing letterSpacing"]}
+{"innerWidth":768,"scrollWidth":768,"offRight":94,"offLeft":1,"clippedCards":10,"overflow":0,"consoleErrors":["Invalid DOM property `%s`. Did you mean `%s`? font-style fontStyle","Invalid DOM property `%s`. Did you mean `%s`? letter-spacing letterSpacing"]}
+{"innerWidth":1024,"scrollWidth":1024,"offRight":86,"offLeft":1,"clippedCards":3,"overflow":0,"consoleErrors":["Invalid DOM property `%s`. Did you mean `%s`? font-style fontStyle","Invalid DOM property `%s`. Did you mean `%s`? letter-spacing letterSpacing"]}
+{"innerWidth":1440,"scrollWidth":1440,"offRight":61,"offLeft":1,"clippedCards":2,"overflow":0,"consoleErrors":["Invalid DOM property `%s`. Did you mean `%s`? font-style fontStyle","Invalid DOM property `%s`. Did you mean `%s`? letter-spacing letterSpacing"]}
+{"innerWidth":1920,"scrollWidth":1920,"offRight":57,"offLeft":1,"clippedCards":1,"overflow":0,"consoleErrors":["Invalid DOM property `%s`. Did you mean `%s`? font-style fontStyle","Invalid DOM property `%s`. Did you mean `%s`? letter-spacing letterSpacing"]}
+{"innerWidth":320,"scrollWidth":320,"offRight":33,"offLeft":2,"clippedCards":20,"overflow":0,"consoleErrors":[]}
+{"innerWidth":360,"scrollWidth":360,"offRight":27,"offLeft":2,"clippedCards":13,"overflow":0,"consoleErrors":[]}
+{"innerWidth":390,"scrollWidth":390,"offRight":26,"offLeft":2,"clippedCards":11,"overflow":0,"consoleErrors":[]}
+{"innerWidth":430,"scrollWidth":430,"offRight":25,"offLeft":2,"clippedCards":10,"overflow":0,"consoleErrors":[]}
+{"innerWidth":768,"scrollWidth":768,"offRight":20,"offLeft":1,"clippedCards":2,"overflow":0,"consoleErrors":[]}
+{"innerWidth":1024,"scrollWidth":1024,"offRight":18,"offLeft":1,"clippedCards":2,"overflow":0,"consoleErrors":[]}
+{"innerWidth":1440,"scrollWidth":1440,"offRight":14,"offLeft":1,"clippedCards":1,"overflow":0,"consoleErrors":[]}
+{"innerWidth":1920,"scrollWidth":1920,"offRight":10,"offLeft":1,"clippedCards":1,"overflow":0,"consoleErrors":[]}
+{"innerWidth":320,"scrollWidth":320,"offRight":119,"offLeft":6,"clippedCards":78,"overflow":0,"consoleErrors":["Invalid DOM property `%s`. Did you mean `%s`? autocomplete autoComplete"]}
+{"innerWidth":360,"scrollWidth":360,"offRight":78,"offLeft":6,"clippedCards":49,"overflow":0,"consoleErrors":["Invalid DOM property `%s`. Did you mean `%s`? autocomplete autoComplete"]}
+{"innerWidth":390,"scrollWidth":390,"offRight":68,"offLeft":6,"clippedCards":49,"overflow":0,"consoleErrors":["Invalid DOM property `%s`. Did you mean `%s`? autocomplete autoComplete"]}
+{"innerWidth":430,"scrollWidth":430,"offRight":67,"offLeft":6,"clippedCards":44,"overflow":0,"consoleErrors":["Invalid DOM property `%s`. Did you mean `%s`? autocomplete autoComplete"]}
+{"innerWidth":768,"scrollWidth":768,"offRight":45,"offLeft":4,"clippedCards":34,"overflow":0,"consoleErrors":["Invalid DOM property `%s`. Did you mean `%s`? autocomplete autoComplete"]}
+{"innerWidth":1024,"scrollWidth":1024,"offRight":42,"offLeft":3,"clippedCards":7,"overflow":0,"consoleErrors":["Invalid DOM property `%s`. Did you mean `%s`? autocomplete autoComplete"]}
+{"innerWidth":1440,"scrollWidth":1440,"offRight":42,"offLeft":3,"clippedCards":7,"overflow":0,"consoleErrors":["Invalid DOM property `%s`. Did you mean `%s`? autocomplete autoComplete"]}
+{"innerWidth":1920,"scrollWidth":1920,"offRight":39,"offLeft":3,"clippedCards":7,"overflow":0,"consoleErrors":["Invalid DOM property `%s`. Did you mean `%s`? autocomplete autoComplete"]}
+{"innerWidth":320,"scrollWidth":320,"offRight":98,"offLeft":2,"clippedCards":48,"overflow":0,"consoleErrors":[]}
+{"innerWidth":360,"scrollWidth":360,"offRight":89,"offLeft":1,"clippedCards":38,"overflow":0,"consoleErrors":[]}
+{"innerWidth":390,"scrollWidth":390,"offRight":87,"offLeft":1,"clippedCards":36,"overflow":0,"consoleErrors":[]}
+{"innerWidth":430,"scrollWidth":430,"offRight":85,"offLeft":0,"clippedCards":34,"overflow":0,"consoleErrors":[]}
+{"innerWidth":768,"scrollWidth":768,"offRight":79,"offLeft":0,"clippedCards":31,"overflow":0,"consoleErrors":[]}
+{"innerWidth":1024,"scrollWidth":1024,"offRight":75,"offLeft":0,"clippedCards":31,"overflow":0,"consoleErrors":[]}
+{"innerWidth":1440,"scrollWidth":1440,"offRight":68,"offLeft":0,"clippedCards":31,"overflow":0,"consoleErrors":[]}
+{"innerWidth":1920,"scrollWidth":1920,"offRight":64,"offLeft":0,"clippedCards":25,"overflow":0,"consoleErrors":[]}
+{"innerWidth":320,"scrollWidth":320,"offRight":15,"offLeft":3,"clippedCards":15,"overflow":0,"consoleErrors":[]}
+{"innerWidth":360,"scrollWidth":360,"offRight":15,"offLeft":2,"clippedCards":12,"overflow":0,"consoleErrors":[]}
+{"innerWidth":390,"scrollWidth":390,"offRight":15,"offLeft":2,"clippedCards":8,"overflow":0,"consoleErrors":[]}
+{"innerWidth":430,"scrollWidth":430,"offRight":15,"offLeft":2,"clippedCards":8,"overflow":0,"consoleErrors":[]}
+{"innerWidth":768,"scrollWidth":768,"offRight":12,"offLeft":0,"clippedCards":3,"overflow":0,"consoleErrors":[]}
+{"innerWidth":1024,"scrollWidth":1024,"offRight":11,"offLeft":0,"clippedCards":3,"overflow":0,"consoleErrors":[]}
+{"innerWidth":1440,"scrollWidth":1440,"offRight":7,"offLeft":0,"clippedCards":1,"overflow":0,"consoleErrors":[]}
+{"innerWidth":1920,"scrollWidth":1920,"offRight":6,"offLeft":0,"clippedCards":1,"overflow":0,"consoleErrors":[]}
+{"innerWidth":320,"scrollWidth":320,"offRight":1,"offLeft":0,"clippedCards":1,"overflow":0,"consoleErrors":[]}
+{"innerWidth":360,"scrollWidth":360,"offRight":1,"offLeft":0,"clippedCards":1,"overflow":0,"consoleErrors":[]}
+{"innerWidth":390,"scrollWidth":390,"offRight":1,"offLeft":0,"clippedCards":1,"overflow":0,"consoleErrors":[]}
+{"innerWidth":430,"scrollWidth":430,"offRight":1,"offLeft":0,"clippedCards":1,"overflow":0,"consoleErrors":[]}
+{"innerWidth":768,"scrollWidth":768,"offRight":0,"offLeft":0,"clippedCards":0,"overflow":0,"consoleErrors":[]}
+{"innerWidth":1024,"scrollWidth":1024,"offRight":0,"offLeft":0,"clippedCards":0,"overflow":0,"consoleErrors":[]}
+{"innerWidth":1440,"scrollWidth":1440,"offRight":0,"offLeft":0,"clippedCards":0,"overflow":0,"consoleErrors":[]}
+{"innerWidth":1920,"scrollWidth":1920,"offRight":0,"offLeft":0,"clippedCards":0,"overflow":0,"consoleErrors":[]}
+{"innerWidth":320,"scrollWidth":320,"offRight":16,"offLeft":0,"clippedCards":1,"overflow":0,"consoleErrors":[]}
+{"innerWidth":360,"scrollWidth":360,"offRight":15,"offLeft":0,"clippedCards":1,"overflow":0,"consoleErrors":[]}
+{"innerWidth":390,"scrollWidth":390,"offRight":14,"offLeft":0,"clippedCards":1,"overflow":0,"consoleErrors":[]}
+{"innerWidth":430,"scrollWidth":430,"offRight":13,"offLeft":0,"clippedCards":1,"overflow":0,"consoleErrors":[]}
+{"innerWidth":768,"scrollWidth":768,"offRight":4,"offLeft":0,"clippedCards":0,"overflow":0,"consoleErrors":[]}
+{"innerWidth":1024,"scrollWidth":1024,"offRight":0,"offLeft":0,"clippedCards":0,"overflow":0,"consoleErrors":[]}
+{"innerWidth":1440,"scrollWidth":1440,"offRight":0,"offLeft":0,"clippedCards":0,"overflow":0,"consoleErrors":[]}
+{"innerWidth":1920,"scrollWidth":1920,"offRight":0,"offLeft":0,"clippedCards":0,"overflow":0,"consoleErrors":[]}
+{"innerWidth":320,"scrollWidth":320,"offRight":1,"offLeft":0,"clippedCards":1,"overflow":0,"consoleErrors":[]}
+{"innerWidth":360,"scrollWidth":360,"offRight":1,"offLeft":0,"clippedCards":1,"overflow":0,"consoleErrors":[]}
+{"innerWidth":390,"scrollWidth":390,"offRight":1,"offLeft":0,"clippedCards":1,"overflow":0,"consoleErrors":[]}
+{"innerWidth":430,"scrollWidth":430,"offRight":1,"offLeft":0,"clippedCards":1,"overflow":0,"consoleErrors":["Failed to load resource: the server responded with a status of 429 (Too Many Requests)","Failed to load resource: the server responded with a status of 429 (Too Many Requests)"]}
+{"innerWidth":768,"scrollWidth":768,"offRight":0,"offLeft":0,"clippedCards":0,"overflow":0,"consoleErrors":["Failed to load resource: the server responded with a status of 429 (Too Many Requests)","Failed to load resource: the server responded with a status of 429 (Too Many Requests)","Failed to load resource: the server responded with a status of 429 (Too Many Requests)"]}
+{"innerWidth":1024,"scrollWidth":1024,"offRight":0,"offLeft":0,"clippedCards":0,"overflow":0,"consoleErrors":["Failed to load resource: the server responded with a status of 429 (Too Many Requests)","Failed to load resource: the server responded with a status of 429 (Too Many Requests)","Failed to load resource: the server responded with a status of 429 (Too Many Requests)"]}
+{"innerWidth":1440,"scrollWidth":1440,"offRight":0,"offLeft":0,"clippedCards":0,"overflow":0,"consoleErrors":["Failed to load resource: the server responded with a status of 429 (Too Many Requests)","Failed to load resource: the server responded with a status of 429 (Too Many Requests)","Failed to load resource: the server responded with a status of 429 (Too Many Requests)"]}
+{"innerWidth":1920,"scrollWidth":1920,"offRight":0,"offLeft":0,"clippedCards":0,"overflow":0,"consoleErrors":["Failed to load resource: the server responded with a status of 429 (Too Many Requests)","Failed to load resource: the server responded with a status of 429 (Too Many Requests)","Failed to load resource: the server responded with a status of 429 (Too Many Requests)"]}

@@ -50,6 +50,7 @@ const emailService_1 = require("./services/emailService");
 const envValidate_1 = require("./utils/envValidate");
 const errorHandler_1 = require("./middleware/errorHandler");
 const requestLogger_1 = require("./middleware/requestLogger");
+const adminOtpService_1 = require("./services/adminOtpService");
 // Routes
 const auth_1 = __importDefault(require("./routes/auth"));
 const pages_1 = __importDefault(require("./routes/pages"));
@@ -65,6 +66,7 @@ const consultations_1 = __importDefault(require("./routes/consultations"));
 const webhooks_1 = __importDefault(require("./routes/webhooks"));
 const dashboard_1 = __importDefault(require("./routes/dashboard"));
 const settings_1 = __importDefault(require("./routes/settings"));
+const visual_components_1 = __importDefault(require("./routes/visual-components"));
 const navigation_1 = __importDefault(require("./routes/navigation"));
 const visitors_1 = __importDefault(require("./routes/visitors"));
 const applications_1 = __importDefault(require("./routes/applications"));
@@ -100,7 +102,7 @@ const globalLimiter = (0, express_rate_limit_1.default)({
 });
 const authLimiter = (0, express_rate_limit_1.default)({
     windowMs: 15 * 60 * 1000,
-    max: 20,
+    max: 100, // Generous allowance for legitimate admin sessions and dev testing
     message: { error: 'Too many authentication attempts.' },
 });
 app.use(globalLimiter);
@@ -130,6 +132,7 @@ app.use('/api/v1/inquiries', inquiries_1.default);
 app.use('/api/v1/consultations', consultations_1.default);
 app.use('/api/v1/dashboard', dashboard_1.default);
 app.use('/api/v1/settings', settings_1.default);
+app.use('/api/v1/visual-components', visual_components_1.default);
 app.use('/api/v1/navigation', navigation_1.default);
 app.use('/api/v1/visitors', visitors_1.default);
 app.use('/api/v1/applications', applications_1.default);
@@ -165,6 +168,12 @@ app.use(errorHandler_1.errorHandler);
 const server = app.listen(PORT, () => {
     logger_1.logger.info(`Backend server running on port ${PORT}`);
     logger_1.logger.info(`Environment: ${process.env.NODE_ENV}`);
+    // Schedule periodic cleanup of expired/used OTPs every 5 minutes
+    setInterval(() => {
+        (0, adminOtpService_1.cleanupExpiredOtps)().catch(err => {
+            logger_1.logger.error('Scheduled OTP cleanup encountered an error', err);
+        });
+    }, 5 * 60 * 1000);
 });
 function shutdown(signal) {
     logger_1.logger.info(`Received ${signal}; shutting down backend.`);

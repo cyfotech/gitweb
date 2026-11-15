@@ -28,25 +28,10 @@ const SIDEBAR_ITEMS: SidebarItem[] = [
     href: '/admin/dashboard',
   },
   {
-    key: 'visual-components',
-    label: 'Page Animation & Visual Managers',
-    icon: <Sparkles size={18} />,
-    children: [
-      { label: 'Hire Professionals Animation', href: '/admin/tax-intelligence' },
-      { label: 'CPA Outsourcing Animation', href: '/admin/production-dashboard' },
-      { label: 'Service Details Animation', href: '/admin/execution-map' },
-      { label: 'Services Workflow Animation', href: '/admin/services' },
-      { label: 'Live Animation Manager (All Pages)', href: '/admin/animations' },
-      { label: 'Shared Media & Assets', href: '/admin/media' },
-    ],
-  },
-  {
     key: 'editing-pages',
     label: 'Website Page Manager',
     icon: <FileEdit size={18} />,
     children: [
-      { label: 'All Website Pages', href: '/admin/pages' },
-      { label: 'Services Manager', href: '/admin/services' },
       { label: 'Blog Manager', href: '/admin/blog' },
       { label: 'Media Library', href: '/admin/media' },
       { label: 'Contact Inquiries', href: '/admin/contact' },
@@ -251,7 +236,7 @@ export function AdminLayout({ children }: AdminLayoutProps) {
   );
 
   return (
-    <div className="flex h-screen bg-[#F7FAF9] dark:bg-[#030F14] text-slate-900 dark:text-slate-100 transition-colors duration-300 relative overflow-hidden font-sans">
+    <div className="admin-layout flex h-screen bg-[#F7FAF9] dark:bg-[#030F14] text-slate-900 dark:text-slate-100 transition-colors duration-300 relative overflow-hidden font-sans">
       <FloatingBackground />
 
       {/* Desktop Glass Sidebar */}

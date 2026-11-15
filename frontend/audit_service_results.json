@@ -1,0 +1,602 @@
+[
+  {
+    "route": "/services",
+    "label": "Services",
+    "docScrollOverflow": "none",
+    "consoleErrors": 0,
+    "contrastFails": [
+      {
+        "W": 390,
+        "tag": "A",
+        "txt": "",
+        "col": "rgb(13, 122, 99)",
+        "bg": "rgb(6,24,30)",
+        "r": "3.44",
+        "req": 4.5
+      },
+      {
+        "W": 390,
+        "tag": "DIV",
+        "txt": "",
+        "col": "rgb(13, 122, 99)",
+        "bg": "rgb(6,24,30)",
+        "r": "3.44",
+        "req": 4.5
+      },
+      {
+        "W": 390,
+        "tag": "SPAN",
+        "txt": "01",
+        "col": "rgb(73, 227, 214)",
+        "bg": "rgb(73,227,214)",
+        "r": "1.00",
+        "req": 4.5
+      },
+      {
+        "W": 390,
+        "tag": "SPAN",
+        "txt": "02",
+        "col": "rgb(73, 227, 214)",
+        "bg": "rgb(73,227,214)",
+        "r": "1.00",
+        "req": 4.5
+      },
+      {
+        "W": 390,
+        "tag": "SPAN",
+        "txt": "03",
+        "col": "rgb(73, 227, 214)",
+        "bg": "rgb(73,227,214)",
+        "r": "1.00",
+        "req": 4.5
+      },
+      {
+        "W": 390,
+        "tag": "SPAN",
+        "txt": "04",
+        "col": "rgb(73, 227, 214)",
+        "bg": "rgb(73,227,214)",
+        "r": "1.00",
+        "req": 4.5
+      },
+      {
+        "W": 390,
+        "tag": "SPAN",
+        "txt": "05",
+        "col": "rgb(73, 227, 214)",
+        "bg": "rgb(73,227,214)",
+        "r": "1.00",
+        "req": 4.5
+      },
+      {
+        "W": 390,
+        "tag": "SPAN",
+        "txt": "06",
+        "col": "rgb(73, 227, 214)",
+        "bg": "rgb(73,227,214)",
+        "r": "1.00",
+        "req": 4.5
+      },
+      {
+        "W": 768,
+        "tag": "A",
+        "txt": "",
+        "col": "rgb(13, 122, 99)",
+        "bg": "rgb(6,24,30)",
+        "r": "3.44",
+        "req": 4.5
+      },
+      {
+        "W": 768,
+        "tag": "DIV",
+        "txt": "",
+        "col": "rgb(13, 122, 99)",
+        "bg": "rgb(6,24,30)",
+        "r": "3.44",
+        "req": 4.5
+      },
+      {
+        "W": 768,
+        "tag": "SPAN",
+        "txt": "01",
+        "col": "rgb(73, 227, 214)",
+        "bg": "rgb(73,227,214)",
+        "r": "1.00",
+        "req": 4.5
+      },
+      {
+        "W": 768,
+        "tag": "SPAN",
+        "txt": "02",
+        "col": "rgb(73, 227, 214)",
+        "bg": "rgb(73,227,214)",
+        "r": "1.00",
+        "req": 4.5
+      }
+    ],
+    "totalFails": 20
+  },
+  {
+    "route": "/tax-planning",
+    "label": "TaxPlanning",
+    "docScrollOverflow": "none",
+    "consoleErrors": 2,
+    "contrastFails": [
+      {
+        "W": 390,
+        "tag": "SPAN",
+        "txt": "01",
+        "col": "rgb(73, 227, 214)",
+        "bg": "rgb(73,227,214)",
+        "r": "1.00",
+        "req": 4.5
+      },
+      {
+        "W": 390,
+        "tag": "SPAN",
+        "txt": "02",
+        "col": "rgb(73, 227, 214)",
+        "bg": "rgb(73,227,214)",
+        "r": "1.00",
+        "req": 4.5
+      },
+      {
+        "W": 390,
+        "tag": "SPAN",
+        "txt": "03",
+        "col": "rgb(73, 227, 214)",
+        "bg": "rgb(73,227,214)",
+        "r": "1.00",
+        "req": 4.5
+      },
+      {
+        "W": 390,
+        "tag": "SPAN",
+        "txt": "04",
+        "col": "rgb(73, 227, 214)",
+        "bg": "rgb(73,227,214)",
+        "r": "1.00",
+        "req": 4.5
+      },
+      {
+        "W": 390,
+        "tag": "SPAN",
+        "txt": "05",
+        "col": "rgb(73, 227, 214)",
+        "bg": "rgb(73,227,214)",
+        "r": "1.00",
+        "req": 4.5
+      },
+      {
+        "W": 390,
+        "tag": "SPAN",
+        "txt": "06",
+        "col": "rgb(73, 227, 214)",
+        "bg": "rgb(73,227,214)",
+        "r": "1.00",
+        "req": 4.5
+      },
+      {
+        "W": 390,
+        "tag": "SPAN",
+        "txt": "",
+        "col": "rgb(169, 182, 189)",
+        "bg": "rgb(227,163,59)",
+        "r": "1.06",
+        "req": 4.5
+      },
+      {
+        "W": 768,
+        "tag": "SPAN",
+        "txt": "01",
+        "col": "rgb(73, 227, 214)",
+        "bg": "rgb(73,227,214)",
+        "r": "1.00",
+        "req": 4.5
+      },
+      {
+        "W": 768,
+        "tag": "SPAN",
+        "txt": "02",
+        "col": "rgb(73, 227, 214)",
+        "bg": "rgb(73,227,214)",
+        "r": "1.00",
+        "req": 4.5
+      },
+      {
+        "W": 768,
+        "tag": "SPAN",
+        "txt": "03",
+        "col": "rgb(73, 227, 214)",
+        "bg": "rgb(73,227,214)",
+        "r": "1.00",
+        "req": 4.5
+      },
+      {
+        "W": 768,
+        "tag": "SPAN",
+        "txt": "04",
+        "col": "rgb(73, 227, 214)",
+        "bg": "rgb(73,227,214)",
+        "r": "1.00",
+        "req": 4.5
+      },
+      {
+        "W": 768,
+        "tag": "SPAN",
+        "txt": "05",
+        "col": "rgb(73, 227, 214)",
+        "bg": "rgb(73,227,214)",
+        "r": "1.00",
+        "req": 4.5
+      }
+    ],
+    "totalFails": 25
+  },
+  {
+    "route": "/tax-preparation",
+    "label": "TaxPreparation",
+    "docScrollOverflow": "none",
+    "consoleErrors": 0,
+    "contrastFails": [
+      {
+        "W": 390,
+        "tag": "SPAN",
+        "txt": "01",
+        "col": "rgb(73, 227, 214)",
+        "bg": "rgb(73,227,214)",
+        "r": "1.00",
+        "req": 4.5
+      },
+      {
+        "W": 390,
+        "tag": "SPAN",
+        "txt": "02",
+        "col": "rgb(73, 227, 214)",
+        "bg": "rgb(73,227,214)",
+        "r": "1.00",
+        "req": 4.5
+      },
+      {
+        "W": 390,
+        "tag": "SPAN",
+        "txt": "03",
+        "col": "rgb(73, 227, 214)",
+        "bg": "rgb(73,227,214)",
+        "r": "1.00",
+        "req": 4.5
+      },
+      {
+        "W": 390,
+        "tag": "SPAN",
+        "txt": "04",
+        "col": "rgb(73, 227, 214)",
+        "bg": "rgb(73,227,214)",
+        "r": "1.00",
+        "req": 4.5
+      },
+      {
+        "W": 390,
+        "tag": "SPAN",
+        "txt": "05",
+        "col": "rgb(73, 227, 214)",
+        "bg": "rgb(73,227,214)",
+        "r": "1.00",
+        "req": 4.5
+      },
+      {
+        "W": 390,
+        "tag": "SPAN",
+        "txt": "06",
+        "col": "rgb(73, 227, 214)",
+        "bg": "rgb(73,227,214)",
+        "r": "1.00",
+        "req": 4.5
+      },
+      {
+        "W": 390,
+        "tag": "SPAN",
+        "txt": "",
+        "col": "rgb(55, 225, 145)",
+        "bg": "rgb(134,217,181)",
+        "r": "1.02",
+        "req": 4.5
+      },
+      {
+        "W": 390,
+        "tag": "BUTTON",
+        "txt": "Individuals & Businesses",
+        "col": "rgb(201, 212, 222)",
+        "bg": "rgb(255,255,255)",
+        "r": "1.50",
+        "req": 4.5
+      },
+      {
+        "W": 768,
+        "tag": "SPAN",
+        "txt": "01",
+        "col": "rgb(73, 227, 214)",
+        "bg": "rgb(73,227,214)",
+        "r": "1.00",
+        "req": 4.5
+      },
+      {
+        "W": 768,
+        "tag": "SPAN",
+        "txt": "02",
+        "col": "rgb(73, 227, 214)",
+        "bg": "rgb(73,227,214)",
+        "r": "1.00",
+        "req": 4.5
+      },
+      {
+        "W": 768,
+        "tag": "SPAN",
+        "txt": "03",
+        "col": "rgb(73, 227, 214)",
+        "bg": "rgb(73,227,214)",
+        "r": "1.00",
+        "req": 4.5
+      },
+      {
+        "W": 768,
+        "tag": "SPAN",
+        "txt": "04",
+        "col": "rgb(73, 227, 214)",
+        "bg": "rgb(73,227,214)",
+        "r": "1.00",
+        "req": 4.5
+      }
+    ],
+    "totalFails": 24
+  },
+  {
+    "route": "/bookkeeping",
+    "label": "Bookkeeping",
+    "docScrollOverflow": "none",
+    "consoleErrors": 1,
+    "contrastFails": [
+      {
+        "W": 390,
+        "tag": "A",
+        "txt": "",
+        "col": "rgb(11, 122, 68)",
+        "bg": "rgb(6,24,30)",
+        "r": "3.35",
+        "req": 4.5
+      },
+      {
+        "W": 390,
+        "tag": "DIV",
+        "txt": "",
+        "col": "rgb(11, 122, 68)",
+        "bg": "rgb(6,24,30)",
+        "r": "3.35",
+        "req": 4.5
+      },
+      {
+        "W": 390,
+        "tag": "SPAN",
+        "txt": "01",
+        "col": "rgb(73, 227, 214)",
+        "bg": "rgb(73,227,214)",
+        "r": "1.00",
+        "req": 4.5
+      },
+      {
+        "W": 390,
+        "tag": "SPAN",
+        "txt": "02",
+        "col": "rgb(73, 227, 214)",
+        "bg": "rgb(73,227,214)",
+        "r": "1.00",
+        "req": 4.5
+      },
+      {
+        "W": 390,
+        "tag": "SPAN",
+        "txt": "03",
+        "col": "rgb(73, 227, 214)",
+        "bg": "rgb(73,227,214)",
+        "r": "1.00",
+        "req": 4.5
+      },
+      {
+        "W": 390,
+        "tag": "SPAN",
+        "txt": "04",
+        "col": "rgb(73, 227, 214)",
+        "bg": "rgb(73,227,214)",
+        "r": "1.00",
+        "req": 4.5
+      },
+      {
+        "W": 390,
+        "tag": "SPAN",
+        "txt": "05",
+        "col": "rgb(73, 227, 214)",
+        "bg": "rgb(73,227,214)",
+        "r": "1.00",
+        "req": 4.5
+      },
+      {
+        "W": 390,
+        "tag": "SPAN",
+        "txt": "06",
+        "col": "rgb(73, 227, 214)",
+        "bg": "rgb(73,227,214)",
+        "r": "1.00",
+        "req": 4.5
+      },
+      {
+        "W": 390,
+        "tag": "DIV",
+        "txt": "",
+        "col": "rgb(232, 237, 240)",
+        "bg": "rgb(55,225,145)",
+        "r": "1.44",
+        "req": 4.5
+      },
+      {
+        "W": 390,
+        "tag": "SPAN",
+        "txt": "",
+        "col": "rgb(55, 225, 145)",
+        "bg": "rgb(55,225,145)",
+        "r": "1.00",
+        "req": 4.5
+      },
+      {
+        "W": 768,
+        "tag": "A",
+        "txt": "",
+        "col": "rgb(11, 122, 68)",
+        "bg": "rgb(6,24,30)",
+        "r": "3.35",
+        "req": 4.5
+      },
+      {
+        "W": 768,
+        "tag": "DIV",
+        "txt": "",
+        "col": "rgb(11, 122, 68)",
+        "bg": "rgb(6,24,30)",
+        "r": "3.35",
+        "req": 4.5
+      }
+    ],
+    "totalFails": 25
+  },
+  {
+    "route": "/services/payroll-management",
+    "label": "Payroll",
+    "docScrollOverflow": "none",
+    "consoleErrors": 9,
+    "contrastFails": [
+      {
+        "W": 390,
+        "tag": "A",
+        "txt": "",
+        "col": "rgb(14, 122, 73)",
+        "bg": "rgb(6,24,30)",
+        "r": "3.37",
+        "req": 4.5
+      },
+      {
+        "W": 390,
+        "tag": "DIV",
+        "txt": "",
+        "col": "rgb(14, 122, 73)",
+        "bg": "rgb(6,24,30)",
+        "r": "3.37",
+        "req": 4.5
+      },
+      {
+        "W": 390,
+        "tag": "SPAN",
+        "txt": "01",
+        "col": "rgb(73, 227, 214)",
+        "bg": "rgb(73,227,214)",
+        "r": "1.00",
+        "req": 4.5
+      },
+      {
+        "W": 390,
+        "tag": "SPAN",
+        "txt": "02",
+        "col": "rgb(73, 227, 214)",
+        "bg": "rgb(73,227,214)",
+        "r": "1.00",
+        "req": 4.5
+      },
+      {
+        "W": 390,
+        "tag": "SPAN",
+        "txt": "03",
+        "col": "rgb(73, 227, 214)",
+        "bg": "rgb(73,227,214)",
+        "r": "1.00",
+        "req": 4.5
+      },
+      {
+        "W": 390,
+        "tag": "SPAN",
+        "txt": "04",
+        "col": "rgb(73, 227, 214)",
+        "bg": "rgb(73,227,214)",
+        "r": "1.00",
+        "req": 4.5
+      },
+      {
+        "W": 390,
+        "tag": "SPAN",
+        "txt": "05",
+        "col": "rgb(73, 227, 214)",
+        "bg": "rgb(73,227,214)",
+        "r": "1.00",
+        "req": 4.5
+      },
+      {
+        "W": 390,
+        "tag": "SPAN",
+        "txt": "06",
+        "col": "rgb(73, 227, 214)",
+        "bg": "rgb(73,227,214)",
+        "r": "1.00",
+        "req": 4.5
+      },
+      {
+        "W": 390,
+        "tag": "DIV",
+        "txt": "STSmart Tax ExpertssServicesCPA Outsourc",
+        "col": "rgb(11, 26, 30)",
+        "bg": "rgb(11,26,30)",
+        "r": "1.00",
+        "req": 4.5
+      },
+      {
+        "W": 768,
+        "tag": "A",
+        "txt": "",
+        "col": "rgb(14, 122, 73)",
+        "bg": "rgb(6,24,30)",
+        "r": "3.37",
+        "req": 4.5
+      },
+      {
+        "W": 768,
+        "tag": "DIV",
+        "txt": "",
+        "col": "rgb(14, 122, 73)",
+        "bg": "rgb(6,24,30)",
+        "r": "3.37",
+        "req": 4.5
+      },
+      {
+        "W": 768,
+        "tag": "SPAN",
+        "txt": "01",
+        "col": "rgb(73, 227, 214)",
+        "bg": "rgb(73,227,214)",
+        "r": "1.00",
+        "req": 4.5
+      }
+    ],
+    "totalFails": 25
+  },
+  {
+    "route": "/main-services",
+    "label": "MainServices",
+    "error": "page.goto: net::ERR_CONNECTION_REFUSED at http://localhost:3000/main-services"
+  },
+  {
+    "route": "/cpa-outsourcing",
+    "label": "CpaOutsourcing",
+    "error": "page.goto: net::ERR_CONNECTION_REFUSED at http://localhost:3000/cpa-outsourcing"
+  },
+  {
+    "route": "/hire-professionals",
+    "label": "HireProfessionals",
+    "error": "page.goto: net::ERR_CONNECTION_REFUSED at http://localhost:3000/hire-professionals"
+  }
+]

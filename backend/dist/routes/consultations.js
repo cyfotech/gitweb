@@ -5,6 +5,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = require("express");
 const express_rate_limit_1 = __importDefault(require("express-rate-limit"));
+const crypto_1 = __importDefault(require("crypto"));
 const prisma_1 = __importDefault(require("../utils/prisma"));
 const auth_1 = require("../middleware/auth");
 const uuid_1 = require("uuid");
@@ -97,8 +98,15 @@ router.post('/', consultationSubmitLimiter, async (req, res) => {
                 error: `This consultation request was already received. Reference: ${recentDuplicate.referenceNo}. Please do not submit it again.`,
             });
         }
-        const randomSuffix = Math.floor(100000 + Math.random() * 900000);
-        const referenceNo = `STE-CONS-${randomSuffix}`;
+        const ts = Date.now().toString(36).toUpperCase();
+        const randHex = crypto_1.default.randomBytes(3).toString('hex').toUpperCase();
+        let referenceNo = `STE-CONS-${ts}-${randHex}`;
+        let collisionCheck = await prisma_1.default.consultationrequest.findUnique({ where: { referenceNo } });
+        while (collisionCheck) {
+            const nextRand = crypto_1.default.randomBytes(3).toString('hex').toUpperCase();
+            referenceNo = `STE-CONS-${Date.now().toString(36).toUpperCase()}-${nextRand}`;
+            collisionCheck = await prisma_1.default.consultationrequest.findUnique({ where: { referenceNo } });
+        }
         const clientIp = req.headers['x-forwarded-for'] || req.socket.remoteAddress || '127.0.0.1';
         const userAgent = req.headers['user-agent'] || 'Direct Client Browser';
         const initialHistory = JSON.stringify([
@@ -391,7 +399,11 @@ router.get('/:id', auth_1.authenticate, async (req, res) => {
     }
 });
 router.post('/:id/reply', auth_1.authenticate, consultationReplyLimiter, async (req, res) => {
-    const { subject, message } = req.body;
+    const { to, subject, message } = req.body;
+    const recipient = typeof to === 'string' ? to.trim().toLowerCase() : '';
+    if (!(0, emailService_1.isValidEmail)(recipient)) {
+        return res.status(400).json({ error: 'A valid recipient email address is required.' });
+    }
     if (typeof subject !== 'string' || !subject.trim() || subject.length > 200 || /[\r\n]/.test(subject)) {
         return res.status(400).json({ error: 'Email subject is required and must be 200 characters or fewer.' });
     }
@@ -403,11 +415,9 @@ router.post('/:id/reply', auth_1.authenticate, consultationReplyLimiter, async (
         const current = await prisma_1.default.consultationrequest.findUnique({ where: { id: consultationId } });
         if (!current)
             return res.status(404).json({ error: 'Consultation request not found.' });
-        if (!(0, emailService_1.isValidEmail)(current.email))
-            return res.status(400).json({ error: 'Customer email address is invalid.' });
         const adminName = req.adminUser?.name || 'STE Smart Tax Experts Team';
         const delivery = await (0, emailService_1.sendEmail)({
-            to: current.email,
+            to: recipient,
             subject: subject.trim(),
             replyTo: process.env.SMTP_FROM_EMAIL || process.env.SMTP_USER,
             html: (0, emailTemplateService_1.buildAdminReplyEmail)({
@@ -424,7 +434,7 @@ router.post('/:id/reply', auth_1.authenticate, consultationReplyLimiter, async (
             subject: subject.trim(),
             body: message.trim(),
             sender: adminName,
-            recipient: current.email,
+            recipient,
             timestamp: new Date().toISOString(),
             deliveryStatus: delivery.success ? 'accepted_by_smtp' : 'not_accepted',
             messageId: delivery.messageId,
@@ -480,6 +490,8 @@ router.put('/:id/status', auth_1.authenticate, async (req, res) => {
         }
         const changedByName = adminUser ? `${adminUser.name || adminUser.email}` : 'Administrator';
         let actionTitle = `Status updated to ${status.replace('_', ' ').toUpperCase()}`;
+        if (status === 'approved')
+            actionTitle = 'Consultation Approved';
         if (status === 'contacted')
             actionTitle = 'Customer Contacted';
         if (status === 'scheduled')
@@ -520,6 +532,108 @@ router.put('/:id/status', auth_1.authenticate, async (req, res) => {
             where: { id: consultationId },
             data: updateData,
         });
+        // Automated professional customer email updates based on status
+        const brand = (0, emailTemplateService_1.getBrandContext)();
+        const refNo = existing.referenceNo || existing.id;
+        if (status === 'approved') {
+            try {
+                const approvedHtml = `
+          <div style="padding:32px 28px;">
+            <div style="display:inline-block;background:#E7F8EF;color:#087C50;font-size:11px;font-weight:800;letter-spacing:1px;text-transform:uppercase;padding:6px 14px;border-radius:999px;margin-bottom:16px;">
+              ✓ Consultation Approved
+            </div>
+            <h2 style="margin:0 0 12px;font-size:22px;color:#0F172A;font-weight:800;">Dear ${existing.fullName},</h2>
+            <p style="font-size:15px;line-height:1.7;color:#334155;margin:0 0 16px;">
+              Your consultation request has been reviewed and <strong>approved</strong> by our senior advisory team.
+            </p>
+            <div style="background:#F0FDF4;border:1px solid #BBF7D0;border-radius:12px;padding:16px;margin-bottom:20px;">
+              <p style="margin:0;font-size:14px;color:#166534;font-weight:600;">
+                Consultation Reference: <strong style="font-family:monospace;font-size:16px;">${refNo}</strong>
+              </p>
+              <p style="margin:6px 0 0;font-size:13px;color:#15803D;">
+                Service: <strong>${formatServiceName(existing.serviceSlug)}</strong>
+              </p>
+            </div>
+            <p style="font-size:14px;line-height:1.7;color:#475569;margin:0 0 20px;">
+              ${note || 'Our specialist will contact you directly to conduct your session. You can also pick an instant meeting slot on our online calendar if you prefer.'}
+            </p>
+            ${brand.calendlyUrl ? `
+              <div style="text-align:center;margin:28px 0;">
+                <a href="${brand.calendlyUrl}" style="display:inline-block;background:#087C50;color:#FFFFFF;font-weight:700;font-size:14px;padding:12px 28px;border-radius:10px;text-decoration:none;box-shadow:0 4px 12px rgba(8,124,80,0.25);">
+                  Pick a Time on Calendly &rarr;
+                </a>
+              </div>
+            ` : ''}
+            <p style="font-size:13px;color:#64748B;margin:24px 0 0;border-top:1px solid #E2E8F0;padding-top:16px;">
+              Questions? Reply directly to this email or reach us at <a href="mailto:${brand.businessEmail}" style="color:#087C50;font-weight:600;">${brand.businessEmail}</a>.
+            </p>
+          </div>
+        `;
+                await (0, emailService_1.sendEmail)({
+                    to: existing.email,
+                    subject: `Consultation Approved — ${brand.businessName} [Ref: ${refNo}]`,
+                    html: approvedHtml,
+                });
+            }
+            catch (emailErr) {
+                logger_1.logger.error('Failed to dispatch consultation approved email', { error: emailErr });
+            }
+        }
+        else if (status === 'rejected') {
+            try {
+                const rejectedHtml = `
+          <div style="padding:32px 28px;">
+            <div style="display:inline-block;background:#FEE2E2;color:#991B1B;font-size:11px;font-weight:800;letter-spacing:1px;text-transform:uppercase;padding:6px 14px;border-radius:999px;margin-bottom:16px;">
+              Consultation Status Update
+            </div>
+            <h2 style="margin:0 0 12px;font-size:22px;color:#0F172A;font-weight:800;">Dear ${existing.fullName},</h2>
+            <p style="font-size:15px;line-height:1.7;color:#334155;margin:0 0 16px;">
+              Thank you for your interest in ${brand.businessName}. After reviewing your submission [Ref: <strong>${refNo}</strong>], our team is unable to accept this specific consultation at this time.
+            </p>
+            ${cancellationReason || note ? `
+              <div style="background:#FEF2F2;border-left:4px solid #EF4444;padding:14px 16px;border-radius:4px;margin:16px 0;">
+                <p style="margin:0;font-size:13px;color:#991B1B;line-height:1.6;">
+                  <strong>Note from team:</strong> ${cancellationReason || note}
+                </p>
+              </div>
+            ` : ''}
+            <p style="font-size:14px;line-height:1.7;color:#475569;margin:16px 0;">
+              If you have any further questions or feel your requirements align with other services, please contact our support team at <a href="mailto:${brand.businessEmail}" style="color:#087C50;font-weight:600;">${brand.businessEmail}</a>.
+            </p>
+          </div>
+        `;
+                await (0, emailService_1.sendEmail)({
+                    to: existing.email,
+                    subject: `Update Regarding Your Consultation Request — ${brand.businessName} [Ref: ${refNo}]`,
+                    html: rejectedHtml,
+                });
+            }
+            catch (emailErr) {
+                logger_1.logger.error('Failed to dispatch consultation rejected email', { error: emailErr });
+            }
+        }
+        else if (status === 'cancelled') {
+            try {
+                const cancelHtml = (0, emailTemplateService_1.buildAppointmentCancellation)({
+                    customerName: existing.fullName,
+                    customerEmail: existing.email,
+                    appointmentDate: existing.appointmentDate || 'Upcoming',
+                    appointmentTime: existing.appointmentTime || 'Scheduled Session',
+                    durationMinutes: '30',
+                    meetingLocation: existing.meetingLocation || 'Online',
+                    meetingUrl: '',
+                    referenceNumber: refNo,
+                }, brand);
+                await (0, emailService_1.sendEmail)({
+                    to: existing.email,
+                    subject: `Consultation Cancelled — ${brand.businessName} [Ref: ${refNo}]`,
+                    html: cancelHtml,
+                });
+            }
+            catch (emailErr) {
+                logger_1.logger.error('Failed to dispatch consultation cancelled email', { error: emailErr });
+            }
+        }
         return res.json({
             ...updated,
             statusHistory: history,
@@ -575,6 +689,55 @@ router.put('/:id/schedule', auth_1.authenticate, async (req, res) => {
                 statusHistory: JSON.stringify(history),
             },
         });
+        // Send professional HTML appointment confirmation email to customer & notification to owner
+        const brand = (0, emailTemplateService_1.getBrandContext)();
+        const adminEmail = (0, emailService_1.getOwnerEmail)();
+        const durationMinutes = req.body.durationMinutes || '30';
+        try {
+            const customerHtml = (0, emailTemplateService_1.buildAppointmentConfirmation)({
+                customerName: existing.fullName,
+                customerEmail: existing.email,
+                appointmentDate,
+                appointmentTime,
+                durationMinutes: String(durationMinutes),
+                meetingLocation: meetingLocation || 'Online Video (Google Meet / Zoom)',
+                meetingUrl: meetingLocation && /^https?:\/\//i.test(meetingLocation) ? meetingLocation : '',
+                referenceNumber: existing.referenceNo || existing.id,
+            }, brand);
+            const ownerHtml = (0, emailTemplateService_1.buildOwnerNotification)({
+                referenceNumber: existing.referenceNo || existing.id,
+                sourcePage: 'Admin Scheduled Appointment',
+                fields: [
+                    { label: 'Event', value: 'Consultation Appointment Confirmed' },
+                    { label: 'Customer Name', value: existing.fullName },
+                    { label: 'Customer Email', value: existing.email },
+                    { label: 'Phone', value: existing.phone || 'Not provided' },
+                    { label: 'Date', value: appointmentDate },
+                    { label: 'Time', value: appointmentTime },
+                    { label: 'Duration', value: `${durationMinutes} minutes` },
+                    { label: 'Meeting Type / Location', value: meetingLocation || meetingType || 'Online' },
+                    { label: 'Assigned Advisor', value: assignedAdminName || changedByName },
+                    { label: 'Scheduled By', value: changedByName },
+                    { label: 'Timestamp', value: new Date().toISOString() },
+                ],
+            }, brand);
+            await Promise.all([
+                (0, emailService_1.sendEmail)({
+                    to: existing.email,
+                    subject: `Consultation Appointment Confirmed — ${brand.businessName} [Ref: ${existing.referenceNo || existing.id}]`,
+                    html: customerHtml,
+                }),
+                (0, emailService_1.sendEmail)({
+                    to: adminEmail,
+                    subject: `Appointment Scheduled — ${existing.fullName} [Ref: ${existing.referenceNo || existing.id}]`,
+                    html: ownerHtml,
+                    replyTo: existing.email,
+                }),
+            ]);
+        }
+        catch (emailErr) {
+            console.error('Failed to send appointment confirmation email:', emailErr);
+        }
         return res.json({
             ...updated,
             statusHistory: history,

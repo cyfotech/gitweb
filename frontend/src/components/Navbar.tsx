@@ -304,21 +304,38 @@ export function Navbar() {
               if (link.name === 'Services') {
                 return (
                   <div key={link.name} className="ptc-mobile-accordion">
-                    <button
-                      type="button"
-                      onClick={() => setMobileServicesOpen((open) => !open)}
-                      aria-expanded={mobileServicesOpen}
-                      aria-controls="ptc-mobile-services-submenu"
-                      className={`ptc-mobile-link ${isActive('/services') ? 'ptc-mobile-link-active' : ''
-                        } ${mobileServicesOpen ? 'ptc-mobile-accordion-open' : ''}`}
+                    <div
+                      className={`ptc-mobile-link ptc-mobile-services-row ${
+                        isActive('/services') ? 'ptc-mobile-link-active' : ''
+                      } ${mobileServicesOpen ? 'ptc-mobile-accordion-open' : ''}`}
                       style={{ transitionDelay: mobileMenuOpen ? `${index * 30}ms` : '0ms' }}
                     >
-                      <span className="ptc-mobile-number">
-                        {String(index + 1).padStart(2, '0')}
-                      </span>
-                      <span>{link.name}</span>
-                      <ChevronDown className="ptc-mobile-arrow" size={15} aria-hidden="true" />
-                    </button>
+                      <Link
+                        to={link.path}
+                        onClick={closeMobileMenu}
+                        aria-current={isActive(link.path) ? 'page' : undefined}
+                        className="ptc-mobile-services-main-link"
+                      >
+                        <span className="ptc-mobile-number">
+                          {String(index + 1).padStart(2, '0')}
+                        </span>
+                        <span>{link.name}</span>
+                      </Link>
+
+                      <button
+                        type="button"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          setMobileServicesOpen((open) => !open);
+                        }}
+                        aria-expanded={mobileServicesOpen}
+                        aria-controls="ptc-mobile-services-submenu"
+                        aria-label="Toggle services submenu"
+                        className="ptc-mobile-chevron-toggle"
+                      >
+                        <ChevronDown className="ptc-mobile-arrow" size={16} aria-hidden="true" />
+                      </button>
+                    </div>
 
                     <div
                       id="ptc-mobile-services-submenu"

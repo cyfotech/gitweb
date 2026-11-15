@@ -978,15 +978,55 @@
 
   .ptc-mobile-accordion .ptc-mobile-link {
     width: 100%;
-    border: 0;
+    border: 1px solid #e2e8f0;
     background: #f8fafc;
     text-align: left;
     font-family: inherit;
-    cursor: pointer;
+    padding: 0;
   }
 
   .dark .ptc-mobile-accordion .ptc-mobile-link {
     background: #0b222a;
+    border-color: rgba(121, 241, 232, 0.15);
+  }
+
+  .ptc-mobile-services-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 !important;
+  }
+
+  .ptc-mobile-services-main-link {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex: 1 1 auto;
+    min-height: 48px;
+    padding: 11px 14px;
+    text-decoration: none;
+    color: inherit;
+    font-size: 13.5px;
+    font-weight: 600;
+  }
+
+  .ptc-mobile-chevron-toggle {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 44px;
+    height: 48px;
+    padding: 0;
+    margin: 0;
+    border: none;
+    background: transparent;
+    cursor: pointer;
+    color: inherit;
+    border-left: 1px solid rgba(226, 232, 240, 0.7);
+  }
+
+  .dark .ptc-mobile-chevron-toggle {
+    border-left-color: rgba(121, 241, 232, 0.15);
   }
 
   .ptc-mobile-accordion .ptc-mobile-arrow {

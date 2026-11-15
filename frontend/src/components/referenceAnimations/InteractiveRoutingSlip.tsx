@@ -86,12 +86,12 @@ Client Notes: ${message.trim() || 'No additional notes provided.'}
     `.trim();
 
     try {
-      await inquiriesApi.create({
+      await inquiriesApi.submit({
         name: name.trim(),
         email: email.trim(),
         phone: phone.trim() || undefined,
         organization: organization.trim() || undefined,
-        inquiry_type: role,
+        inquiryType: role,
         message: consolidatedMessage,
       });
 

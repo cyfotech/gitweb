@@ -910,47 +910,66 @@ export function ContactInquiriesPage() {
                         )}
                       </div>
 
-                      <div className="p-3.5 rounded-2xl bg-[#071A22] border border-teal-500/10">
-                        <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider block mb-1">
+                      <div className="p-3.5 rounded-2xl bg-slate-50 dark:bg-[#071A22] border border-slate-200 dark:border-teal-500/10">
+                        <span className="text-[10px] font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider block mb-1">
                           Company / Organization
                         </span>
-                        <span className="text-xs text-white font-semibold flex items-center gap-1.5 [overflow-wrap:anywhere] break-words">
+                        <span className="text-xs text-slate-800 dark:text-white font-semibold flex items-center gap-1.5 [overflow-wrap:anywhere] break-words">
                           <Building size={13} className="shrink-0 text-slate-400" />
                           <span>{selectedInquiry.organization || 'Individual / Non-disclosed'}</span>
                         </span>
                       </div>
 
-                      <div className="p-3.5 rounded-2xl bg-[#071A22] border border-teal-500/10">
-                        <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider block mb-1">
+                      <div className="p-3.5 rounded-2xl bg-slate-50 dark:bg-[#071A22] border border-slate-200 dark:border-teal-500/10">
+                        <span className="text-[10px] font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider block mb-1">
                           Inquiry Classification
                         </span>
-                        <span className="text-xs text-teal-300 font-semibold">
+                        <span className="text-xs text-teal-600 dark:text-teal-300 font-semibold">
                           {selectedInquiry.inquiryType || 'General Consultation'}
                         </span>
                       </div>
+
+                      {/* Requested Services Badges if present */}
+                      {selectedInquiry.subject && selectedInquiry.subject !== 'General Enquiry' && (
+                        <div className="md:col-span-2 p-3.5 rounded-2xl bg-teal-500/5 dark:bg-teal-500/10 border border-teal-500/20">
+                          <span className="text-[10px] font-bold text-teal-700 dark:text-teal-400 uppercase tracking-wider block mb-2">
+                            Requested Services / Interests
+                          </span>
+                          <div className="flex flex-wrap gap-1.5">
+                            {selectedInquiry.subject.split(',').map((srv, idx) => (
+                              <span
+                                key={idx}
+                                className="inline-flex items-center px-2.5 py-1 rounded-lg text-xs font-semibold bg-white dark:bg-[#071A22] text-teal-700 dark:text-teal-300 border border-teal-500/30 shadow-xs"
+                              >
+                                {srv.trim()}
+                              </span>
+                            ))}
+                          </div>
+                        </div>
+                      )}
                     </div>
 
                     {/* Untruncated Original Message */}
                     <div className="space-y-1.5">
                       <div className="flex items-center justify-between">
-                        <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider">
+                        <span className="text-[10px] font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider">
                           Full Inquiry Message
                         </span>
                         <button
                           onClick={() => copyToClipboard(selectedInquiry.message, 'msgCopy')}
-                          className="text-[10px] text-teal-400 hover:underline flex items-center gap-1 cursor-pointer"
+                          className="text-[10px] text-teal-600 dark:text-teal-400 hover:underline flex items-center gap-1 cursor-pointer font-medium"
                         >
                           {copiedId === 'msgCopy' ? 'Copied!' : 'Copy Text'}
                         </button>
                       </div>
-                      <div className="p-4 rounded-2xl bg-[#071A22] border border-teal-500/15 text-slate-200 text-xs leading-relaxed whitespace-pre-wrap [overflow-wrap:anywhere] break-words font-sans">
+                      <div className="p-4 rounded-2xl bg-slate-50 dark:bg-[#071A22] border border-slate-200 dark:border-teal-500/15 text-slate-800 dark:text-slate-200 text-xs leading-relaxed whitespace-pre-wrap [overflow-wrap:anywhere] break-words font-sans">
                         {selectedInquiry.message}
                       </div>
                     </div>
 
                     {/* Internal Team Notes Section */}
-                    <div className="space-y-3 pt-3 border-t border-teal-500/15">
-                      <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider block">
+                    <div className="space-y-3 pt-3 border-t border-slate-200 dark:border-teal-500/15">
+                      <span className="text-[10px] font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider block">
                         Internal Administrative Notes ({selectedInquiry.notes?.length || 0})
                       </span>
 
@@ -961,12 +980,12 @@ export function ContactInquiriesPage() {
                           placeholder="Add internal note for advisory team..."
                           value={noteText}
                           onChange={(e) => setNoteText(e.target.value)}
-                          className="flex-1 px-3.5 py-2 rounded-xl bg-[#071A22] border border-teal-500/20 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-teal-400 transition-colors"
+                          className="flex-1 px-3.5 py-2 rounded-xl bg-slate-50 dark:bg-[#071A22] border border-slate-300 dark:border-teal-500/20 text-xs text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:border-teal-500 transition-colors"
                         />
                         <button
                           type="submit"
                           disabled={addingNote || !noteText.trim()}
-                          className="px-4 py-2 rounded-xl bg-teal-500 hover:bg-teal-400 text-slate-950 font-bold text-xs disabled:opacity-40 transition-colors cursor-pointer"
+                          className="px-4 py-2 rounded-xl bg-teal-500 hover:bg-teal-400 text-slate-950 font-bold text-xs disabled:opacity-40 transition-colors cursor-pointer shadow-sm"
                         >
                           {addingNote ? 'Saving...' : 'Add Note'}
                         </button>
@@ -978,20 +997,20 @@ export function ContactInquiriesPage() {
                           selectedInquiry.notes.map((note) => (
                             <div
                               key={note.id}
-                              className="p-3 rounded-xl bg-[#071A22] border border-teal-500/10 flex items-start justify-between gap-3 text-xs"
+                              className="p-3 rounded-xl bg-slate-50 dark:bg-[#071A22] border border-slate-200 dark:border-teal-500/10 flex items-start justify-between gap-3 text-xs"
                             >
                               <div className="space-y-1">
-                                <p className="text-slate-200 whitespace-pre-wrap [overflow-wrap:anywhere] break-words">
+                                <p className="text-slate-800 dark:text-slate-200 whitespace-pre-wrap [overflow-wrap:anywhere] break-words">
                                   {note.note}
                                 </p>
                                 <span className="text-[10px] text-slate-500 block">
-                                  By <strong className="text-teal-400">{note.authorName}</strong> &bull;{' '}
+                                  By <strong className="text-teal-600 dark:text-teal-400">{note.authorName}</strong> &bull;{' '}
                                   {formatDate(note.createdAt)}
                                 </span>
                               </div>
                               <button
                                 onClick={() => handleDeleteNote(note.id)}
-                                className="text-slate-500 hover:text-rose-400 transition-colors p-1 cursor-pointer"
+                                className="text-slate-400 hover:text-rose-500 transition-colors p-1 cursor-pointer"
                                 title="Delete Note"
                               >
                                 <Trash2 size={13} />
@@ -1019,17 +1038,17 @@ export function ContactInquiriesPage() {
                       {selectedInquiry.activityLogs && selectedInquiry.activityLogs.length > 0 ? (
                         selectedInquiry.activityLogs.map((act) => (
                           <div key={act.id} className="relative group text-xs">
-                            <span className="absolute -left-6 top-1 w-2.5 h-2.5 rounded-full bg-teal-400 ring-4 ring-[#0B2530]" />
-                            <div className="p-3 rounded-xl bg-[#071A22] border border-teal-500/10 space-y-1">
+                            <span className="absolute -left-6 top-1 w-2.5 h-2.5 rounded-full bg-teal-400 ring-4 ring-white dark:ring-[#0B2530]" />
+                            <div className="p-3 rounded-xl bg-slate-50 dark:bg-[#071A22] border border-slate-200 dark:border-teal-500/10 space-y-1">
                               <div className="flex items-center justify-between">
-                                <span className="font-bold text-white text-[11px] uppercase tracking-wide text-teal-400">
+                                <span className="font-bold text-teal-600 dark:text-teal-400 text-[11px] uppercase tracking-wide">
                                   {act.action.replace('_', ' ')}
                                 </span>
-                                <span className="text-[10px] text-slate-400">
+                                <span className="text-[10px] text-slate-500 dark:text-slate-400">
                                   {formatDate(act.timestamp)}
                                 </span>
                               </div>
-                              <p className="text-slate-300">{act.description}</p>
+                              <p className="text-slate-800 dark:text-slate-300">{act.description}</p>
                               <span className="text-[10px] text-slate-500 block">
                                 Performed by: {act.performedBy}
                               </span>
@@ -1067,26 +1086,26 @@ export function ContactInquiriesPage() {
                         selectedInquiry.communicationHistory.map((comm) => (
                           <div
                             key={comm.id}
-                            className="p-4 rounded-2xl bg-[#071A22] border border-teal-500/15 space-y-2 text-xs"
+                            className="p-4 rounded-2xl bg-slate-50 dark:bg-[#071A22] border border-slate-200 dark:border-teal-500/15 space-y-2 text-xs"
                           >
-                            <div className="flex items-center justify-between border-b border-white/5 pb-2">
+                            <div className="flex items-center justify-between border-b border-slate-200 dark:border-white/5 pb-2">
                               <div>
-                                <span className="font-bold text-white block">{comm.subject}</span>
-                                <span className="text-[10px] text-slate-400">
+                                <span className="font-bold text-slate-900 dark:text-white block">{comm.subject}</span>
+                                <span className="text-[10px] text-slate-500 dark:text-slate-400">
                                   To: {comm.recipient} &bull; From: {comm.sender}
                                 </span>
                               </div>
-                              <span className="text-[10px] text-teal-400 font-mono">
+                              <span className="text-[10px] text-teal-600 dark:text-teal-400 font-mono">
                                 {formatDate(comm.timestamp)}
                               </span>
                             </div>
                             {comm.deliveryStatus && (
-                              <div className={`text-[10px] font-bold ${comm.deliveryStatus === 'accepted_by_smtp' ? 'text-emerald-400' : 'text-rose-400'}`}>
+                              <div className={`text-[10px] font-bold ${comm.deliveryStatus === 'accepted_by_smtp' ? 'text-emerald-600 dark:text-emerald-400' : 'text-rose-600 dark:text-rose-400'}`}>
                                 {comm.deliveryStatus === 'accepted_by_smtp' ? 'Accepted by SMTP' : 'Not accepted by SMTP'}
                                 {comm.purpose ? ` · ${comm.purpose.replace(/_/g, ' ')}` : ''}
                               </div>
                             )}
-                            <div className="text-slate-300 leading-relaxed whitespace-pre-wrap [overflow-wrap:anywhere] break-words">
+                            <div className="text-slate-800 dark:text-slate-300 leading-relaxed whitespace-pre-wrap [overflow-wrap:anywhere] break-words">
                               {comm.body}
                             </div>
                             {comm.error && (
@@ -1129,24 +1148,24 @@ export function ContactInquiriesPage() {
         {/* EMAIL REPLY MODAL / DRAWER */}
         {showReplyBox && selectedInquiry && (
           <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/70 backdrop-blur-sm animate-fade-in">
-            <div className="bg-[#0B2530] border border-teal-500/30 rounded-3xl p-6 w-full max-w-2xl shadow-2xl space-y-4">
-              <div className="flex items-center justify-between border-b border-teal-500/15 pb-3">
+            <div className="bg-white dark:bg-[#0B2530] border border-slate-200 dark:border-teal-500/30 rounded-3xl p-6 w-full max-w-2xl shadow-2xl space-y-4">
+              <div className="flex items-center justify-between border-b border-slate-200 dark:border-teal-500/15 pb-3">
                 <div className="flex items-center gap-2">
-                  <div className="p-2 rounded-xl bg-teal-500/15 text-teal-400">
+                  <div className="p-2 rounded-xl bg-teal-500/15 text-teal-600 dark:text-teal-400">
                     <Send size={16} />
                   </div>
                   <div>
-                    <h3 className="text-sm font-extrabold text-white">
+                    <h3 className="text-sm font-extrabold text-slate-900 dark:text-white">
                       Direct Customer Email Reply
                     </h3>
-                    <p className="text-[11px] text-slate-400">
+                    <p className="text-[11px] text-slate-500 dark:text-slate-400">
                       Sending from the configured STE owner Gmail account.
                     </p>
                   </div>
                 </div>
                 <button
                   onClick={() => setShowReplyBox(false)}
-                  className="p-1.5 rounded-lg text-slate-400 hover:text-white hover:bg-white/5 transition-colors cursor-pointer"
+                  className="p-1.5 rounded-lg text-slate-400 hover:text-slate-800 dark:hover:text-white hover:bg-black/5 dark:hover:bg-white/5 transition-colors cursor-pointer"
                 >
                   <X size={16} />
                 </button>
@@ -1154,7 +1173,7 @@ export function ContactInquiriesPage() {
 
               <div className="space-y-3 text-xs">
                 <div>
-                  <label className="text-[10px] font-bold text-slate-400 uppercase tracking-wider block mb-1">
+                  <label className="text-[10px] font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider block mb-1">
                     Recipient Email
                   </label>
                   <input
@@ -1163,35 +1182,35 @@ export function ContactInquiriesPage() {
                     maxLength={254}
                     value={replyRecipient}
                     onChange={(e) => setReplyRecipient(e.target.value)}
-                    className="w-full px-3.5 py-2 rounded-xl bg-[#071A22] border border-teal-500/20 text-white focus:outline-none focus:border-teal-400"
+                    className="w-full px-3.5 py-2 rounded-xl bg-slate-50 dark:bg-[#071A22] border border-slate-300 dark:border-teal-500/20 text-slate-900 dark:text-white focus:outline-none focus:border-teal-500"
                   />
                 </div>
                 <div>
-                  <label className="text-[10px] font-bold text-slate-400 uppercase tracking-wider block mb-1">
+                  <label className="text-[10px] font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider block mb-1">
                     Subject Line
                   </label>
                   <input
                     type="text"
                     value={replySubject}
                     onChange={(e) => setReplySubject(e.target.value)}
-                    className="w-full px-3.5 py-2 rounded-xl bg-[#071A22] border border-teal-500/20 text-white focus:outline-none focus:border-teal-400"
+                    className="w-full px-3.5 py-2 rounded-xl bg-slate-50 dark:bg-[#071A22] border border-slate-300 dark:border-teal-500/20 text-slate-900 dark:text-white focus:outline-none focus:border-teal-500"
                   />
                 </div>
 
                 <div>
-                  <label className="text-[10px] font-bold text-slate-400 uppercase tracking-wider block mb-1">
+                  <label className="text-[10px] font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider block mb-1">
                     Message Body
                   </label>
                   <textarea
                     rows={8}
                     value={replyMessage}
                     onChange={(e) => setReplyMessage(e.target.value)}
-                    className="w-full px-3.5 py-2.5 rounded-xl bg-[#071A22] border border-teal-500/20 text-white focus:outline-none focus:border-teal-400 font-sans leading-relaxed resize-none"
+                    className="w-full px-3.5 py-2.5 rounded-xl bg-slate-50 dark:bg-[#071A22] border border-slate-300 dark:border-teal-500/20 text-slate-900 dark:text-white focus:outline-none focus:border-teal-500 font-sans leading-relaxed resize-none"
                   />
                 </div>
 
-                <div className="p-3 rounded-xl bg-teal-500/10 border border-teal-500/20 text-[11px] text-teal-300 flex items-center gap-2">
-                  <Info size={14} className="shrink-0" />
+                <div className="p-3 rounded-xl bg-teal-500/10 border border-teal-500/20 text-[11px] text-teal-700 dark:text-teal-300 flex items-center gap-2">
+                  <Info size={14} className="shrink-0 text-teal-600 dark:text-teal-400" />
                   <span>
                     Sending this email will automatically update the inquiry status to{' '}
                     <strong>Responded</strong> and log the transmission into the audit trail.
@@ -1199,11 +1218,11 @@ export function ContactInquiriesPage() {
                 </div>
               </div>
 
-              <div className="flex items-center justify-end gap-2.5 pt-2 border-t border-teal-500/15">
+              <div className="flex items-center justify-end gap-2.5 pt-2 border-t border-slate-200 dark:border-teal-500/15">
                 <button
                   type="button"
                   onClick={() => setShowReplyBox(false)}
-                  className="px-4 py-2 rounded-xl bg-[#071A22] border border-teal-500/20 text-slate-300 hover:text-white text-xs font-semibold cursor-pointer"
+                  className="px-4 py-2 rounded-xl bg-slate-100 dark:bg-[#071A22] border border-slate-300 dark:border-teal-500/20 text-slate-700 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white text-xs font-semibold cursor-pointer"
                 >
                   Cancel
                 </button>

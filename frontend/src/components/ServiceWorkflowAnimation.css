@@ -214,7 +214,7 @@
   background: var(--workflow-accent);
 }
 
-.service-workflow__stage-progress > span {
+.service-workflow__stage-progress>span {
   margin-left: auto;
   color: var(--workflow-muted);
   font-size: 7px;
@@ -326,14 +326,18 @@
     opacity: 0;
     transform: translateY(8px) scale(0.985);
   }
-  3%, 21% {
+
+  3%,
+  21% {
     border-color: color-mix(in srgb, var(--workflow-accent) 62%, transparent);
     background: color-mix(in srgb, var(--workflow-accent) 12%, white);
     box-shadow: 0 5px 16px color-mix(in srgb, var(--workflow-accent) 12%, transparent);
     opacity: 1;
     transform: translateY(0) scale(1);
   }
-  28%, 100% {
+
+  28%,
+  100% {
     border-color: var(--workflow-line);
     background: rgba(255, 255, 255, 0.64);
     box-shadow: none;
@@ -352,14 +356,18 @@
     opacity: 0;
     transform: translateY(8px) scale(0.985);
   }
-  3%, 21% {
+
+  3%,
+  21% {
     border-color: color-mix(in srgb, var(--workflow-accent) 62%, transparent);
     background: color-mix(in srgb, var(--workflow-accent) 14%, #071c25);
     box-shadow: 0 5px 16px color-mix(in srgb, var(--workflow-accent) 12%, transparent);
     opacity: 1;
     transform: translateY(0) scale(1);
   }
-  28%, 100% {
+
+  28%,
+  100% {
     border-color: var(--workflow-line);
     background: rgba(7, 28, 37, 0.64);
     box-shadow: none;
@@ -369,7 +377,10 @@
 }
 
 @keyframes workflow-live-dot {
-  50% { opacity: 0.45; transform: scale(0.78); }
+  50% {
+    opacity: 0.45;
+    transform: scale(0.78);
+  }
 }
 
 /* Each service uses a distinct workflow composition rather than a shared demo layout. */
@@ -377,78 +388,146 @@
   grid-template-columns: 0.85fr 2.8fr 1fr;
   grid-template-areas: "source stages result" "source focus result";
 }
-.service-workflow--individual-tax-prep .service-workflow__stages { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-.service-workflow--individual-tax-prep .service-workflow__stage:nth-child(odd) { border-radius: 4px 12px 12px 4px; }
+
+.service-workflow--individual-tax-prep .service-workflow__stages {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.service-workflow--individual-tax-prep .service-workflow__stage:nth-child(odd) {
+  border-radius: 4px 12px 12px 4px;
+}
 
 .service-workflow--family-tax-planning .service-workflow__artwork {
   grid-template-columns: 1fr 2fr 1fr;
   grid-template-areas: "source stages focus" "source result focus";
   background-image: radial-gradient(circle at 54% 50%, color-mix(in srgb, var(--workflow-accent) 10%, transparent) 0 3px, transparent 4px);
 }
-.service-workflow--family-tax-planning .service-workflow__stages { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-.service-workflow--family-tax-planning .service-workflow__stage { border-radius: 18px 5px 18px 5px; }
+
+.service-workflow--family-tax-planning .service-workflow__stages {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.service-workflow--family-tax-planning .service-workflow__stage {
+  border-radius: 18px 5px 18px 5px;
+}
 
 .service-workflow--personal-tax-consultation .service-workflow__artwork {
   grid-template-columns: 1fr 2.2fr 1fr;
   grid-template-areas: "source stages result" "focus stages result";
   border-radius: 28px 8px 28px 8px;
 }
-.service-workflow--personal-tax-consultation .service-workflow__stages { grid-template-columns: 1fr; }
-.service-workflow--personal-tax-consultation .service-workflow__stage { min-height: 0; padding: 5px 9px; border-radius: 5px 12px; }
+
+.service-workflow--personal-tax-consultation .service-workflow__stages {
+  grid-template-columns: 1fr;
+}
+
+.service-workflow--personal-tax-consultation .service-workflow__stage {
+  min-height: 0;
+  padding: 5px 9px;
+  border-radius: 5px 12px;
+}
 
 .service-workflow--irs-assistance .service-workflow__artwork {
   grid-template-columns: 1fr 2.7fr;
   grid-template-areas: "source focus" "stages result";
   background-image: repeating-linear-gradient(0deg, transparent 0 23px, color-mix(in srgb, var(--workflow-accent) 7%, transparent) 24px);
 }
-.service-workflow--irs-assistance .service-workflow__stages { grid-column: 1 / -1; }
-.service-workflow--irs-assistance .service-workflow__stage { border-left: 3px solid var(--workflow-accent); border-radius: 2px 10px 10px 2px; }
+
+.service-workflow--irs-assistance .service-workflow__stages {
+  grid-column: 1 / -1;
+}
+
+.service-workflow--irs-assistance .service-workflow__stage {
+  border-left: 3px solid var(--workflow-accent);
+  border-radius: 2px 10px 10px 2px;
+}
 
 .service-workflow--business-tax-preparation .service-workflow__artwork {
   grid-template-columns: 1fr 2.4fr;
   grid-template-areas: "source stages" "result focus";
   background-image: linear-gradient(90deg, transparent 49.8%, var(--workflow-line) 50%, transparent 50.2%);
 }
-.service-workflow--business-tax-preparation .service-workflow__stages { grid-template-columns: repeat(4, minmax(0, 1fr)); }
-.service-workflow--business-tax-preparation .service-workflow__stage { border-top: 3px solid var(--workflow-accent); border-radius: 4px; }
+
+.service-workflow--business-tax-preparation .service-workflow__stages {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+.service-workflow--business-tax-preparation .service-workflow__stage {
+  border-top: 3px solid var(--workflow-accent);
+  border-radius: 4px;
+}
 
 .service-workflow--accounting-services .service-workflow__artwork {
   grid-template-columns: 1fr 2fr 1fr;
   grid-template-areas: "source stages focus" "source result focus";
 }
-.service-workflow--accounting-services .service-workflow__stages { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-.service-workflow--accounting-services .service-workflow__stage { border-bottom: 2px double var(--workflow-line); border-radius: 3px; }
+
+.service-workflow--accounting-services .service-workflow__stages {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.service-workflow--accounting-services .service-workflow__stage {
+  border-bottom: 2px double var(--workflow-line);
+  border-radius: 3px;
+}
 
 .service-workflow--bookkeeping .service-workflow__artwork {
   grid-template-columns: 1fr 2.5fr;
   grid-template-areas: "source stages" "focus result";
   background-image: repeating-linear-gradient(90deg, transparent 0 28px, color-mix(in srgb, var(--workflow-accent) 5%, transparent) 29px);
 }
-.service-workflow--bookkeeping .service-workflow__stages { grid-template-columns: repeat(4, minmax(0, 1fr)); }
-.service-workflow--bookkeeping .service-workflow__stage { border-radius: 14px 14px 4px 4px; }
+
+.service-workflow--bookkeeping .service-workflow__stages {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+.service-workflow--bookkeeping .service-workflow__stage {
+  border-radius: 14px 14px 4px 4px;
+}
 
 .service-workflow--payroll-management .service-workflow__artwork {
   grid-template-columns: 1fr 2fr;
   grid-template-areas: "source result" "stages focus";
 }
-.service-workflow--payroll-management .service-workflow__stages { grid-column: 1 / -1; }
-.service-workflow--payroll-management .service-workflow__stage { min-height: 58px; border-radius: 14px; }
+
+.service-workflow--payroll-management .service-workflow__stages {
+  grid-column: 1 / -1;
+}
+
+.service-workflow--payroll-management .service-workflow__stage {
+  min-height: 58px;
+  border-radius: 14px;
+}
 
 .service-workflow--financial-reporting .service-workflow__artwork {
   grid-template-columns: 1fr 2fr 1fr;
   grid-template-areas: "source stages result" "source focus result";
   background-image: linear-gradient(180deg, transparent 62%, color-mix(in srgb, var(--workflow-accent) 6%, transparent) 62%);
 }
-.service-workflow--financial-reporting .service-workflow__stages { grid-template-columns: 1fr; }
-.service-workflow--financial-reporting .service-workflow__stage { min-height: 0; padding: 5px 10px; border-radius: 3px 12px 3px 12px; }
+
+.service-workflow--financial-reporting .service-workflow__stages {
+  grid-template-columns: 1fr;
+}
+
+.service-workflow--financial-reporting .service-workflow__stage {
+  min-height: 0;
+  padding: 5px 10px;
+  border-radius: 3px 12px 3px 12px;
+}
 
 .service-workflow--business-tax-planning .service-workflow__artwork {
   grid-template-columns: 1fr 2.3fr 1fr;
   grid-template-areas: "source stages result" "source focus result";
   border-radius: 50px 12px 50px 12px;
 }
-.service-workflow--business-tax-planning .service-workflow__stages { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-.service-workflow--business-tax-planning .service-workflow__stage { transform: rotate(-1deg); }
+
+.service-workflow--business-tax-planning .service-workflow__stages {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.service-workflow--business-tax-planning .service-workflow__stage {
+  transform: rotate(-1deg);
+}
 
 .service-workflow--tax-prep-outsourcing .service-workflow__artwork {
   grid-template-columns: 1fr 2.5fr;
@@ -456,70 +535,137 @@
   background-image: radial-gradient(ellipse at 8% 20%, color-mix(in srgb, var(--workflow-accent) 8%, transparent), transparent 40%);
   background-clip: padding-box;
 }
-.service-workflow--tax-prep-outsourcing .service-workflow__stages { grid-template-columns: repeat(4, minmax(0, 1fr)); }
-.service-workflow--tax-prep-outsourcing .service-workflow__stage { border-style: dashed; border-radius: 8px; }
+
+.service-workflow--tax-prep-outsourcing .service-workflow__stages {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+.service-workflow--tax-prep-outsourcing .service-workflow__stage {
+  border-style: dashed;
+  border-radius: 8px;
+}
 
 .service-workflow--bookkeeping-outsourcing .service-workflow__artwork {
   grid-template-columns: 1fr 2fr 1fr;
   grid-template-areas: "source stages stages" "focus result result";
 }
-.service-workflow--bookkeeping-outsourcing .service-workflow__stages { grid-template-columns: repeat(4, minmax(0, 1fr)); }
-.service-workflow--bookkeeping-outsourcing .service-workflow__stage:nth-child(even) { margin-top: 10px; }
+
+.service-workflow--bookkeeping-outsourcing .service-workflow__stages {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+.service-workflow--bookkeeping-outsourcing .service-workflow__stage:nth-child(even) {
+  margin-top: 10px;
+}
 
 .service-workflow--accounting-outsourcing .service-workflow__artwork {
   grid-template-columns: 1fr 2.5fr;
   grid-template-areas: "source stages" "focus result";
   background-image: linear-gradient(135deg, transparent 48%, color-mix(in srgb, var(--workflow-accent) 10%, transparent) 49%, transparent 50%);
 }
-.service-workflow--accounting-outsourcing .service-workflow__stages { grid-template-columns: repeat(4, minmax(0, 1fr)); }
-.service-workflow--accounting-outsourcing .service-workflow__stage { border-radius: 14px; }
+
+.service-workflow--accounting-outsourcing .service-workflow__stages {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+.service-workflow--accounting-outsourcing .service-workflow__stage {
+  border-radius: 14px;
+}
 
 .service-workflow--payroll-processing .service-workflow__artwork {
   grid-template-columns: 1fr 1.7fr 1fr;
   grid-template-areas: "source stages result" "source focus result";
   background-image: repeating-linear-gradient(0deg, transparent 0 18px, color-mix(in srgb, var(--workflow-accent) 7%, transparent) 19px);
 }
-.service-workflow--payroll-processing .service-workflow__stages { grid-template-columns: 1fr; }
-.service-workflow--payroll-processing .service-workflow__stage { min-height: 0; padding: 5px 9px; border-radius: 4px; }
+
+.service-workflow--payroll-processing .service-workflow__stages {
+  grid-template-columns: 1fr;
+}
+
+.service-workflow--payroll-processing .service-workflow__stage {
+  min-height: 0;
+  padding: 5px 9px;
+  border-radius: 4px;
+}
 
 .service-workflow--audit-support .service-workflow__artwork {
   grid-template-columns: 1fr 2fr;
   grid-template-areas: "source focus" "stages result";
 }
-.service-workflow--audit-support .service-workflow__stages { grid-column: 1 / -1; grid-template-columns: repeat(4, minmax(0, 1fr)); }
-.service-workflow--audit-support .service-workflow__stage { border-left: 1px solid var(--workflow-line); border-right: 1px solid var(--workflow-line); border-radius: 0; }
+
+.service-workflow--audit-support .service-workflow__stages {
+  grid-column: 1 / -1;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+.service-workflow--audit-support .service-workflow__stage {
+  border-left: 1px solid var(--workflow-line);
+  border-right: 1px solid var(--workflow-line);
+  border-radius: 0;
+}
 
 .service-workflow--financial-statement-prep .service-workflow__artwork {
   grid-template-columns: 1fr 2.4fr 1fr;
   grid-template-areas: "source stages result" "focus stages result";
   background-image: linear-gradient(90deg, transparent 32%, var(--workflow-line) 32.2% 32.5%, transparent 32.7%);
 }
-.service-workflow--financial-statement-prep .service-workflow__stages { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-.service-workflow--financial-statement-prep .service-workflow__stage { border-radius: 2px; box-shadow: 2px 2px 0 var(--workflow-line); }
+
+.service-workflow--financial-statement-prep .service-workflow__stages {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.service-workflow--financial-statement-prep .service-workflow__stage {
+  border-radius: 2px;
+  box-shadow: 2px 2px 0 var(--workflow-line);
+}
 
 .service-workflow--tax-review-support .service-workflow__artwork {
   grid-template-columns: 1fr 2.7fr 1fr;
   grid-template-areas: "source stages focus" "result stages focus";
   background-image: radial-gradient(circle at 51% 50%, transparent 0 38px, color-mix(in srgb, var(--workflow-accent) 10%, transparent) 39px 40px, transparent 41px);
 }
-.service-workflow--tax-review-support .service-workflow__stages { grid-template-columns: 1fr; }
-.service-workflow--tax-review-support .service-workflow__stage { min-height: 0; padding: 5px 9px; border-radius: 20px 4px 4px 20px; }
+
+.service-workflow--tax-review-support .service-workflow__stages {
+  grid-template-columns: 1fr;
+}
+
+.service-workflow--tax-review-support .service-workflow__stage {
+  min-height: 0;
+  padding: 5px 9px;
+  border-radius: 20px 4px 4px 20px;
+}
 
 .service-workflow--year-end-cleanup .service-workflow__artwork {
   grid-template-columns: 1fr 2.4fr;
   grid-template-areas: "source stages" "focus result";
   background-image: repeating-linear-gradient(135deg, transparent 0 13px, color-mix(in srgb, var(--workflow-accent) 5%, transparent) 14px 15px);
 }
-.service-workflow--year-end-cleanup .service-workflow__stages { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-.service-workflow--year-end-cleanup .service-workflow__stage { border-bottom: 2px solid var(--workflow-accent); border-radius: 14px; }
+
+.service-workflow--year-end-cleanup .service-workflow__stages {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.service-workflow--year-end-cleanup .service-workflow__stage {
+  border-bottom: 2px solid var(--workflow-accent);
+  border-radius: 14px;
+}
 
 .service-workflow--write-up-services .service-workflow__artwork {
   grid-template-columns: 1fr 2fr 1fr;
   grid-template-areas: "source stages result" "focus stages result";
   background-image: repeating-linear-gradient(0deg, transparent 0 21px, color-mix(in srgb, var(--workflow-accent) 7%, transparent) 22px);
 }
-.service-workflow--write-up-services .service-workflow__stages { grid-template-columns: 1fr; }
-.service-workflow--write-up-services .service-workflow__stage { min-height: 0; padding: 5px 10px; border-right: 3px solid var(--workflow-accent); border-radius: 3px 12px 12px 3px; }
+
+.service-workflow--write-up-services .service-workflow__stages {
+  grid-template-columns: 1fr;
+}
+
+.service-workflow--write-up-services .service-workflow__stage {
+  min-height: 0;
+  padding: 5px 10px;
+  border-right: 3px solid var(--workflow-accent);
+  border-radius: 3px 12px 12px 3px;
+}
 
 .service-workflow--dedicated-staff-augmentation .service-workflow__artwork {
   grid-template-columns: 1fr 2.5fr;
@@ -528,14 +674,22 @@
   background-size: 24px 24px, 31px 31px;
   background-clip: padding-box;
 }
-.service-workflow--dedicated-staff-augmentation .service-workflow__stages { grid-column: 1 / -1; }
-.service-workflow--dedicated-staff-augmentation .service-workflow__stage { border-radius: 14px; }
+
+.service-workflow--dedicated-staff-augmentation .service-workflow__stages {
+  grid-column: 1 / -1;
+}
+
+.service-workflow--dedicated-staff-augmentation .service-workflow__stage {
+  border-radius: 14px;
+}
+
 .service-workflow--dedicated-staff-augmentation .service-workflow__stage-title {
   align-self: flex-start;
   max-width: 100%;
 }
 
 @media (max-width: 640px) {
+
   .service-workflow__artwork,
   .service-workflow--individual-tax-prep .service-workflow__artwork,
   .service-workflow--family-tax-planning .service-workflow__artwork,
@@ -564,9 +718,20 @@
     padding: 12px;
   }
 
-  .service-workflow__source { align-self: stretch; }
-  .service-workflow__focus { justify-content: flex-end; text-align: right; }
-  .service-workflow__focus-arrow { display: block; flex: 0 0 auto; }
+  .service-workflow__source {
+    align-self: stretch;
+  }
+
+  .service-workflow__focus {
+    justify-content: flex-end;
+    text-align: right;
+  }
+
+  .service-workflow__focus-arrow {
+    display: block;
+    flex: 0 0 auto;
+  }
+
   .service-workflow__stages,
   .service-workflow--individual-tax-prep .service-workflow__stages,
   .service-workflow--family-tax-planning .service-workflow__stages,
@@ -613,13 +778,40 @@
     padding: 7px;
   }
 
-  .service-workflow__connector { display: none; }
-  .service-workflow--detail .service-workflow__artwork { min-height: 0; padding: 12px; }
-  .service-workflow--detail .service-workflow__artwork { min-height: 236px; }
-  .service-workflow--detail .service-workflow__stage { min-height: 0; padding: 7px; }
+  .service-workflow__connector {
+    display: none;
+  }
+
+  .service-workflow--detail .service-workflow__artwork {
+    min-height: 0;
+    padding: 12px;
+  }
+
+  .service-workflow--detail .service-workflow__artwork {
+    min-height: clamp(200px, 74vw, 236px);
+  }
+
+  .service-workflow--detail .service-workflow__stage {
+    min-height: 0;
+    padding: 7px;
+  }
+
+  /* Prevent nowrap labels from clipping inside narrow stage/result cells */
+  .service-workflow__stage-detail,
+  .service-workflow__result-label,
+  .service-workflow__result-metric {
+    white-space: normal;
+    overflow-wrap: anywhere;
+    min-width: 0;
+  }
+
+  .service-workflow__artwork>* {
+    min-width: 0;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
+
   .service-workflow *,
   .service-workflow *::before,
   .service-workflow *::after {
@@ -686,37 +878,42 @@
     opacity: 0;
     transform: translateY(8px) scale(0.985);
   }
+
   3% {
     border-color: color-mix(in srgb, var(--workflow-accent) 75%, transparent);
     background: color-mix(in srgb, var(--workflow-accent) 12%, white);
     box-shadow:
       0 5px 18px color-mix(in srgb, var(--workflow-accent) 14%, transparent),
       0 0 0 1px color-mix(in srgb, var(--workflow-accent) 22%, transparent),
-      inset 0 1px 0 rgba(255,255,255,0.55);
+      inset 0 1px 0 rgba(255, 255, 255, 0.55);
     opacity: 1;
     transform: translateY(0) scale(1);
   }
+
   12% {
     border-color: color-mix(in srgb, var(--workflow-accent) 55%, transparent);
     background: color-mix(in srgb, var(--workflow-accent) 10%, white);
     box-shadow:
       0 4px 14px color-mix(in srgb, var(--workflow-accent) 10%, transparent),
       0 0 0 1px color-mix(in srgb, var(--workflow-accent) 15%, transparent),
-      inset 0 1px 0 rgba(255,255,255,0.4);
+      inset 0 1px 0 rgba(255, 255, 255, 0.4);
     opacity: 1;
     transform: translateY(0) scale(1);
   }
+
   21% {
     border-color: color-mix(in srgb, var(--workflow-accent) 55%, transparent);
     background: color-mix(in srgb, var(--workflow-accent) 10%, white);
     box-shadow:
       0 4px 14px color-mix(in srgb, var(--workflow-accent) 10%, transparent),
       0 0 0 1px color-mix(in srgb, var(--workflow-accent) 15%, transparent),
-      inset 0 1px 0 rgba(255,255,255,0.4);
+      inset 0 1px 0 rgba(255, 255, 255, 0.4);
     opacity: 1;
     transform: translateY(0) scale(1);
   }
-  28%, 100% {
+
+  28%,
+  100% {
     border-color: var(--workflow-line);
     background: rgba(255, 255, 255, 0.64);
     box-shadow: none;
@@ -732,16 +929,18 @@
     opacity: 0;
     transform: translateY(8px) scale(0.985);
   }
+
   3% {
     border-color: color-mix(in srgb, var(--workflow-accent) 75%, transparent);
     background: color-mix(in srgb, var(--workflow-accent) 14%, #071c25);
     box-shadow:
       0 5px 18px color-mix(in srgb, var(--workflow-accent) 18%, transparent),
       0 0 0 1px color-mix(in srgb, var(--workflow-accent) 28%, transparent),
-      inset 0 1px 0 rgba(255,255,255,0.06);
+      inset 0 1px 0 rgba(255, 255, 255, 0.06);
     opacity: 1;
     transform: translateY(0) scale(1);
   }
+
   12% {
     border-color: color-mix(in srgb, var(--workflow-accent) 55%, transparent);
     background: color-mix(in srgb, var(--workflow-accent) 11%, #071c25);
@@ -751,6 +950,7 @@
     opacity: 1;
     transform: translateY(0) scale(1);
   }
+
   21% {
     border-color: color-mix(in srgb, var(--workflow-accent) 55%, transparent);
     background: color-mix(in srgb, var(--workflow-accent) 11%, #071c25);
@@ -760,7 +960,9 @@
     opacity: 1;
     transform: translateY(0) scale(1);
   }
-  28%, 100% {
+
+  28%,
+  100% {
     border-color: var(--workflow-line);
     background: rgba(7, 28, 37, 0.64);
     box-shadow: none;
@@ -778,6 +980,7 @@
     opacity: 0;
     transform: translateY(-6px);
   }
+
   to {
     opacity: 1;
     transform: translateY(0);
@@ -796,6 +999,7 @@
     opacity: 0;
     transform: scale(0.985) translateY(4px);
   }
+
   to {
     opacity: 1;
     transform: scale(1) translateY(0);
@@ -823,26 +1027,32 @@
    6. Live dot — improved pulse: fade + scale + colour shift
    ---------------------------------------------------------- */
 @keyframes workflow-live-dot {
-  0%, 100% {
+
+  0%,
+  100% {
     opacity: 1;
     transform: scale(1);
     box-shadow: 0 0 0 0 color-mix(in srgb, var(--workflow-accent) 55%, transparent);
   }
+
   40% {
     opacity: 0.6;
     transform: scale(0.72);
     box-shadow: 0 0 0 0 transparent;
   }
+
   55% {
     opacity: 0.6;
     transform: scale(0.72);
     box-shadow: 0 0 0 0 transparent;
   }
+
   70% {
     opacity: 1;
     transform: scale(1.15);
     box-shadow: 0 0 0 4px color-mix(in srgb, var(--workflow-accent) 22%, transparent);
   }
+
   85% {
     opacity: 1;
     transform: scale(1);
@@ -857,9 +1067,18 @@
 .service-workflow__stage-progress i b {
   animation-delay: 0s;
 }
-.service-workflow__stage-progress i:nth-child(2) b { animation-delay: 0.3s; }
-.service-workflow__stage-progress i:nth-child(3) b { animation-delay: 0.6s; }
-.service-workflow__stage-progress i:nth-child(4) b { animation-delay: 0.9s; }
+
+.service-workflow__stage-progress i:nth-child(2) b {
+  animation-delay: 0.3s;
+}
+
+.service-workflow__stage-progress i:nth-child(3) b {
+  animation-delay: 0.6s;
+}
+
+.service-workflow__stage-progress i:nth-child(4) b {
+  animation-delay: 0.9s;
+}
 
 /* ----------------------------------------------------------
    8. Source card — premium glass-morphism lift on running
@@ -870,6 +1089,7 @@
     0 1px 4px rgba(17, 54, 60, 0.04),
     inset 0 1px 0 rgba(255, 255, 255, 0.6);
 }
+
 .dark .service-workflow[data-running="true"] .service-workflow__source {
   box-shadow:
     0 6px 20px rgba(0, 0, 0, 0.3),

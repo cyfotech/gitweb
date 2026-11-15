@@ -87,7 +87,7 @@ html.dark .home-hero-motion {
   height: 18px;
 }
 
-.home-hero-motion__brand > span:last-child {
+.home-hero-motion__brand>span:last-child {
   display: grid;
   gap: 2px;
 }
@@ -253,7 +253,7 @@ html.dark .home-hero-motion {
 
 .home-hero-motion__document-icon,
 .home-hero-motion__tax-note-icon,
-.home-hero-motion__filed > span:first-child,
+.home-hero-motion__filed>span:first-child,
 .home-hero-motion__team-icon {
   display: grid;
   flex: 0 0 auto;
@@ -267,18 +267,18 @@ html.dark .home-hero-motion {
 
 .home-hero-motion__document-icon svg,
 .home-hero-motion__tax-note-icon svg,
-.home-hero-motion__filed > span:first-child svg,
+.home-hero-motion__filed>span:first-child svg,
 .home-hero-motion__team-icon svg {
   width: 16px;
   height: 16px;
 }
 
-.home-hero-motion__document-top > span:nth-child(2),
-.home-hero-motion__tax-note > span:nth-child(2),
-.home-hero-motion__filed > span:nth-child(2),
-.home-hero-motion__team-summary > span:nth-child(2),
-.home-hero-motion__queue-row > span:nth-child(2),
-.home-hero-motion__reconcile > span:nth-child(2) {
+.home-hero-motion__document-top>span:nth-child(2),
+.home-hero-motion__tax-note>span:nth-child(2),
+.home-hero-motion__filed>span:nth-child(2),
+.home-hero-motion__team-summary>span:nth-child(2),
+.home-hero-motion__queue-row>span:nth-child(2),
+.home-hero-motion__reconcile>span:nth-child(2) {
   display: grid;
   min-width: 0;
   gap: 3px;
@@ -390,13 +390,13 @@ html.dark .home-hero-motion {
   color: var(--hero-accent);
 }
 
-.home-hero-motion__filed > span:first-child {
+.home-hero-motion__filed>span:first-child {
   width: 27px;
   height: 27px;
 }
 
 .home-hero-motion__filed i,
-.home-hero-motion__queue-row--active > i {
+.home-hero-motion__queue-row--active>i {
   width: 28px;
   height: 4px;
   margin-left: auto;
@@ -406,7 +406,7 @@ html.dark .home-hero-motion {
 }
 
 .home-hero-motion__filed i b,
-.home-hero-motion__queue-row--active > i b {
+.home-hero-motion__queue-row--active>i b {
   display: block;
   width: 64%;
   height: 100%;
@@ -417,7 +417,7 @@ html.dark .home-hero-motion {
 }
 
 .home-hero-motion[data-running="true"] .home-hero-motion__filed i b,
-.home-hero-motion[data-running="true"] .home-hero-motion__queue-row--active > i b {
+.home-hero-motion[data-running="true"] .home-hero-motion__queue-row--active>i b {
   animation-play-state: running;
 }
 
@@ -499,7 +499,7 @@ html.dark .home-hero-motion {
 }
 
 .home-hero-motion__reconcile-seal svg,
-.home-hero-motion__team-footer > svg {
+.home-hero-motion__team-footer>svg {
   width: 14px;
   height: 14px;
 }
@@ -566,7 +566,7 @@ html.dark .home-hero-motion {
   font-size: 7px;
 }
 
-.home-hero-motion__queue-row > svg {
+.home-hero-motion__queue-row>svg {
   width: 14px;
   height: 14px;
   margin-left: auto;
@@ -614,7 +614,7 @@ html.dark .home-hero-motion {
   background: color-mix(in srgb, var(--hero-accent) 13%, var(--hero-paper));
 }
 
-.home-hero-motion__team-footer > svg {
+.home-hero-motion__team-footer>svg {
   margin-left: auto;
   color: var(--hero-accent);
 }
@@ -781,62 +781,188 @@ html.dark .home-hero-motion {
 }
 
 @keyframes home-hero-card-loop {
-  0% { opacity: 0; transform: translate3d(20px, 9px, 0) scale(0.985); }
-  3%, 29% { opacity: 1; transform: translate3d(0, 0, 0) scale(1); }
-  36%, 100% { opacity: 0; transform: translate3d(-18px, -5px, 0) scale(0.99); }
+  0% {
+    opacity: 0;
+    transform: translate3d(20px, 9px, 0) scale(0.985);
+  }
+
+  3%,
+  29% {
+    opacity: 1;
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+
+  36%,
+  100% {
+    opacity: 0;
+    transform: translate3d(-18px, -5px, 0) scale(0.99);
+  }
 }
 
 @keyframes home-hero-timeline-step {
-  0% { opacity: 0.55; }
-  3%, 29% { color: var(--hero-accent); opacity: 1; }
-  36%, 100% { opacity: 0.62; }
+  0% {
+    opacity: 0.55;
+  }
+
+  3%,
+  29% {
+    color: var(--hero-accent);
+    opacity: 1;
+  }
+
+  36%,
+  100% {
+    opacity: 0.62;
+  }
 }
 
 @keyframes home-hero-timeline {
-  0%, 100% { transform: scaleX(0.08); opacity: 0.55; }
-  50% { transform: scaleX(1); opacity: 1; }
+
+  0%,
+  100% {
+    transform: scaleX(0.08);
+    opacity: 0.55;
+  }
+
+  50% {
+    transform: scaleX(1);
+    opacity: 1;
+  }
 }
 
 @keyframes home-hero-progress {
-  0%, 28% { width: 8%; }
-  62% { width: 68%; }
-  100% { width: 100%; }
+
+  0%,
+  28% {
+    width: 8%;
+  }
+
+  62% {
+    width: 68%;
+  }
+
+  100% {
+    width: 100%;
+  }
 }
 
 @keyframes home-hero-live-pulse {
-  0%, 100% { opacity: 1; transform: scale(1); }
-  48% { opacity: 0.55; transform: scale(0.82); }
+
+  0%,
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+
+  48% {
+    opacity: 0.55;
+    transform: scale(0.82);
+  }
 }
 
 @keyframes home-hero-ambient {
-  from { transform: translate3d(0, 0, 0) scale(0.96); }
-  to { transform: translate3d(-7px, 8px, 0) scale(1.04); }
+  from {
+    transform: translate3d(0, 0, 0) scale(0.96);
+  }
+
+  to {
+    transform: translate3d(-7px, 8px, 0) scale(1.04);
+  }
 }
 
 @keyframes home-hero-orbit {
-  to { transform: rotate(360deg); }
+  to {
+    transform: rotate(360deg);
+  }
 }
 
 @keyframes home-hero-float {
-  to { transform: translate3d(0, -6px, 0) rotate(3deg); }
+  to {
+    transform: translate3d(0, -6px, 0) rotate(3deg);
+  }
 }
 
 @media (max-width: 600px) {
-  .home-hero-motion { padding-inline: 0; }
-  .home-hero-motion__frame { border-radius: 18px; padding: 12px; }
-  .home-hero-motion__frame-top { padding-bottom: 10px; }
-  .home-hero-motion__brand-mark { width: 29px; height: 29px; }
-  .home-hero-motion__brand strong { font-size: 8px; }
-  .home-hero-motion__brand small { font-size: 6px; }
-  .home-hero-motion__live { font-size: 7px; }
-  .home-hero-motion__card { padding: 12px; }
-  .home-hero-motion__card h2 { margin: 8px 0 10px; font-size: 18px; }
-  .home-hero-motion__document-row { font-size: 7px; }
-  .home-hero-motion__encrypted { font-size: 6px; }
-  .home-hero-motion__floating { width: 28px; height: 28px; }
+  .home-hero-motion {
+    padding-inline: 0;
+  }
+
+  .home-hero-motion__frame {
+    border-radius: 18px;
+    padding: 12px;
+  }
+
+  .home-hero-motion__frame-top {
+    padding-bottom: 10px;
+  }
+
+  .home-hero-motion__brand-mark {
+    width: 29px;
+    height: 29px;
+  }
+
+  .home-hero-motion__brand strong {
+    font-size: 8px;
+  }
+
+  .home-hero-motion__brand small {
+    font-size: 6px;
+  }
+
+  .home-hero-motion__live {
+    font-size: 7px;
+  }
+
+  .home-hero-motion__card {
+    padding: 12px;
+  }
+
+  .home-hero-motion__card h2 {
+    margin: 8px 0 10px;
+    font-size: 18px;
+  }
+
+  .home-hero-motion__document-row {
+    font-size: 7px;
+  }
+
+  .home-hero-motion__encrypted {
+    font-size: 6px;
+  }
+
+  .home-hero-motion__floating {
+    width: 28px;
+    height: 28px;
+  }
+
+  /* Pull the ambient rings inward so they stay inside the frame instead of
+     being clipped into slivers by the frame's overflow:hidden. */
+  .home-hero-motion__orbit {
+    width: 46%;
+  }
+
+  .home-hero-motion__orbit--one {
+    top: -6%;
+    right: -6%;
+  }
+
+  .home-hero-motion__orbit--two {
+    width: 36%;
+    bottom: -4%;
+    left: -5%;
+  }
+
+  .home-hero-motion__ambient--one {
+    right: -4%;
+  }
+
+  .home-hero-motion__ambient--two {
+    left: -4%;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
+
   .home-hero-motion *,
   .home-hero-motion *::before,
   .home-hero-motion *::after {
@@ -846,8 +972,20 @@ html.dark .home-hero-motion {
     scroll-behavior: auto !important;
   }
 
-  .home-hero-motion__card { opacity: 0 !important; }
-  .home-hero-motion__card:first-child { opacity: 1 !important; transform: none !important; }
-  .home-hero-motion__timeline-step { opacity: 1 !important; }
-  .home-hero-motion__orbit { display: none; }
+  .home-hero-motion__card {
+    opacity: 0 !important;
+  }
+
+  .home-hero-motion__card:first-child {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+
+  .home-hero-motion__timeline-step {
+    opacity: 1 !important;
+  }
+
+  .home-hero-motion__orbit {
+    display: none;
+  }
 }

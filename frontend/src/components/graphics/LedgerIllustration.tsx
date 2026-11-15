@@ -33,7 +33,7 @@ export function LedgerIllustration() {
   const isBalanced = totalDebits === totalCredits;
 
   return (
-    <div className="w-full rounded-3xl p-6 sm:p-8 bg-white/70 dark:bg-[#071C25]/80 backdrop-blur-xl border border-[#DCE5E2] dark:border-[rgba(121,241,232,0.2)] shadow-xl">
+    <div className="w-full rounded-3xl p-3 sm:p-6 md:p-8 bg-white/70 dark:bg-[#071C25]/80 backdrop-blur-xl border border-[#DCE5E2] dark:border-[rgba(121,241,232,0.2)] shadow-xl overflow-hidden">
       {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-6 border-b border-[#DCE5E2] dark:border-[rgba(121,241,232,0.15)]">
         <div>

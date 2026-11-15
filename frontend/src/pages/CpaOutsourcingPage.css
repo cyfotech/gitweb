@@ -684,8 +684,13 @@
 }
 
 @media (max-width: 380px) {
-  .cpa-enquiry-routing__canvas { width: 100%; height: 250px; }
-  .cpa-enquiry-routing__map { transform: scale(.52); }
+  .cpa-enquiry-routing__canvas { width: 100%; height: 240px; }
+  .cpa-enquiry-routing__map { transform: scale(.48); }
+}
+
+@media (max-width: 340px) {
+  .cpa-enquiry-routing__canvas { width: 100%; height: 220px; }
+  .cpa-enquiry-routing__map { transform: scale(.44); }
 }
 
 @keyframes cpa-dashboard-float-mobile { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-5px); } }

@@ -8,6 +8,7 @@ import {
 import { AdminLayout } from '../components/AdminLayout';
 import { ThreeDCard, MagneticButton } from '../components/ThreeDComponents';
 import { servicesApi } from '../../api/services';
+import { ServiceSectionBuilder, fromBuilderModel } from '../components/ServiceSectionBuilder';
 
 interface CategoryItem {
   id: string;
@@ -105,7 +106,7 @@ export function ServiceManagerPage() {
     if (!text) return [];
     const trimmed = text.trim();
     if (trimmed.startsWith('[') && trimmed.endsWith(']')) {
-      try { return JSON.parse(trimmed); } catch {}
+      try { return JSON.parse(trimmed); } catch { }
     }
     return text.split('\n').map(l => l.trim().replace(/^[-*•]\s*/, '')).filter(Boolean);
   };
@@ -126,7 +127,7 @@ export function ServiceManagerPage() {
     if (!text) return [];
     const trimmed = text.trim();
     if (trimmed.startsWith('[') && trimmed.endsWith(']')) {
-      try { return JSON.parse(trimmed); } catch {}
+      try { return JSON.parse(trimmed); } catch { }
     }
     return text.split('\n').map(l => l.trim()).filter(Boolean).map(line => {
       const clean = line.replace(/^[-*•]\s*/, '');
@@ -155,7 +156,7 @@ export function ServiceManagerPage() {
     if (!text) return [];
     const trimmed = text.trim();
     if (trimmed.startsWith('[') && trimmed.endsWith(']')) {
-      try { return JSON.parse(trimmed); } catch {}
+      try { return JSON.parse(trimmed); } catch { }
     }
     return text.split('\n').map(l => l.trim()).filter(Boolean).map(line => {
       const clean = line.replace(/^[-*•]\s*/, '');
@@ -185,7 +186,7 @@ export function ServiceManagerPage() {
     if (!text) return [];
     const trimmed = text.trim();
     if (trimmed.startsWith('[') && trimmed.endsWith(']')) {
-      try { return JSON.parse(trimmed); } catch {}
+      try { return JSON.parse(trimmed); } catch { }
     }
     return text.split('\n').map(l => l.trim()).filter(Boolean).map((line, i) => {
       const clean = line.replace(/^[-*•]\s*/, '');
@@ -215,7 +216,7 @@ export function ServiceManagerPage() {
     if (!text) return [];
     const trimmed = text.trim();
     if (trimmed.startsWith('[') && trimmed.endsWith(']')) {
-      try { return JSON.parse(trimmed); } catch {}
+      try { return JSON.parse(trimmed); } catch { }
     }
     const blocks = text.split(/\n\s*\n/).map(b => b.trim()).filter(Boolean);
     const out: { question: string; answer: string }[] = [];
@@ -290,7 +291,7 @@ export function ServiceManagerPage() {
       if (data && typeof data === 'object') {
         setPageConfig(prev => ({ ...prev, ...data }));
       }
-    } catch {}
+    } catch { }
   };
 
   const handleSavePageConfig = async (e: React.FormEvent) => {
@@ -320,8 +321,8 @@ export function ServiceManagerPage() {
     const animStages = Array.isArray(heroAnim.stages)
       ? heroAnim.stages.join('\n')
       : (service.workflow && Array.isArray(service.workflow) && service.workflow.length >= 4
-          ? service.workflow.slice(0, 4).map((w: any) => w.title).join('\n')
-          : '');
+        ? service.workflow.slice(0, 4).map((w: any) => w.title).join('\n')
+        : '');
 
     setForm({
       ...emptyForm,
@@ -733,6 +734,7 @@ export function ServiceManagerPage() {
                 {[
                   { id: 'general', label: 'General & Overview', icon: Briefcase },
                   { id: 'content', label: 'Rich Content (Scope, FAQs)', icon: Layers },
+                  { id: 'builder', label: 'Page Builder', icon: Layers },
                   { id: 'animation', label: 'Animation & Simulation', icon: PlayCircle },
                   { id: 'media', label: 'Hero Image & Media', icon: ImageIcon },
                   { id: 'seo', label: 'SEO & Metadata', icon: Search },
@@ -743,11 +745,10 @@ export function ServiceManagerPage() {
                       key={t.id}
                       type="button"
                       onClick={() => setFormTab(t.id as any)}
-                      className={`flex items-center gap-1.5 px-3 py-2.5 border-b-2 transition-all cursor-pointer whitespace-nowrap shrink-0 ${
-                        formTab === t.id
-                          ? 'border-teal-500 text-teal-600 dark:text-cyan-300'
-                          : 'border-transparent text-slate-500 hover:text-slate-700 dark:hover:text-slate-300'
-                      }`}
+                      className={`flex items-center gap-1.5 px-3 py-2.5 border-b-2 transition-all cursor-pointer whitespace-nowrap shrink-0 ${formTab === t.id
+                        ? 'border-teal-500 text-teal-600 dark:text-cyan-300'
+                        : 'border-transparent text-slate-500 hover:text-slate-700 dark:hover:text-slate-300'
+                        }`}
                     >
                       <Icon size={14} />
                       <span>{t.label}</span>
@@ -986,6 +987,35 @@ export function ServiceManagerPage() {
                       />
                     </div>
                   </div>
+                )}
+
+                {/* TAB: Visual Page Builder (structured sections) */}
+                {formTab === 'builder' && (
+                  editingService ? (
+                    <ServiceSectionBuilder
+                      service={editingService}
+                      onSave={async (model) => {
+                        const merged = fromBuilderModel(model);
+                        const payload = {
+                          ...form,
+                          ...merged,
+                          heroImage: merged.heroImage || undefined,
+                          thumbnailImage: merged.thumbnailImage || undefined,
+                          additionalImages: {
+                            ...(typeof editingService.additionalImages === 'object' ? editingService.additionalImages : {}),
+                            heroAnimationConfig: merged.heroAnimationConfig,
+                          },
+                        };
+                        await servicesApi.update(editingService.id, payload);
+                        fetchServices();
+                      }}
+                    />
+                  ) : (
+                    <div className="p-8 text-center text-sm text-slate-500 dark:text-slate-400">
+                      Save the service&apos;s general information first, then use the Page Builder to
+                      edit its structured sections.
+                    </div>
+                  )
                 )}
 
                 {/* TAB 3: Live Animation & Simulation Content */}

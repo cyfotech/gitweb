@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Link, Navigate, useParams } from 'react-router-dom';
 import { AnimatePresence, motion, useReducedMotion } from 'motion/react';
 import {
@@ -42,9 +42,26 @@ export function HireProfessionalRolePage() {
   const [isApplicationOpen, setIsApplicationOpen] = useState(false);
   const reduceMotion = useReducedMotion();
 
+  // Reset page-specific UI when navigating from one role to another.
+  useEffect(() => {
+    setSelectedLevelIndex(0);
+    setIsApplicationOpen(false);
+    window.scrollTo({
+      top: 0,
+      behavior: reduceMotion ? 'auto' : 'smooth',
+    });
+  }, [roleSlug, reduceMotion]);
+
   if (!role) return <Navigate to="/hire-professionals" replace />;
 
-  const selectedLevel = role.levels?.[selectedLevelIndex];
+  // Keep the selected index valid if role content is updated dynamically.
+  const availableLevelCount = role.levels?.length ?? 0;
+  const safeSelectedLevelIndex =
+    availableLevelCount > 0
+      ? Math.min(selectedLevelIndex, availableLevelCount - 1)
+      : 0;
+
+  const selectedLevel = role.levels?.[safeSelectedLevelIndex];
   const responsibilities = selectedLevel?.responsibilities ?? role.responsibilities;
   const skills = selectedLevel?.skills ?? role.skills;
   const software = selectedLevel?.software ?? role.software;
@@ -54,7 +71,7 @@ export function HireProfessionalRolePage() {
   const RoleIcon = role.icon;
 
   return (
-    <main className="hire-pro-page hp-role-page">
+    <main className="hire-pro-page hp-role-page" id="hire-professional-role">
       <div className="hp-ambient hp-ambient-one" aria-hidden="true" />
       <div className="hp-ambient hp-ambient-two" aria-hidden="true" />
       <div className="hp-content hp-role-content">
@@ -78,18 +95,39 @@ export function HireProfessionalRolePage() {
           variants={ROLE_STAGGER}
         >
           <motion.div className="hp-role-hero-copy" variants={ROLE_STAGGER}>
-            <motion.span className="hp-eyebrow" variants={ROLE_REVEAL}><RoleIcon size={15} /> Career opportunity</motion.span>
+            <motion.span className="hp-eyebrow" variants={ROLE_REVEAL}>
+              <RoleIcon size={15} aria-hidden="true" />
+              Career opportunity
+            </motion.span>
             <motion.h1 variants={ROLE_REVEAL}>{role.title}</motion.h1>
             <motion.p variants={ROLE_REVEAL}>{selectedLevel?.description ?? role.overview}</motion.p>
-            <motion.div className="hp-role-specialty" variants={ROLE_REVEAL}><Sparkles size={15} /> {role.specialization}</motion.div>
+            <motion.div className="hp-role-specialty" variants={ROLE_REVEAL}>
+              <Sparkles size={15} aria-hidden="true" />
+              <span>{role.specialization}</span>
+            </motion.div>
             <motion.div className="hp-role-hero-actions" variants={ROLE_REVEAL}>
-              <button type="button" className="hp-detail-button hp-detail-button-primary" onClick={() => setIsApplicationOpen(true)}>
-                Apply Now <ArrowRight size={16} />
+              <button
+                type="button"
+                className="hp-detail-button hp-detail-button-primary"
+                onClick={() => setIsApplicationOpen(true)}
+                aria-label={`Apply for the ${role.title} position`}
+              >
+                Apply Now <ArrowRight size={16} aria-hidden="true" />
               </button>
-              <Link to="/hire-professionals" className="hp-detail-button hp-detail-button-secondary">Back to All Roles</Link>
+              <Link
+                to="/hire-professionals"
+                className="hp-detail-button hp-detail-button-secondary"
+              >
+                Back to All Roles
+              </Link>
             </motion.div>
           </motion.div>
-          <motion.div className="hp-role-hero-visual" role="region" aria-label={`${role.title} interactive workflow animation`} variants={ROLE_REVEAL}>
+          <motion.div
+            className="hp-role-hero-visual"
+            role="region"
+            aria-label={`${role.title} interactive workflow animation`}
+            variants={ROLE_REVEAL}
+          >
             <HireRoleExperience role={role} />
           </motion.div>
         </motion.section>
@@ -112,16 +150,24 @@ export function HireProfessionalRolePage() {
                 <motion.button
                   type="button"
                   key={level.label}
-                  className={`hp-level-option${selectedLevelIndex === index ? ' is-selected' : ''}`}
+                  className={`hp-level-option${safeSelectedLevelIndex === index ? ' is-selected' : ''}`}
                   onClick={() => setSelectedLevelIndex(index)}
-                  aria-pressed={selectedLevelIndex === index}
+                  aria-pressed={safeSelectedLevelIndex === index}
+                  aria-label={`Show ${level.label} experience details`}
                   variants={ROLE_REVEAL}
                   whileHover={reduceMotion ? undefined : { y: -2 }}
                   whileTap={reduceMotion ? undefined : { scale: 0.99 }}
                 >
-                  <span className="hp-level-icon"><GraduationCap size={19} /></span>
-                  <span><strong>{level.label}</strong><small>{level.experience}</small></span>
-                  <span className="hp-level-check"><Check size={14} /></span>
+                  <span className="hp-level-icon" aria-hidden="true">
+                    <GraduationCap size={19} />
+                  </span>
+                  <span className="hp-level-copy">
+                    <strong>{level.label}</strong>
+                    <small>{level.experience}</small>
+                  </span>
+                  <span className="hp-level-check" aria-hidden="true">
+                    <Check size={14} />
+                  </span>
                 </motion.button>
               ))}
             </div>
@@ -129,63 +175,101 @@ export function HireProfessionalRolePage() {
         )}
 
         <AnimatePresence mode="wait" initial={false}>
-        <motion.div
-          key={selectedLevel?.label || role.slug}
-          initial={reduceMotion ? false : { opacity: 0, y: 8 }}
-          animate={{ opacity: 1, y: 0 }}
-          exit={reduceMotion ? undefined : { opacity: 0, y: -6 }}
-          transition={{ duration: reduceMotion ? 0 : 0.22, ease: 'easeOut' }}
-        >
-        <motion.section className="hp-role-overview hp-role-section" initial={reduceMotion ? false : 'hidden'} whileInView="visible" viewport={{ once: true, amount: 0.2 }} variants={ROLE_STAGGER}>
-          <motion.div variants={ROLE_REVEAL}>
-            <span className="hp-detail-kicker">Role overview</span>
-            <h2>Make a measurable difference in <em>every engagement.</em></h2>
-          </motion.div>
-          <motion.p variants={ROLE_REVEAL}>{selectedLevel?.description ?? role.overview}</motion.p>
-          <motion.div className="hp-role-experience-note" variants={ROLE_REVEAL}><span><BriefcaseBusiness size={17} /></span><div><strong>Experience</strong><small>{experience}</small></div></motion.div>
-        </motion.section>
+          <motion.div
+            aria-live="polite"
+            aria-atomic="true"
+            key={selectedLevel?.label || role.slug}
+            initial={reduceMotion ? false : { opacity: 0, y: 8 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={reduceMotion ? undefined : { opacity: 0, y: -6 }}
+            transition={{ duration: reduceMotion ? 0 : 0.22, ease: 'easeOut' }}
+          >
+            <motion.section className="hp-role-overview hp-role-section" initial={reduceMotion ? false : 'hidden'} whileInView="visible" viewport={{ once: true, amount: 0.2 }} variants={ROLE_STAGGER}>
+              <motion.div variants={ROLE_REVEAL}>
+                <span className="hp-detail-kicker">Role overview</span>
+                <h2>Make a measurable difference in <em>every engagement.</em></h2>
+              </motion.div>
+              <motion.p variants={ROLE_REVEAL}>{selectedLevel?.description ?? role.overview}</motion.p>
+              <motion.div className="hp-role-experience-note" variants={ROLE_REVEAL}><span><BriefcaseBusiness size={17} /></span><div><strong>Experience</strong><small>{experience}</small></div></motion.div>
+            </motion.section>
 
-        <motion.section className="hp-role-detail-grid hp-role-section" initial={reduceMotion ? false : 'hidden'} whileInView="visible" viewport={{ once: true, amount: 0.12 }} variants={ROLE_STAGGER}>
-          <motion.article className="hp-role-info-card hp-role-responsibilities" variants={ROLE_REVEAL} whileHover={reduceMotion ? undefined : { y: -3 }}>
-            <span className="hp-role-card-icon"><CheckCircle2 size={19} /></span>
-            <span className="hp-detail-kicker">Day-to-day impact</span>
-            <h2>Key responsibilities</h2>
-            <ul>{responsibilities.map(item => <li key={item}><Check size={15} />{item}</li>)}</ul>
-          </motion.article>
-          <motion.article className="hp-role-info-card hp-role-skills" variants={ROLE_REVEAL} whileHover={reduceMotion ? undefined : { y: -3 }}>
-            <span className="hp-role-card-icon"><Sparkles size={19} /></span>
-            <span className="hp-detail-kicker">Technical capability</span>
-            <h2>Required skills</h2>
-            <div className="hp-role-skill-list">{skills.map(skill => <span key={skill}>{skill}</span>)}</div>
-            <h3>Software &amp; tools</h3>
-            <div className="hp-role-tool-list">{software.map(tool => <span key={tool}>{tool}</span>)}</div>
-          </motion.article>
-        </motion.section>
+            <motion.section className="hp-role-detail-grid hp-role-section" initial={reduceMotion ? false : 'hidden'} whileInView="visible" viewport={{ once: true, amount: 0.12 }} variants={ROLE_STAGGER}>
+              <motion.article className="hp-role-info-card hp-role-responsibilities" variants={ROLE_REVEAL} whileHover={reduceMotion ? undefined : { y: -3 }}>
+                <span className="hp-role-card-icon"><CheckCircle2 size={19} /></span>
+                <span className="hp-detail-kicker">Day-to-day impact</span>
+                <h2>Key responsibilities</h2>
+                <ul>
+                  {responsibilities.map((item, index) => (
+                    <li key={`${index}-${item}`}>
+                      <Check size={15} aria-hidden="true" />
+                      <span>{item}</span>
+                    </li>
+                  ))}
+                </ul>
+              </motion.article>
+              <motion.article className="hp-role-info-card hp-role-skills" variants={ROLE_REVEAL} whileHover={reduceMotion ? undefined : { y: -3 }}>
+                <span className="hp-role-card-icon"><Sparkles size={19} /></span>
+                <span className="hp-detail-kicker">Technical capability</span>
+                <h2>Required skills</h2>
+                <div className="hp-role-skill-list" aria-label="Required skills">
+                  {skills.map((skill, index) => (
+                    <span key={`${index}-${skill}`}>{skill}</span>
+                  ))}
+                </div>
+                <h3>Software &amp; tools</h3>
+                <div className="hp-role-tool-list" aria-label="Software and tools">
+                  {software.map((tool, index) => (
+                    <span key={`${index}-${tool}`}>{tool}</span>
+                  ))}
+                </div>
+              </motion.article>
+            </motion.section>
 
-        <motion.section className="hp-role-qualifications hp-role-section" initial={reduceMotion ? false : 'hidden'} whileInView="visible" viewport={{ once: true, amount: 0.08 }} variants={ROLE_STAGGER}>
-          <motion.div className="hp-role-section-heading" variants={ROLE_REVEAL}>
-            <span className="hp-detail-kicker">What helps you thrive</span>
-            <h2>Qualifications &amp; <em>expectations</em></h2>
+            <motion.section className="hp-role-qualifications hp-role-section" initial={reduceMotion ? false : 'hidden'} whileInView="visible" viewport={{ once: true, amount: 0.08 }} variants={ROLE_STAGGER}>
+              <motion.div className="hp-role-section-heading" variants={ROLE_REVEAL}>
+                <span className="hp-detail-kicker">What helps you thrive</span>
+                <h2>Qualifications &amp; <em>expectations</em></h2>
+              </motion.div>
+              <div className="hp-role-qualification-grid">
+                <motion.article className="hp-role-info-card" variants={ROLE_REVEAL} whileHover={reduceMotion ? undefined : { y: -3 }}>
+                  <span className="hp-role-card-icon"><GraduationCap size={19} /></span>
+                  <h3>Qualifications</h3>
+                  <ul>
+                    {qualifications.map((item, index) => (
+                      <li key={`${index}-${item}`}>
+                        <Check size={15} aria-hidden="true" />
+                        <span>{item}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </motion.article>
+                <motion.article className="hp-role-info-card" variants={ROLE_REVEAL} whileHover={reduceMotion ? undefined : { y: -3 }}>
+                  <span className="hp-role-card-icon"><ShieldCheck size={19} /></span>
+                  <h3>What we expect</h3>
+                  <ul>
+                    {expectations.map((item, index) => (
+                      <li key={`${index}-${item}`}>
+                        <Check size={15} aria-hidden="true" />
+                        <span>{item}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </motion.article>
+                <motion.article className="hp-role-info-card hp-role-benefits-card" variants={ROLE_REVEAL} whileHover={reduceMotion ? undefined : { y: -3 }}>
+                  <span className="hp-role-card-icon"><BriefcaseBusiness size={19} /></span>
+                  <h3>Why work with us</h3>
+                  <ul>
+                    {role.benefits.map((item, index) => (
+                      <li key={`${index}-${item}`}>
+                        <Check size={15} aria-hidden="true" />
+                        <span>{item}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </motion.article>
+              </div>
+            </motion.section>
           </motion.div>
-          <div className="hp-role-qualification-grid">
-            <motion.article className="hp-role-info-card" variants={ROLE_REVEAL} whileHover={reduceMotion ? undefined : { y: -3 }}>
-              <span className="hp-role-card-icon"><GraduationCap size={19} /></span>
-              <h3>Qualifications</h3>
-              <ul>{qualifications.map(item => <li key={item}><Check size={15} />{item}</li>)}</ul>
-            </motion.article>
-            <motion.article className="hp-role-info-card" variants={ROLE_REVEAL} whileHover={reduceMotion ? undefined : { y: -3 }}>
-              <span className="hp-role-card-icon"><ShieldCheck size={19} /></span>
-              <h3>What we expect</h3>
-              <ul>{expectations.map(item => <li key={item}><Check size={15} />{item}</li>)}</ul>
-            </motion.article>
-            <motion.article className="hp-role-info-card hp-role-benefits-card" variants={ROLE_REVEAL} whileHover={reduceMotion ? undefined : { y: -3 }}>
-              <span className="hp-role-card-icon"><BriefcaseBusiness size={19} /></span>
-              <h3>Why work with us</h3>
-              <ul>{role.benefits.map(item => <li key={item}><Check size={15} />{item}</li>)}</ul>
-            </motion.article>
-          </div>
-        </motion.section>
-        </motion.div>
         </AnimatePresence>
 
         <motion.section className="hp-role-apply-cta" initial={reduceMotion ? false : 'hidden'} whileInView="visible" viewport={{ once: true, amount: 0.25 }} variants={ROLE_STAGGER}>
@@ -194,19 +278,28 @@ export function HireProfessionalRolePage() {
             <h2>Bring your expertise to a team that values <em>good work.</em></h2>
             <p>Share your experience and let’s explore whether this role is a good fit.</p>
           </motion.div>
-          <motion.button type="button" className="hp-detail-button hp-detail-button-primary" onClick={() => setIsApplicationOpen(true)} variants={ROLE_REVEAL} whileHover={reduceMotion ? undefined : { y: -2 }} whileTap={reduceMotion ? undefined : { scale: 0.98 }}>
-            Apply for This Position <ArrowUpRight size={16} />
+          <motion.button
+            type="button"
+            className="hp-detail-button hp-detail-button-primary"
+            onClick={() => setIsApplicationOpen(true)}
+            aria-label={`Apply for the ${role.title} position`}
+            variants={ROLE_REVEAL}
+            whileHover={reduceMotion ? undefined : { y: -2 }}
+            whileTap={reduceMotion ? undefined : { scale: 0.98 }}
+          >
+            Apply for This Position
+            <ArrowUpRight size={16} aria-hidden="true" />
           </motion.button>
         </motion.section>
       </div>
       <AnimatePresence>
-      {isApplicationOpen && (
-        <ProfessionalApplicationForm
-          role={role}
-          selectedLevel={selectedLevel?.label}
-          onClose={() => setIsApplicationOpen(false)}
-        />
-      )}
+        {isApplicationOpen && (
+          <ProfessionalApplicationForm
+            role={role}
+            selectedLevel={selectedLevel?.label}
+            onClose={() => setIsApplicationOpen(false)}
+          />
+        )}
       </AnimatePresence>
     </main>
   );
