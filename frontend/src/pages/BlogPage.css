@@ -23,18 +23,16 @@
   color: var(--blog-text);
   background-color: #061418;
   background-image:
-    linear-gradient(
-      180deg,
+    linear-gradient(180deg,
       rgba(3, 13, 16, 0.78) 0%,
       rgba(3, 16, 19, 0.84) 44%,
-      rgba(3, 16, 19, 0.91) 100%
-    ),
+      rgba(3, 16, 19, 0.91) 100%),
     url("./blog-office-bg.png");
   background-size: cover;
   background-position: center top;
   background-repeat: no-repeat;
   background-attachment: fixed;
-  font-family: "DM Sans", "Plus Jakarta Sans", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  font-family: "Inter Tight", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
 }
 
 .dark .blog-premium,
@@ -53,12 +51,10 @@ html.dark .blog-premium,
   --blog-glow: rgba(0, 238, 220, 0.2);
   background-color: #061418;
   background-image:
-    linear-gradient(
-      180deg,
+    linear-gradient(180deg,
       rgba(3, 13, 16, 0.78) 0%,
       rgba(3, 16, 19, 0.84) 44%,
-      rgba(3, 16, 19, 0.91) 100%
-    ),
+      rgba(3, 16, 19, 0.91) 100%),
     url("./blog-office-bg.png");
   background-size: cover;
   background-position: center top;
@@ -166,7 +162,7 @@ html.dark .blog-premium,
   max-width: 850px;
   margin: 0;
   color: var(--blog-text);
-  font-family: "Playfair Display", Georgia, "Times New Roman", serif;
+  font-family: var(--font-sans);
   font-size: clamp(2.7rem, 5.4vw, 5rem);
   font-weight: 600;
   letter-spacing: -0.055em;
@@ -177,6 +173,7 @@ html.dark .blog-premium,
 .blog-premium__title span {
   display: block;
   color: #f0ca82;
+  font-family: var(--font-serif);
   font-style: italic;
   font-weight: 500;
 }
@@ -239,7 +236,7 @@ html.dark .blog-premium,
   transform: translateY(-1px);
 }
 
-.blog-premium__search > svg {
+.blog-premium__search>svg {
   flex: 0 0 auto;
   color: var(--blog-teal);
 }
@@ -419,19 +416,17 @@ html.dark .blog-premium__filter.is-active,
   z-index: 0;
   inset: 0;
   border-radius: inherit;
-  background: radial-gradient(
-    360px circle at var(--pointer-x) var(--pointer-y),
-    rgba(0, 235, 218, 0.14),
-    rgba(112, 75, 220, 0.045) 35%,
-    transparent 68%
-  );
+  background: radial-gradient(360px circle at var(--pointer-x) var(--pointer-y),
+      rgba(0, 235, 218, 0.14),
+      rgba(112, 75, 220, 0.045) 35%,
+      transparent 68%);
   content: "";
   opacity: 0;
   pointer-events: none;
   transition: opacity 250ms ease;
 }
 
-.blog-card > * {
+.blog-card>* {
   position: relative;
   z-index: 1;
 }
@@ -507,7 +502,7 @@ html.dark .blog-premium__filter.is-active,
 .blog-card h2 {
   margin: 0;
   color: #f5fbfa;
-  font-family: "Playfair Display", Georgia, "Times New Roman", serif;
+  font-family: var(--font-sans);
   font-size: clamp(1.12rem, 1.5vw, 1.35rem);
   font-weight: 650;
   letter-spacing: -0.025em;
@@ -634,7 +629,7 @@ html.dark .blog-premium__filter.is-active,
 .blog-premium__empty h2 {
   margin: 1rem 0 0.4rem;
   color: var(--blog-text);
-  font-family: "Playfair Display", Georgia, serif;
+  font-family: var(--font-sans);
   font-size: 1.5rem;
 }
 
@@ -738,7 +733,7 @@ html.dark .blog-modal__panel,
 .blog-modal__panel h2 {
   margin: 1rem 0 0.8rem;
   color: var(--blog-text);
-  font-family: "Playfair Display", Georgia, serif;
+  font-family: var(--font-sans);
   font-size: clamp(1.7rem, 4vw, 2.5rem);
   line-height: 1.2;
 }
@@ -833,23 +828,47 @@ html.dark .blog-modal__panel,
 }
 
 @keyframes blogRevealUp {
-  from { opacity: 0; transform: translateY(22px); }
-  to { opacity: 1; transform: translateY(0); }
+  from {
+    opacity: 0;
+    transform: translateY(22px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 @keyframes blogOrbDrift {
-  from { transform: translate3d(0, -10px, 0) scale(0.95); }
-  to { transform: translate3d(20px, 24px, 0) scale(1.07); }
+  from {
+    transform: translate3d(0, -10px, 0) scale(0.95);
+  }
+
+  to {
+    transform: translate3d(20px, 24px, 0) scale(1.07);
+  }
 }
 
 @keyframes blogFadeIn {
-  from { opacity: 0; }
-  to { opacity: 1; }
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
 }
 
 @keyframes blogModalIn {
-  from { opacity: 0; transform: translateY(14px) scale(0.985); }
-  to { opacity: 1; transform: translateY(0) scale(1); }
+  from {
+    opacity: 0;
+    transform: translateY(14px) scale(0.985);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
 }
 
 @media (max-width: 768px) {
@@ -921,6 +940,7 @@ html.dark .blog-modal__panel,
 }
 
 @media (prefers-reduced-motion: reduce) {
+
   .blog-premium *,
   .blog-premium *::before,
   .blog-premium *::after {

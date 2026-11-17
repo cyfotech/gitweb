@@ -431,7 +431,7 @@ class TaxPlanningPage extends React.Component {
         <link rel="preconnect" href="https://fonts.googleapis.com" />
 
 
-        
+
         <style>{`
 /* Smart Tax Expertss (STE) Master Brand Theme & Text Contrast */
 .stp > header {
@@ -3938,11 +3938,11 @@ html[data-theme="dark"] .stp [style*="border-radius: 20px; background: #EFE8DA"]
 
 
                         {v.submitError && (
-                        <div style={{ color: "#EF4444", fontSize: "13px", fontWeight: 600, marginBottom: "8px" }}>
-                          {v.submitError}
-                        </div>
-                      )}
-                      <button type="submit" disabled={v.submitting} className="btn btn-ink" style={cssToStyle("width: 100%; min-height: 58px; font-size: 16px; opacity: " + (v.submitting ? "0.7" : "1") + ";")}>{v.submitting ? "Sending..." : v.submitLabel}
+                          <div style={{ color: "#EF4444", fontSize: "13px", fontWeight: 600, marginBottom: "8px" }}>
+                            {v.submitError}
+                          </div>
+                        )}
+                        <button type="submit" disabled={v.submitting} className="btn btn-ink" style={cssToStyle("width: 100%; min-height: 58px; font-size: 16px; opacity: " + (v.submitting ? "0.7" : "1") + ";")}>{v.submitting ? "Sending..." : v.submitLabel}
                           <svg width="16" height="16" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"></path></svg></button>
 
 

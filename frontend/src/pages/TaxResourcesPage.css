@@ -22,7 +22,7 @@
   padding: clamp(7.5rem, 11vw, 10rem) clamp(1rem, 3vw, 2rem) 5rem;
   color: var(--tr-text);
   background: #041417;
-  font-family: "DM Sans", "Plus Jakarta Sans", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  font-family: "Inter Tight", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
 }
 
 .tax-resources-premium *,
@@ -37,12 +37,10 @@
   inset: 0;
   pointer-events: none;
   background-image:
-    linear-gradient(
-      180deg,
+    linear-gradient(180deg,
       rgba(2, 11, 14, 0.73) 0%,
       rgba(3, 15, 18, 0.84) 36%,
-      rgba(3, 15, 18, 0.94) 100%
-    ),
+      rgba(3, 15, 18, 0.94) 100%),
     url("./tax-resources-office-bg.png");
   background-size: cover;
   background-position: center top;
@@ -146,7 +144,7 @@
 .tax-resources-hero__title {
   margin: 0;
   color: #fffdf7;
-  font-family: "Playfair Display", Georgia, "Times New Roman", serif;
+  font-family: var(--font-sans);
   font-size: clamp(2.5rem, 5.3vw, 4.8rem);
   font-weight: 600;
   letter-spacing: -0.052em;
@@ -158,6 +156,7 @@
 .tax-resources-hero__title span {
   display: block;
   color: var(--tr-gold);
+  font-family: var(--font-serif);
   font-style: italic;
   font-weight: 500;
 }
@@ -236,9 +235,17 @@
   background: rgba(233, 196, 127, 0.27);
 }
 
-.tax-resources-hero__document--back span:nth-child(2) { width: 62%; }
-.tax-resources-hero__document--back span:nth-child(3) { width: 72%; }
-.tax-resources-hero__document--back span:nth-child(4) { width: 48%; }
+.tax-resources-hero__document--back span:nth-child(2) {
+  width: 62%;
+}
+
+.tax-resources-hero__document--back span:nth-child(3) {
+  width: 72%;
+}
+
+.tax-resources-hero__document--back span:nth-child(4) {
+  width: 48%;
+}
 
 .tax-resources-hero__document--front {
   z-index: 1;
@@ -278,11 +285,30 @@
   transform-origin: bottom;
 }
 
-.tax-resources-hero__chart i:nth-child(1) { height: 42%; animation-delay: 0.1s; }
-.tax-resources-hero__chart i:nth-child(2) { height: 66%; animation-delay: 0.2s; }
-.tax-resources-hero__chart i:nth-child(3) { height: 51%; animation-delay: 0.3s; }
-.tax-resources-hero__chart i:nth-child(4) { height: 81%; animation-delay: 0.4s; }
-.tax-resources-hero__chart i:nth-child(5) { height: 94%; animation-delay: 0.5s; }
+.tax-resources-hero__chart i:nth-child(1) {
+  height: 42%;
+  animation-delay: 0.1s;
+}
+
+.tax-resources-hero__chart i:nth-child(2) {
+  height: 66%;
+  animation-delay: 0.2s;
+}
+
+.tax-resources-hero__chart i:nth-child(3) {
+  height: 51%;
+  animation-delay: 0.3s;
+}
+
+.tax-resources-hero__chart i:nth-child(4) {
+  height: 81%;
+  animation-delay: 0.4s;
+}
+
+.tax-resources-hero__chart i:nth-child(5) {
+  height: 94%;
+  animation-delay: 0.5s;
+}
 
 .tax-resources-hero__doc-line {
   width: 91%;
@@ -378,12 +404,10 @@
   z-index: -1;
   inset: 0;
   border-radius: inherit;
-  background: radial-gradient(
-    420px circle at var(--tax-pointer-x) var(--tax-pointer-y),
-    rgba(0, 255, 226, 0.14),
-    rgba(172, 92, 255, 0.06) 36%,
-    transparent 72%
-  );
+  background: radial-gradient(420px circle at var(--tax-pointer-x) var(--tax-pointer-y),
+      rgba(0, 255, 226, 0.14),
+      rgba(172, 92, 255, 0.06) 36%,
+      transparent 72%);
   content: "";
   opacity: 0;
   pointer-events: none;
@@ -430,7 +454,7 @@
 .tax-estimator__heading h2 {
   margin: 0;
   color: #fff;
-  font-family: "Playfair Display", Georgia, serif;
+  font-family: var(--font-sans);
   font-size: clamp(1.25rem, 2vw, 1.7rem);
   font-weight: 600;
   line-height: 1.35;
@@ -610,7 +634,7 @@
   font-size: 0.69rem;
 }
 
-.tax-estimator__footer > span {
+.tax-estimator__footer>span {
   display: inline-flex;
   align-items: center;
   gap: 0.45rem;
@@ -658,7 +682,7 @@
   gap: 0.7rem;
   margin: 0;
   color: #fffdf7;
-  font-family: "Playfair Display", Georgia, serif;
+  font-family: var(--font-sans);
   font-size: clamp(1.7rem, 3.2vw, 2.35rem);
   font-weight: 600;
   line-height: 1.25;
@@ -720,12 +744,10 @@
 }
 
 .tax-deadline-card::before {
-  background: radial-gradient(
-    330px circle at var(--tax-pointer-x) var(--tax-pointer-y),
-    rgba(0, 255, 226, 0.15),
-    rgba(172, 92, 255, 0.06) 38%,
-    transparent 73%
-  );
+  background: radial-gradient(330px circle at var(--tax-pointer-x) var(--tax-pointer-y),
+      rgba(0, 255, 226, 0.15),
+      rgba(172, 92, 255, 0.06) 38%,
+      transparent 73%);
 }
 
 .tax-deadline-card__top {
@@ -900,43 +922,99 @@
 }
 
 @keyframes taxRevealUp {
-  from { opacity: 0; transform: translateY(22px); }
-  to { opacity: 1; transform: translateY(0); }
+  from {
+    opacity: 0;
+    transform: translateY(22px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 @keyframes taxOrbFloat {
-  from { transform: translate3d(0, -12px, 0) scale(0.95); }
-  to { transform: translate3d(20px, 25px, 0) scale(1.07); }
+  from {
+    transform: translate3d(0, -12px, 0) scale(0.95);
+  }
+
+  to {
+    transform: translate3d(20px, 25px, 0) scale(1.07);
+  }
 }
 
 @keyframes taxVisualFloat {
-  0%, 100% { transform: translateY(0) rotateZ(0); }
-  50% { transform: translateY(-8px) rotateZ(0.4deg); }
+
+  0%,
+  100% {
+    transform: translateY(0) rotateZ(0);
+  }
+
+  50% {
+    transform: translateY(-8px) rotateZ(0.4deg);
+  }
 }
 
 @keyframes taxDocumentBack {
-  0%, 100% { transform: translate(30px, 2px) rotate(10deg) rotateY(-12deg); }
-  50% { transform: translate(34px, -5px) rotate(8deg) rotateY(-8deg); }
+
+  0%,
+  100% {
+    transform: translate(30px, 2px) rotate(10deg) rotateY(-12deg);
+  }
+
+  50% {
+    transform: translate(34px, -5px) rotate(8deg) rotateY(-8deg);
+  }
 }
 
 @keyframes taxDocumentFront {
-  0%, 100% { transform: translate(-12px, 0) rotate(-5deg) rotateY(8deg); }
-  50% { transform: translate(-8px, -7px) rotate(-3deg) rotateY(4deg); }
+
+  0%,
+  100% {
+    transform: translate(-12px, 0) rotate(-5deg) rotateY(8deg);
+  }
+
+  50% {
+    transform: translate(-8px, -7px) rotate(-3deg) rotateY(4deg);
+  }
 }
 
 @keyframes taxIconFloat {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-8px); }
+
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(-8px);
+  }
 }
 
 @keyframes taxHaloPulse {
-  0%, 100% { opacity: 0.6; transform: scale(0.95); }
-  50% { opacity: 1; transform: scale(1.08); }
+
+  0%,
+  100% {
+    opacity: 0.6;
+    transform: scale(0.95);
+  }
+
+  50% {
+    opacity: 1;
+    transform: scale(1.08);
+  }
 }
 
 @keyframes taxBarGrow {
-  from { transform: scaleY(0.1); opacity: 0.3; }
-  to { transform: scaleY(1); opacity: 1; }
+  from {
+    transform: scaleY(0.1);
+    opacity: 0.3;
+  }
+
+  to {
+    transform: scaleY(1);
+    opacity: 1;
+  }
 }
 
 @media (max-width: 1050px) {
@@ -1039,6 +1117,7 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
+
   .tax-resources-premium *,
   .tax-resources-premium *::before,
   .tax-resources-premium *::after {
@@ -1075,7 +1154,7 @@ html:not(.dark):not([data-theme="dark"]) .tax-estimator,
   background:
     radial-gradient(ellipse at 95% 0%, rgba(22, 180, 168, 0.11), transparent 24rem),
     linear-gradient(145deg, rgba(255, 255, 255, 0.94), rgba(246, 250, 247, 0.91));
-  box-shadow: 0 24px 65px rgba(7, 28, 30, 0.17), inset 0 1px rgba(255,255,255,.95);
+  box-shadow: 0 24px 65px rgba(7, 28, 30, 0.17), inset 0 1px rgba(255, 255, 255, .95);
 }
 
 html:not(.dark):not([data-theme="dark"]) .tax-estimator__heading h2,
@@ -1137,7 +1216,7 @@ html:not(.dark):not([data-theme="dark"]) .tax-income-control__hint,
 html:not(.dark):not([data-theme="dark"]) .tax-metric,
 :root:not(.dark):not([data-theme="dark"]) .tax-metric {
   border-color: rgba(24, 77, 76, .15);
-  background: linear-gradient(145deg, rgba(255,255,255,.95), rgba(241,247,244,.92));
+  background: linear-gradient(145deg, rgba(255, 255, 255, .95), rgba(241, 247, 244, .92));
   box-shadow: 0 10px 28px rgba(13, 43, 41, .06), inset 0 1px #fff;
 }
 
@@ -1188,30 +1267,31 @@ html:not(.dark):not([data-theme="dark"]) .tax-ledger-section__heading h2,
 :root:not(.dark):not([data-theme="dark"]) .tax-section-heading h2,
 :root:not(.dark):not([data-theme="dark"]) .tax-ledger-section__heading h2 {
   color: #fffdf7;
-  text-shadow: 0 3px 18px rgba(0,0,0,.48);
+  text-shadow: 0 3px 18px rgba(0, 0, 0, .48);
 }
+
 /* Section titles sit directly on the darkened office photograph, so keep them white. */
 
 html:not(.dark):not([data-theme="dark"]) .tax-section-heading p,
 :root:not(.dark):not([data-theme="dark"]) .tax-section-heading p {
   color: #edf4f0;
-  text-shadow: 0 2px 10px rgba(0,0,0,.62);
+  text-shadow: 0 2px 10px rgba(0, 0, 0, .62);
 }
 
 html:not(.dark):not([data-theme="dark"]) .tax-section-heading__mark,
 :root:not(.dark):not([data-theme="dark"]) .tax-section-heading__mark {
   color: #126d70;
-  border-color: rgba(255,255,255,.68);
-  background: rgba(255,255,255,.9);
-  box-shadow: 0 8px 25px rgba(0,0,0,.12);
+  border-color: rgba(255, 255, 255, .68);
+  background: rgba(255, 255, 255, .9);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, .12);
 }
 
 html:not(.dark):not([data-theme="dark"]) .tax-deadline-card,
 :root:not(.dark):not([data-theme="dark"]) .tax-deadline-card {
-  border-color: rgba(255,255,255,.72);
+  border-color: rgba(255, 255, 255, .72);
   color: #172c30;
-  background: linear-gradient(145deg, rgba(255,255,255,.94), rgba(247,250,247,.89));
-  box-shadow: 0 18px 42px rgba(0,0,0,.15), inset 0 1px #fff;
+  background: linear-gradient(145deg, rgba(255, 255, 255, .94), rgba(247, 250, 247, .89));
+  box-shadow: 0 18px 42px rgba(0, 0, 0, .15), inset 0 1px #fff;
 }
 
 html:not(.dark):not([data-theme="dark"]) .tax-deadline-card__number,
@@ -1221,7 +1301,7 @@ html:not(.dark):not([data-theme="dark"]) .tax-deadline-card__number,
 
 html:not(.dark):not([data-theme="dark"]) .tax-deadline-card__calendar,
 :root:not(.dark):not([data-theme="dark"]) .tax-deadline-card__calendar {
-  border-color: rgba(168,120,49,.24);
+  border-color: rgba(168, 120, 49, .24);
   color: #966b2e;
   background: linear-gradient(145deg, #fffdf7, #f3f5ef);
 }
@@ -1243,24 +1323,24 @@ html:not(.dark):not([data-theme="dark"]) .tax-deadline-card p,
 
 html:not(.dark):not([data-theme="dark"]) .tax-ledger-section__panel,
 :root:not(.dark):not([data-theme="dark"]) .tax-ledger-section__panel {
-  border-color: rgba(255,255,255,.7);
-  background: rgba(255,255,255,.91);
-  box-shadow: 0 20px 60px rgba(0,0,0,.16);
+  border-color: rgba(255, 255, 255, .7);
+  background: rgba(255, 255, 255, .91);
+  box-shadow: 0 20px 60px rgba(0, 0, 0, .16);
 }
 
 html:not(.dark):not([data-theme="dark"]) .tax-disclosure,
 :root:not(.dark):not([data-theme="dark"]) .tax-disclosure {
-  border-color: rgba(255,255,255,.68);
+  border-color: rgba(255, 255, 255, .68);
   color: #52676a;
-  background: linear-gradient(145deg, rgba(255,255,255,.94), rgba(247,249,244,.92));
-  box-shadow: 0 16px 40px rgba(0,0,0,.14);
+  background: linear-gradient(145deg, rgba(255, 255, 255, .94), rgba(247, 249, 244, .92));
+  box-shadow: 0 16px 40px rgba(0, 0, 0, .14);
 }
 
 html:not(.dark):not([data-theme="dark"]) .tax-disclosure__icon,
 :root:not(.dark):not([data-theme="dark"]) .tax-disclosure__icon {
-  border-color: rgba(168,120,49,.25);
+  border-color: rgba(168, 120, 49, .25);
   color: #966b2e;
-  background: rgba(233,196,127,.14);
+  background: rgba(233, 196, 127, .14);
 }
 
 html:not(.dark):not([data-theme="dark"]) .tax-disclosure strong,
@@ -1278,8 +1358,8 @@ html:not(.dark):not([data-theme="dark"]) .tax-disclosure p,
 html.dark .tax-resources-premium .tax-estimator,
 [data-theme="dark"] .tax-resources-premium .tax-estimator,
 :root[data-theme="dark"] .tax-resources-premium .tax-estimator {
-  border-color: rgba(139,232,220,.25);
-  background: linear-gradient(145deg, rgba(7,34,38,.93), rgba(4,20,24,.9));
+  border-color: rgba(139, 232, 220, .25);
+  background: linear-gradient(145deg, rgba(7, 34, 38, .93), rgba(4, 20, 24, .9));
 }
 
 .dark .tax-resources-premium .tax-estimator__heading h2,
@@ -1312,9 +1392,9 @@ html.dark .tax-resources-premium .tax-section-heading p,
 html.dark .tax-resources-premium .tax-status-button,
 [data-theme="dark"] .tax-resources-premium .tax-status-button,
 :root[data-theme="dark"] .tax-resources-premium .tax-status-button {
-  border-color: rgba(137,226,216,.22);
+  border-color: rgba(137, 226, 216, .22);
   color: #d6e6e2;
-  background: rgba(255,255,255,.045);
+  background: rgba(255, 255, 255, .045);
 }
 
 .dark .tax-resources-premium .tax-status-button.is-active,
@@ -1355,16 +1435,16 @@ html.dark .tax-resources-premium .tax-metric--estimate strong,
 html.dark .tax-resources-premium .tax-metric,
 [data-theme="dark"] .tax-resources-premium .tax-metric,
 :root[data-theme="dark"] .tax-resources-premium .tax-metric {
-  border-color: rgba(137,226,216,.18);
-  background: rgba(255,255,255,.045);
+  border-color: rgba(137, 226, 216, .18);
+  background: rgba(255, 255, 255, .045);
 }
 
 .dark .tax-resources-premium .tax-metric--estimate,
 html.dark .tax-resources-premium .tax-metric--estimate,
 [data-theme="dark"] .tax-resources-premium .tax-metric--estimate,
 :root[data-theme="dark"] .tax-resources-premium .tax-metric--estimate {
-  border-color: rgba(233,196,127,.28);
-  background: linear-gradient(145deg, rgba(30,86,78,.6), rgba(15,42,44,.8));
+  border-color: rgba(233, 196, 127, .28);
+  background: linear-gradient(145deg, rgba(30, 86, 78, .6), rgba(15, 42, 44, .8));
 }
 
 .dark .tax-resources-premium .tax-metric__label,
@@ -1405,8 +1485,8 @@ html.dark .tax-resources-premium .tax-disclosure strong,
 html.dark .tax-resources-premium .tax-deadline-card,
 [data-theme="dark"] .tax-resources-premium .tax-deadline-card,
 :root[data-theme="dark"] .tax-resources-premium .tax-deadline-card {
-  border-color: rgba(137,226,216,.2);
-  background: linear-gradient(145deg, rgba(8,35,39,.94), rgba(4,21,25,.88));
+  border-color: rgba(137, 226, 216, .2);
+  background: linear-gradient(145deg, rgba(8, 35, 39, .94), rgba(4, 21, 25, .88));
 }
 
 .dark .tax-resources-premium .tax-deadline-card p,
@@ -1420,16 +1500,16 @@ html.dark .tax-resources-premium .tax-deadline-card p,
 html.dark .tax-resources-premium .tax-ledger-section__panel,
 [data-theme="dark"] .tax-resources-premium .tax-ledger-section__panel,
 :root[data-theme="dark"] .tax-resources-premium .tax-ledger-section__panel {
-  border-color: rgba(137,226,216,.21);
-  background: rgba(5,24,28,.8);
+  border-color: rgba(137, 226, 216, .21);
+  background: rgba(5, 24, 28, .8);
 }
 
 .dark .tax-resources-premium .tax-disclosure,
 html.dark .tax-resources-premium .tax-disclosure,
 [data-theme="dark"] .tax-resources-premium .tax-disclosure,
 :root[data-theme="dark"] .tax-resources-premium .tax-disclosure {
-  border-color: rgba(233,196,127,.27);
-  background: linear-gradient(145deg, rgba(28,40,35,.83), rgba(6,25,28,.88));
+  border-color: rgba(233, 196, 127, .27);
+  background: linear-gradient(145deg, rgba(28, 40, 35, .83), rgba(6, 25, 28, .88));
 }
 
 .dark .tax-resources-premium .tax-disclosure__icon,
@@ -1437,6 +1517,6 @@ html.dark .tax-resources-premium .tax-disclosure__icon,
 [data-theme="dark"] .tax-resources-premium .tax-disclosure__icon,
 :root[data-theme="dark"] .tax-resources-premium .tax-disclosure__icon {
   color: #e9c47f;
-  border-color: rgba(233,196,127,.27);
-  background: rgba(233,196,127,.07);
+  border-color: rgba(233, 196, 127, .27);
+  background: rgba(233, 196, 127, .07);
 }

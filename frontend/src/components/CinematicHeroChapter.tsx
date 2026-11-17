@@ -556,8 +556,6 @@ export function CinematicHeroChapter({
         </EditableElement>
         <div className="ct-hero__background-grid" />
         <div className="ct-hero__background-noise" />
-        <div className="ct-hero__background-orb ct-hero__background-orb--one" />
-        <div className="ct-hero__background-orb ct-hero__background-orb--two" />
       </div>
 
       <div className="ct-hero__container">

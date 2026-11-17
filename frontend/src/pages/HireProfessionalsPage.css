@@ -73,7 +73,7 @@
 }
 
 .hp-ambient-one {
-  top: 70px;
+  top: 360px;
   right: -190px;
   background: radial-gradient(circle, rgba(49, 215, 208, 0.23), transparent 68%);
 }
@@ -141,7 +141,7 @@
   max-width: 760px;
   margin: 24px 0 18px;
   color: #10292f;
-  font-family: Georgia, "Times New Roman", serif;
+  font-family: var(--font-sans);
   font-size: clamp(2.65rem, 5.1vw, 5.35rem);
   font-weight: 700;
   letter-spacing: -0.055em;
@@ -151,6 +151,7 @@
 
 .hp-hero h1 span,
 .hp-section-heading h2 span {
+  font-family: var(--font-serif);
   color: #0b8988;
   background: linear-gradient(100deg, #087a7e 0%, #22a8a2 48%, #b88935 100%);
   -webkit-background-clip: text;
@@ -618,7 +619,7 @@
 }
 
 .hp-term-stat strong {
-  font-family: Georgia, serif;
+  font-family: 'Instrument Serif', Georgia, serif;
   font-size: 12.5px;
   color: #10292f;
   font-weight: 750;
@@ -902,7 +903,7 @@
 .hp-section-heading h2 {
   margin: 0;
   color: #122f34;
-  font: 700 clamp(1.9rem, 3.2vw, 3.1rem)/1.08 Georgia, "Times New Roman", serif;
+  font: 700 clamp(1.9rem, 3.2vw, 3.1rem)/1.08 'Instrument Serif', Georgia, "Times New Roman", serif;
   letter-spacing: -.04em;
   text-wrap: balance;
 }
@@ -1060,7 +1061,7 @@
 
 .hp-tier-indicator {
   color: rgba(17, 83, 90, .34);
-  font: 700 12px/1 Georgia, serif;
+  font: 700 12px/1 'Instrument Serif', Georgia, serif;
   letter-spacing: .12em;
 }
 
@@ -1069,7 +1070,7 @@
   z-index: 1;
   margin: 0;
   color: #173b40;
-  font: 700 clamp(1.22rem, 1.5vw, 1.58rem)/1.2 Georgia, "Times New Roman", serif;
+  font: 700 clamp(1.22rem, 1.5vw, 1.58rem)/1.2 'Instrument Serif', Georgia, "Times New Roman", serif;
   letter-spacing: -.025em;
 }
 
@@ -1388,7 +1389,7 @@
   z-index: 1;
   margin: 0;
   color: #163a40;
-  font: 700 18px/1.18 Georgia, "Times New Roman", serif;
+  font: 700 18px/1.18 'Instrument Serif', Georgia, "Times New Roman", serif;
   letter-spacing: -.02em;
   overflow-wrap: anywhere;
 }
@@ -1559,7 +1560,7 @@
   max-width: 750px;
   margin: 0;
   color: #f8fffd;
-  font: 700 clamp(1.65rem, 2.7vw, 2.55rem)/1.13 Georgia, "Times New Roman", serif;
+  font: 700 clamp(1.65rem, 2.7vw, 2.55rem)/1.13 'Instrument Serif', Georgia, "Times New Roman", serif;
   letter-spacing: -.035em;
 }
 
@@ -2445,7 +2446,7 @@ html.dark .hp-software-tags span {
 .hp-role-card h3 {
   margin: 0;
   color: #173b40;
-  font: 700 clamp(1.16rem, 1.45vw, 1.42rem)/1.2 Georgia, "Times New Roman", serif;
+  font: 700 clamp(1.16rem, 1.45vw, 1.42rem)/1.2 'Instrument Serif', Georgia, "Times New Roman", serif;
   letter-spacing: -.025em;
 }
 
@@ -2629,7 +2630,7 @@ html.dark .hp-role-card-watermark {
 .hp-role-hero-copy h1 {
   margin: 22px 0 17px;
   color: var(--hp-ink);
-  font: 700 clamp(2.5rem, 5vw, 4.7rem)/1.02 Georgia, "Times New Roman", serif;
+  font: 700 clamp(2.5rem, 5vw, 4.7rem)/1.02 'Instrument Serif', Georgia, "Times New Roman", serif;
   letter-spacing: -.055em;
   text-wrap: balance;
 }
@@ -2737,7 +2738,7 @@ html.dark .hp-role-card-watermark {
 .hp-role-apply-cta h2 {
   margin: 0;
   color: #173b40;
-  font: 700 clamp(1.75rem, 3vw, 2.65rem)/1.1 Georgia, serif;
+  font: 700 clamp(1.75rem, 3vw, 2.65rem)/1.1 'Instrument Serif', Georgia, serif;
   letter-spacing: -.035em;
 }
 
@@ -2909,7 +2910,7 @@ html.dark .hp-role-card-watermark {
 .hp-role-info-card h2 {
   margin: 3px 0 19px;
   color: #173b40;
-  font: 700 21px/1.2 Georgia, serif;
+  font: 700 21px/1.2 'Instrument Serif', Georgia, serif;
 }
 
 .hp-role-info-card h3 {
@@ -3082,7 +3083,7 @@ html.dark .hp-role-card-watermark {
 .hp-application-success h2 {
   margin: 0;
   color: #173b40;
-  font: 700 clamp(1.55rem, 3vw, 2.3rem)/1.1 Georgia, serif;
+  font: 700 clamp(1.55rem, 3vw, 2.3rem)/1.1 'Instrument Serif', Georgia, serif;
   letter-spacing: -.035em;
 }
 
@@ -3756,7 +3757,7 @@ html.dark .hp-application-close {
 .hp-application-heading h2 {
   margin: 0;
   color: #173b40;
-  font: 700 clamp(1.45rem, 3vw, 2rem)/1.12 Georgia, serif;
+  font: 700 clamp(1.45rem, 3vw, 2rem)/1.12 'Instrument Serif', Georgia, serif;
   letter-spacing: -.035em;
   overflow-wrap: anywhere;
 }
@@ -4117,7 +4118,7 @@ html.dark .hp-application-close {
 .hp-application-success h3 {
   margin: 0;
   color: #173b40;
-  font: 700 clamp(1.5rem, 3vw, 2rem)/1.15 Georgia, serif;
+  font: 700 clamp(1.5rem, 3vw, 2rem)/1.15 'Instrument Serif', Georgia, serif;
 }
 
 .hp-application-success p {

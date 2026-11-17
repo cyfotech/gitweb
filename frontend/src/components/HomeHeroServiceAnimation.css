@@ -193,7 +193,7 @@ html.dark .home-hero-motion {
 .home-hero-motion__card h2 {
   margin: 10px 0 14px;
   color: var(--hero-ink);
-  font-family: Georgia, "Times New Roman", serif;
+  font-family: var(--font-sans);
   font-size: clamp(18px, 2.1vw, 24px);
   font-weight: 500;
   letter-spacing: -0.035em;
