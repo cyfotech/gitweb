@@ -1137,7 +1137,7 @@ html[data-theme="dark"] .stp [style*="border-radius: 20px; background: #EFE8DA"]
 
 
               <a href="#contact" className="btn btn-acc" style={cssToStyle("min-height: 44px; padding: 0 20px; font-size: 14px;")}>Book a Planning Review
-                <svg width="16" height="16" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"></path></svg></a>
+                <svg style={{flexShrink:0,display:"inline-block",verticalAlign:"middle"}} width="16" height="16" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"></path></svg></a>
 
             </div>
 
@@ -1211,7 +1211,7 @@ html[data-theme="dark"] .stp [style*="border-radius: 20px; background: #EFE8DA"]
                       <div style={cssToStyle("display: flex; gap: 14px; flex-wrap: wrap;")}>
 
                         <a href="#contact" className="btn btn-acc">Book a Planning Review
-                          <svg width="16" height="16" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"></path></svg></a>
+                          <svg style={{flexShrink:0,display:"inline-block",verticalAlign:"middle"}} width="16" height="16" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"></path></svg></a>
 
 
                         <a href="#year" className="btn btn-ghost-d">Explore the planning year</a>
@@ -1237,7 +1237,7 @@ html[data-theme="dark"] .stp [style*="border-radius: 20px; background: #EFE8DA"]
                       <div style={cssToStyle("display: flex; gap: 14px; flex-wrap: wrap;")}>
 
                         <a href="#contact" className="btn btn-acc">Plan Your Business Taxes
-                          <svg width="16" height="16" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"></path></svg></a>
+                          <svg style={{flexShrink:0,display:"inline-block",verticalAlign:"middle"}} width="16" height="16" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"></path></svg></a>
 
 
                         <a href="#lab" className="btn btn-ghost-d">Try the deduction reality check</a>
@@ -1577,11 +1577,11 @@ html[data-theme="dark"] .stp [style*="border-radius: 20px; background: #EFE8DA"]
                   <ul style={cssToStyle("padding: 10px 22px 8px; display: flex; flex-direction: column;")}>
 
                     <li style={cssToStyle("display: flex; align-items: center; justify-content: space-between; padding: 9px 0; border-bottom: 1px solid rgba(12,26,34,0.07); font-size: 13.5px;")}>YTD income &amp; payments reviewed
-                      <span style={cssToStyle("width: 20px; height: 20px; border-radius: 50%; background: var(--acc); color: #fff; display: grid; place-items: center; animation: tick 9s 0.4s infinite both;")}><svg width="11" height="11" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"></path></svg></span></li>
+                      <span style={cssToStyle("width: 20px; height: 20px; border-radius: 50%; background: var(--acc); color: #fff; display: grid; place-items: center; animation: tick 9s 0.4s infinite both;")}><svg style={{flexShrink:0,display:"inline-block",verticalAlign:"middle"}} width="11" height="11" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"></path></svg></span></li>
 
 
                     <li style={cssToStyle("display: flex; align-items: center; justify-content: space-between; padding: 9px 0; font-size: 13.5px;")}>Actions agreed before Dec 31
-                      <span style={cssToStyle("width: 20px; height: 20px; border-radius: 50%; background: #0C1A22; color: #fff; display: grid; place-items: center; animation: tick 9s 4.4s infinite both;")}><svg width="11" height="11" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"></path></svg></span></li>
+                      <span style={cssToStyle("width: 20px; height: 20px; border-radius: 50%; background: #0C1A22; color: #fff; display: grid; place-items: center; animation: tick 9s 4.4s infinite both;")}><svg style={{flexShrink:0,display:"inline-block",verticalAlign:"middle"}} width="11" height="11" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"></path></svg></span></li>
 
                   </ul>
 
@@ -2048,7 +2048,7 @@ html[data-theme="dark"] .stp [style*="border-radius: 20px; background: #EFE8DA"]
 
                 <div style={cssToStyle("position: absolute; top: 50%; left: 50%; width: 64px; height: 64px; margin: -32px 0 0 -32px; border-radius: 50%; background: #fff; color: #0C1A22; display: grid; place-items: center; box-shadow: 0 12px 30px -8px rgba(0,0,0,0.5);")}>
 
-                  <svg width="26" height="26" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M9 6l-6 6 6 6M15 6l6 6-6 6"></path></svg>
+                  <svg style={{flexShrink:0,display:"inline-block",verticalAlign:"middle"}} width="26" height="26" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M9 6l-6 6 6 6M15 6l6 6-6 6"></path></svg>
 
                 </div>
 
@@ -2184,7 +2184,7 @@ html[data-theme="dark"] .stp [style*="border-radius: 20px; background: #EFE8DA"]
                         <React.Fragment key={index}>
 
 
-                          <li style={cssToStyle("display: flex; gap: 14px; align-items: center; padding: 16px 18px; border-radius: 16px; background: #F7F3EA; font-size: 15px; font-weight: 500;")}><span style={cssToStyle("flex: none; width: 26px; height: 26px; border-radius: 50%; background: #0C1A22; color: var(--hz); display: grid; place-items: center;")}><svg width="12" height="12" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"></path></svg></span>
+                          <li style={cssToStyle("display: flex; gap: 14px; align-items: center; padding: 16px 18px; border-radius: 16px; background: #F7F3EA; font-size: 15px; font-weight: 500;")}><span style={cssToStyle("flex: none; width: 26px; height: 26px; border-radius: 50%; background: #0C1A22; color: var(--hz); display: grid; place-items: center;")}><svg style={{flexShrink:0,display:"inline-block",verticalAlign:"middle"}} width="12" height="12" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"></path></svg></span>
                             {a}</li>
 
 
@@ -2196,10 +2196,10 @@ html[data-theme="dark"] .stp [style*="border-radius: 20px; background: #EFE8DA"]
 
                     <div style={cssToStyle("display: flex; gap: 10px; align-items: center; margin-top: 8px;")}>
 
-                      <button type="button" className="round" aria-label="Previous month" onClick={v.prevMonth}><svg width="18" height="18" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M19 12H5M11 6l-6 6 6 6"></path></svg></button>
+                      <button type="button" className="round" aria-label="Previous month" onClick={v.prevMonth}><svg style={{flexShrink:0,display:"inline-block",verticalAlign:"middle"}} width="18" height="18" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M19 12H5M11 6l-6 6 6 6"></path></svg></button>
 
 
-                      <button type="button" className="round" aria-label="Next month" onClick={v.nextMonth}><svg width="18" height="18" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"></path></svg></button>
+                      <button type="button" className="round" aria-label="Next month" onClick={v.nextMonth}><svg style={{flexShrink:0,display:"inline-block",verticalAlign:"middle"}} width="18" height="18" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"></path></svg></button>
 
 
                       <button type="button" className="pill" onClick={v.toNow}>Jump to today</button>
@@ -2244,10 +2244,10 @@ html[data-theme="dark"] .stp [style*="border-radius: 20px; background: #EFE8DA"]
 
                 <div style={cssToStyle("display: flex; align-items: center; gap: 10px;")}>
 
-                  <button type="button" className="round" aria-label="Previous reason" onClick={v.prevWhy}><svg width="18" height="18" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M19 12H5M11 6l-6 6 6 6"></path></svg></button>
+                  <button type="button" className="round" aria-label="Previous reason" onClick={v.prevWhy}><svg style={{flexShrink:0,display:"inline-block",verticalAlign:"middle"}} width="18" height="18" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M19 12H5M11 6l-6 6 6 6"></path></svg></button>
 
 
-                  <button type="button" className="round" style={cssToStyle("background: #0C1A22; color: #F3EFE6;")} aria-label="Next reason" onClick={v.nextWhy}><svg width="18" height="18" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"></path></svg></button>
+                  <button type="button" className="round" style={cssToStyle("background: #0C1A22; color: #F3EFE6;")} aria-label="Next reason" onClick={v.nextWhy}><svg style={{flexShrink:0,display:"inline-block",verticalAlign:"middle"}} width="18" height="18" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"></path></svg></button>
 
 
                   <button type="button" className="pill" aria-pressed={v.whyAutoPressed} onClick={v.toggleWhyAuto}>{v.whyAutoLabel}</button>
@@ -3049,7 +3049,7 @@ html[data-theme="dark"] .stp [style*="border-radius: 20px; background: #EFE8DA"]
                         <span className="mono hide-sm" style={cssToStyle("flex: none; font-size: 11px; letter-spacing: 0.08em; color: #4F5B60; font-weight: 400;")}>{c.tags}</span>
 
 
-                        <span className={c.icCls} aria-hidden="true"><svg width="16" height="16" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round"><path d="M12 5v14M5 12h14"></path></svg></span>
+                        <span className={c.icCls} aria-hidden="true"><svg style={{flexShrink:0,display:"inline-block",verticalAlign:"middle"}} width="16" height="16" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round"><path d="M12 5v14M5 12h14"></path></svg></span>
 
                       </button></h3>
 
@@ -3215,10 +3215,10 @@ html[data-theme="dark"] .stp [style*="border-radius: 20px; background: #EFE8DA"]
 
                     <div style={cssToStyle("display: flex; gap: 10px; margin-top: 10px;")}>
 
-                      <button type="button" className="round-d" aria-label="Previous step" onClick={v.prevStep}><svg width="18" height="18" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M19 12H5M11 6l-6 6 6 6"></path></svg></button>
+                      <button type="button" className="round-d" aria-label="Previous step" onClick={v.prevStep}><svg style={{flexShrink:0,display:"inline-block",verticalAlign:"middle"}} width="18" height="18" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M19 12H5M11 6l-6 6 6 6"></path></svg></button>
 
 
-                      <button type="button" className="round-d" style={cssToStyle("background: var(--hz); border-color: var(--hz); color: #0C1A22;")} aria-label="Next step" onClick={v.nextStep}><svg width="18" height="18" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"></path></svg></button>
+                      <button type="button" className="round-d" style={cssToStyle("background: var(--hz); border-color: var(--hz); color: #0C1A22;")} aria-label="Next step" onClick={v.nextStep}><svg style={{flexShrink:0,display:"inline-block",verticalAlign:"middle"}} width="18" height="18" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"></path></svg></button>
 
                     </div>
 
@@ -3282,7 +3282,7 @@ html[data-theme="dark"] .stp [style*="border-radius: 20px; background: #EFE8DA"]
                           <span className="vt">{p.t}</span>
 
 
-                          <span style={cssToStyle("width: 40px; height: 40px; border-radius: 50%; border: 1px solid currentColor; display: grid; place-items: center; opacity: 0.6; flex: none;")}><svg width="14" height="14" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" aria-hidden="true"><path d="M12 5v14M5 12h14"></path></svg></span>
+                          <span style={cssToStyle("width: 40px; height: 40px; border-radius: 50%; border: 1px solid currentColor; display: grid; place-items: center; opacity: 0.6; flex: none;")}><svg style={{flexShrink:0,display:"inline-block",verticalAlign:"middle"}} width="14" height="14" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" aria-hidden="true"><path d="M12 5v14M5 12h14"></path></svg></span>
 
                         </button>
 
@@ -3331,7 +3331,7 @@ html[data-theme="dark"] .stp [style*="border-radius: 20px; background: #EFE8DA"]
 
 
                           <a href={p.href} className={p.btn} style={cssToStyle("position: relative; align-self: flex-start; margin-top: 6px;")}>{p.cta}
-                            <svg width="16" height="16" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"></path></svg></a>
+                            <svg style={{flexShrink:0,display:"inline-block",verticalAlign:"middle"}} width="16" height="16" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"></path></svg></a>
 
                         </div>
 
@@ -3537,7 +3537,7 @@ html[data-theme="dark"] .stp [style*="border-radius: 20px; background: #EFE8DA"]
 
                       <h3 style={cssToStyle("margin: 0;")}><button type="button" className="faq-q" aria-expanded={f.exp} aria-controls={f.pid} onClick={f.toggle}><span style={cssToStyle("display: flex; gap: 16px; align-items: baseline;")}><span className="mono" style={cssToStyle("font-size: 11px; color: var(--hz-d); font-weight: 400; white-space: nowrap;")}>{f.tag}</span>
                         {f.q}</span>
-                        <span className={f.icCls} aria-hidden="true"><svg width="14" height="14" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round"><path d="M12 5v14M5 12h14"></path></svg></span></button></h3>
+                        <span className={f.icCls} aria-hidden="true"><svg style={{flexShrink:0,display:"inline-block",verticalAlign:"middle"}} width="14" height="14" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round"><path d="M12 5v14M5 12h14"></path></svg></span></button></h3>
 
 
                       {(f.open) && (
@@ -3810,7 +3810,7 @@ html[data-theme="dark"] .stp [style*="border-radius: 20px; background: #EFE8DA"]
                       <React.Fragment key={index}>
 
 
-                        <button type="button" className={c.cls} aria-pressed={c.sel} onClick={c.toggle}><span className="bx"><svg width="13" height="13" fill="none" stroke="currentColor" strokeWidth="3.2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"></path></svg></span>
+                        <button type="button" className={c.cls} aria-pressed={c.sel} onClick={c.toggle}><span className="bx"><svg style={{flexShrink:0,display:"inline-block",verticalAlign:"middle"}} width="13" height="13" fill="none" stroke="currentColor" strokeWidth="3.2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"></path></svg></span>
                           {c.t}</button>
 
 
@@ -3943,7 +3943,7 @@ html[data-theme="dark"] .stp [style*="border-radius: 20px; background: #EFE8DA"]
                           </div>
                         )}
                         <button type="submit" disabled={v.submitting} className="btn btn-ink" style={cssToStyle("width: 100%; min-height: 58px; font-size: 16px; opacity: " + (v.submitting ? "0.7" : "1") + ";")}>{v.submitting ? "Sending..." : v.submitLabel}
-                          <svg width="16" height="16" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"></path></svg></button>
+                          <svg style={{flexShrink:0,display:"inline-block",verticalAlign:"middle"}} width="16" height="16" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"></path></svg></button>
 
 
                         <p style={cssToStyle("font-size: 12px; line-height: 1.5; color: #4F5B60;")}>We'll reply to discuss scope before any work begins. Please don't send tax documents through this form.</p>

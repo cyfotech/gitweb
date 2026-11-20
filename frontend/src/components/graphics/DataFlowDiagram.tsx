@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { ArrowRight, Lock } from 'lucide-react';
+import './DataFlowDiagram.css';
 
 interface CmsStage {
   id?: string;

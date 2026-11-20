@@ -430,10 +430,11 @@ export function ConsultationForm({
                         type="button"
                         key={cat.id}
                         onClick={() => handleCategoryChange(cat.id)}
-                        className={`p-4 rounded-2xl text-left border transition-all duration-200 cursor-pointer ${isSelected
-                          ? 'glass-panel border-[#315F69] dark:border-[#2CCFC5] shadow-md scale-[1.01]'
-                          : 'bg-black/5 dark:bg-[#031117]/60 border-[#DCE5E2] dark:border-[rgba(121,241,232,0.12)] hover:border-gray-400 dark:hover:border-gray-700 opacity-80 hover:opacity-100'
+                        className={`p-4 rounded-2xl text-left border cursor-pointer select-none ${isSelected
+                          ? 'bg-black/5 dark:bg-[#0D2229] border-[#315F69] dark:border-[#2CCFC5] shadow-md !transform-none !transition-none'
+                          : 'bg-black/5 dark:bg-[#031117]/60 border-[#DCE5E2] dark:border-[rgba(121,241,232,0.12)] opacity-85 hover:opacity-100 !transform-none !transition-none'
                           }`}
+                        style={{ transform: 'none', transition: 'none', animation: 'none' }}
                       >
                         <div className="flex items-center justify-between mb-1.5">
                           <span className={`text-sm font-bold ${isSelected ? 'text-[#315F69] dark:text-[#79F1E8]' : 'text-[#17252B] dark:text-[#F3FBFC]'}`}>

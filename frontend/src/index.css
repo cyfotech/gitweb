@@ -1488,3 +1488,74 @@ main .progress-label-row {
     filter: none !important;
   }
 }
+/* ============================================================
+   GLOBAL ARROW & BUTTON FIX — Prevent SVG icon clipping
+   ============================================================ */
+
+/* Ensure SVG icons inside buttons never get clipped or shrunk */
+button svg,
+a svg,
+[role="button"] svg {
+  flex-shrink: 0;
+  display: inline-block;
+  vertical-align: middle;
+  overflow: visible;
+}
+
+/* Core button layout fix — ensure full visibility of content */
+.ptc-consultation-button,
+.ptc-mobile-consultation,
+.hero-button,
+.btn-acc,
+.btn-ghost-d,
+.inline-flex,
+button.inline-flex,
+a.inline-flex {
+  overflow: visible !important;
+  white-space: nowrap;
+}
+
+/* Prevent parent overflow: hidden from clipping translateY hover */
+main section,
+header,
+footer {
+  overflow: visible;
+}
+
+/* Fix specific overflow: hidden on sections that clips buttons */
+.cinematic-hero {
+  overflow: hidden; /* keep bg clip, but child buttons need visible */
+}
+
+.cinematic-hero .hero-buttons,
+.cinematic-hero .hero-button {
+  overflow: visible !important;
+}
+
+
+/* ============================================================
+   TRANSLATEY HOVER OVERFLOW FIX
+   Prevents buttons from being clipped when parent has overflow:hidden
+   during hover translateY transform
+   ============================================================ */
+
+main button,
+main a[class*="button"],
+main a[class*="Button"],
+main .inline-flex,
+header .ptc-consultation-button,
+header .ptc-mobile-consultation {
+  position: relative;
+  z-index: 1;
+}
+
+/* Ensure arrow SVGs inside any button are always visible */
+main button svg,
+main a svg,
+header button svg,
+nav button svg {
+  flex-shrink: 0 !important;
+  overflow: visible !important;
+  display: inline-block !important;
+}
+

@@ -168,28 +168,6 @@ export function Home() {
         </section>
       </EditableSectionContainer>
 
-      {/* FINANCIAL INTELLIGENCE MEDIA SHOWCASE */}
-      <EditableSectionContainer sectionKey="media_showcase" sectionTitle="Financial Intelligence Media" isEnabled={isSectionEnabled('media_showcase')} sectionData={getSection('media_showcase')}>
-        <section
-          className="home-premium__chapter home-premium__media scroll-reveal-depth"
-          data-home-section="media"
-          aria-label="Financial intelligence media showcase"
-        >
-          <div
-            className="home-premium__ambient home-premium__ambient--media"
-            aria-hidden="true"
-          />
-          <div className="home-premium__content mx-auto w-full max-w-7xl px-4 py-16 sm:px-6 lg:px-8">
-            <VideoShowcase
-              title={getSection('media_showcase')?.title || 'Financial Intelligence in Real-Time Motion'}
-              subtitle={getSection('media_showcase')?.description || 'Explore the operational rhythm of our dual-review diagnostic preparation pipeline and multi-tier tax compliance engine.'}
-              onExploreWork={() => navigate('/services')}
-              cmsContent={getSection('media_showcase')}
-            />
-          </div>
-        </section>
-      </EditableSectionContainer>
-
       {/* CHAPTER 3 — FINANCIAL CLARITY */}
       <EditableSectionContainer sectionKey="financial_clarity" sectionTitle="Financial Clarity & Calculators" isEnabled={isSectionEnabled('financial_clarity')} sectionData={getSection('financial_clarity')}>
         <EditableSectionContainer sectionKey="data_flow" sectionTitle="Secure Data Flow" isEnabled={isSectionEnabled('data_flow')} sectionData={getSection('data_flow')}>

@@ -10,6 +10,10 @@
   background: transparent;
 }
 
+.dark .ptc-navbar {
+  background: transparent;
+}
+
 .ptc-navbar *,
 .ptc-navbar *::before,
 .ptc-navbar *::after {
@@ -22,39 +26,30 @@
   max-width: 1280px;
   min-height: 64px;
   margin: 0 auto;
-  padding: 10px 18px;
+  padding: 10px 22px;
 
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 22px;
+  gap: 24px;
 
   border: 1px solid rgba(220, 229, 226, 0.9);
   border-radius: 999px;
 
-  background: rgba(255, 255, 255, 0.93);
-  box-shadow: 0 8px 30px rgba(20, 36, 43, 0.08);
-
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-
-  transition:
-    background 250ms ease,
-    box-shadow 250ms ease,
-    border-color 250ms ease,
-    border-radius 250ms ease;
+  background: #ffffff;
+  box-shadow: 0 4px 20px rgba(16, 32, 40, 0.06);
 
   pointer-events: auto;
+  transition:
+    background 220ms ease,
+    border-color 220ms ease,
+    box-shadow 220ms ease;
 }
 
 .dark .ptc-navbar-container {
-  background: rgba(7, 28, 37, 0.95);
-  border-color: rgba(121, 241, 232, 0.2);
-  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2);
-}
-
-.ptc-navbar-scrolled .ptc-navbar-container {
-  box-shadow: 0 12px 36px rgba(20, 36, 43, 0.12);
+  background: #071920;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.35);
 }
 
 .ptc-navbar-brand {
@@ -67,7 +62,7 @@
 .ptc-desktop-nav {
   flex: 1;
   justify-content: center;
-  gap: 3px;
+  gap: 6px;
   min-width: 0;
 }
 
@@ -79,51 +74,45 @@
   position: relative;
   display: inline-flex;
   align-items: center;
-  justify-content: center;
-  gap: 5px;
+  gap: 4px;
 
-  padding: 11px 10px;
+  padding: 8px 14px;
   border-radius: 999px;
 
   color: #476067;
-  font-size: 12px;
+  font-size: 13.5px;
   font-weight: 500;
   text-decoration: none;
   white-space: nowrap;
 
   transition:
-    color 180ms ease,
-    background 180ms ease;
+    color 160ms ease,
+    background 160ms ease;
 }
 
 .dark .ptc-nav-link {
-  color: #a8c0c6;
+  color: #9cb3ba;
 }
 
-.ptc-nav-link:hover,
+.ptc-nav-link:hover {
+  color: #12242b;
+  background: rgba(23, 56, 63, 0.05);
+}
+
+.dark .ptc-nav-link:hover {
+  color: #f4fbfc;
+  background: rgba(255, 255, 255, 0.06);
+}
+
 .ptc-nav-link-active {
   color: #12242b;
-  background: rgba(23, 56, 63, 0.045);
+  font-weight: 600;
+  background: rgba(23, 56, 63, 0.08);
 }
 
-.dark .ptc-nav-link:hover,
 .dark .ptc-nav-link-active {
-  color: #f4fbfc;
-  background: rgba(255, 255, 255, 0.05);
-}
-
-.ptc-nav-active-indicator {
-  position: absolute;
-  bottom: 4px;
-  left: 25%;
-  width: 50%;
-  height: 2px;
-  border-radius: 99px;
-  background: #315f69;
-}
-
-.dark .ptc-nav-active-indicator {
-  background: #49e3d6;
+  color: #ffffff;
+  background: rgba(255, 255, 255, 0.08);
 }
 
 /* Desktop actions */
@@ -131,7 +120,7 @@
 .ptc-desktop-actions {
   flex-shrink: 0;
   align-items: center;
-  gap: 10px;
+  gap: 12px;
 }
 
 .ptc-theme-toggle {
@@ -143,68 +132,83 @@
   height: 38px;
   flex-shrink: 0;
 
-  border: 1px solid #dce5e2;
+  border: 1px solid rgba(23, 56, 63, 0.14);
   border-radius: 50%;
 
-  background: rgba(0, 0, 0, 0.025);
+  background: transparent;
   color: #17383f;
 
   cursor: pointer;
 
   transition:
     background 180ms ease,
-    transform 180ms ease;
+    border-color 180ms ease,
+    color 180ms ease;
 }
 
 .dark .ptc-theme-toggle {
-  color: #7df5e8;
-  border-color: rgba(121, 241, 232, 0.2);
-  background: rgba(255, 255, 255, 0.05);
+  color: #e6f0f2;
+  border-color: rgba(255, 255, 255, 0.16);
+  background: transparent;
 }
 
 .ptc-theme-toggle:hover {
-  background: rgba(22, 167, 101, 0.12);
-  transform: rotate(-8deg);
+  background: rgba(23, 56, 63, 0.06);
+  border-color: rgba(23, 56, 63, 0.28);
+}
+
+.dark .ptc-theme-toggle:hover {
+  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(255, 255, 255, 0.3);
 }
 
 .ptc-consultation-button {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: 9px;
+  gap: 8px;
 
-  padding: 12px 17px;
-  border: 0;
+  padding: 10px 20px;
+  border: 1px solid rgba(23, 56, 63, 0.22);
   border-radius: 999px;
 
-  background: #17383f;
-  color: white;
+  background: transparent;
+  color: #17383f;
 
-  font-size: 12px;
+  font-size: 13px;
   font-weight: 600;
   white-space: nowrap;
+  overflow: visible;
 
   cursor: pointer;
 
   transition:
     background 180ms ease,
-    transform 180ms ease,
-    box-shadow 180ms ease;
+    border-color 180ms ease,
+    color 180ms ease;
+}
+
+/* Ensure arrow icon is never clipped */
+.ptc-consultation-button svg {
+  flex-shrink: 0;
+  display: inline-block;
+  overflow: visible;
+  margin-left: 2px;
 }
 
 .ptc-consultation-button:hover {
-  background: #0f282e;
-  transform: translateY(-1px);
-  box-shadow: 0 7px 18px rgba(23, 56, 63, 0.18);
+  background: rgba(23, 56, 63, 0.06);
+  border-color: rgba(23, 56, 63, 0.4);
 }
 
 .dark .ptc-consultation-button {
-  background: #49e3d6;
-  color: #03181e;
+  border-color: rgba(255, 255, 255, 0.22);
+  color: #f4fbfc;
 }
 
 .dark .ptc-consultation-button:hover {
-  background: #7df5e8;
+  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(255, 255, 255, 0.4);
 }
 
 /* Mobile button: hidden on desktop */
@@ -228,12 +232,13 @@
     left: 0;
     right: 0;
     width: 100%;
-    padding: 10px 16px;
+    padding: 12px 16px;
     z-index: 10002;
     pointer-events: none;
+    background: transparent;
   }
 
-  /* Full-width responsive header bar */
+  /* Centered responsive oval header bar */
   .ptc-navbar-container {
     width: 100% !important;
     min-width: 0 !important;
@@ -243,28 +248,26 @@
     min-height: 58px;
 
     margin: 0 auto;
-    padding: 8px 16px;
+    padding: 8px 18px;
 
     display: flex !important;
     align-items: center !important;
     justify-content: space-between !important;
     gap: 12px;
 
-    border: 1px solid rgba(220, 229, 226, 0.95);
+    border: 1px solid rgba(220, 229, 226, 0.9);
     border-radius: 999px;
 
-    /* Solid high-contrast background in light mode */
     background: #ffffff;
-    box-shadow: 0 4px 22px rgba(15, 32, 39, 0.1);
+    box-shadow: 0 4px 18px rgba(16, 32, 40, 0.06);
 
     pointer-events: auto;
   }
 
   .dark .ptc-navbar-container {
-    /* Solid high-contrast background in dark mode */
-    background: #06181e;
-    border-color: rgba(121, 241, 232, 0.25);
-    box-shadow: 0 6px 24px rgba(0, 0, 0, 0.45);
+    background: #071920;
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    box-shadow: 0 6px 24px rgba(0, 0, 0, 0.4);
   }
 
   /* STE Brand Logo pinned to the far left */
@@ -299,18 +302,18 @@
     margin-left: auto;
     flex-shrink: 0;
 
-    width: 44px;
-    min-width: 44px;
-    height: 44px;
-    min-height: 44px;
+    width: 40px;
+    min-width: 40px;
+    height: 40px;
+    min-height: 40px;
 
     padding: 0;
     margin: 0 0 0 auto;
 
     border: 1px solid rgba(23, 56, 63, 0.14);
-    border-radius: 12px;
+    border-radius: 50%;
 
-    background: #f1f5f9;
+    background: transparent;
     color: #0f172a;
 
     cursor: pointer;
@@ -324,17 +327,17 @@
   }
 
   .dark .ptc-mobile-toggle {
-    background: #0e2931;
-    border-color: rgba(121, 241, 232, 0.28);
+    background: transparent;
+    border-color: rgba(255, 255, 255, 0.16);
     color: #f8fafc;
   }
 
   .ptc-mobile-toggle:hover {
-    background: #e2e8f0;
+    background: rgba(23, 56, 63, 0.08);
   }
 
   .dark .ptc-mobile-toggle:hover {
-    background: #143742;
+    background: rgba(255, 255, 255, 0.1);
   }
 
   .ptc-mobile-toggle:active {
@@ -349,8 +352,8 @@
   .ptc-menu-icon,
   .ptc-close-icon {
     display: block;
-    width: 24px;
-    height: 24px;
+    width: 22px;
+    height: 22px;
   }
 
   /* Mobile navigation panel: Solid opaque background, elevated z-index */
@@ -368,14 +371,11 @@
 
     padding: 18px;
 
-    border: 1px solid #dce5e2;
-    border-radius: 22px;
+    border: 1px solid rgba(220, 229, 226, 0.9);
+    border-radius: 20px;
 
-    /* 100% Solid opaque background in light theme */
     background: #ffffff;
-    box-shadow:
-      0 20px 50px rgba(15, 32, 39, 0.26),
-      0 0 0 1px rgba(0, 0, 0, 0.05);
+    box-shadow: 0 12px 40px rgba(15, 32, 39, 0.14);
 
     opacity: 0;
     visibility: hidden;
@@ -391,12 +391,9 @@
   }
 
   .dark .ptc-mobile-panel {
-    /* 100% Solid opaque background in dark theme */
-    background: #06181e;
-    border-color: rgba(121, 241, 232, 0.25);
-    box-shadow:
-      0 25px 60px rgba(0, 0, 0, 0.75),
-      0 0 0 1px rgba(73, 227, 214, 0.12);
+    background: #071920;
+    border-color: rgba(255, 255, 255, 0.12);
+    box-shadow: 0 16px 48px rgba(0, 0, 0, 0.55);
   }
 
   .ptc-mobile-panel-open {
@@ -420,11 +417,10 @@
     min-height: 48px;
     padding: 11px 14px;
 
-    border: 1px solid #e2e8f0;
     border-radius: 12px;
 
     color: #1e293b;
-    background: #f8fafc;
+    background: transparent;
     font-size: 13.5px;
     font-weight: 600;
     text-decoration: none;
@@ -437,22 +433,27 @@
 
   .dark .ptc-mobile-link {
     color: #f1f5f9;
-    background: #0b222a;
-    border-color: rgba(121, 241, 232, 0.15);
+    background: transparent;
   }
 
-  .ptc-mobile-link:hover,
+  .ptc-mobile-link:hover {
+    color: #0e3a42;
+    background: rgba(23, 56, 63, 0.06);
+  }
+
   .ptc-mobile-link-active {
     color: #0e3a42;
-    background: #eef4f5;
-    border-color: rgba(23, 56, 63, 0.25);
+    background: rgba(23, 56, 63, 0.08);
   }
 
-  .dark .ptc-mobile-link:hover,
+  .dark .ptc-mobile-link:hover {
+    color: #49e3d6;
+    background: rgba(255, 255, 255, 0.06);
+  }
+
   .dark .ptc-mobile-link-active {
     color: #49e3d6;
-    background: #112f38;
-    border-color: rgba(73, 227, 214, 0.35);
+    background: rgba(73, 227, 214, 0.1);
   }
 
   .ptc-mobile-number {
@@ -498,7 +499,7 @@
   }
 
   .dark .ptc-mobile-footer {
-    border-top-color: rgba(73, 227, 214, 0.18);
+    border-top-color: rgba(255, 255, 255, 0.12);
   }
 
   .ptc-mobile-consultation {
@@ -509,13 +510,13 @@
 
     width: 100%;
     min-height: 48px;
-    padding: 13px 16px;
+    padding: 13px 18px;
 
-    border: 0;
-    border-radius: 14px;
+    border: 1px solid rgba(23, 56, 63, 0.22);
+    border-radius: 999px;
 
-    background: linear-gradient(110deg, #16A765, #35C98A);
-    color: #ffffff;
+    background: transparent;
+    color: #17383f;
 
     font-size: 13px;
     font-weight: 700;
@@ -523,13 +524,23 @@
     cursor: pointer;
 
     transition:
-      transform 180ms ease,
-      box-shadow 180ms ease;
+      background 180ms ease,
+      border-color 180ms ease,
+      transform 180ms ease;
+  }
+
+  .dark .ptc-mobile-consultation {
+    border-color: rgba(255, 255, 255, 0.22);
+    color: #f4fbfc;
+    background: transparent;
   }
 
   .ptc-mobile-consultation:hover {
-    transform: translateY(-1px);
-    box-shadow: 0 6px 18px rgba(22, 167, 101, 0.25);
+    background: rgba(23, 56, 63, 0.06);
+  }
+
+  .dark .ptc-mobile-consultation:hover {
+    background: rgba(255, 255, 255, 0.08);
   }
 
   .ptc-mobile-footer p {
@@ -584,7 +595,8 @@
   .ptc-navbar-container {
     height: 52px;
     min-height: 52px;
-    padding: 6px 12px;
+    padding: 6px 14px;
+    border-radius: 999px;
   }
 
   .ptc-navbar-brand img {
@@ -594,10 +606,10 @@
   }
 
   .ptc-mobile-toggle {
-    width: 38px;
-    min-width: 38px;
-    height: 38px;
-    min-height: 38px;
+    width: 36px;
+    min-width: 36px;
+    height: 36px;
+    min-height: 36px;
   }
 
   .ptc-mobile-panel {
@@ -818,17 +830,17 @@
 }
 
 .ptc-nav-dropdown-trigger:hover {
-  background: rgba(34, 175, 104, 0.12);
-  color: #1a8650;
+  background: rgba(23, 56, 63, 0.06);
+  color: #12242b;
 }
 
 .dark .ptc-nav-dropdown-trigger {
-  color: #a9c1c8;
+  color: #9cb3ba;
 }
 
 .dark .ptc-nav-dropdown-trigger:hover {
-  background: rgba(34, 175, 104, 0.18);
-  color: #35e092;
+  background: rgba(255, 255, 255, 0.08);
+  color: #f4fbfc;
 }
 
 .ptc-nav-chevron {
@@ -843,7 +855,7 @@
 
 .ptc-services-dropdown {
   position: absolute;
-  top: calc(100% + 12px);
+  top: calc(100% + 14px);
   left: 50%;
   transform: translateX(-50%) translateY(-8px);
 
@@ -884,8 +896,8 @@
 }
 
 .dark .ptc-services-dropdown-inner {
-  background: #0a1a20;
-  border-color: rgba(121, 241, 232, 0.18);
+  background: #071920;
+  border: 1px solid rgba(255, 255, 255, 0.12);
   box-shadow: 0 28px 64px rgba(0, 0, 0, 0.5);
 }
 
@@ -933,7 +945,7 @@
 }
 
 .dark .ptc-services-dropdown-icon {
-  background: rgba(73, 227, 214, 0.1);
+  background: rgba(255, 255, 255, 0.06);
   color: #49e3d6;
 }
 
@@ -946,19 +958,19 @@
 
 .dark .ptc-services-dropdown-item:hover,
 .dark .ptc-services-dropdown-item-active {
-  background: rgba(73, 227, 214, 0.08);
+  background: rgba(255, 255, 255, 0.06);
   color: #f4fbfc;
 }
 
 .ptc-services-dropdown-item:hover .ptc-services-dropdown-icon,
 .ptc-services-dropdown-item-active .ptc-services-dropdown-icon {
-  background: rgba(22, 167, 101, 0.14);
+  background: rgba(23, 56, 63, 0.12);
   color: #16a765;
 }
 
 .dark .ptc-services-dropdown-item:hover .ptc-services-dropdown-icon,
 .dark .ptc-services-dropdown-item-active .ptc-services-dropdown-icon {
-  background: rgba(73, 227, 214, 0.2);
+  background: rgba(255, 255, 255, 0.1);
   color: #7df5e8;
 }
 

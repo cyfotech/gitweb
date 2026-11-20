@@ -27,12 +27,12 @@ export function CinematicClosingChapter({
   const displayDescription = cmsContent?.description || 'Whether scaling your accounting firm’s seasonal capacity or seeking comprehensive entity tax planning, initiate a confidential discovery briefing below.';
   return (
     <section id="contact" className="relative py-28 px-4 sm:px-6 lg:px-8 bg-[#FAFCFB] dark:bg-[#030F14] overflow-hidden transition-colors duration-300">
-      
+
       {/* Background radial ambient illumination */}
       <div className="absolute bottom-0 right-1/4 w-[600px] h-[500px] bg-gradient-to-t from-[#2CCFC5]/15 to-transparent rounded-full blur-[140px] pointer-events-none" />
 
       <div className="max-w-7xl mx-auto relative z-10">
-        
+
         {/* Chapter Header & Dramatic Framing */}
         <div className="text-center max-w-3xl mx-auto mb-16">
           <EditableElement

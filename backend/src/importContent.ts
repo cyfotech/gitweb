@@ -67,7 +67,7 @@ export async function importFrontendContent() {
     // Read BLOG_POSTS from frontend/src/data/blog.ts
     if (fs.existsSync(BLOG_DATA_PATH)) {
       const blogCode = fs.readFileSync(BLOG_DATA_PATH, 'utf8');
-      
+
       // Real blog post records extracted verbatim from frontend/src/data/blog.ts
       const blogPosts = [
         {
@@ -254,7 +254,7 @@ Our proven five-pillar standardization framework includes:
     // 2. IMPORT ALL 20 SERVICES FROM SERVICES_CATALOG
     // ----------------------------------------------------
     console.log('\n[2/5] Extracting & Importing All 20 Services...');
-    
+
     // Service categories mapping
     const srvCatMap = new Map<string, string>();
     const existingCats = await prisma.servicecategory.findMany();
@@ -660,9 +660,9 @@ Our proven five-pillar standardization framework includes:
         subheading: 'Direct access to senior advisory leadership',
         description: 'Engage with our managing directors to review your tax objectives or scale your practice capacity ahead of critical filing deadlines.',
         content: JSON.stringify({
-          phone: '(800) 555-PTAX (7829)',
-          email: 'advisory@preferredtax.com',
-          address: '100 Wall Street, 24th Floor, New York, NY 10005',
+          phone: '+1 214 837 7128',
+          email: 'brian@smarttaxexpertss.com',
+          address: '5900 BALCONES DR STE 100 AUSTIN TX 78731-4298 USA',
         }),
       },
     };

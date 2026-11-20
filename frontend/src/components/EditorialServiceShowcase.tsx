@@ -300,16 +300,6 @@ export function EditorialServiceShowcase({
                       loading="lazy"
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-black/25 to-transparent" />
-
-                    <div className="absolute top-3 left-3 right-3 flex items-center justify-between gap-2">
-                      <span className="px-2.5 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider bg-white/90 dark:bg-[#051917]/90 text-[#17262B] dark:text-[#35E092] backdrop-blur-md">
-                        {categoryLabel}
-                      </span>
-                      <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-[10px] font-semibold bg-black/60 text-emerald-300 backdrop-blur-md border border-white/10">
-                        <Clock className="w-3 h-3 text-[#35E092]" />
-                        <span>{service.turnaroundTime}</span>
-                      </span>
-                    </div>
                   </div>
 
                   {/* Body */}

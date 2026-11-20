@@ -1,0 +1,468 @@
+/* ==========================================================================
+   ENQUIRY ROUTING & DATA FLOW DIAGRAM — COMPLETE RESPONSIVE STYLING
+   Supports: 1920px, 1440px, 1024px, 768px, 640px, 375px, 320px
+   ========================================================================== */
+
+.cpa-enquiry-routing {
+  --cpa-routing-bg: var(--cpa-bg, var(--bg-main, #f6f7f3));
+  --cpa-routing-text: var(--cpa-text, var(--text-primary, #142b32));
+  --cpa-routing-muted: var(--cpa-text-muted, var(--text-muted, #7b8d90));
+  --cpa-routing-border: var(--cpa-border, var(--border-color, rgba(35, 75, 79, .14)));
+  --cpa-routing-surface: var(--cpa-surface-solid, var(--card-elevated, #ffffff));
+  --cpa-routing-teal: var(--cpa-teal, var(--primary-accent, #147d7a));
+  --cpa-routing-blue: var(--cpa-blue, var(--accent-blue, #6389e8));
+  --cpa-routing-gold: var(--cpa-gold-bright, var(--accent-gold-strong, #efc66b));
+  
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+  overflow: hidden;
+}
+
+html.dark .cpa-enquiry-routing {
+  --cpa-routing-bg: #071c25;
+  --cpa-routing-text: #f4fbfc;
+  --cpa-routing-muted: #a8c0c6;
+  --cpa-routing-border: rgba(121, 241, 232, 0.2);
+  --cpa-routing-surface: #0a242f;
+  --cpa-routing-teal: #49e3d6;
+  --cpa-routing-blue: #6389e8;
+  --cpa-routing-gold: #efc66b;
+}
+
+/* ==========================================================================
+   DESKTOP / WIDE (>= 768px)
+   ========================================================================== */
+
+.cpa-enquiry-routing__canvas {
+  width: 100%;
+  max-width: 580px;
+  height: 480px;
+  margin: 20px auto 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+}
+
+.cpa-enquiry-routing__map {
+  position: relative;
+  width: 560px;
+  height: 480px;
+  flex-shrink: 0;
+}
+
+.cpa-enquiry-routing__paths {
+  position: absolute;
+  inset: 0;
+  width: 560px;
+  height: 480px;
+  pointer-events: none;
+}
+
+.cpa-enquiry-routing__base-path {
+  stroke: var(--cpa-routing-text);
+  stroke-opacity: .18;
+  stroke-width: 2;
+}
+
+.cpa-enquiry-routing__flow-path {
+  stroke: var(--cpa-routing-blue);
+  stroke-width: 2.5;
+  stroke-linecap: round;
+  stroke-dasharray: 6 10;
+  animation: cpa-enquiry-flow 1.6s linear infinite;
+}
+
+.cpa-enquiry-routing__source {
+  position: absolute;
+  top: 180px;
+  left: 20px;
+  width: 120px;
+  height: 120px;
+  z-index: 4;
+}
+
+.cpa-enquiry-routing__source-core {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  border-radius: 50%;
+  color: var(--cpa-routing-bg);
+  background: var(--cpa-routing-text);
+  box-shadow: 0 20px 40px -18px rgba(14, 26, 43, .6);
+}
+
+.cpa-enquiry-routing__source-core svg {
+  width: 26px;
+  height: 26px;
+  color: var(--cpa-routing-gold);
+}
+
+.cpa-enquiry-routing__source-core span,
+.cpa-enquiry-routing__caption {
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  letter-spacing: .1em;
+}
+
+.cpa-enquiry-routing__source-core span {
+  font-size: 10px;
+  font-weight: 700;
+}
+
+.cpa-enquiry-routing__ring {
+  position: absolute;
+  inset: 0;
+  border: 2px solid var(--cpa-routing-blue);
+  border-radius: 50%;
+  animation: cpa-enquiry-ring 2.4s cubic-bezier(.2, .7, .2, 1) infinite;
+}
+
+.cpa-enquiry-routing__ring--delayed {
+  animation-delay: 1.2s;
+}
+
+.cpa-enquiry-routing__token {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 3;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: var(--cpa-routing-gold);
+  box-shadow: 0 0 0 4px rgba(200, 241, 53, .25), 0 0 18px rgba(200, 241, 53, .9);
+  offset-rotate: 0deg;
+  offset-anchor: center;
+  animation: cpa-enquiry-travel 3.2s cubic-bezier(.5, 0, .3, 1) infinite;
+}
+
+.cpa-enquiry-routing__token--tax {
+  offset-path: path('M 120 240 C 230 240, 220 90, 330 90');
+}
+
+.cpa-enquiry-routing__token--books {
+  offset-path: path('M 120 240 L 330 240');
+  animation-delay: 1.05s;
+}
+
+.cpa-enquiry-routing__token--payroll {
+  offset-path: path('M 120 240 C 230 240, 220 390, 330 390');
+  animation-delay: 2.1s;
+}
+
+.cpa-enquiry-routing__desk {
+  position: absolute;
+  left: 330px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 228px;
+  min-height: 76px;
+  padding: 14px 16px;
+  border: 1.5px solid var(--cpa-routing-border);
+  border-radius: 16px;
+  color: var(--cpa-routing-text);
+  background: var(--cpa-routing-surface);
+  box-shadow: 0 10px 30px -22px rgba(14, 26, 43, .45);
+  text-align: left;
+  cursor: pointer;
+  transition: transform .3s cubic-bezier(.2, .7, .2, 1), border-color .3s, box-shadow .3s;
+  box-sizing: border-box;
+}
+
+.cpa-enquiry-routing__desk:hover,
+.cpa-enquiry-routing__desk.is-selected {
+  transform: translateX(6px);
+  border-color: var(--cpa-routing-teal);
+}
+
+.cpa-enquiry-routing__desk.is-selected {
+  box-shadow: 0 12px 30px -18px var(--cpa-routing-teal);
+  border-color: var(--cpa-routing-teal);
+}
+
+.cpa-enquiry-routing__desk:focus-visible {
+  outline: 3px solid var(--cpa-routing-gold);
+  outline-offset: 3px;
+}
+
+.cpa-enquiry-routing__desk-code {
+  display: grid;
+  flex: 0 0 40px;
+  width: 40px;
+  height: 40px;
+  place-items: center;
+  border-radius: 12px;
+  color: var(--cpa-routing-gold);
+  background: var(--cpa-routing-text);
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 11px;
+  font-weight: 700;
+}
+
+.cpa-enquiry-routing__desk-copy {
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+}
+
+.cpa-enquiry-routing__desk-copy strong {
+  font-size: 13px;
+  font-weight: 700;
+  line-height: 1.25;
+  color: var(--cpa-routing-text);
+}
+
+.cpa-enquiry-routing__desk-copy small {
+  margin-top: 3px;
+  color: var(--cpa-routing-muted);
+  font-size: 10px;
+  line-height: 1.25;
+}
+
+.cpa-enquiry-routing__desk-arrow {
+  flex: 0 0 auto;
+  width: 16px;
+  height: 16px;
+  margin-left: auto;
+  color: var(--cpa-routing-blue);
+  transition: transform .25s ease;
+}
+
+.cpa-enquiry-routing__desk:hover .cpa-enquiry-routing__desk-arrow,
+.cpa-enquiry-routing__desk.is-selected .cpa-enquiry-routing__desk-arrow {
+  transform: translateX(3px);
+  color: var(--cpa-routing-teal);
+}
+
+.cpa-enquiry-routing__caption {
+  position: absolute;
+  bottom: 8px;
+  left: 20px;
+  margin: 0;
+  color: var(--cpa-routing-muted);
+  font-size: 10px;
+  letter-spacing: .06em;
+  font-weight: 600;
+}
+
+.cpa-enquiry-routing__selection {
+  margin: 18px 0 0;
+  color: var(--cpa-routing-muted);
+  font-size: 12px;
+  text-align: center;
+}
+
+.cpa-enquiry-routing__selection strong {
+  color: var(--cpa-routing-teal);
+}
+
+/* Animations */
+@keyframes cpa-enquiry-flow {
+  to {
+    stroke-dashoffset: -16;
+  }
+}
+
+@keyframes cpa-enquiry-travel {
+  0% {
+    offset-distance: 0%;
+    opacity: 0;
+  }
+  8% {
+    opacity: 1;
+  }
+  92% {
+    opacity: 1;
+  }
+  100% {
+    offset-distance: 100%;
+    opacity: 0;
+  }
+}
+
+@keyframes cpa-enquiry-ring {
+  0% {
+    transform: scale(0.9);
+    opacity: 0.8;
+  }
+  100% {
+    transform: scale(1.4);
+    opacity: 0;
+  }
+}
+
+/* ==========================================================================
+   INTERMEDIATE TABLET / COMPACT DESKTOP (768px – 1024px)
+   Scales the diagram proportionally while keeping everything inside
+   ========================================================================== */
+@media (min-width: 768px) and (max-width: 1023px) {
+  .cpa-enquiry-routing__canvas {
+    width: 520px;
+    height: 440px;
+  }
+
+  .cpa-enquiry-routing__map {
+    transform-origin: center center;
+    transform: scale(0.92);
+  }
+}
+
+/* ==========================================================================
+   MOBILE & SMALL SCREENS (< 768px)
+   Rearranges cards vertically, central "Your Enquiry" node on top,
+   animated vertical connector lines, perfectly responsive down to 320px
+   ========================================================================== */
+@media (max-width: 767px) {
+  .cpa-enquiry-routing {
+    padding: 20px 14px !important;
+  }
+
+  .cpa-enquiry-routing__canvas {
+    width: 100% !important;
+    max-width: 420px !important;
+    height: auto !important;
+    margin: 16px auto 0 !important;
+    overflow: visible !important;
+    display: block !important;
+  }
+
+  .cpa-enquiry-routing__map {
+    position: static !important;
+    width: 100% !important;
+    height: auto !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    gap: 16px !important;
+    transform: none !important;
+  }
+
+  /* Central "Your Enquiry" source circle centered at top */
+  .cpa-enquiry-routing__source {
+    position: relative !important;
+    top: auto !important;
+    left: auto !important;
+    width: 100px !important;
+    height: 100px !important;
+    margin: 0 auto 8px !important;
+    flex-shrink: 0 !important;
+  }
+
+  .cpa-enquiry-routing__source-core {
+    width: 100px !important;
+    height: 100px !important;
+    box-shadow: 0 10px 28px -10px rgba(14, 26, 43, 0.5) !important;
+  }
+
+  .cpa-enquiry-routing__source-core svg {
+    width: 22px !important;
+    height: 22px !important;
+  }
+
+  .cpa-enquiry-routing__source-core span {
+    font-size: 9px !important;
+    letter-spacing: 0.08em !important;
+  }
+
+  /* Connecting vertical routing indicator between source and cards */
+  .cpa-enquiry-routing__paths {
+    display: none !important;
+  }
+
+  .cpa-enquiry-routing__token {
+    display: none !important;
+  }
+
+  /* Three service cards stacked vertically and full width */
+  .cpa-enquiry-routing__desk {
+    position: relative !important;
+    top: auto !important;
+    left: auto !important;
+    width: 100% !important;
+    max-width: 380px !important;
+    min-height: 68px !important;
+    padding: 12px 14px !important;
+    margin: 0 !important;
+    box-sizing: border-box !important;
+    border-radius: 14px !important;
+    transform: none !important;
+  }
+
+  .cpa-enquiry-routing__desk:hover,
+  .cpa-enquiry-routing__desk.is-selected {
+    transform: translateY(-2px) !important;
+  }
+
+  .cpa-enquiry-routing__desk-code {
+    width: 36px !important;
+    height: 36px !important;
+    flex: 0 0 36px !important;
+    border-radius: 10px !important;
+    font-size: 10px !important;
+  }
+
+  .cpa-enquiry-routing__desk-copy strong {
+    font-size: 12px !important;
+  }
+
+  .cpa-enquiry-routing__desk-copy small {
+    font-size: 9.5px !important;
+  }
+
+  .cpa-enquiry-routing__caption {
+    position: static !important;
+    margin-top: 10px !important;
+    text-align: center !important;
+    font-size: 9px !important;
+  }
+
+  .cpa-enquiry-routing__selection {
+    font-size: 11px !important;
+    margin-top: 12px !important;
+  }
+}
+
+/* ==========================================================================
+   EXTRA SMALL MOBILE (320px – 375px)
+   ========================================================================== */
+@media (max-width: 375px) {
+  .cpa-enquiry-routing {
+    padding: 16px 10px !important;
+  }
+
+  .cpa-enquiry-routing__source {
+    width: 90px !important;
+    height: 90px !important;
+  }
+
+  .cpa-enquiry-routing__source-core {
+    width: 90px !important;
+    height: 90px !important;
+  }
+
+  .cpa-enquiry-routing__desk {
+    padding: 10px 12px !important;
+    gap: 10px !important;
+  }
+
+  .cpa-enquiry-routing__desk-code {
+    width: 32px !important;
+    height: 32px !important;
+    flex: 0 0 32px !important;
+    font-size: 9.5px !important;
+  }
+
+  .cpa-enquiry-routing__desk-copy strong {
+    font-size: 11.5px !important;
+  }
+
+  .cpa-enquiry-routing__desk-copy small {
+    font-size: 9px !important;
+  }
+}

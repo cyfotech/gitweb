@@ -61,16 +61,74 @@ var LLC = [
 ];
 var MONTHS = [["Jan", 0.45, ""], ["Feb", 0.72, ""], ["Mar", 1, "Mar 15"], ["Apr", 0.98, "Apr 15"], ["May", 0.32, ""], ["Jun", 0.26, ""], ["Jul", 0.28, ""], ["Aug", 0.4, ""], ["Sep", 0.86, "Sep 15"], ["Oct", 0.8, "Oct 15"], ["Nov", 0.24, ""], ["Dec", 0.22, ""]];
 var DOCS = [
-  { form: "1120-S", name: "S Corporation Return", title: "U.S. Income Tax Return for an S Corporation", status: "In review", items: ["Shareholder & basis records received", "Books reconciled to the return", "Form 1120-S prepared & balanced", "Reviewer sign-off complete"] },
-  { form: "1065", name: "Partnership Return", title: "U.S. Return of Partnership Income", status: "Preparing", items: ["Trial balance & records received", "Supporting schedules & workpapers", "Schedule K-1 information", "Reviewer check complete"] },
-  { form: "1040", name: "Individual Return", title: "U.S. Individual Income Tax Return", status: "Ready", items: ["W-2 / 1099 income organised", "Deductions & credits reviewed", "Form 1040 prepared", "Final review & handover"] },
-  { form: "SUPPORT", name: "Supporting Documents", title: "Organised supporting documentation", status: "Preparing", items: ["Income statements collected", "Expense records organised", "Supporting schedules matched", "Ready for preparation"] }
-];
-var DOCS = [
-  { form: "1120-S", name: "S Corporation Return", title: "U.S. Income Tax Return for an S Corporation", status: "In review", items: ["Shareholder & basis records received", "Books reconciled to the return", "Form 1120-S prepared & balanced", "Reviewer sign-off complete"] },
-  { form: "1065", name: "Partnership Return", title: "U.S. Return of Partnership Income", status: "Preparing", items: ["Trial balance & records received", "Supporting schedules & workpapers", "Schedule K-1 information", "Reviewer check complete"] },
-  { form: "1040", name: "Individual Return", title: "U.S. Individual Income Tax Return", status: "Ready", items: ["W-2 / 1099 income organised", "Deductions & credits reviewed", "Form 1040 prepared", "Final review & handover"] },
-  { form: "SUPPORT", name: "Supporting Documents", title: "Organised supporting documentation", status: "Preparing", items: ["Income statements collected", "Expense records organised", "Supporting schedules matched", "Ready for preparation"] }
+  {
+    stage: "RECEIVED",
+    stageNum: "01/04",
+    form: "1040",
+    name: "Individual Return",
+    title: "U.S. Individual Income Tax Return",
+    status: "Received",
+    badge: "Received",
+    badgeBg: "#DCF4EC",
+    badgeColor: "#0F5A42",
+    items: [
+      "Client tax documents & W-2s collected",
+      "Prior-year returns reviewed for carryforwards",
+      "Deductions & tax credits verified",
+      "Ready for tax preparation & computation"
+    ]
+  },
+  {
+    stage: "PREPARED",
+    stageNum: "02/04",
+    form: "1065",
+    name: "Partnership Return",
+    title: "U.S. Return of Partnership Income",
+    status: "Prepared",
+    badge: "Prepared",
+    badgeBg: "#FFF1DB",
+    badgeColor: "#8A4B00",
+    items: [
+      "Trial balance & financial records received",
+      "Supporting schedules & workpapers drafted",
+      "Schedule K-1 partner allocations calculated",
+      "Draft partnership return prepared & balanced"
+    ]
+  },
+  {
+    stage: "REVIEWED",
+    stageNum: "03/04",
+    form: "1120-S",
+    name: "S Corporation Return",
+    title: "U.S. Income Tax Return for an S Corporation",
+    status: "Reviewed",
+    badge: "Reviewed",
+    badgeBg: "#E8EDFF",
+    badgeColor: "#2642A0",
+    items: [
+      "Shareholder basis & loan records confirmed",
+      "General ledger reconciled with tax return",
+      "Reviewer sign-off & technical checklist complete",
+      "Audit-trail workpapers cross-referenced"
+    ]
+  },
+  {
+    stage: "HANDOVER",
+    stageNum: "04/04",
+    form: "1120",
+    name: "Corporate Return",
+    title: "U.S. Corporation Income Tax Return",
+    status: "Handover",
+    badge: "Handover",
+    badgeBg: "#F0FAF5",
+    badgeColor: "#17694F",
+    items: [
+      "Final tax return & schedules packaged",
+      "Form 8879 e-file authorization generated",
+      "Client filing & payment instructions prepared",
+      "Handed over to client for review & sign-off"
+    ]
+  }
 ];
 var STEPS = [
   { t: "Understand your requirements", d: "We start by understanding whether you need individual tax preparation, business tax support, bookkeeping, or outsourcing assistance for your CPA firm." },
@@ -123,7 +181,7 @@ var WHY = [
   { t: "Practical, process-led", d: "Organised records, clear communication and a defined workflow — requirements first." }
 ];
 var ACC_LIGHT = { "#17694F": "#86D9B5", "#1F4FB8": "#A9C1FF", "#6B3FA0": "#D2B8F5", "#9A4A12": "#F4B886" };
-var DEF = { mode: "direct", svc: 0, auto: true, llc: 0, peak: 120, cap: 80, step: 0, aud: 0, faq: 0, enq: "tax", sent: false, doc: 0, docSeq: 0, chk: 0 };
+var DEF = { mode: "direct", svc: 0, auto: true, llc: 0, peak: 120, cap: 80, step: 0, aud: 0, faq: 0, enq: "tax", sent: false, doc: 0, docSeq: 0, chk: 0, wfStage: 0 };
 
 function pad(n) { return n < 10 ? "0" + n : "" + n; }
 
@@ -137,13 +195,8 @@ class TaxPreparationPage extends React.Component {
     }, 7000);
     this._d = setInterval(function () {
       var s = self.s();
-      var D = DOCS[(s.doc || 0) % DOCS.length];
-      if ((s.chk || 0) < D.items.length) {
-        self.setState({ chk: (s.chk || 0) + 1 });
-      } else {
-        self.setState({ doc: (s.doc + 1) % DOCS.length, chk: 0, docSeq: (s.docSeq || 0) + 1 });
-      }
-    }, 1600);
+      self.setState({ wfStage: ((s.wfStage || 0) + 1) % DOCS.length });
+    }, 3000);
   }
   componentWillUnmount() { clearInterval(this._t); clearInterval(this._d); }
 
@@ -274,6 +327,33 @@ class TaxPreparationPage extends React.Component {
       })(),
       prevDoc: function () { var c = self.s(); self.setState({ doc: (c.doc - 1 + DOCS.length) % DOCS.length, chk: 0, docSeq: (c.docSeq || 0) + 1 }); },
       nextDoc: function () { var c = self.s(); self.setState({ doc: (c.doc + 1) % DOCS.length, chk: 0, docSeq: (c.docSeq || 0) + 1 }); },
+      wfStage: s.wfStage || 0,
+      wfDoc: DOCS[(s.wfStage || 0) % DOCS.length],
+      wfMiles: (function () {
+        var st = s.wfStage || 0;
+        var out = [];
+        var LABELS = ["RECEIVED", "PREPARED", "REVIEWED", "HANDOVER"];
+        for (var i = 0; i < 4; i++) {
+          var t = i / 3 * 100;
+          out.push({ i: i, p: t, label: LABELS[i], done: i < st, active: i === st });
+        }
+        return out;
+      })(),
+      wfTlWidth: ((s.wfStage || 0) / 3 * 100) + "%",
+      prevWf: function () {
+        clearInterval(self._d);
+        var c = self.s();
+        var ns = (((c.wfStage || 0) - 1) + DOCS.length) % DOCS.length;
+        self.setState({ wfStage: ns });
+        self._d = setInterval(function () { var ss = self.s(); self.setState({ wfStage: ((ss.wfStage || 0) + 1) % DOCS.length }); }, 3000);
+      },
+      nextWf: function () {
+        clearInterval(self._d);
+        var c = self.s();
+        var ns = ((c.wfStage || 0) + 1) % DOCS.length;
+        self.setState({ wfStage: ns });
+        self._d = setInterval(function () { var ss = self.s(); self.setState({ wfStage: ((ss.wfStage || 0) + 1) % DOCS.length }); }, 3000);
+      },
 
       llcOpts: llcOpts,
 
@@ -418,7 +498,7 @@ class TaxPreparationPage extends React.Component {
 
 
               <a href="#contact" className="btn btn-acc" style={cssToStyle("min-height: 44px; padding: 0 20px; font-size: 14px;")}>Get in Touch
-                <svg width="16" height="16" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"></path></svg></a>
+                <svg style={{flexShrink:0,display:"inline-block",verticalAlign:"middle"}} width="16" height="16" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"></path></svg></a>
 
             </div>
 
@@ -486,7 +566,7 @@ class TaxPreparationPage extends React.Component {
                       <div style={cssToStyle("display: flex; gap: 14px; flex-wrap: wrap;")}>
 
                         <a href="#contact" className="btn btn-acc">Get in Touch
-                          <svg width="16" height="16" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"></path></svg></a>
+                          <svg style={{flexShrink:0,display:"inline-block",verticalAlign:"middle"}} width="16" height="16" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"></path></svg></a>
 
 
                         <a href="#services" className="btn btn-ghost-d">Discuss Your Requirements</a>
@@ -512,7 +592,7 @@ class TaxPreparationPage extends React.Component {
                       <div style={cssToStyle("display: flex; gap: 14px; flex-wrap: wrap;")}>
 
                         <a href="#outsourcing" className="btn btn-acc">Discuss CPA Outsourcing
-                          <svg width="16" height="16" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"></path></svg></a>
+                          <svg style={{flexShrink:0,display:"inline-block",verticalAlign:"middle"}} width="16" height="16" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"></path></svg></a>
 
 
                         <a href="#planner" className="btn btn-ghost-d">Model your peak-season gap</a>
@@ -532,116 +612,143 @@ class TaxPreparationPage extends React.Component {
               {/*  hero visual  */}
 
 
-              <div className="in d3" style={cssToStyle("flex: 1 1 440px; min-width: 0; position: relative; height: 500px;")} role="img" aria-label="Illustrative preparation workflow: a partnership return moving from received to prepared, reviewed and handed over">
+              <div className="in d3" style={cssToStyle("flex: 1 1 440px; min-width: 0; position: relative;")} role="img" aria-label="Illustrative preparation workflow: a partnership return moving from received to prepared, reviewed and handed over">
 
-                <div aria-hidden="true" style={cssToStyle("position: absolute; left: 4%; top: 30px; width: 62%; height: 300px; border-radius: 18px; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.12); animation: floatA 9s ease-in-out infinite; padding: 22px;")}>
 
-                  <p className="mono" style={cssToStyle("font-size: 44px; color: rgba(255,255,255,0.16); font-weight: 500;")}>1120-S</p>
+
+                {/* Background ghost cards (decorative, behind) */}
+
+                <div aria-hidden="true" style={cssToStyle("position: absolute; left: 4%; top: 10px; width: 54%; height: 200px; border-radius: 18px; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.12); animation: floatA 9s ease-in-out infinite; padding: 22px; pointer-events: none; z-index: 0;")}>
+
+                  <p className="mono" style={cssToStyle("font-size: 44px; color: rgba(255,255,255,0.14); font-weight: 500;")}>1120-S</p>
+
+                </div>
+
+                <div aria-hidden="true" style={cssToStyle("position: absolute; right: 2%; top: 0; width: 46%; height: 170px; border-radius: 18px; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.12); animation: floatB 11s ease-in-out infinite; padding: 22px; text-align: right; pointer-events: none; z-index: 0;")}>
+
+                  <p className="mono" style={cssToStyle("font-size: 44px; color: rgba(255,255,255,0.14); font-weight: 500;")}>1040</p>
 
                 </div>
 
 
-                <div aria-hidden="true" style={cssToStyle("position: absolute; right: 2%; top: 6px; width: 54%; height: 260px; border-radius: 18px; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.12); animation: floatB 11s ease-in-out infinite; padding: 22px; text-align: right;")}>
 
-                  <p className="mono" style={cssToStyle("font-size: 44px; color: rgba(255,255,255,0.16); font-weight: 500;")}>1040</p>
+                {/* Label */}
 
-                </div>
-
+                <p className="mono" style={cssToStyle("position: relative; z-index: 2; text-align: right; font-size: 10px; letter-spacing: 0.14em; color: #6F8089; text-transform: uppercase; margin-bottom: 10px; padding-top: 4px;")}>Illustrative workflow</p>
 
 
-                <div aria-hidden="true" style={cssToStyle("position: absolute; left: 50%; top: 66px; transform: translateX(-50%); width: min(380px, 92%); border-radius: 22px; background: #FBFBF8; color: #0C1A22; box-shadow: 0 50px 100px -30px rgba(0,0,0,0.6); overflow: hidden; animation: floatC 7s ease-in-out infinite;")}>
 
+                {/* White workflow card — ABOVE timeline */}
+                <div aria-hidden="true" style={cssToStyle("position: relative; z-index: 2; width: min(390px, 100%); margin: 0 auto 20px; border-radius: 22px; background: #FBFBF8; color: #0C1A22; box-shadow: 0 30px 70px -20px rgba(0,0,0,0.55); overflow: hidden; transition: all 0.4s ease;")}>
                   <div style={cssToStyle("position: absolute; left: 0; right: 0; top: 0; height: 60px; background: linear-gradient(180deg, transparent, rgba(23,105,79,0.08), transparent); animation: scan 4.5s ease-in-out infinite;")}></div>
 
-
+                  {/* Header: Form + Status badge */}
                   <div style={cssToStyle("padding: 22px 24px 18px; border-bottom: 1px dashed rgba(12,26,34,0.15); display: flex; justify-content: space-between; align-items: flex-start; gap: 12px;")}>
-
                     <div>
-
-                      <p className="mono" style={cssToStyle("font-size: 11px; letter-spacing: 0.12em; color: #4A5A62;")}>FORM</p>
-
-
-                      <p className="mono" style={cssToStyle("font-size: 34px; font-weight: 500; letter-spacing: -0.02em; line-height: 1.1;")}>{v.curDoc.form}</p>
-
-
-                      <p style={cssToStyle("font-size: 13px; color: #4A5A62; margin-top: 4px;")}>{v.curDoc.title}</p>
-
+                      <p className="mono" style={cssToStyle("font-size: 11px; letter-spacing: 0.12em; color: #4A5A62; text-transform: uppercase;")}>STAGE {v.wfDoc.stageNum || "01/04"} · FORM</p>
+                      <p className="mono" style={cssToStyle("font-size: 34px; font-weight: 500; letter-spacing: -0.02em; line-height: 1.1; margin-top: 2px;")}>{v.wfDoc.form}</p>
+                      <p style={cssToStyle("font-size: 13px; color: #4A5A62; margin-top: 4px;")}>{v.wfDoc.title}</p>
                     </div>
-
-
-                    <span style={cssToStyle("align-self: flex-start; padding: 6px 14px; border-radius: 999px; font-size: 12px; font-weight: 600; background: #FFF1DB; color: #8A4B00;")}>{v.curDoc.status}</span>
 
                   </div>
 
+                  {/* 4 Items in sequential workflow order */}
+                  <ul style={cssToStyle("padding: 14px 24px 22px; display: flex; flex-direction: column; gap: 4px;")}>
+                    {v.wfDoc.items.map(function (item, i) {
+                      var isCompleted = i <= (v.wfStage || 0);
+                      var isCurrentActive = i === (v.wfStage || 0);
 
-                  <ul style={cssToStyle("padding: 14px 24px 8px; display: flex; flex-direction: column; gap: 4px;")}>
-
-                    {v.curDoc.items.map(function (item, i) {
-                      var done = i < v.chk;
                       return (
-                        <li key={i} style={cssToStyle("display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 10px 0; border-bottom: " + (i < v.curDoc.items.length - 1 ? "1px solid rgba(12,26,34,0.07)" : "none") + "; font-size: 14px; color: " + (done ? "#0F5A42" : "#4A5A62") + "; transition: color .4s;")}>
-                          <span>{item}</span>
-                          <span style={cssToStyle("flex: none; width: 22px; height: 22px; border-radius: 50%; display: grid; place-items: center; color: #fff; background: " + (done ? "var(--acc)" : "rgba(12,26,34,0.1)") + "; transition: background .4s; animation: " + (done ? "tick 0.5s cubic-bezier(.2,.7,.2,1) both" : "none") + ";")}>
-                            {done ? <svg width="12" height="12" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"></path></svg> : null}
+                        <li key={i} style={cssToStyle("display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 10px 0; border-bottom: " + (i < v.wfDoc.items.length - 1 ? "1px solid rgba(12,26,34,0.07)" : "none") + "; font-size: 13.5px; font-weight: " + (isCurrentActive ? "600" : "400") + "; color: " + (isCompleted ? "#0F5A42" : "#8A9AA2") + "; transition: all .35s ease;")}>
+                          <span style={cssToStyle("line-height: 1.35;")}>{item}</span>
+                          <span style={cssToStyle("flex: none; width: 22px; height: 22px; border-radius: 50%; display: grid; place-items: center; color: #fff; background: " + (isCompleted ? "var(--acc)" : "rgba(12,26,34,0.12)") + "; border: 1.5px solid " + (isCurrentActive ? "var(--acc-l)" : "transparent") + "; box-shadow: " + (isCurrentActive ? "0 0 8px rgba(44,207,197,0.5)" : "none") + "; transition: all .35s ease;")}>
+                            {isCompleted ? (
+                              <svg style={{flexShrink:0,display:"inline-block",verticalAlign:"middle"}} width="12" height="12" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"><path d="M2 6.5l3 3 5-5"></path></svg>
+                            ) : (
+                              <span style={cssToStyle("width: 6px; height: 6px; border-radius: 50%; background: #A0B0B8;")}></span>
+                            )}
                           </span>
                         </li>
                       );
                     })}
-
                   </ul>
 
-
-                  <div style={cssToStyle("padding: 10px 24px 22px;")}>
-
-                    <div style={cssToStyle("height: 6px; border-radius: 6px; background: rgba(12,26,34,0.08); overflow: hidden;")}><div style={cssToStyle("height: 100%; width: " + v.progPct + "%; background: var(--acc); transition: width .6s cubic-bezier(.2,.7,.2,1);")}></div></div>
-
-                  </div>
-
                 </div>
 
+                {/* Dark timeline panel — BELOW white card */}
+                <div style={cssToStyle("position: relative; z-index: 2; width: min(480px, 100%); margin: 0 auto; padding: 18px 22px 16px; border-radius: 18px; background: rgba(12,26,34,0.85); border: 1px solid rgba(255,255,255,0.14); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);")}>
+                  {/* Timeline track and nodes */}
+                  <div style={cssToStyle("position: relative; height: 32px; margin: 4px 10px 10px;")}>
+                    {/* Background inactive line */}
+                    <span style={cssToStyle("position: absolute; left: 0; right: 0; top: 15px; height: 3px; border-radius: 3px; background: rgba(255,255,255,0.18);")}></span>
 
+                    {/* Active progress line */}
+                    <span style={cssToStyle("position: absolute; left: 0; top: 15px; height: 3px; border-radius: 3px; background: var(--acc-l); box-shadow: 0 0 10px var(--acc-l); width: " + v.wfTlWidth + "; transition: width .55s cubic-bezier(.2,.7,.2,1);")}></span>
 
-                <div style={cssToStyle("position: absolute; left: 0; right: 0; bottom: 10px; margin: 0 auto; width: min(480px, 100%); padding: 18px 22px 16px; border-radius: 18px; background: rgba(12,26,34,0.75); border: 1px solid rgba(255,255,255,0.14); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);")}>
-
-                  <div style={cssToStyle("position: relative; height: 18px; margin: 10px 8px 14px;")}>
-                    <span style={cssToStyle("position: absolute; left: 0; right: 0; top: 8px; height: 2px; border-radius: 2px; background: rgba(255,255,255,0.15);")}></span>
-                    <span style={cssToStyle("position: absolute; left: 0; top: 8px; height: 2px; border-radius: 2px; background: var(--acc-l); box-shadow: 0 0 8px var(--acc-l); width: " + v.tlWidth + "; transition: width .6s cubic-bezier(.2,.7,.2,1);")}></span>
-
-                    {v.miles.map(function (m) {
-                      return <span key={m.i} style={cssToStyle("position: absolute; left: " + m.p + "%; top: 3px; width: 14px; height: 14px; margin-left: -7px; border-radius: 50%; border: 2px solid " + (m.active ? "var(--acc-l)" : (m.done ? "var(--acc)" : "rgba(255,255,255,0.35)")) + "; background: " + (m.active ? "var(--acc-l)" : (m.done ? "var(--acc)" : "rgba(12,26,34,0.9)")) + "; box-shadow: " + (m.active ? "0 0 14px var(--acc-l)" : "none") + "; transition: background .4s, border-color .4s, box-shadow .4s;")}>
-                        <span style={cssToStyle("position: absolute; inset: 3px; border-radius: 50%; background: #fff; opacity: " + ((m.done || m.active) ? 1 : 0) + "; transition: opacity .4s;")}></span>
-                      </span>;
+                    {/* Nodes (perfect circles centered on line) */}
+                    {v.wfMiles.map(function (m) {
+                      return (
+                        <div
+                          key={m.i}
+                          onClick={function () {
+                            clearInterval(self._d);
+                            self.setState({ wfStage: m.i });
+                            self._d = setInterval(function () {
+                              var ss = self.s();
+                              self.setState({ wfStage: ((ss.wfStage || 0) + 1) % DOCS.length });
+                            }, 3000);
+                          }}
+                          role="button"
+                          tabIndex={0}
+                          aria-label={"Stage " + m.label}
+                          style={cssToStyle("position: absolute; left: " + m.p + "%; top: 50%; transform: translate(-50%, -50%); width: 22px; height: 22px; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; z-index: 3; -webkit-tap-highlight-color: transparent;")}
+                        >
+                          <span style={cssToStyle("width: " + (m.active ? "18px" : "14px") + "; height: " + (m.active ? "18px" : "14px") + "; border-radius: 50%; border: 2.5px solid " + (m.active ? "var(--acc-l)" : (m.done ? "var(--acc)" : "rgba(255,255,255,0.4)")) + "; background: " + (m.active ? "var(--acc-l)" : (m.done ? "var(--acc)" : "#0C1A22")) + "; box-shadow: " + (m.active ? "0 0 14px 2px var(--acc-l)" : "none") + "; display: flex; align-items: center; justify-content: center; transition: all .35s ease;")}>
+                            <span style={cssToStyle("width: " + (m.active ? "6px" : "4px") + "; height: " + (m.active ? "6px" : "4px") + "; border-radius: 50%; background: #ffffff; opacity: " + ((m.done || m.active) ? "1" : "0") + "; transition: opacity .35s;")}></span>
+                          </span>
+                        </div>
+                      );
                     })}
-
                   </div>
 
+                  {/* Stage labels precisely under each node */}
+                  <div className="mono" style={cssToStyle("position: relative; height: 18px; margin: 0 10px 16px; font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase;")}>
+                    {v.wfMiles.map(function (m) {
+                      var align = m.i === 0 ? "left" : (m.i === v.wfMiles.length - 1 ? "right" : "center");
+                      var trans = m.i === 0 ? "0%" : (m.i === v.wfMiles.length - 1 ? "-100%" : "-50%");
 
-                  <div className="mono" style={cssToStyle("display: flex; justify-content: space-between; font-size: 11px; letter-spacing: 0.06em; color: #A9B6BD; text-transform: uppercase;")}><span>Received</span>
-                    <span>Prepared</span>
-                    <span>Reviewed</span>
-                    <span>Handover</span></div>
-
-
-                  <div style={cssToStyle("display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-top: 14px;")}>
-
-                    <button type="button" className="mono" aria-label="Previous document" onClick={v.prevDoc} style={cssToStyle("flex: none; width: 42px; height: 42px; border-radius: 50%; border: 1px solid rgba(255,255,255,0.25); background: rgba(255,255,255,0.06); color: var(--acc-l); display: grid; place-items: center; cursor: pointer; transition: background .3s, transform .3s, border-color .3s;")}>
-                      <svg width="16" height="16" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round"><path d="M19 12H5M11 18l-6-6 6-6"></path></svg>
-                    </button>
-
-
-                    <span className="mono" style={cssToStyle("font-size: 11px; letter-spacing: 0.1em; color: #C9D3D8; text-transform: uppercase;")}>{v.curDoc.name} · {pad(v.activeStep + 1)}/{pad(4)}</span>
-
-
-                    <button type="button" className="mono" aria-label="Next document" onClick={v.nextDoc} style={cssToStyle("flex: none; width: 42px; height: 42px; border-radius: 50%; border: 1px solid rgba(255,255,255,0.25); background: rgba(255,255,255,0.06); color: var(--acc-l); display: grid; place-items: center; cursor: pointer; transition: background .3s, transform .3s, border-color .3s;")}>
-                      <svg width="16" height="16" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round"><path d="M5 12h14M13 6l6 6-6 6"></path></svg>
-                    </button>
-
+                      return (
+                        <span
+                          key={m.i}
+                          onClick={function () {
+                            clearInterval(self._d);
+                            self.setState({ wfStage: m.i });
+                            self._d = setInterval(function () {
+                              var ss = self.s();
+                              self.setState({ wfStage: ((ss.wfStage || 0) + 1) % DOCS.length });
+                            }, 3000);
+                          }}
+                          style={cssToStyle("position: absolute; left: " + m.p + "%; transform: translateX(" + trans + "); text-align: " + align + "; cursor: pointer; color: " + (m.active ? "var(--acc-l)" : (m.done ? "#86D9B5" : "#6F8089")) + "; font-weight: " + (m.active ? "700" : "500") + "; white-space: nowrap; transition: color .35s;")}
+                        >
+                          {m.label}
+                        </span>
+                      );
+                    })}
                   </div>
 
+                  {/* Navigation controls & status readout */}
+                  <div style={cssToStyle("display: flex; align-items: center; justify-content: space-between; gap: 12px;")}>
+                    <button type="button" aria-label="Previous stage" onClick={v.prevWf} style={cssToStyle("flex: none; width: 44px; height: 44px; border-radius: 50%; border: 1.5px solid rgba(44,207,197,0.5); background: rgba(0,0,0,0.3); color: #2CCFC5; display: grid; place-items: center; cursor: pointer; transition: background .25s, border-color .25s, transform .2s;")}>
+                      <svg style={{flexShrink:0,display:"inline-block",verticalAlign:"middle"}} width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg>
+                    </button>
+                    <span className="mono" style={cssToStyle("font-size: 11px; letter-spacing: 0.1em; color: #C9D3D8; text-transform: uppercase;")}>
+                      {v.wfDoc.stage || ["RECEIVED", "PREPARED", "REVIEWED", "HANDOVER"][v.wfStage || 0]} · {v.wfDoc.name} · {pad((v.wfStage || 0) + 1)}/{pad(4)}
+                    </span>
+                    <button type="button" aria-label="Next stage" onClick={v.nextWf} style={cssToStyle("flex: none; width: 44px; height: 44px; border-radius: 50%; border: 1.5px solid rgba(44,207,197,0.5); background: rgba(0,0,0,0.3); color: #2CCFC5; display: grid; place-items: center; cursor: pointer; transition: background .25s, border-color .25s, transform .2s;")}>
+                      <svg style={{flexShrink:0,display:"inline-block",verticalAlign:"middle"}} width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                    </button>
+                  </div>
                 </div>
-
-
-                <p className="mono" style={cssToStyle("position: absolute; right: 0; top: -22px; font-size: 10px; letter-spacing: 0.14em; color: #6F8089; text-transform: uppercase;")}>Illustrative workflow</p>
 
               </div>
 
@@ -814,7 +921,7 @@ class TaxPreparationPage extends React.Component {
                               <React.Fragment key={index}>
 
 
-                                <li style={cssToStyle("display: flex; gap: 12px; align-items: flex-start; font-size: 15px; line-height: 1.5; padding-bottom: 12px; border-bottom: 1px solid rgba(12,26,34,0.07);")}><span style={cssToStyle("flex: none; margin-top: 2px; width: 20px; height: 20px; border-radius: 50%; background: #E3F1EA; color: var(--acc); display: grid; place-items: center;")}><svg width="11" height="11" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"></path></svg></span>
+                                <li style={cssToStyle("display: flex; gap: 12px; align-items: flex-start; font-size: 15px; line-height: 1.5; padding-bottom: 12px; border-bottom: 1px solid rgba(12,26,34,0.07);")}><span style={cssToStyle("flex: none; margin-top: 2px; width: 20px; height: 20px; border-radius: 50%; background: #E3F1EA; color: var(--acc); display: grid; place-items: center;")}><svg style={{flexShrink:0,display:"inline-block",verticalAlign:"middle"}} width="11" height="11" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"></path></svg></span>
                                   {it}</li>
 
 
@@ -830,15 +937,15 @@ class TaxPreparationPage extends React.Component {
                           <div style={cssToStyle("position: relative; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 20px;")}>
 
                             <a href="#contact" className="btn btn-acc">Discuss this return
-                              <svg width="16" height="16" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"></path></svg></a>
+                              <svg style={{flexShrink:0,display:"inline-block",verticalAlign:"middle"}} width="16" height="16" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"></path></svg></a>
 
 
                             <div style={cssToStyle("display: flex; align-items: center; gap: 10px;")}>
 
-                              <button type="button" aria-label="Previous service" onClick={v.prevSlide} style={cssToStyle("width: 50px; height: 50px; border-radius: 50%; border: 1px solid rgba(12,26,34,0.2); background: #fff; color: #0C1A22; display: grid; place-items: center; cursor: pointer;")}><svg width="18" height="18" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M19 12H5M11 6l-6 6 6 6"></path></svg></button>
+                              <button type="button" aria-label="Previous service" onClick={v.prevSlide} style={cssToStyle("width: 50px; height: 50px; border-radius: 50%; border: 1px solid rgba(12,26,34,0.2); background: #fff; color: #0C1A22; display: grid; place-items: center; cursor: pointer;")}><svg style={{flexShrink:0,display:"inline-block",verticalAlign:"middle"}} width="18" height="18" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M19 12H5M11 6l-6 6 6 6"></path></svg></button>
 
 
-                              <button type="button" aria-label="Next service" onClick={v.nextSlide} style={cssToStyle("width: 50px; height: 50px; border-radius: 50%; border: 0; background: #0C1A22; color: #fff; display: grid; place-items: center; cursor: pointer;")}><svg width="18" height="18" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"></path></svg></button>
+                              <button type="button" aria-label="Next service" onClick={v.nextSlide} style={cssToStyle("width: 50px; height: 50px; border-radius: 50%; border: 0; background: #0C1A22; color: #fff; display: grid; place-items: center; cursor: pointer;")}><svg style={{flexShrink:0,display:"inline-block",verticalAlign:"middle"}} width="18" height="18" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"></path></svg></button>
 
 
                               <button type="button" onClick={v.toggleAuto} aria-pressed={v.autoPressed} style={cssToStyle("min-height: 44px; padding: 0 14px; border: 0; background: transparent; color: #4A5A62; font-size: 13px; font-weight: 600; cursor: pointer;")}>{v.autoLabel}</button>
@@ -1014,7 +1121,7 @@ class TaxPreparationPage extends React.Component {
                       <React.Fragment key={index}>
 
 
-                        <li style={cssToStyle("display: flex; gap: 12px; align-items: center; padding: 12px 0; border-bottom: 1px solid rgba(255,255,255,0.08); font-size: 15px; color: #E9EEF0;")}><span style={cssToStyle("color: var(--acc-l); display: grid; place-items: center;")}><svg width="16" height="16" fill="none" stroke="currentColor" strokeWidth="2.6" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"></path></svg></span>
+                        <li style={cssToStyle("display: flex; gap: 12px; align-items: center; padding: 12px 0; border-bottom: 1px solid rgba(255,255,255,0.08); font-size: 15px; color: #E9EEF0;")}><span style={cssToStyle("color: var(--acc-l); display: grid; place-items: center;")}><svg style={{flexShrink:0,display:"inline-block",verticalAlign:"middle"}} width="16" height="16" fill="none" stroke="currentColor" strokeWidth="2.6" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"></path></svg></span>
                           {c}</li>
 
 
@@ -1161,7 +1268,7 @@ class TaxPreparationPage extends React.Component {
 
 
                   <a href="#contact" className="btn btn-light" style={cssToStyle("margin-top: 28px;")}>Discuss CPA Outsourcing
-                    <svg width="16" height="16" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"></path></svg></a>
+                    <svg style={{flexShrink:0,display:"inline-block",verticalAlign:"middle"}} width="16" height="16" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"></path></svg></a>
 
                 </div>
 
@@ -1381,7 +1488,7 @@ class TaxPreparationPage extends React.Component {
 
 
                   <span style={cssToStyle("display: inline-flex; align-items: center; gap: 10px; font-weight: 600;")}>Talk it through with us
-                    <svg width="18" height="18" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"></path></svg></span>
+                    <svg style={{flexShrink:0,display:"inline-block",verticalAlign:"middle"}} width="18" height="18" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"></path></svg></span>
 
                 </a>
 
@@ -1470,10 +1577,10 @@ class TaxPreparationPage extends React.Component {
 
                         <div style={cssToStyle("display: flex; gap: 10px;")}>
 
-                          <button type="button" aria-label="Previous step" onClick={v.prevStep} style={cssToStyle("width: 50px; height: 50px; border-radius: 50%; border: 1px solid rgba(255,255,255,0.25); background: transparent; color: #fff; display: grid; place-items: center; cursor: pointer;")}><svg width="18" height="18" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M19 12H5M11 6l-6 6 6 6"></path></svg></button>
+                          <button type="button" aria-label="Previous step" onClick={v.prevStep} style={cssToStyle("width: 50px; height: 50px; border-radius: 50%; border: 1px solid rgba(255,255,255,0.25); background: transparent; color: #fff; display: grid; place-items: center; cursor: pointer;")}><svg style={{flexShrink:0,display:"inline-block",verticalAlign:"middle"}} width="18" height="18" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M19 12H5M11 6l-6 6 6 6"></path></svg></button>
 
 
-                          <button type="button" aria-label="Next step" onClick={v.nextStep} style={cssToStyle("width: 50px; height: 50px; border-radius: 50%; border: 0; background: #fff; color: #0C1A22; display: grid; place-items: center; cursor: pointer;")}><svg width="18" height="18" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"></path></svg></button>
+                          <button type="button" aria-label="Next step" onClick={v.nextStep} style={cssToStyle("width: 50px; height: 50px; border-radius: 50%; border: 0; background: #fff; color: #0C1A22; display: grid; place-items: center; cursor: pointer;")}><svg style={{flexShrink:0,display:"inline-block",verticalAlign:"middle"}} width="18" height="18" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"></path></svg></button>
 
                         </div>
 
@@ -1626,7 +1733,7 @@ class TaxPreparationPage extends React.Component {
 
 
                           <a href={a.href} className="btn btn-acc" style={cssToStyle("align-self: flex-start; margin-top: 10px;")}>{a.cta}
-                            <svg width="16" height="16" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"></path></svg></a>
+                            <svg style={{flexShrink:0,display:"inline-block",verticalAlign:"middle"}} width="16" height="16" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"></path></svg></a>
 
                         </div>
 
@@ -1685,7 +1792,7 @@ class TaxPreparationPage extends React.Component {
 
 
                 <a href="#contact" className="btn btn-ghost-l" style={cssToStyle("align-self: flex-start;")}>Ask our team
-                  <svg width="16" height="16" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"></path></svg></a>
+                  <svg style={{flexShrink:0,display:"inline-block",verticalAlign:"middle"}} width="16" height="16" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"></path></svg></a>
 
               </div>
 
@@ -1700,7 +1807,7 @@ class TaxPreparationPage extends React.Component {
 
                       <h3 style={cssToStyle("margin: 0;")}><button type="button" className="faq-q" aria-expanded={q.exp} aria-controls={q.pid} onClick={q.toggle}><span style={cssToStyle("display: flex; gap: 18px; align-items: baseline;")}><span className="mono" style={cssToStyle("font-size: 12px; color: var(--acc); font-weight: 400;")}>{q.n}</span>
                         {q.q}</span>
-                        <span className={q.icCls} aria-hidden="true"><svg width="14" height="14" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" aria-hidden="true"><path d="M12 5v14M5 12h14"></path></svg></span></button></h3>
+                        <span className={q.icCls} aria-hidden="true"><svg style={{flexShrink:0,display:"inline-block",verticalAlign:"middle"}} width="14" height="14" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" aria-hidden="true"><path d="M12 5v14M5 12h14"></path></svg></span></button></h3>
 
 
                       {(q.open) && (
@@ -1812,7 +1919,7 @@ class TaxPreparationPage extends React.Component {
 
                       <button type="submit" disabled={v.submitting} className="btn btn-acc" style={cssToStyle("width: 100%; min-height: 56px; font-size: 16px; opacity: " + (v.submitting ? '0.7' : '1') + ";")}>
                         {v.submitting ? 'Sending...' : v.submitLabel}
-                        <svg width="16" height="16" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"></path></svg></button>
+                        <svg style={{flexShrink:0,display:"inline-block",verticalAlign:"middle"}} width="16" height="16" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"></path></svg></button>
 
 
                       <p style={cssToStyle("font-size: 12px; line-height: 1.5; color: #8A989F;")}>We'll reply to discuss scope before any work begins. Please don't send tax documents through this form.</p>
@@ -1830,7 +1937,7 @@ class TaxPreparationPage extends React.Component {
 
                     <div className="fade-up" aria-live="polite" style={cssToStyle("min-height: 380px; display: flex; flex-direction: column; justify-content: center; align-items: flex-start; gap: 18px;")}>
 
-                      <span style={cssToStyle("width: 64px; height: 64px; border-radius: 50%; background: var(--acc); display: grid; place-items: center; animation: pulse 2s infinite;")}><svg width="28" height="28" fill="none" stroke="#fff" strokeWidth="2.6" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"></path></svg></span>
+                      <span style={cssToStyle("width: 64px; height: 64px; border-radius: 50%; background: var(--acc); display: grid; place-items: center; animation: pulse 2s infinite;")}><svg style={{flexShrink:0,display:"inline-block",verticalAlign:"middle"}} width="28" height="28" fill="none" stroke="#fff" strokeWidth="2.6" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"></path></svg></span>
 
 
                       <p className="serif" style={cssToStyle("font-size: 36px; font-style: italic; color: #fff; line-height: 1.1;")}>Thank you — we'll be in touch.</p>

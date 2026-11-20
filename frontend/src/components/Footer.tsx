@@ -6,7 +6,6 @@ import {
   MapPin,
   Sun,
   Moon,
-  FileCheck,
   ArrowUpRight,
 } from 'lucide-react';
 import { useTheme } from '../context/ThemeContext';
@@ -23,14 +22,6 @@ export function Footer() {
   return (
     <footer className="site-footer" aria-label="Site footer">
       <div className="site-footer__inner">
-
-        {/* Live status ticker */}
-        <div className="site-footer__live-bar" aria-hidden="true">
-          <span className="site-footer__live-dot" />
-          <span className="site-footer__live-text">
-            Accepting new clients &nbsp;·&nbsp; Year-round US tax &amp; accounting &nbsp;·&nbsp; Federal &amp; State &nbsp;·&nbsp; Secure file transfer &nbsp;·&nbsp; IRS Circular 230 compliant
-          </span>
-        </div>
 
         {/* Main footer grid */}
         <div className="site-footer__grid">
@@ -112,30 +103,12 @@ export function Footer() {
 
         </div>
 
-        {/* Circular 230 disclosure */}
-        <section className="site-footer__disclosure" aria-labelledby="site-footer-disclosure-title">
-          <div className="site-footer__disclosure-heading" id="site-footer-disclosure-title">
-            <FileCheck aria-hidden="true" />
-            <span>IRS Circular 230 Disclosure &amp; Confidentiality Notice</span>
-          </div>
-          <p>
-            To ensure compliance with requirements imposed by the Internal Revenue Service, any U.S. federal tax advice contained on this website or in related preliminary communications is not intended or written to be used, and cannot be used, for the purpose of (i) avoiding penalties under the Internal Revenue Code or (ii) promoting, marketing, or recommending to another party any transaction or matter addressed herein. Bilateral Non-Disclosure Agreements (NDAs) govern all client file transmissions.
-          </p>
-        </section>
-
         {/* Copyright and legal links */}
         <div className="site-footer__bottom">
           <p className="site-footer__copyright">
             © {new Date().getFullYear()} {settings.brandName}. All rights reserved.
             <span>Registered IRS Tax Return Preparers &amp; CPA Advisory.</span>
           </p>
-          <nav className="site-footer__legal" aria-label="Legal information">
-            <Link to="/about">Privacy Policy</Link>
-            <span aria-hidden="true">•</span>
-            <Link to="/about">Terms of Engagement</Link>
-            <span aria-hidden="true">•</span>
-            <Link to="/about">SOC 2 Type II Certified</Link>
-          </nav>
         </div>
 
       </div>

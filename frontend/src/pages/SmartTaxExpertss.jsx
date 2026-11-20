@@ -145,25 +145,7 @@ textarea.f { resize: vertical; }
   .pg.ready .rv, .pg.ready .sx { opacity: 1; transform: none; transition: none; }
 }
 
-/* ====================================================================
-   Header + mobile menu
-   ==================================================================== */
-.hdr { position: sticky; top: 0; z-index: 50; background: rgba(7,18,31,.94); -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px); border-bottom: 1px solid rgba(255,255,255,.1); padding-top: env(safe-area-inset-top, 0px); }
-.hdr-in { display: flex; align-items: center; justify-content: space-between; gap: 20px; min-height: 72px; }
-.hdr-logo { color: #fff; text-decoration: none; font-size: 21px; font-weight: 700; white-space: nowrap; }
-.hdr-logo:hover { color: #fff; }
-.navlinks { display: flex; gap: 26px; }
-.hdr-right { display: flex; align-items: center; gap: 12px; }
-.hdr-cta { min-height: 46px; padding: 0 20px; font-size: 15px; }
-.burger { display: none; width: 46px; height: 46px; border-radius: 12px; border: 1.5px solid rgba(255,255,255,.28); background: transparent; cursor: pointer; padding: 0; flex-direction: column; align-items: center; justify-content: center; gap: 5px; }
-.burger span { display: block; width: 20px; height: 2px; background: #fff; border-radius: 2px; transition: transform .3s, opacity .3s; }
-.burger.on span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
-.burger.on span:nth-child(2) { opacity: 0; }
-.burger.on span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
-.mnav { display: none; background: #07121F; border-top: 1px solid rgba(255,255,255,.1); max-height: 0; overflow: hidden; transition: max-height .35s ease; }
-.mnav .wrap { display: flex; flex-direction: column; padding-top: 8px; padding-bottom: 20px; }
-.mnav .navl { font-size: 18px; padding: 14px 2px; border-bottom: 1px solid rgba(255,255,255,.08); }
-.mnav.open { max-height: 90vh; overflow-y: auto; }
+
 
 /* ====================================================================
    LARGE MONITORS  (>= 1700px)
@@ -187,16 +169,12 @@ textarea.f { resize: vertical; }
   .sec { padding: 92px 0; }
   .navlinks { gap: 16px; }
   .navl { font-size: 14px; }
-  .hdr-cta { padding: 0 16px; font-size: 14px; }
 }
 
 /* ====================================================================
    TABLETS  (<= 900px)
    ==================================================================== */
 @media (max-width: 900px) {
-  .navlinks { display: none !important; }
-  .burger { display: inline-flex; }
-  .mnav { display: block; }
   .sec { padding: 72px 0; }
   .rowbtn.on { transform: none; }
   .stick { position: static !important; }
@@ -214,12 +192,9 @@ textarea.f { resize: vertical; }
   .sec { padding: 56px 0; }
   .lead { font-size: 17px; margin-top: 16px; }
   .eb { font-size: 12px; letter-spacing: .1em; margin-bottom: 14px; }
-  .hdr-in { min-height: 64px; gap: 12px; }
-  .hdr-logo { font-size: 19px; }
 
   /* full-width, thumb-friendly buttons */
   .btn { width: 100%; padding-left: 20px; padding-right: 20px; }
-  .hdr-cta { display: none; }
   .btn.b4, .btn.b1, .btn.b2, .btn.b3 { white-space: normal; }
 
   /* tabs / pills stay compact and wrap */
@@ -257,14 +232,12 @@ textarea.f { resize: vertical; }
 }
 @media (max-width: 360px) {
   .wrap { padding: 0 14px; }
-  .hdr-logo { font-size: 17px; }
 }
 
 /* ====================================================================
    Landscape phones: keep the header short
    ==================================================================== */
 @media (max-height: 480px) and (orientation: landscape) {
-  .hdr-in { min-height: 56px; }
   .sec { padding: 48px 0; }
 }
 
@@ -543,7 +516,7 @@ textarea.f { resize: vertical; }
 /* ===== State + content ===== */
 /**
  * All state + content for the page.
- * Ported 1:1 from the original class component's state/renderVals().
+ * Ported 1:1 from the original class component’s state/renderVals().
  */
 const INITIAL = {
   aud: 0, mode: 0, heroAuto: true, who: 0, why: 0, whyAuto: true, fit: {},
@@ -597,7 +570,7 @@ function usePageData() {
 
   /* WHO */
   const whoData = [
-    { label: 'US CPA Firms', h: 'Additional capacity, inside your established procedures.', p: 'You already have clients, established processes and a team responsible for reviewing and delivering accounting services. What you need is additional capacity. Choose tax preparers, bookkeepers, staff accountants and other accounting professionals from our existing team, ready to work within your firmâ€™s established procedures.', useLabel: 'You can use them for', uses: ['Individual and business tax preparation support', 'Monthly bookkeeping', 'Bank and credit card reconciliations', 'General ledger maintenance', 'Financial statement preparation', 'Tax workpaper organization', 'Accounts payable and receivable', 'Seasonal accounting support'], cta: 'Hire Professionals for My CPA Firm' },
+    { label: 'US CPA Firms', h: 'Additional capacity, inside your established procedures.', p: 'You already have clients, established processes and a team responsible for reviewing and delivering accounting services. What you need is additional capacity. Choose tax preparers, bookkeepers, staff accountants and other accounting professionals from our existing team, ready to work within your firm’s established procedures.', useLabel: 'You can use them for', uses: ['Individual and business tax preparation support', 'Monthly bookkeeping', 'Bank and credit card reconciliations', 'General ledger maintenance', 'Financial statement preparation', 'Tax workpaper organization', 'Accounts payable and receivable', 'Seasonal accounting support'], cta: 'Hire Professionals for My CPA Firm' },
     { label: 'Tax Preparation Firms', h: 'More preparation capacity when deadlines tighten.', p: 'Tax season brings more work, tighter deadlines and greater pressure on existing staff. If your team is spending too much time organizing documents, preparing draft returns and handling repetitive preparation work, additional professionals may help distribute the workload.', useLabel: 'We match you based on', uses: ['The tax forms your firm prepares', 'The tax software you use', 'The level of preparation experience you require'], cta: 'Find Tax Preparation Professionals' },
     { label: 'Bookkeeping & Accounting Firms', h: 'Recurring work needs recurring capacity.', p: 'Adding more clients is good for business, but every new account also creates recurring work. Choose professionals from our team who can support that workload, with no recruitment process for you to manage.', useLabel: 'Someone who can', uses: ['Maintain client books', 'Reconcile accounts', 'Prepare reports', 'Follow your existing bookkeeping procedures'], cta: 'Build My Bookkeeping Team' },
     { label: 'Small & Medium-Sized Businesses', h: 'The right amount of accounting help, not a whole department.', p: 'Not every business needs a full accounting department. Depending on your workload, a part-time or full-time professional may be a more suitable arrangement than hiring an entire local department.', useLabel: 'You might simply need someone to', uses: ['Maintain your books', 'Process invoices', 'Reconcile bank accounts', 'Prepare monthly financial information'], cta: 'Hire an Accountant for My Business' },
@@ -608,7 +581,7 @@ function usePageData() {
 
   /* WHY */
   const whyData = [
-    ['Your accounting workload is growing faster than your team.', 'New clients and responsibilities arrive, but the team is the same size. Bookkeeping, reconciliations, tax preparation and reporting compete for everyoneâ€™s time.', 'Add bookkeepers, accountants or tax professionals from our team to handle defined responsibilities and distribute the workload.', 'Your CPA firm adds 20 new bookkeeping clients. Instead of loading your existing accountants, you choose a dedicated bookkeeper from our team for the additional accounts.'],
+    ['Your accounting workload is growing faster than your team.', 'New clients and responsibilities arrive, but the team is the same size. Bookkeeping, reconciliations, tax preparation and reporting compete for everyone’s time.', 'Add bookkeepers, accountants or tax professionals from our team to handle defined responsibilities and distribute the workload.', 'Your CPA firm adds 20 new bookkeeping clients. Instead of loading your existing accountants, you choose a dedicated bookkeeper from our team for the additional accounts.'],
     ['Hiring experienced accounting professionals locally is expensive.', 'Salary, recruitment expenses, benefits, employment costs, training and overheads. For smaller firms, another local full-time employee may not make commercial sense.', 'Our team in India gives you experienced professionals who are ready to start. Evaluate the total engagement cost against local hiring. The objective is not the cheapest person, but skills and cost that make sense for the work.', 'A US bookkeeping firm needs QuickBooks support without another local full-time position. It explores a dedicated professional in India with relevant software experience.'],
     ['Your senior accountants are spending too much time on routine work.', 'Hours go into categorizing transactions, organizing documents, preparing routine schedules and chasing missing information instead of work that needs judgement.', 'Divide responsibilities by complexity. An offshore professional handles assigned preparation; your senior team reviews, corrects, interprets and approves.', 'A senior accountant spends 12 hours each week on reconciliations and workpapers. A dedicated accountant prepares those schedules under your procedures.'],
     ['Tax season creates more work than your existing team can handle.', 'Documents arrive at different times, new clients come in, and deadlines remain fixed. Permanent hires just for seasonal demand may not be practical.', 'Add tax preparation professionals from our team for an agreed period. Your authorized US tax professionals keep technical review, approval and filing.', 'A practice handling 500 individual returns a year sees a sharp increase between January and April and adds preparers from our team for that period.'],
@@ -636,7 +609,7 @@ function usePageData() {
     { label: 'US Tax Preparers', intro: 'If your firm handles individual and business tax returns, you may need additional preparation capacity. We match you with team members by the returns they have worked on, their software experience and their level of responsibility.', pos: ['Individual Tax Return Preparer', 'Business Tax Return Preparer', 'Tax Associate', 'Senior Tax Preparer', 'Tax Reviewer', 'Tax Workpaper Specialist', 'Seasonal Tax Preparation Professional'], workLabel: 'What can they work on? Depending on experience', work: ['Form 1040 and associated schedules', 'Form 1065 partnership returns', 'Form 1120-S S corporation returns', 'Form 1120 C corporation returns', 'Tax document organization', 'Supporting schedules and workpapers', 'Identifying missing information', 'Preparing draft returns for review', 'Addressing reviewer comments'], sw: 'Drake Tax, ProConnect, UltraTax CS, CCH Axcess, CCH ProSystem fx, ProSeries and Lacerte.', ex: 'Your firm receives 150 individual returns during filing season. Tax preparation professionals handle assigned preparation tasks while your authorized US tax professionals retain technical oversight, required review and filing responsibilities.', cta: 'Hire a US Tax Preparer' },
     { label: 'Dedicated Bookkeepers', intro: 'Bookkeeping is not just entering transactions into software. A good bookkeeper understands how transactions affect accounts, how reconciliations work and why the books must be accurate before reports are prepared.', pos: ['Junior Bookkeeper', 'US Bookkeeping Specialist', 'QuickBooks Bookkeeper', 'Full-Charge Bookkeeper', 'Senior Bookkeeper', 'Bookkeeping Team Lead'], workLabel: 'Typical responsibilities', work: ['Recording and categorizing transactions', 'Bank and credit card reconciliations', 'Recording bills and customer invoices', 'Accounts payable and receivable support', 'Vendor and customer statement reconciliation', 'Maintaining bookkeeping records', 'Identifying unmatched or unusual transactions', 'Preparing monthly reports', 'Supporting month-end closing'], sw: 'QuickBooks Online, QuickBooks Desktop, Xero, Sage and other accounting platforms.', ex: 'You manage 25 small business clients. A dedicated bookkeeper handles assigned accounts using your chart of accounts, monthly checklist and reporting procedures. Your senior accountant reviews the completed work.', cta: 'Hire a Dedicated Bookkeeper' },
     { label: 'Accountants & Senior Accounting Professionals', intro: 'When your business grows, basic bookkeeping may no longer be enough. You may need someone who understands general ledger accounting, adjusting entries, balance sheet reconciliations, accruals and monthly reporting.', pos: ['Staff Accountant', 'General Ledger Accountant', 'Senior Accountant', 'Accounting Analyst', 'Financial Reporting Accountant', 'Reconciliation Specialist', 'Accounting Team Lead'], workLabel: 'Typical responsibilities', work: ['Journal entries', 'Accruals and prepayments', 'General ledger maintenance', 'Balance sheet reconciliations', 'Fixed asset schedules', 'Revenue and expense accounting', 'Intercompany reconciliations', 'Month-end and year-end close support', 'Trial balance review', 'Financial statement preparation'], sw: '', ex: 'Your business operates through multiple entities with monthly reporting. An experienced accountant prepares the schedules and maintains the general ledger. Your finance manager retains review and financial decisions.', cta: 'Hire an Accountant' },
-    { label: 'Payroll Specialists', intro: 'Payroll requires accuracy, confidentiality and an understanding of the companyâ€™s payroll processes. Add professionals from our team to support payroll administration and related accounting work.', pos: ['Payroll Administrator', 'Payroll Processing Specialist', 'Payroll Accountant', 'Payroll Reconciliation Specialist', 'Multi-State Payroll Support Professional'], workLabel: 'Typical responsibilities', work: ['Preparing payroll inputs', 'Checking timesheets and employee changes', 'Reviewing payroll registers', 'Supporting payroll reconciliations', 'Maintaining payroll-related records', 'Preparing payroll reports', 'Coordinating information for payroll tax processes', 'Supporting payroll accounting entries'], sw: 'ADP, Gusto, Paychex, Rippling, Paylocity and UKG.', ex: 'Your business has 80 employees and runs payroll twice a month. A payroll specialist organizes information, verifies inputs and prepares reconciliation schedules under your approved procedures. The employer and authorized payroll personnel retain approval and legal responsibilities.', cta: 'Hire a Payroll Specialist' },
+    { label: 'Payroll Specialists', intro: 'Payroll requires accuracy, confidentiality and an understanding of the company’s payroll processes. Add professionals from our team to support payroll administration and related accounting work.', pos: ['Payroll Administrator', 'Payroll Processing Specialist', 'Payroll Accountant', 'Payroll Reconciliation Specialist', 'Multi-State Payroll Support Professional'], workLabel: 'Typical responsibilities', work: ['Preparing payroll inputs', 'Checking timesheets and employee changes', 'Reviewing payroll registers', 'Supporting payroll reconciliations', 'Maintaining payroll-related records', 'Preparing payroll reports', 'Coordinating information for payroll tax processes', 'Supporting payroll accounting entries'], sw: 'ADP, Gusto, Paychex, Rippling, Paylocity and UKG.', ex: 'Your business has 80 employees and runs payroll twice a month. A payroll specialist organizes information, verifies inputs and prepares reconciliation schedules under your approved procedures. The employer and authorized payroll personnel retain approval and legal responsibilities.', cta: 'Hire a Payroll Specialist' },
     { label: 'Accounts Payable & Receivable Professionals', intro: 'If your business handles a high volume of invoices and payments, you may need dedicated AP/AR support.', pos: ['Accounts Payable Specialist', 'Accounts Receivable Specialist', 'Billing Specialist', 'Cash Application Specialist', 'Collections Support Professional'], workLabel: 'Typical responsibilities', work: ['Vendor invoice processing', 'Invoice data verification', 'Vendor statement reconciliation', 'Payment preparation support', 'Customer invoicing', 'Payment allocation', 'Accounts receivable aging', 'Outstanding payment follow-ups', 'Billing records and reporting'], sw: '', ex: 'Your construction company receives hundreds of invoices every month. An AP specialist organizes invoices, verifies required documentation and prepares payment schedules for authorized approval.', cta: 'Hire AP/AR Professionals' },
     { label: 'Specialized Accounting & Finance Professionals', intro: 'Some businesses need skills beyond regular bookkeeping and accounting. These roles require a more specific assessment of practical experience, technical knowledge and the level of responsibility involved.', pos: ['Sales Tax Support Specialists', 'Form 1099 Preparation Support', 'Audit Documentation Specialists', 'Financial Analysts', 'Budgeting and Forecasting Analysts', 'Controller Support Professionals', 'Multi-Entity Accounting Specialists', 'Accounting Cleanup Professionals'], workLabel: 'How we approach these roles', work: ['Assessment of practical experience', 'Assessment of technical knowledge', 'Clarity on the level of responsibility', 'Availability confirmed position by position'], sw: '', ex: '', cta: 'Discuss a Specialized Role' }
   ];
@@ -677,16 +650,16 @@ function usePageData() {
   /* USE CASES */
   const caseData = [
     ['A CPA firm that needs more tax preparers', 'An established team of five handles individual and business returns. As deadlines approach, more documents arrive than the team can comfortably process, and seniors spend too long on initial preparation.', 'Two tax preparers with relevant individual and business tax preparation experience.', 'Offshore professionals prepare assigned draft work. The firm instructs and reviews. Authorized US professionals handle approvals and filing. The firm retains its client relationships.', 'Flexible seasonal or full-time dedicated hiring'],
-    ['A bookkeeping firm that has taken on more clients', 'The firm adds 15 new monthly clients: transaction recording, bank reconciliations, vendor bills and monthly reports. The existing team is struggling to finish on schedule.', 'A dedicated QuickBooks bookkeeper, assessed on reconciliations, categorization and monthly bookkeeping.', 'The professional manages assigned bookkeeping using the firmâ€™s procedures. The senior accountant reviews the work and handles client-specific decisions.', 'Full-time dedicated hiring'],
+    ['A bookkeeping firm that has taken on more clients', 'The firm adds 15 new monthly clients: transaction recording, bank reconciliations, vendor bills and monthly reports. The existing team is struggling to finish on schedule.', 'A dedicated QuickBooks bookkeeper, assessed on reconciliations, categorization and monthly bookkeeping.', 'The professional manages assigned bookkeeping using the firm’s procedures. The senior accountant reviews the work and handles client-specific decisions.', 'Full-time dedicated hiring'],
     ['An e-commerce business that needs better financial records', 'An online retailer is paid through multiple gateways and marketplaces. Sales, refunds, platform fees and settlements are not always easy to reconcile.', 'An accountant or bookkeeper with relevant e-commerce reconciliation experience.', 'The professional prepares settlement reconciliations, records assigned transactions and organizes supporting schedules. The finance manager reviews the results.', 'Full-time or part-time dedicated hiring'],
-    ['A US business that needs payroll support', 'A company with a regular payroll cycle spends considerable time collecting employee information, checking payroll inputs and preparing reports.', 'A payroll specialist familiar with its payroll software and procedures.', 'The professional supports data preparation, register checks and reconciliations. Authorized personnel retain payroll approval and the employerâ€™s legal obligations.', 'Part-time or full-time dedicated hiring'],
+    ['A US business that needs payroll support', 'A company with a regular payroll cycle spends considerable time collecting employee information, checking payroll inputs and preparing reports.', 'A payroll specialist familiar with its payroll software and procedures.', 'The professional supports data preparation, register checks and reconciliations. Authorized personnel retain payroll approval and the employer’s legal obligations.', 'Part-time or full-time dedicated hiring'],
     ['A firm with months of bookkeeping backlog', 'Several client accounts are behind on reconciliations and transaction recording. The firm wants them up to date before normal monthly reporting continues.', 'A bookkeeping cleanup specialist for a defined period, with accounts, periods, software, outputs and deadlines defined before work starts.', 'The professional works through the backlog, identifies missing information and prepares the accounts for review.', 'Project-based staffing'],
     ['A fractional CFO firm that needs reporting support', 'Too much senior time goes into preparing reconciliations, organizing schedules and compiling financial data.', 'An experienced accountant or financial analyst with general ledger, reporting and spreadsheet-based analysis experience.', 'The professional prepares financial schedules and reports. The CFO team reviews, interprets the numbers and provides strategic recommendations.', 'Full-time or part-time dedicated hiring']
   ];
   const cases = caseData.map((c, i) => Object.assign({ num: num(i), t: c[0], sit: c[1], need: c[2], split: c[3], model: c[4], hidden: s.uc === i ? 'false' : 'true', aria: 'Use case ' + (i + 1) }, sel('uc', i)));
 
   /* INDUSTRIES + SOFTWARE */
-  const indData = [['CPA, Tax & Accounting Firms', 'Tax preparation, bookkeeping, general ledger accounting, reconciliation, workpaper preparation, financial reporting and accounting support.'], ['E-Commerce & Retail', 'Marketplace reconciliation, payment gateway settlements, sales recording, refunds, inventory-related accounting and monthly reporting.'], ['Real Estate & Property Management', 'Rental income tracking, property-level bookkeeping, vendor payments, expense recording and financial reporting.'], ['Healthcare Practices', 'Bookkeeping, expense recording, vendor accounting, payroll administration support and reporting, with appropriate privacy and access controls.'], ['Construction & Contracting', 'Vendor invoices, accounts payable, job-cost accounting support, project expense tracking, billing support and reconciliations.'], ['Professional Services', 'Client billing, time-based invoicing, expense recording, accounts receivable, monthly bookkeeping and profitability reporting.'], ['Restaurants & Hospitality', 'Daily sales reconciliation, vendor accounting, payroll-related accounting, expense classification and financial reporting.'], ['Technology & SaaS', 'Subscription billing reconciliation, deferred revenue support, expense accounting, general ledger maintenance and monthly financial reporting.'], ['Manufacturing & Distribution', 'Purchasing records, inventory-related accounting, vendor reconciliation, cost schedules and financial reporting.'], ['Nonprofit Organizations', 'Fund accounting support, grant-related transaction tracking, reconciliations and reporting preparation, subject to the candidateâ€™s relevant experience.']];
+  const indData = [['CPA, Tax & Accounting Firms', 'Tax preparation, bookkeeping, general ledger accounting, reconciliation, workpaper preparation, financial reporting and accounting support.'], ['E-Commerce & Retail', 'Marketplace reconciliation, payment gateway settlements, sales recording, refunds, inventory-related accounting and monthly reporting.'], ['Real Estate & Property Management', 'Rental income tracking, property-level bookkeeping, vendor payments, expense recording and financial reporting.'], ['Healthcare Practices', 'Bookkeeping, expense recording, vendor accounting, payroll administration support and reporting, with appropriate privacy and access controls.'], ['Construction & Contracting', 'Vendor invoices, accounts payable, job-cost accounting support, project expense tracking, billing support and reconciliations.'], ['Professional Services', 'Client billing, time-based invoicing, expense recording, accounts receivable, monthly bookkeeping and profitability reporting.'], ['Restaurants & Hospitality', 'Daily sales reconciliation, vendor accounting, payroll-related accounting, expense classification and financial reporting.'], ['Technology & SaaS', 'Subscription billing reconciliation, deferred revenue support, expense accounting, general ledger maintenance and monthly financial reporting.'], ['Manufacturing & Distribution', 'Purchasing records, inventory-related accounting, vendor reconciliation, cost schedules and financial reporting.'], ['Nonprofit Organizations', 'Fund accounting support, grant-related transaction tracking, reconciliations and reporting preparation, subject to the candidate’s relevant experience.']];
   const inds = indData.map((n, i) => Object.assign({ label: n[0], text: n[1] }, sel('ind', i)));
   const swData = [
     ['US Tax Preparation Software', ['Drake Tax', 'Intuit ProConnect Tax', 'Thomson Reuters UltraTax CS', 'CCH ProSystem fx Tax', 'CCH Axcess Tax', 'Intuit ProSeries', 'Intuit Lacerte', 'TaxSlayer Pro'], 'Individual and business tax preparation, supporting schedules, workpapers, document organization and draft return preparation.'],
@@ -720,10 +693,10 @@ function usePageData() {
     ['Can I hire someone with QuickBooks Online experience?', 'Yes. Tell us QuickBooks Online is mandatory and we will match you with professionals who have practical experience on it.'],
     ['Can I request someone experienced in Form 1040 or business tax returns?', 'Yes. You can specify whether you need individual tax preparation, partnership returns, S corporation returns or C corporation returns, and we match on that specific experience.'],
     ['Can the professional work during US business hours?', 'You can specify the required time-zone overlap and schedule. Availability will depend on the candidate and the agreed employment arrangement.'],
-    ['Who manages the professionalâ€™s daily work?', 'In a client-managed dedicated staffing model, your business generally assigns tasks, sets priorities and reviews the work. Employment and HR responsibilities are handled according to the actual contractual arrangement.'],
-    ['Who is the legal employer?', 'The employing entity depends on the engagement structure. If Smart Tax Expertss or its designated Indian entity employs the professional, that entityâ€™s employment responsibilities should be documented in the agreement.'],
+    ['Who manages the professional’s daily work?', 'In a client-managed dedicated staffing model, your business generally assigns tasks, sets priorities and reviews the work. Employment and HR responsibilities are handled according to the actual contractual arrangement.'],
+    ['Who is the legal employer?', 'The employing entity depends on the engagement structure. If Smart Tax Expertss or its designated Indian entity employs the professional, that entity’s employment responsibilities should be documented in the agreement.'],
     ['Can I hire someone for only three or six months?', 'A fixed-term or project-based arrangement can be discussed, subject to candidate availability, applicable employment requirements and contractual terms.'],
-    ['Can I increase working hours later?', 'Potentially, yes. Any change depends on the professionalâ€™s availability and the revised commercial and employment arrangements.'],
+    ['Can I increase working hours later?', 'Potentially, yes. Any change depends on the professional’s availability and the revised commercial and employment arrangements.'],
     ['What happens if the professional leaves?', 'The agreed continuity process should cover notice, handover, access revocation and a replacement from our team. The actual replacement terms and timeframes will be specified in your agreement.'],
     ['Can I use my existing accounting and tax software?', 'Yes, subject to technical feasibility, licensing and security requirements. You can specify the platforms candidates should know.'],
     ['Do you provide tax return review and filing?', 'This page focuses on dedicated staffing. Preparation, review and filing services are separate scopes. Any review or filing responsibility must be specifically agreed and carried out by appropriately authorized professionals.'],
@@ -735,7 +708,7 @@ function usePageData() {
 
   /* FORM */
   const pill = (key, arr) => arr.map((t) => ({ t: t, on: !!s[key][t], cls: s[key][t] ? 'on' : '', tog: () => tog(key, t) }));
-  const fNames = ['Part A of 4 Â· Your business', 'Part B of 4 Â· Your hiring requirement', 'Part C of 4 Â· The work', 'Part D of 4 Â· Budget and extras'];
+  const fNames = ['Part A of 4 · Your business', 'Part B of 4 · Your hiring requirement', 'Part C of 4 · The work', 'Part D of 4 · Budget and extras'];
   const show = (i) => (s.fstep === i ? 'block' : 'none');
 
   return {
@@ -771,7 +744,6 @@ function usePageData() {
 
 /* ===== Page ===== */
 const NAV = [
-  ['#who', 'Who we help'],
   ['#roles', 'Professionals'],
   ['#models', 'Hiring models'],
   ['#process', 'Process'],
@@ -779,63 +751,6 @@ const NAV = [
   ['#faq', 'FAQ'],
 ];
 
-/* Sticky header: inline nav on laptop/desktop, slide-down menu on tablet/mobile */
-function Header() {
-  const [open, setOpen] = useState(false);
-
-  useEffect(() => {
-    const onKey = (e) => e.key === 'Escape' && setOpen(false);
-    const onResize = () => window.innerWidth > 900 && setOpen(false);
-    window.addEventListener('keydown', onKey);
-    window.addEventListener('resize', onResize);
-    return () => {
-      window.removeEventListener('keydown', onKey);
-      window.removeEventListener('resize', onResize);
-    };
-  }, []);
-
-  const close = () => setOpen(false);
-
-  return (
-    <header className="hdr">
-      <div className="wrap hdr-in">
-        <a href="#top" className="d hdr-logo" onClick={close}>
-          Smart Tax <span style={{ color: '#37E191' }}>Expertss</span>
-        </a>
-        <nav className="navlinks" aria-label="Page sections">
-          {NAV.map(([href, label]) => (
-            <a key={href} className="navl" href={href}>{label}</a>
-          ))}
-        </nav>
-        <div className="hdr-right">
-          <a className="btn b1 hdr-cta" href="#enquiry">
-            Request professionals <span className="ar" aria-hidden="true">â†’</span>
-          </a>
-          <button
-            type="button"
-            className={'burger' + (open ? ' on' : '')}
-            aria-label={open ? 'Close menu' : 'Open menu'}
-            aria-expanded={open}
-            aria-controls="mobile-menu"
-            onClick={() => setOpen((o) => !o)}
-          >
-            <span /><span /><span />
-          </button>
-        </div>
-      </div>
-      <nav id="mobile-menu" className={'mnav' + (open ? ' open' : '')} aria-label="Page sections (mobile)">
-        <div className="wrap">
-          {NAV.map(([href, label]) => (
-            <a key={href} className="navl" href={href} onClick={close}>{label}</a>
-          ))}
-          <a className="btn b1" href="#enquiry" onClick={close} style={{ marginTop: 12 }}>
-            Request professionals <span className="ar" aria-hidden="true">â†’</span>
-          </a>
-        </div>
-      </nav>
-    </header>
-  );
-}
 
 export default function App() {
   const root = useRef(null);
@@ -881,22 +796,19 @@ export default function App() {
       <style>{CSS}</style>
 
 
-      {/* NAV */}
-      <Header />
-
       {/* 01 HERO */}
       <section id="top" style={{ background: "#07121F", color: "#FFFFFF", position: "relative", overflow: "hidden" }}>
         <div aria-hidden="true" style={{ position: "absolute", inset: "0", backgroundImage: "linear-gradient(rgba(255,255,255,.045) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,.045) 1px, transparent 1px)", backgroundSize: "56px 56px", maskImage: "radial-gradient(ellipse at 75% 40%, #000 0%, transparent 70%)", WebkitMaskImage: "radial-gradient(ellipse at 75% 40%, #000 0%, transparent 70%)" }}></div>
         <div className="wrap" style={{ position: "relative", paddingTop: "34px", paddingBottom: "96px" }}>
           <div className="m" style={{ display: "flex", flexWrap: "wrap", gap: "10px 28px", fontSize: "13px", color: "#A9B8C7", letterSpacing: ".06em" }}>
-            <span><span style={{ color: "#FFB84D" }}>â—</span> New York {clockUS}</span>
-            <span><span style={{ color: "#37E191" }}>â—</span> India {clockIN}</span>
-            <span>Tell us the work â†’ choose your professional â†’ work starts</span>
+            <span><span style={{ color: "#FFB84D" }}>●</span> New York {clockUS}</span>
+            <span><span style={{ color: "#37E191" }}>●</span> India {clockIN}</span>
+            <span>Tell us the work → choose your professional → work starts</span>
           </div>
           <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(min(480px, 100%), 1fr))", gap: "56px", alignItems: "center", marginTop: "54px" }}>
             <div className="fade">
               <h1 className="eb" style={{ color: "#37E191" }}>Hire dedicated accounting professionals in India for your US business</h1>
-              <h2 className="d" style={{ fontSize: "clamp(38px, 5vw, 68px)", fontWeight: "800" }}>Need an accountant, bookkeeper or tax professional? <span style={{ color: "#37E191" }}>Let's find the right person</span> for your business.</h2>
+              <h2 className="d" style={{ fontSize: "clamp(38px, 5vw, 68px)", fontWeight: "800" }}>Need an accountant, bookkeeper or tax professional? <span style={{ color: "#37E191" }}>Let’s find the right person</span> for your business.</h2>
               <div role="group" aria-label="I am hiring for" style={{ display: "flex", flexWrap: "wrap", gap: "10px", marginTop: "34px" }}>
                 {auds.map((a, _i) => (<Fragment key={_i}>
                   <button type="button" className={"tabd " + a.cls} aria-pressed={a.pressed} onClick={a.pick}>{a.label}</button>
@@ -905,7 +817,7 @@ export default function App() {
               <p style={{ fontSize: "19px", color: "#D5DEE7", margin: "24px 0 0", maxWidth: "600px", minHeight: "92px", textWrap: "pretty" }}>{audLine}</p>
               <p style={{ fontSize: "16px", color: "#A9B8C7", margin: "14px 0 0", maxWidth: "600px" }}>Our team is already in place. No job posts, no resume rounds, no weeks of screening on your side. Tell us the work, choose the professional you want from our team, and get started. <strong style={{ color: "#FFFFFF" }}>You decide who joins, what work gets done and how they fit your operations.</strong></p>
               <div style={{ display: "flex", flexWrap: "wrap", gap: "14px", marginTop: "34px" }}>
-                <a className="btn b1" href="#enquiry">Request Accounting Professionals <span className="ar" aria-hidden="true">â†’</span></a>
+                <a className="btn b1" href="#enquiry">Request Accounting Professionals <svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" style={{flexShrink:0,display:'inline-block'}}><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
                 <a className="btn b3" href="#models">Explore Hiring Options</a>
               </div>
             </div>
@@ -913,7 +825,7 @@ export default function App() {
             {/* team board */}
             <div className="fade heroboard" style={{ background: "#0D1D30", border: "1px solid rgba(255,255,255,.14)", borderRadius: "26px", padding: "26px", boxShadow: "0 40px 90px -40px rgba(0,0,0,.8)" }}>
               <div style={{ display: "flex", flexWrap: "wrap", alignItems: "center", justifyContent: "space-between", gap: "14px" }}>
-                <p className="m" style={{ margin: "0", fontSize: "13px", letterSpacing: ".12em", textTransform: "uppercase", color: "#A9B8C7" }}>Team board Â· illustrative</p>
+                <p className="m" style={{ margin: "0", fontSize: "13px", letterSpacing: ".12em", textTransform: "uppercase", color: "#A9B8C7" }}>Team board · illustrative</p>
                 <div role="group" aria-label="Compare" style={{ display: "flex", background: "rgba(255,255,255,.08)", borderRadius: "999px", padding: "4px" }}>
                   <button type="button" className={"tabd " + modeAcls} style={{ borderColor: "transparent", minHeight: "44px" }} aria-pressed={modeA} onClick={setModeA}>Today</button>
                   <button type="button" className={"tabd " + modeBcls} style={{ borderColor: "transparent", minHeight: "44px" }} aria-pressed={modeB} onClick={setModeB}>With a dedicated seat</button>
@@ -921,11 +833,11 @@ export default function App() {
               </div>
               <div style={{ display: "grid", gap: "16px", marginTop: "22px" }}>
                 <div style={{ borderRadius: "18px", background: "rgba(255,184,77,.07)", border: "1px solid rgba(255,184,77,.3)", padding: "18px" }}>
-                  <p style={{ margin: "0 0 12px", fontSize: "14px", fontWeight: "600", color: "#FFD9A0" }}>{laneA} Â· US</p>
+                  <p style={{ margin: "0 0 12px", fontSize: "14px", fontWeight: "600", color: "#FFD9A0" }}>{laneA} · US</p>
                   {modeA && (<>
                     <div style={{ display: "flex", flexWrap: "wrap", gap: "8px" }}>
                       {routine.map((c, _i) => (<Fragment key={_i}><span className="chip chAon pop jit" style={{ animationDelay: c.delay }}>{c.t}</span></Fragment>))}
-                      {senior.map((c, _i) => (<Fragment key={_i}><span className="chip chA" style={{ opacity: ".55" }}>{c.t} Â· waiting</span></Fragment>))}
+                      {senior.map((c, _i) => (<Fragment key={_i}><span className="chip chA" style={{ opacity: ".55" }}>{c.t} · waiting</span></Fragment>))}
                     </div>
                   </>)}
                   {modeB && (<>
@@ -935,9 +847,9 @@ export default function App() {
                   </>)}
                 </div>
                 <div style={{ borderRadius: "18px", background: "rgba(55,225,145,.07)", border: "1px solid rgba(55,225,145,.3)", padding: "18px", minHeight: "128px" }}>
-                  <p style={{ margin: "0 0 12px", fontSize: "14px", fontWeight: "600", color: "#9BF0C6" }}>Dedicated professional Â· India</p>
+                  <p style={{ margin: "0 0 12px", fontSize: "14px", fontWeight: "600", color: "#9BF0C6" }}>Dedicated professional · India</p>
                   {modeA && (<>
-                    <div className="seatpulse" style={{ border: "1.5px dashed #37E191", borderRadius: "12px", minHeight: "56px", display: "grid", placeItems: "center", color: "#9BF0C6", fontSize: "15px" }}>Open seat â€” the work has nowhere to go</div>
+                    <div className="seatpulse" style={{ border: "1.5px dashed #37E191", borderRadius: "12px", minHeight: "56px", display: "grid", placeItems: "center", color: "#9BF0C6", fontSize: "15px" }}>Open seat — the work has nowhere to go</div>
                   </>)}
                   {modeB && (<>
                     <div style={{ display: "flex", flexWrap: "wrap", gap: "8px" }}>
@@ -965,49 +877,17 @@ export default function App() {
         </div>
       </section>
 
-      {/* 02 WHO WE HELP */}
-      <section id="who" className="sec">
-        <div className="wrap">
-          <div className="rv">
-            <p className="eb" style={{ color: "#0E7A49" }}>02 Â· Who we help</p>
-            <h2 className="d h2">Different businesses have different hiring problems. We help you find the right people for them.</h2>
-            <p className="lead">A CPA firm hiring its fifth tax preparer has very different requirements from a small business looking for its first bookkeeper. So we start with your business and the work involved, not with one staffing arrangement for everyone.</p>
-          </div>
-          <div role="group" aria-label="Business type" className="rv" style={{ display: "flex", flexWrap: "wrap", gap: "10px", marginTop: "44px" }}>
-            {who.map((w, _i) => (<Fragment key={_i}>
-              <button type="button" className={`tab ${w.cls} `} aria-pressed={w.pressed} onClick={w.pick}>{w.label}</button>
-            </Fragment>))}
-          </div>
-          {who.map((w, _i) => (<Fragment key={_i}>
-            {w.on && (<>
-              <div className="card fade" style={{ marginTop: "22px", padding: "clamp(24px, 4vw, 52px)", display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(min(380px, 100%), 1fr))", gap: "44px" }}>
-                <div style={{ display: "flex", flexDirection: "column", gap: "18px", alignItems: "flex-start" }}>
-                  <p className="m" style={{ margin: "0", fontSize: "13px", color: "#55605C", letterSpacing: ".1em" }}>{w.num} / 06</p>
-                  <h3 className="d" style={{ fontSize: "clamp(26px, 3vw, 40px)", fontWeight: "700" }}>{w.h}</h3>
-                  <p style={{ margin: "0", color: "#2B3A47" }}>{w.p}</p>
-                  <a className="btn b4" href="#enquiry" style={{ marginTop: "8px" }}>{w.cta} <span className="ar" aria-hidden="true">â†’</span></a>
-                </div>
-                <div style={{ background: "#F2F4F0", borderRadius: "18px", padding: "28px" }}>
-                  <p className="m" style={{ margin: "0 0 16px", fontSize: "13px", letterSpacing: ".1em", textTransform: "uppercase", color: "#55605C" }}>{w.useLabel}</p>
-                  <ul className="ck">{w.uses.map((u, _i) => (<Fragment key={_i}><li className="pop" style={{ animationDelay: u.delay }}>{u.t}</li></Fragment>))}</ul>
-                </div>
-              </div>
-            </>)}
-          </Fragment>))}
-        </div>
-      </section>
-
       {/* 03 WHY */}
       <section id="why" className="sec" style={{ background: "#FFFFFF" }}>
         <div className="wrap">
           <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(min(420px, 100%), 1fr))", gap: "56px", alignItems: "end" }}>
             <div className="rv">
-              <p className="eb" style={{ color: "#0E7A49" }}>03 Â· Why businesses need dedicated professionals</p>
+              <p className="eb" style={{ color: "#0E7A49" }}>03 · Why businesses need dedicated professionals</p>
               <h2 className="d h2">Your business is growing. But is your accounting team keeping up?</h2>
               <p className="lead">Every new client brings more bookkeeping, reconciliations and reporting. Every tax season adds preparation work and tighter deadlines. At some point, the existing team simply does not have the capacity to handle everything comfortably.</p>
             </div>
             <div className="rv" role="img" aria-label="Illustration: workload keeps growing while team size stays the same" style={{ background: "#F2F4F0", borderRadius: "20px", padding: "26px" }}>
-              <p className="m" style={{ margin: "0 0 18px", fontSize: "13px", letterSpacing: ".1em", textTransform: "uppercase", color: "#55605C" }}>The gap Â· illustrative</p>
+              <p className="m" style={{ margin: "0 0 18px", fontSize: "13px", letterSpacing: ".1em", textTransform: "uppercase", color: "#55605C" }}>The gap · illustrative</p>
               <p style={{ margin: "0 0 8px", fontSize: "14px", fontWeight: "600" }}>Workload</p>
               <div style={{ height: "30px", borderRadius: "8px", background: "rgba(15,27,42,.08)" }}><div className="grow" style={{ height: "100%", width: "42%", borderRadius: "8px", background: "#FFB84D" }}></div></div>
               <p style={{ margin: "18px 0 8px", fontSize: "14px", fontWeight: "600" }}>Team capacity</p>
@@ -1045,8 +925,8 @@ export default function App() {
               <div style={{ flex: "1 1 200px", height: "4px", borderRadius: "2px", background: "rgba(255,255,255,.14)" }}><div style={{ height: "100%", borderRadius: "2px", background: "#37E191", width: whyPct, transition: "width .7s" }}></div></div>
               <span className="m" style={{ fontSize: "14px", color: "#A9B8C7" }}>{whyCount}</span>
               <div style={{ display: "flex", gap: "10px" }}>
-                <button type="button" className="rnd" style={{ borderColor: "#FFFFFF", color: "#FFFFFF" }} aria-label="Previous reason" onClick={whyPrev}>â†</button>
-                <button type="button" className="rnd" style={{ borderColor: "#37E191", background: "#37E191", color: "#06131F" }} aria-label="Next reason" onClick={whyNext}>â†’</button>
+                <button type="button" className="rnd" style={{ borderColor: "#FFFFFF", color: "#FFFFFF" }} aria-label="Previous reason" onClick={whyPrev}>←</button>
+                <button type="button" className="rnd" style={{ borderColor: "#37E191", background: "#37E191", color: "#06131F" }} aria-label="Next reason" onClick={whyNext}>→</button>
               </div>
             </div>
           </div>
@@ -1066,7 +946,7 @@ export default function App() {
               <p className="m" style={{ margin: "0", fontSize: "13px", letterSpacing: ".1em", textTransform: "uppercase", color: "#8A5A00" }}>And when it may not be</p>
               <p style={{ margin: "0", fontSize: "19px", textWrap: "pretty" }}>It may not be the right arrangement if you have very little work, no clear responsibilities, no capacity to supervise a dedicated resource, or no suitable legal and security arrangements for offshore access.</p>
               <p className="d" style={{ fontSize: "26px", fontWeight: "700" }}>The first step should be to understand the work, not immediately commit to hiring.</p>
-              <a className="btn b1" href="#enquiry" style={{ marginTop: "auto" }}>Discuss My Accounting Staffing Needs <span className="ar" aria-hidden="true">â†’</span></a>
+              <a className="btn b1" href="#enquiry" style={{ marginTop: "auto" }}>Discuss My Accounting Staffing Needs <svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" style={{flexShrink:0,display:'inline-block'}}><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
             </div>
           </div>
         </div>
@@ -1082,7 +962,7 @@ export default function App() {
           <div className="rv" style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(min(420px, 100%), 1fr))", gap: "36px", marginTop: "44px", alignItems: "start" }}>
             <div style={{ display: "grid", gap: "10px" }}>
               {match.map((r, _i) => (<Fragment key={_i}>
-                <button type="button" className={`rowbtn ${r.cls} `} aria-pressed={r.pressed} onClick={r.pick}><span>{r.c}</span><span aria-hidden="true">â†’</span></button>
+                <button type="button" className={`rowbtn ${r.cls} `} aria-pressed={r.pressed} onClick={r.pick}><span>{r.c}</span><span aria-hidden="true">→</span></button>
               </Fragment>))}
             </div>
             <div className="stick" style={{ position: "sticky", top: "100px" }}>
@@ -1094,7 +974,7 @@ export default function App() {
                     <div style={{ height: "1px", background: "rgba(255,255,255,.18)", margin: "28px 0" }}></div>
                     <p className="m" style={{ margin: "0", fontSize: "13px", letterSpacing: ".12em", textTransform: "uppercase", color: "#A9B8C7" }}>Potential responsibility</p>
                     <p style={{ margin: "10px 0 0", fontSize: "21px" }}>{r.r}</p>
-                    <a className="btn b1" href="#roles" style={{ marginTop: "32px" }}>Explore Professionals You Can Hire <span className="ar" aria-hidden="true">â†’</span></a>
+                    <a className="btn b1" href="#roles" style={{ marginTop: "32px" }}>Explore Professionals You Can Hire <svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" style={{flexShrink:0,display:'inline-block'}}><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
                   </div>
                 </>)}
               </Fragment>))}
@@ -1107,7 +987,7 @@ export default function App() {
       <section id="roles" className="sec">
         <div className="wrap">
           <div className="rv">
-            <p className="eb" style={{ color: "#0E7A49" }}>04 Â· Professionals you can hire</p>
+            <p className="eb" style={{ color: "#0E7A49" }}>04 · Professionals you can hire</p>
             <h2 className="d h2">What kind of accounting professional are you looking for?</h2>
             <p className="lead">Someone who handles basic transaction entry may not be suitable for month-end closing. General accounting experience is not the same as practical US tax preparation. Identify the position properly first.</p>
           </div>
@@ -1118,7 +998,7 @@ export default function App() {
           </div>
           {roles.map((r, _i) => (<Fragment key={_i}>
             {r.on && (<>
-              <div className="card fade" style={{ marginTop: "20px", overflow: "hidden" }}>
+              <div className="card fade" style={{ marginTop: "20px", overflow: "visible" }}>
                 <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(min(360px, 100%), 1fr))" }}>
                   <div style={{ padding: "clamp(24px, 4vw, 48px)", display: "flex", flexDirection: "column", gap: "18px", alignItems: "flex-start" }}>
                     <h3 className="d" style={{ fontSize: "clamp(28px, 3.4vw, 44px)", fontWeight: "700" }}>{r.label}</h3>
@@ -1130,7 +1010,7 @@ export default function App() {
                     {r.hasSw && (<>
                       <p style={{ margin: "6px 0 0", fontSize: "15px", color: "#2B3A47" }}><strong>Software experience to consider:</strong> {r.sw}</p>
                     </>)}
-                    <a className="btn b4" href="#enquiry" style={{ marginTop: "10px" }}>{r.cta} <span className="ar" aria-hidden="true">â†’</span></a>
+                    <a className="btn b4" href="#enquiry" style={{ marginTop: "10px" }}>{r.cta} <svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" style={{flexShrink:0,display:'inline-block'}}><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
                   </div>
                   <div style={{ padding: "clamp(24px, 4vw, 48px)", background: "#07121F", color: "#FFFFFF", display: "flex", flexDirection: "column", gap: "20px" }}>
                     <p className="m" style={{ margin: "0", fontSize: "13px", letterSpacing: ".1em", textTransform: "uppercase", color: "#37E191" }}>{r.workLabel}</p>
@@ -1153,8 +1033,8 @@ export default function App() {
       <section id="models" className="sec" style={{ background: "#07121F", color: "#FFFFFF" }}>
         <div className="wrap">
           <div className="rv">
-            <p className="eb" style={{ color: "#37E191" }}>05 Â· Choose your hiring model</p>
-            <h2 className="d h2">You don't have to hire everyone full-time. Choose based on your actual workload.</h2>
+            <p className="eb" style={{ color: "#37E191" }}>05 · Choose your hiring model</p>
+            <h2 className="d h2">You don’t have to hire everyone full-time. Choose based on your actual workload.</h2>
             <p className="lead" style={{ color: "#D5DEE7" }}>One of the biggest hiring mistakes is choosing a full-time position before understanding how much work the role actually involves. Move the dial to see a starting point.</p>
           </div>
           <div className="rv" style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(min(420px, 100%), 1fr))", gap: "28px", marginTop: "48px" }}>
@@ -1169,7 +1049,7 @@ export default function App() {
                 <div className="fade">
                   <label htmlFor="hrs" style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", margin: "28px 0 10px", fontWeight: "600" }}><span>Hours of work per week</span><span className="d" style={{ fontSize: "40px", color: "#37E191" }}>{hrs}<span style={{ fontSize: "18px" }}> hrs</span></span></label>
                   <input id="hrs" type="range" min="5" max="40" step="1" value={hrs} onChange={setHrs} style={{ width: "100%", height: "44px", accentColor: "#37E191" }} />
-                  <p className="m" style={{ margin: "18px 0 10px", fontSize: "12px", letterSpacing: ".1em", textTransform: "uppercase", color: "#A9B8C7" }}>One working week Â· 5 days Ã— 8 hours</p>
+                  <p className="m" style={{ margin: "18px 0 10px", fontSize: "12px", letterSpacing: ".1em", textTransform: "uppercase", color: "#A9B8C7" }}>One working week · 5 days × 8 hours</p>
                   <div style={{ display: "grid", gridTemplateColumns: "repeat(8, minmax(0, 1fr))", gap: "6px" }}>
                     {cells.map((c, _i) => (<Fragment key={_i}><div className="cell" style={{ background: c.bg }}></div></Fragment>))}
                   </div>
@@ -1177,7 +1057,7 @@ export default function App() {
               </>)}
               {isSeasonal && (<>
                 <div className="fade">
-                  <p className="m" style={{ margin: "28px 0 10px", fontSize: "12px", letterSpacing: ".1em", textTransform: "uppercase", color: "#A9B8C7" }}>A tax practice's year Â· illustrative</p>
+                  <p className="m" style={{ margin: "28px 0 10px", fontSize: "12px", letterSpacing: ".1em", textTransform: "uppercase", color: "#A9B8C7" }}>A tax practice’s year · illustrative</p>
                   <div style={{ display: "grid", gridTemplateColumns: "repeat(12, minmax(0, 1fr))", gap: "6px", alignItems: "end", height: "150px" }}>
                     {months.map((mo, _i) => (<Fragment key={_i}><div className="pop" style={{ height: mo.h, background: mo.bg, borderRadius: "6px", animationDelay: mo.delay }}></div></Fragment>))}
                   </div>
@@ -1189,7 +1069,7 @@ export default function App() {
               </>)}
               {isProject && (<>
                 <div className="fade">
-                  <p className="m" style={{ margin: "28px 0 10px", fontSize: "12px", letterSpacing: ".1em", textTransform: "uppercase", color: "#A9B8C7" }}>A defined project Â· illustrative</p>
+                  <p className="m" style={{ margin: "28px 0 10px", fontSize: "12px", letterSpacing: ".1em", textTransform: "uppercase", color: "#A9B8C7" }}>A defined project · illustrative</p>
                   <div style={{ display: "grid", gap: "10px" }}>
                     <div style={{ display: "flex", alignItems: "center", gap: "12px" }}><span style={{ flex: "0 0 96px", fontSize: "14px", color: "#A9B8C7" }}>Scope</span><div className="bar pop" style={{ flex: "0 0 24%", background: "#FFB84D" }}></div></div>
                     <div style={{ display: "flex", alignItems: "center", gap: "12px" }}><span style={{ flex: "0 0 96px", fontSize: "14px", color: "#A9B8C7" }}>Clear backlog</span><div className="bar pop" style={{ flex: "0 0 56%", background: "#37E191", animationDelay: ".15s" }}></div></div>
@@ -1207,7 +1087,7 @@ export default function App() {
                     <p className="d" style={{ fontSize: "clamp(32px, 4vw, 52px)", fontWeight: "800" }}>{mm.name}</p>
                     <p style={{ margin: "0", fontSize: "18px", fontWeight: "600" }}>{mm.for}</p>
                     <p style={{ margin: "0", fontSize: "16px" }}>{mm.ex}</p>
-                    <a className="btn b4" href="#enquiry" style={{ marginTop: "8px" }}>{mm.cta} <span className="ar" aria-hidden="true">â†’</span></a>
+                    <a className="btn b4" href="#enquiry" style={{ marginTop: "8px" }}>{mm.cta} <svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" style={{flexShrink:0,display:'inline-block'}}><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
                   </div>
                 </>)}
               </Fragment>))}
@@ -1227,7 +1107,7 @@ export default function App() {
               </div>
             </Fragment>))}
           </div>
-          <div className="rv" style={{ marginTop: "36px", textAlign: "center" }}><a className="btn b1" href="#enquiry">Help Me Choose the Right Model <span className="ar" aria-hidden="true">â†’</span></a></div>
+          <div className="rv" style={{ marginTop: "36px", textAlign: "center" }}><a className="btn b1" href="#enquiry">Help Me Choose the Right Model <svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" style={{flexShrink:0,display:'inline-block'}}><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></div>
         </div>
       </section>
 
@@ -1235,7 +1115,7 @@ export default function App() {
       <section id="process" className="sec">
         <div className="wrap">
           <div className="rv">
-            <p className="eb" style={{ color: "#0E7A49" }}>06 Â· How it works</p>
+            <p className="eb" style={{ color: "#0E7A49" }}>06 · How it works</p>
             <h2 className="d h2">Our team is already in place. You choose the talent, and the work starts.</h2>
             <p className="lead">No job posts, no resume rounds, no weeks of screening and shortlisting on your side. The bookkeepers, tax preparers, accountants and payroll specialists are already part of Smart Tax Expertss. Five steps from first conversation to live work.</p>
           </div>
@@ -1270,90 +1150,10 @@ export default function App() {
             </Fragment>))}
             <div style={{ display: "flex", flexWrap: "wrap", justifyContent: "space-between", alignItems: "center", gap: "16px", marginTop: "34px", paddingTop: "24px", borderTop: "1px solid rgba(15,27,42,.12)" }}>
               <div style={{ display: "flex", gap: "10px" }}>
-                <button type="button" className="rnd" aria-label="Previous step" onClick={stepPrev}>â†</button>
-                <button type="button" className="rnd" style={{ background: "#0F1B2A", color: "#FFFFFF" }} aria-label="Next step" onClick={stepNext}>â†’</button>
+                <button type="button" className="rnd" aria-label="Previous step" onClick={stepPrev}>←</button>
+                <button type="button" className="rnd" style={{ background: "#0F1B2A", color: "#FFFFFF" }} aria-label="Next step" onClick={stepNext}>→</button>
               </div>
-              <a className="btn b1" href="#enquiry">Choose My Professional <span className="ar" aria-hidden="true">â†’</span></a>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* 07 TIMELINE */}
-      <section id="timeline" className="sec" style={{ background: "#FFFFFF" }}>
-        <div className="wrap">
-          <div className="rv">
-            <p className="eb" style={{ color: "#0E7A49" }}>07 Â· Getting started</p>
-            <h2 className="d h2">How quickly can work start?</h2>
-            <p className="lead">Hiring is usually tied to a deadline: a tax season approaching, a team member leaving, a growing client workload. Because our team already exists, the slow parts of hiring are gone. What is left mostly depends on you.</p>
-          </div>
-          <div style={{ display: "grid", gap: "14px", marginTop: "48px" }}>
-            {gantt.map((g, _i) => (<Fragment key={_i}>
-              <div style={{ display: "flex", flexWrap: "wrap", alignItems: "center", gap: "8px 24px" }}>
-                <p style={{ flex: "1 1 250px", margin: "0", fontWeight: "600" }}>{g.t}</p>
-                <div style={{ flex: "999 1 380px", minWidth: "0", background: "#F2F4F0", borderRadius: "9px", padding: "0" }}>
-                  <div className={`bar sx ganttbar ${g.cls} `} style={{ marginLeft: g.l, width: g.w, backgroundColor: g.bg, display: "flex", alignItems: "center", padding: "0 12px", minWidth: "max-content" }}><span className="m" style={{ fontSize: "13px", color: "#06131F", whiteSpace: "nowrap" }}>{g.est}</span></div>
-                </div>
-              </div>
-            </Fragment>))}
-          </div>
-          <div className="rv" style={{ display: "flex", flexWrap: "wrap", alignItems: "center", justifyContent: "space-between", gap: "20px", marginTop: "36px" }}>
-            <p style={{ margin: "0", maxWidth: "760px", fontSize: "15px", color: "#55605C" }}>There are no job posts, resume rounds or screening on your side. The start date depends on how soon you can meet and choose, the availability of the professional you want, and onboarding and system access. Typical time from first conversation to work starting: [YOUR TYPICAL START TIME].</p>
-            <a className="btn b2" href="#enquiry">Discuss My Start Date <span className="ar" aria-hidden="true">â†’</span></a>
-          </div>
-        </div>
-      </section>
-
-      {/* 08 AFTER HIRE */}
-      <section id="after" className="sec" style={{ background: "#07121F", color: "#FFFFFF" }}>
-        <div className="wrap">
-          <div className="rv">
-            <p className="eb" style={{ color: "#37E191" }}>08 Â· What happens after you hire someone?</p>
-            <h2 className="d h2">We stay involved after you choose.</h2>
-            <p className="lead" style={{ color: "#D5DEE7" }}>You also need a clear arrangement for employment, communication, attendance, performance and continuity. The exact split depends on the agreed engagement model and employing structure.</p>
-          </div>
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(min(420px, 100%), 1fr))", gap: "22px", marginTop: "48px" }}>
-            <div className="rv" style={{ borderRadius: "24px", padding: "clamp(24px, 3vw, 40px)", background: "rgba(55,225,145,.08)", border: "1.5px solid rgba(55,225,145,.45)" }}>
-              <p className="m" style={{ margin: "0", fontSize: "13px", letterSpacing: ".12em", textTransform: "uppercase", color: "#37E191" }}>Where included in your agreement</p>
-              <h3 className="d" style={{ fontSize: "30px", fontWeight: "700", margin: "12px 0 22px" }}>What Smart Tax Expertss handles</h3>
-              <ul className="ck ckd" style={{ color: "#D5DEE7", fontSize: "16px" }}>
-                <li>Providing professionals from our in-house team.</li>
-                <li>Matching them to your role and software.</li>
-                <li>Introductions and onboarding coordination.</li>
-                <li>Employment documentation.</li>
-                <li>Salary and HR administration.</li>
-                <li>Attendance and leave coordination.</li>
-                <li>Employee support and employment-related communication.</li>
-                <li>Performance concern escalation.</li>
-                <li>A replacement from our team where required.</li>
-                <li>Transition and knowledge-transfer coordination.</li>
-              </ul>
-            </div>
-            <div className="rv" style={{ borderRadius: "24px", padding: "clamp(24px, 3vw, 40px)", background: "rgba(255,184,77,.08)", border: "1.5px solid rgba(255,184,77,.5)" }}>
-              <p className="m" style={{ margin: "0", fontSize: "13px", letterSpacing: ".12em", textTransform: "uppercase", color: "#FFB84D" }}>In a client-managed arrangement</p>
-              <h3 className="d" style={{ fontSize: "30px", fontWeight: "700", margin: "12px 0 22px" }}>What you continue to control</h3>
-              <ul className="ck cka" style={{ color: "#D5DEE7", fontSize: "16px" }}>
-                <li>Assigning daily tasks.</li>
-                <li>Setting work priorities.</li>
-                <li>Defining accounting procedures.</li>
-                <li>Explaining client-specific requirements.</li>
-                <li>Providing authorized system access.</li>
-                <li>Reviewing completed work.</li>
-                <li>Approving financial transactions.</li>
-                <li>Managing your customer relationships.</li>
-                <li>Making final business decisions.</li>
-                <li>Approving tax returns and filings through authorized personnel.</li>
-              </ul>
-            </div>
-          </div>
-          <div className="rv" style={{ marginTop: "22px", borderRadius: "24px", background: "#0D1D30", border: "1px solid rgba(255,255,255,.14)", padding: "clamp(24px, 3vw, 40px)", display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(min(360px, 100%), 1fr))", gap: "28px", alignItems: "center" }}>
-            <div>
-              <h3 className="d" style={{ fontSize: "30px", fontWeight: "700" }}>Who employs the professional?</h3>
-              <p style={{ margin: "14px 0 0", color: "#D5DEE7", fontSize: "16px" }}>This should never be left unclear. The professionals are part of our team: Smart Tax Expertss or its designated Indian employing entity employs them and manages the agreed employment responsibilities. Your US business manages the assigned work under the contract. The employing entity, supervision structure, payroll obligations and legal responsibilities must match the real arrangement and be documented properly.</p>
-            </div>
-            <div style={{ display: "flex", flexDirection: "column", gap: "14px", alignItems: "flex-start" }}>
-              <p style={{ margin: "0", fontSize: "19px" }}>You know your clients and your internal processes better than anyone else. The professional should work the way your business operates.</p>
-              <a className="btn b1" href="#enquiry">Understand How the Engagement Works <span className="ar" aria-hidden="true">â†’</span></a>
+              <a className="btn b1" href="#enquiry">Choose My Professional <svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" style={{flexShrink:0,display:'inline-block'}}><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
             </div>
           </div>
         </div>
@@ -1364,16 +1164,16 @@ export default function App() {
         <div className="wrap">
           <div className="rv" style={{ display: "flex", flexWrap: "wrap", justifyContent: "space-between", alignItems: "end", gap: "24px" }}>
             <div style={{ flex: "1 1 520px" }}>
-              <p className="eb" style={{ color: "#0E7A49" }}>09 Â· Real-world hiring use cases</p>
+              <p className="eb" style={{ color: "#0E7A49" }}>09 · Real-world hiring use cases</p>
               <h2 className="d h2">What does this actually look like in your business?</h2>
               <p className="lead" style={{ fontSize: "16px", color: "#55605C" }}>Illustrative scenarios, not claims of specific completed Smart Tax Expertss projects.</p>
             </div>
             <div style={{ display: "flex", gap: "10px" }}>
-              <button type="button" className="rnd" aria-label="Previous use case" onClick={ucPrev}>â†</button>
-              <button type="button" className="rnd" style={{ background: "#0F1B2A", color: "#FFFFFF" }} aria-label="Next use case" onClick={ucNext}>â†’</button>
+              <button type="button" className="rnd" aria-label="Previous use case" onClick={ucPrev}>←</button>
+              <button type="button" className="rnd" style={{ background: "#0F1B2A", color: "#FFFFFF" }} aria-label="Next use case" onClick={ucNext}>→</button>
             </div>
           </div>
-          <div className="rv card" style={{ marginTop: "40px", overflow: "hidden" }}>
+          <div className="rv card" style={{ marginTop: "40px", overflow: "visible" }}>
             <div className="track" style={{ transform: `translateX(${ucShift})` }}>
               {cases.map((u, _i) => (<Fragment key={_i}>
                 <article className="slide" aria-hidden={u.hidden} style={{ padding: "clamp(24px, 4vw, 52px)" }}>
@@ -1392,7 +1192,7 @@ export default function App() {
               <div role="group" aria-label="Choose use case" style={{ display: "flex" }}>
                 {cases.map((u, _i) => (<Fragment key={_i}><button type="button" className={`dot ${u.cls} `} aria-label={u.aria} aria-pressed={u.pressed} onClick={u.pick}><i></i></button></Fragment>))}
               </div>
-              <a className="btn b4" href="#enquiry">Discuss a Similar Requirement <span className="ar" aria-hidden="true">â†’</span></a>
+              <a className="btn b4" href="#enquiry">Discuss a Similar Requirement <svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" style={{flexShrink:0,display:'inline-block'}}><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
             </div>
           </div>
         </div>
@@ -1402,7 +1202,7 @@ export default function App() {
       <section id="industries" className="sec" style={{ background: "#FFFFFF" }}>
         <div className="wrap">
           <div className="rv">
-            <p className="eb" style={{ color: "#0E7A49" }}>10 Â· Industries we serve</p>
+            <p className="eb" style={{ color: "#0E7A49" }}>10 · Industries we serve</p>
             <h2 className="d h2">Accounting professionals for different industries.</h2>
             <p className="lead">A retail business reports differently from a construction company. A CPA firm needs different skills from a SaaS company. The industry, transaction types and software shape which of our professionals we match to you.</p>
           </div>
@@ -1418,7 +1218,7 @@ export default function App() {
                   <div className="pop" style={{ borderRadius: "22px", background: "#F2F4F0", padding: "clamp(24px, 3vw, 40px)", display: "flex", flexDirection: "column", gap: "16px", alignItems: "flex-start" }}>
                     <h3 className="d" style={{ fontSize: "30px", fontWeight: "700" }}>{n.label}</h3>
                     <p style={{ margin: "0", fontSize: "18px" }}>{n.text}</p>
-                    <a className="btn b4" href="#enquiry">Find Professionals for My Industry <span className="ar" aria-hidden="true">â†’</span></a>
+                    <a className="btn b4" href="#enquiry">Find Professionals for My Industry <svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" style={{flexShrink:0,display:'inline-block'}}><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
                   </div>
                 </>)}
               </Fragment>))}
@@ -1431,8 +1231,8 @@ export default function App() {
       <section id="software" className="sec" style={{ paddingTop: "0", background: "#FFFFFF" }}>
         <div className="wrap">
           <div className="rv" style={{ borderTop: "1px solid rgba(15,27,42,.12)", paddingTop: "96px" }}>
-            <p className="eb" style={{ color: "#0E7A49" }}>11 Â· Accounting, tax and payroll software</p>
-            <h2 className="d h2">Your business already has its systems. Let's find someone who knows how to use them.</h2>
+            <p className="eb" style={{ color: "#0E7A49" }}>11 · Accounting, tax and payroll software</p>
+            <h2 className="d h2">Your business already has its systems. Let’s find someone who knows how to use them.</h2>
             <p className="lead">Changing accounting software just because you are hiring offshore makes little sense. We match you with professionals who already work on your stack.</p>
           </div>
         </div>
@@ -1445,7 +1245,7 @@ export default function App() {
           <div className="rv" style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(min(420px, 100%), 1fr))", gap: "32px", marginTop: "48px", alignItems: "start" }}>
             <div style={{ display: "grid", gap: "10px" }}>
               {sws.map((w, _i) => (<Fragment key={_i}>
-                <button type="button" className={`rowbtn ${w.cls} `} style={{ background: "#F2F4F0" }} aria-pressed={w.pressed} onClick={w.pick}><span>{w.label}</span><span aria-hidden="true">â†’</span></button>
+                <button type="button" className={`rowbtn ${w.cls} `} style={{ background: "#F2F4F0" }} aria-pressed={w.pressed} onClick={w.pick}><span>{w.label}</span><span aria-hidden="true">→</span></button>
               </Fragment>))}
             </div>
             <div>
@@ -1460,7 +1260,7 @@ export default function App() {
                 </>)}
               </Fragment>))}
               <p style={{ margin: "20px 0 0", fontSize: "16px" }}>A software name on a profile is not proof of practical knowledge. Tell us whether a platform is mandatory or preferred; we match on how our professionals have actually used it, and you can test that yourself when you meet them.</p>
-              <a className="btn b2" href="#enquiry" style={{ marginTop: "20px" }}>Find Someone Who Knows My Software <span className="ar" aria-hidden="true">â†’</span></a>
+              <a className="btn b2" href="#enquiry" style={{ marginTop: "20px" }}>Find Someone Who Knows My Software <svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" style={{flexShrink:0,display:'inline-block'}}><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
             </div>
           </div>
           <p style={{ margin: "40px 0 0", fontSize: "14px", color: "#55605C", fontStyle: "italic" }}>The software listed represents platforms that may be included in your requirements. Experience and certifications vary by professional. Listing a product does not imply an official partnership or endorsement.</p>
@@ -1471,7 +1271,7 @@ export default function App() {
       <section id="security" className="sec" style={{ background: "#07121F", color: "#FFFFFF" }}>
         <div className="wrap">
           <div className="rv">
-            <p className="eb" style={{ color: "#37E191" }}>12 Â· Quality, confidentiality and data security</p>
+            <p className="eb" style={{ color: "#37E191" }}>12 · Quality, confidentiality and data security</p>
             <h2 className="d h2">Your accounting data is sensitive. The way it is handled matters.</h2>
             <p className="lead" style={{ color: "#D5DEE7" }}>An offshore professional may access financial records, business information and potentially personal taxpayer data. Before an engagement begins, the parties should establish how information is accessed, stored, processed and protected.</p>
           </div>
@@ -1518,7 +1318,7 @@ export default function App() {
             <div style={{ display: "flex", flexDirection: "column", gap: "14px", alignItems: "flex-start" }}>
               <p style={{ margin: "0", fontSize: "16px" }}>Before sharing protected taxpayer information with an offshore professional, your US tax firm should obtain appropriate legal and compliance guidance, including any required taxpayer consent. Written information security programs and applicable FTC Safeguards Rule obligations should also be assessed according to the parties' actual roles.</p>
               <p style={{ margin: "0", fontSize: "16px", fontWeight: "600" }}>Our approach: security responsibilities and permitted data access are agreed before work begins, not after a problem occurs.</p>
-              <a className="btn b4" href="#enquiry">Discuss Our Security &amp; Data Handling Process <span className="ar" aria-hidden="true">â†’</span></a>
+              <a className="btn b4" href="#enquiry">Discuss Our Security &amp; Data Handling Process <svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" style={{flexShrink:0,display:'inline-block'}}><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
             </div>
           </div>
         </div>
@@ -1528,7 +1328,7 @@ export default function App() {
       <section id="team" className="sec" style={{ background: "#D9F7E6" }}>
         <div className="wrap">
           <div className="rv">
-            <p className="eb" style={{ color: "#0A5A36" }}>13 Â· Building and expanding your team</p>
+            <p className="eb" style={{ color: "#0A5A36" }}>13 · Building and expanding your team</p>
             <h2 className="d h2">Start with one professional. Add more when your business needs them.</h2>
             <p className="lead">You do not need to build an entire offshore department on day one. Step through the stages and watch the seats fill.</p>
           </div>
@@ -1551,7 +1351,7 @@ export default function App() {
                 </>)}
               </Fragment>))}
               <p style={{ margin: "24px 0 0", fontSize: "15px", color: "#2B3A47" }}>The right structure depends on your workload, client portfolio and management requirements. You do not need every role shown.</p>
-              <a className="btn b4" href="#enquiry" style={{ marginTop: "20px" }}>Plan My Offshore Accounting Team <span className="ar" aria-hidden="true">â†’</span></a>
+              <a className="btn b4" href="#enquiry" style={{ marginTop: "20px" }}>Plan My Offshore Accounting Team <svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" style={{flexShrink:0,display:'inline-block'}}><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
             </div>
             <div role="img" aria-label={seatAria} style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(min(170px, 100%), 1fr))", gap: "14px" }}>
               {seats.map((e, _i) => (<Fragment key={_i}>
@@ -1566,7 +1366,7 @@ export default function App() {
       <section id="continuity" className="sec">
         <div className="wrap">
           <div className="rv">
-            <p className="eb" style={{ color: "#0E7A49" }}>14 Â· Performance, replacement and continuity</p>
+            <p className="eb" style={{ color: "#0E7A49" }}>14 · Performance, replacement and continuity</p>
             <h2 className="d h2">What happens if the professional is not the right fit?</h2>
             <p className="lead">No match can guarantee a perfect fit from day one. Sometimes more training is needed; sometimes the role turns out different from the job description. What matters is a clear process for addressing it.</p>
           </div>
@@ -1581,7 +1381,7 @@ export default function App() {
             <div>
               <h3 className="d" style={{ fontSize: "28px", fontWeight: "700" }}>What about leave or resignation?</h3>
               <p style={{ margin: "12px 0 0", fontSize: "16px", color: "#2B3A47" }}>Continuity planning should cover planned leave, unexpected absence and resignation. Replacement timelines, fees, notice periods and backup-resource commitments should be confirmed in writing.</p>
-              <a className="btn b2" href="#enquiry" style={{ marginTop: "22px" }}>Understand Our Continuity Arrangements <span className="ar" aria-hidden="true">â†’</span></a>
+              <a className="btn b2" href="#enquiry" style={{ marginTop: "22px" }}>Understand Our Continuity Arrangements <svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" style={{flexShrink:0,display:'inline-block'}}><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
             </div>
             <ul className="ck" style={{ gridTemplateColumns: "repeat(auto-fit, minmax(min(200px, 100%), 1fr))", fontSize: "16px" }}>
               <li>Task documentation.</li>
@@ -1599,7 +1399,7 @@ export default function App() {
       <section id="pricing" className="sec" style={{ background: "#FFFFFF" }}>
         <div className="wrap">
           <div className="rv">
-            <p className="eb" style={{ color: "#0E7A49" }}>15 Â· Pricing and engagement</p>
+            <p className="eb" style={{ color: "#0E7A49" }}>15 · Pricing and engagement</p>
             <h2 className="d h2">What does it cost to hire an accounting professional in India?</h2>
             <p className="lead">A junior bookkeeper and a senior US tax reviewer should not be priced as if they are the same role. Cost depends on the professional, their experience and how the engagement is structured.</p>
           </div>
@@ -1637,7 +1437,7 @@ export default function App() {
                 <li>Replacement provisions.</li>
               </ul>
               <div style={{ display: "flex", flexWrap: "wrap", gap: "12px", marginTop: "auto" }}>
-                <a className="btn b1" href="#enquiry">Request a Staffing Proposal <span className="ar" aria-hidden="true">â†’</span></a>
+                <a className="btn b1" href="#enquiry">Request a Staffing Proposal <svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" style={{flexShrink:0,display:'inline-block'}}><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
                 <a className="btn b3" href="#enquiry">Discuss My Hiring Budget</a>
               </div>
             </div>
@@ -1649,10 +1449,10 @@ export default function App() {
       <section id="faq" className="sec">
         <div className="wrap" style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(min(360px, 100%), 1fr))", gap: "48px", alignItems: "start" }}>
           <div className="rv">
-            <p className="eb" style={{ color: "#0E7A49" }}>16 Â· Frequently asked questions</p>
+            <p className="eb" style={{ color: "#0E7A49" }}>16 · Frequently asked questions</p>
             <h2 className="d h2">The questions firms ask before they hire.</h2>
             <p className="lead" style={{ fontSize: "17px" }}>Something specific to your firm? Ask it on the enquiry form and we will cover it on the first call.</p>
-            <a className="btn b2" href="#enquiry" style={{ marginTop: "26px" }}>Talk to Our Team <span className="ar" aria-hidden="true">â†’</span></a>
+            <a className="btn b2" href="#enquiry" style={{ marginTop: "26px" }}>Talk to Our Team <svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" style={{flexShrink:0,display:'inline-block'}}><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
           </div>
           <div className="rv" style={{ gridColumn: "span 1", borderTop: "1.5px solid #0F1B2A" }}>
             {faqs.map((q, _i) => (<Fragment key={_i}>
@@ -1671,13 +1471,13 @@ export default function App() {
       <section id="enquiry" className="sec" style={{ background: "#07121F", color: "#FFFFFF" }}>
         <div className="wrap" style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(min(380px, 100%), 1fr))", gap: "48px", alignItems: "start" }}>
           <div className="rv">
-            <p className="eb" style={{ color: "#37E191" }}>17 Â· Hiring enquiry</p>
-            <h2 className="d h2">Tell us what kind of professional you need. We'll take it from there.</h2>
+            <p className="eb" style={{ color: "#37E191" }}>17 · Hiring enquiry</p>
+            <h2 className="d h2">Tell us what kind of professional you need. We’ll take it from there.</h2>
             <p className="lead" style={{ color: "#D5DEE7", fontSize: "17px" }}>You do not need to prepare a brief or a job description. Our team is ready; three ways to start:</p>
             <div style={{ display: "grid", gap: "12px", marginTop: "30px" }}>
               <div style={{ borderRadius: "18px", border: "1.5px solid #37E191", padding: "20px", display: "flex", gap: "16px", alignItems: "flex-start" }}><span className="d" style={{ fontSize: "30px", fontWeight: "800", color: "#37E191" }}>1</span><div><p style={{ margin: "0", fontWeight: "600", fontSize: "18px" }}>Send your requirement</p><p style={{ margin: "4px 0 0", color: "#A9B8C7", fontSize: "15px" }}>Four short parts on this form. We review it and come back with professionals from our team who fit the work.</p></div></div>
               <div style={{ borderRadius: "18px", border: "1px solid rgba(255,255,255,.2)", padding: "20px", display: "flex", gap: "16px", alignItems: "flex-start" }}><span className="d" style={{ fontSize: "30px", fontWeight: "800", color: "#FFB84D" }}>2</span><div><p style={{ margin: "0", fontWeight: "600", fontSize: "18px" }}>Book a consultation call</p><p style={{ margin: "4px 0 0", color: "#A9B8C7", fontSize: "15px" }}>Talk the role through with our team first. <a href="#enquiry" style={{ color: "#37E191" }}>[YOUR BOOKING LINK]</a></p></div></div>
-              <div style={{ borderRadius: "18px", border: "1px solid rgba(255,255,255,.2)", padding: "20px", display: "flex", gap: "16px", alignItems: "flex-start" }}><span className="d" style={{ fontSize: "30px", fontWeight: "800", color: "#FFB84D" }}>3</span><div><p style={{ margin: "0", fontWeight: "600", fontSize: "18px" }}>Call or email us</p><p style={{ margin: "4px 0 0", color: "#A9B8C7", fontSize: "15px" }}>[YOUR US PHONE NUMBER] Â· [YOUR EMAIL ADDRESS]</p></div></div>
+              <div style={{ borderRadius: "18px", border: "1px solid rgba(255,255,255,.2)", padding: "20px", display: "flex", gap: "16px", alignItems: "flex-start" }}><span className="d" style={{ fontSize: "30px", fontWeight: "800", color: "#FFB84D" }}>3</span><div><p style={{ margin: "0", fontWeight: "600", fontSize: "18px" }}>Call or email us</p><p style={{ margin: "4px 0 0", color: "#A9B8C7", fontSize: "15px" }}>[YOUR US PHONE NUMBER] · [YOUR EMAIL ADDRESS]</p></div></div>
             </div>
           </div>
 
@@ -1717,13 +1517,13 @@ export default function App() {
                     {proPills.map((p, _i) => (<Fragment key={_i}><button type="button" className={`pill ${p.cls} `} aria-pressed={p.on} onClick={p.tog}>{p.t}</button></Fragment>))}
                   </div>
                   <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(min(230px, 100%), 1fr))", gap: "16px", marginTop: "18px" }}>
-                    <div><label className="lb" htmlFor="f-count">How many professionals?</label><select className="f" id="f-count"><option>1</option><option>2â€“3</option><option>4â€“5</option><option>6â€“10</option><option>More than 10</option><option>Not Sure Yet</option></select></div>
+                    <div><label className="lb" htmlFor="f-count">How many professionals?</label><select className="f" id="f-count"><option>1</option><option>2–3</option><option>4–5</option><option>6–10</option><option>More than 10</option><option>Not Sure Yet</option></select></div>
                     <div><label className="lb" htmlFor="f-model">Preferred hiring model</label><select className="f" id="f-model"><option>Full-Time Dedicated</option><option>Part-Time Dedicated</option><option>Flexible / Project-Based</option><option>Seasonal Staffing</option><option>I Need Your Recommendation</option></select></div>
                     <div><label className="lb" htmlFor="f-exp">Experience level</label><select className="f" id="f-exp"><option>Junior</option><option>Mid-Level</option><option>Senior</option><option>Reviewer / Team Lead</option><option>Open to Recommendations</option></select></div>
                     <div><label className="lb" htmlFor="f-sched">Working schedule</label><select className="f" id="f-sched"><option>US Eastern Time Overlap</option><option>US Central Time Overlap</option><option>US Mountain Time Overlap</option><option>US Pacific Time Overlap</option><option>Flexible Working Hours</option><option>To Be Discussed</option></select></div>
                   </div>
                   <label className="lb" htmlFor="f-when" style={{ marginTop: "16px" }}>When do you need the professional?</label>
-                  <select className="f" id="f-when"><option>As Soon as Possible</option><option>Within 2â€“4 Weeks</option><option>Within 1â€“2 Months</option><option>Before the Next Tax Season</option><option>Just Exploring Options</option></select>
+                  <select className="f" id="f-when"><option>As Soon as Possible</option><option>Within 2–4 Weeks</option><option>Within 1–2 Months</option><option>Before the Next Tax Season</option><option>Just Exploring Options</option></select>
                   <p className="lb" id="l-sw" style={{ marginTop: "18px" }}>Which software should they know? <span style={{ fontWeight: "400", color: "#A9B8C7" }}>Select all that apply</span></p>
                   <div role="group" aria-labelledby="l-sw" style={{ display: "flex", flexWrap: "wrap", gap: "8px" }}>
                     {swPills.map((p, _i) => (<Fragment key={_i}><button type="button" className={`pill ${p.cls} `} aria-pressed={p.on} onClick={p.tog}>{p.t}</button></Fragment>))}
@@ -1734,7 +1534,7 @@ export default function App() {
                   <legend className="d" style={{ fontSize: "28px", fontWeight: "700", padding: "0", marginBottom: "22px" }}>Explain the work</legend>
                   <label className="lb" htmlFor="f-work">What will the professional be responsible for?</label>
                   <textarea className="f" id="f-work" rows="7" placeholder="Tell us about the work you need help with. For example, monthly bookkeeping for multiple clients, Form 1040 preparation, bank reconciliations, payroll processing, accounts payable or financial reporting. You can also mention the software you use and any specific experience required."></textarea>
-                  <label className="lb" htmlFor="f-jd" style={{ marginTop: "16px" }}>Do you already have a job description? <span style={{ fontWeight: "400", color: "#A9B8C7" }}>Optional Â· PDF, DOC or DOCX</span></label>
+                  <label className="lb" htmlFor="f-jd" style={{ marginTop: "16px" }}>Do you already have a job description? <span style={{ fontWeight: "400", color: "#A9B8C7" }}>Optional · PDF, DOC or DOCX</span></label>
                   <input className="f" id="f-jd" type="file" accept=".pdf,.doc,.docx" />
                 </fieldset>
 
@@ -1751,12 +1551,12 @@ export default function App() {
                 </fieldset>
 
                 <div style={{ display: "flex", flexWrap: "wrap", justifyContent: "space-between", gap: "12px", marginTop: "28px" }}>
-                  <button type="button" className={`btn b3 fback ${backCls} `} style={{ visibility: backVis }} onClick={fBack}>â† Back</button>
+                  <button type="button" className={`btn b3 fback ${backCls} `} style={{ visibility: backVis }} onClick={fBack}>← Back</button>
                   {notLast && (<>
-                    <button type="button" className="btn b1" onClick={fNext}>Continue <span className="ar" aria-hidden="true">â†’</span></button>
+                    <button type="button" className="btn b1" onClick={fNext}>Continue <svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" style={{flexShrink:0,display:'inline-block'}}><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
                   </>)}
                   {isLast && (<>
-                    <button type="button" className="btn b1" onClick={fSend}>Request a Hiring Consultation <span className="ar" aria-hidden="true">â†’</span></button>
+                    <button type="button" className="btn b1" onClick={fSend}>Request a Hiring Consultation <svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" style={{flexShrink:0,display:'inline-block'}}><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
                   </>)}
                 </div>
               </form>
@@ -1769,10 +1569,10 @@ export default function App() {
       <section className="sec" style={{ background: "#37E191", color: "#06131F", position: "relative", overflow: "hidden" }}>
         <div className="wrap rv" style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(min(420px, 100%), 1fr))", gap: "48px", alignItems: "center" }}>
           <div>
-            <h2 className="d" style={{ fontSize: "clamp(38px, 5.4vw, 76px)", fontWeight: "800", textWrap: "balance" }}>Don't let hiring delays hold back your accounting business.</h2>
+            <h2 className="d" style={{ fontSize: "clamp(38px, 5.4vw, 76px)", fontWeight: "800", textWrap: "balance" }}>Don’t let hiring delays hold back your accounting business.</h2>
             <p style={{ margin: "24px 0 0", fontSize: "19px", maxWidth: "620px" }}>You already know what needs to get done. The right person to take responsibility for it is already on our team. One dedicated bookkeeper, an experienced US tax preparer, a payroll specialist or an entire team: tell us what your business needs, choose your professional, and start.</p>
             <div style={{ display: "flex", flexWrap: "wrap", gap: "14px", marginTop: "32px" }}>
-              <a className="btn b4" href="#enquiry">Choose My Professional <span className="ar" aria-hidden="true">â†’</span></a>
+              <a className="btn b4" href="#enquiry">Choose My Professional <svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" style={{flexShrink:0,display:'inline-block'}}><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
               <a className="btn b2" href="#enquiry">Talk to Our Team</a>
             </div>
           </div>
@@ -1782,7 +1582,7 @@ export default function App() {
             <div className="seat off seatpulse" style={{ minHeight: "110px", borderColor: "#06131F" }}><span className="m" style={{ fontSize: "12px" }}>OPEN</span><span style={{ fontWeight: "600" }}>Your next hire</span></div>
           </div>
         </div>
-        <div className="wrap"><p className="d" style={{ marginTop: "64px", paddingTop: "28px", borderTop: "1.5px solid rgba(6,19,31,.3)", fontSize: "clamp(20px, 2.4vw, 30px)", fontWeight: "600", maxWidth: "900px" }}>Let's find the right accounting professional for your business, with clear expectations from the very beginning.</p></div>
+        <div className="wrap"><p className="d" style={{ marginTop: "64px", paddingTop: "28px", borderTop: "1.5px solid rgba(6,19,31,.3)", fontSize: "clamp(20px, 2.4vw, 30px)", fontWeight: "600", maxWidth: "900px" }}>Let’s find the right accounting professional for your business, with clear expectations from the very beginning.</p></div>
       </section>
 
       {/* FOOTER */}

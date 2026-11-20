@@ -163,6 +163,7 @@ export function Navbar() {
           >
             {navLinks.map((link) => {
               const active = isActive(link.path);
+              const showActive = active && link.path !== '/hire-professionals';
 
               if (link.name === 'Services') {
                 return (
@@ -177,7 +178,6 @@ export function Navbar() {
                         className={`ptc-nav-link ${active ? 'ptc-nav-link-active' : ''}`}
                       >
                         <span>{link.name}</span>
-                        {active && <span className="ptc-nav-active-indicator" />}
                       </Link>
                       <button
                         ref={servicesTriggerRef}
@@ -227,14 +227,10 @@ export function Navbar() {
                   <Link
                     to={link.path}
                     aria-current={active ? 'page' : undefined}
-                    className={`ptc-nav-link ${active ? 'ptc-nav-link-active' : ''
+                    className={`ptc-nav-link ${showActive ? 'ptc-nav-link-active' : ''
                       }`}
                   >
                     <span>{link.name}</span>
-
-                    {active && (
-                      <span className="ptc-nav-active-indicator" />
-                    )}
                   </Link>
 
                 </div>
@@ -305,9 +301,8 @@ export function Navbar() {
                 return (
                   <div key={link.name} className="ptc-mobile-accordion">
                     <div
-                      className={`ptc-mobile-link ptc-mobile-services-row ${
-                        isActive('/services') ? 'ptc-mobile-link-active' : ''
-                      } ${mobileServicesOpen ? 'ptc-mobile-accordion-open' : ''}`}
+                      className={`ptc-mobile-link ptc-mobile-services-row ${isActive('/services') ? 'ptc-mobile-link-active' : ''
+                        } ${mobileServicesOpen ? 'ptc-mobile-accordion-open' : ''}`}
                       style={{ transitionDelay: mobileMenuOpen ? `${index * 30}ms` : '0ms' }}
                     >
                       <Link
@@ -366,9 +361,9 @@ export function Navbar() {
                     to={link.path}
                     onClick={closeMobileMenu}
                     aria-current={
-                      isActive(link.path) ? 'page' : undefined
+                      isActive(link.path) && link.path !== '/hire-professionals' ? 'page' : undefined
                     }
-                    className={`ptc-mobile-link ${isActive(link.path)
+                    className={`ptc-mobile-link ${isActive(link.path) && link.path !== '/hire-professionals'
                       ? 'ptc-mobile-link-active'
                       : ''
                       }`}

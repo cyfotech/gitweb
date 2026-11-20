@@ -1,4 +1,4 @@
-﻿/* ==========================================================================
+/* ==========================================================================
    SMART TAX EXPERTSS — REFERENCE ANIMATIONS SYSTEM CSS
    Theme-aware (Light & Dark mode), Responsive, Zero Layout Shift
    ========================================================================== */
@@ -129,14 +129,15 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  font-family: "Plus Jakarta Sans", system-ui, -apple-system, sans-serif; letter-spacing: 0.05em;
+  font-family: var(--font-sans, "Inter Tight", sans-serif);
+  letter-spacing: 0.05em;
   font-size: 0.75rem;
   font-weight: 700;
   cursor: pointer;
-  transform: translate(-50%, -50%);
-  transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+  transform: translate(-50%, -50%) !important;
+  transition: background-color 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
   background: #FFFFFF;
-  color: #12242B;
+  color: #000000;
   border: 1.5px solid #DCE5E2;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
   z-index: 3;
@@ -144,34 +145,36 @@
 
 :is(.dark .ref-orbit-node) {
   background: #0A242E;
-  color: #E2F3F1;
+  color: #FFFFFF;
   border-color: rgba(121, 241, 232, 0.2);
 }
 
 .ref-orbit-node:hover {
   border-color: #10B981;
-  box-shadow: 0 0 0 4px rgba(16, 185, 129, 0.25), 0 6px 16px rgba(0, 0, 0, 0.12);
-  transform: translate(-50%, -50%) scale(1.08);
+  box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.25);
+  transform: translate(-50%, -50%) !important;
 }
 
 :is(.dark .ref-orbit-node:hover) {
   border-color: #49E3D6;
-  box-shadow: 0 0 0 4px rgba(73, 227, 214, 0.3), 0 6px 16px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 0 0 3px rgba(73, 227, 214, 0.3);
+  transform: translate(-50%, -50%) !important;
 }
 
 .ref-orbit-node.is-active {
   background: #10B981;
   color: #FFFFFF;
   border-color: #059669;
-  transform: translate(-50%, -50%) scale(1.18);
-  box-shadow: 0 0 0 8px rgba(16, 185, 129, 0.2), 0 8px 18px rgba(16, 185, 129, 0.3);
+  transform: translate(-50%, -50%) !important;
+  box-shadow: 0 0 0 6px rgba(16, 185, 129, 0.2), 0 4px 14px rgba(16, 185, 129, 0.3);
 }
 
 :is(.dark .ref-orbit-node.is-active) {
   background: #49E3D6;
   color: #03141A;
   border-color: #7DF5E8;
-  box-shadow: 0 0 0 8px rgba(73, 227, 214, 0.25), 0 8px 20px rgba(73, 227, 214, 0.35);
+  transform: translate(-50%, -50%) !important;
+  box-shadow: 0 0 0 6px rgba(73, 227, 214, 0.25), 0 4px 14px rgba(73, 227, 214, 0.35);
 }
 
 /* ==========================================================================

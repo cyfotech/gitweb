@@ -630,7 +630,7 @@
     "defaultSpeed": "1.0x",
     "defaultEasing": "cubic-bezier(0.16, 1, 0.3, 1)",
     "repeat": "once",
-    "status": "active"
+    "status": "inactive"
   },
   {
     "id": "footer-brand-glow",

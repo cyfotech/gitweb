@@ -1,4 +1,4 @@
-﻿import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   FileSpreadsheet,
   BookOpen,
@@ -104,15 +104,13 @@ interface OrbitalServiceWheelProps {
 
 export function OrbitalServiceWheel({ onSelectService, className = '' }: OrbitalServiceWheelProps) {
   const [activeIdx, setActiveIdx] = useState(0);
-  const [isPaused, setIsPaused] = useState(false);
 
   useEffect(() => {
-    if (isPaused) return;
     const timer = setInterval(() => {
       setActiveIdx((prev) => (prev + 1) % SEVEN_SERVICES.length);
-    }, 3400);
+    }, 3000);
     return () => clearInterval(timer);
-  }, [isPaused]);
+  }, []);
 
   const active = SEVEN_SERVICES[activeIdx];
   const ActiveIcon = active.icon;
@@ -127,14 +125,12 @@ export function OrbitalServiceWheel({ onSelectService, className = '' }: Orbital
   return (
     <div 
       className={`ref-anim-card ${className}`}
-      
-      
       aria-label="Interactive 7-Service Accounting & Tax Orbital Wheel"
     >
       <div className="ref-anim-header">
         <div className="flex items-center gap-2">
           <span className="ref-anim-dot" />
-          <span className="text-xs font-bold text-[#12242B] dark:text-[#F4FBFC] uppercase tracking-wider font-sans">
+          <span className="text-xs font-bold text-[#000000] dark:text-[#000000] uppercase tracking-wider font-sans">
             Transaction Journey · 7 Interconnected Practices
           </span>
         </div>
@@ -152,7 +148,7 @@ export function OrbitalServiceWheel({ onSelectService, className = '' }: Orbital
             {/* Center Core */}
             <div className="ref-orbit-center">
               <span className="text-[10px] uppercase font-bold tracking-widest text-[#49E3D6]">One Hub</span>
-              <span className="text-xs font-bold font-sans tracking-tight leading-tight mt-0.5">7 Unified Services</span>
+              <span className="text-xs font-bold font-sans tracking-tight leading-tight mt-0.5 text-white">7 Unified Services</span>
               <span className="text-[8.5px] text-gray-300 font-sans mt-1">SOC-2 &bull; Circular 230</span>
             </div>
 
@@ -183,27 +179,27 @@ export function OrbitalServiceWheel({ onSelectService, className = '' }: Orbital
         <div className="lg:col-span-6 flex flex-col justify-between">
           <div>
             <div className="flex items-center gap-2 mb-2">
-              <div className="w-8 h-8 rounded-lg bg-emerald-500/10 dark:bg-[#49E3D6]/15 flex items-center justify-center text-emerald-600 dark:text-[#49E3D6]">
+              <div className="w-8 h-8 rounded-lg bg-emerald-500/10 dark:bg-[#49E3D6]/15 flex items-center justify-center text-emerald-600 dark:text-[#00875A]">
                 <ActiveIcon className="w-4 h-4" />
               </div>
               <div>
-                <span className="text-[10px] font-bold font-sans uppercase text-emerald-600 dark:text-[#49E3D6] tracking-wider">
+                <span className="text-[10px] font-bold font-sans uppercase text-emerald-700 dark:text-emerald-700 tracking-wider">
                   {active.tag}
                 </span>
-                <h4 className="text-lg font-bold text-[#12242B] dark:text-[#F4FBFC] font-sans tracking-tight">
+                <h4 className="text-lg font-bold text-[#000000] dark:text-[#000000] font-sans tracking-tight">
                   {active.name}
                 </h4>
               </div>
             </div>
 
-            <p className="text-xs text-[#476067] dark:text-[#A8C0C6] leading-relaxed mb-4">
+            <p className="text-xs text-[#000000] dark:text-[#000000] font-medium leading-relaxed mb-4">
               {active.intro}
             </p>
 
             <div className="grid gap-1.5 mb-4">
               {active.items.map((item, idx) => (
-                <div key={idx} className="flex items-center gap-2 text-xs text-[#12242B] dark:text-[#E2EBE8]">
-                  <CheckCircle2 className="w-3.5 h-3.5 text-emerald-500 dark:text-[#49E3D6] shrink-0" />
+                <div key={idx} className="flex items-center gap-2 text-xs text-[#000000] dark:text-[#000000] font-medium">
+                  <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600 dark:text-emerald-600 shrink-0" />
                   <span>{item}</span>
                 </div>
               ))}
@@ -212,14 +208,14 @@ export function OrbitalServiceWheel({ onSelectService, className = '' }: Orbital
 
           <div className="pt-3 border-t border-[#E2EBE8] dark:border-[rgba(121,241,232,0.15)] flex flex-wrap items-center justify-between gap-2">
             <div className="flex flex-wrap items-center gap-1.5">
-              <span className="text-[10px] font-bold uppercase text-gray-400">Key Tags:</span>
+              <span className="text-[10px] font-bold uppercase text-[#000000]">Key Tags:</span>
               {active.chips.map((c) => (
-                <span key={c} className="text-[10px] px-2 py-0.5 rounded-full bg-black/5 dark:bg-white/5 font-sans text-[#315F69] dark:text-[#7DF5E8] font-bold">
+                <span key={c} className="text-[10px] px-2 py-0.5 rounded-full bg-black/5 dark:bg-black/5 font-sans text-[#000000] font-bold border border-black/10">
                   {c}
                 </span>
               ))}
             </div>
-            <div className="flex items-center gap-1 text-[10px] font-bold text-emerald-600 dark:text-[#49E3D6] font-sans">
+            <div className="flex items-center gap-1 text-[10px] font-bold text-emerald-700 dark:text-emerald-700 font-sans">
               <span>Step 0{activeIdx + 1} of 07</span>
             </div>
           </div>

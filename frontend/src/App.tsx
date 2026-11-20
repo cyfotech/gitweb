@@ -122,7 +122,6 @@ export default function App() {
             <AdminAuthProvider>
               <VisualEditorProvider>
                 <BrowserRouter>
-                  <BackendStatusIndicator />
                   <Routes>
                     {/* ============================================================
                 ADMIN ROUTES — No Navbar/Footer, protected by auth

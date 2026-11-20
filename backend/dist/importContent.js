@@ -1,22 +1,22 @@
 "use strict";
-var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
+var __createBinding = (this && this.__createBinding) || (Object.create ? (function (o, m, k, k2) {
     if (k2 === undefined) k2 = k;
     var desc = Object.getOwnPropertyDescriptor(m, k);
     if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
-      desc = { enumerable: true, get: function() { return m[k]; } };
+        desc = { enumerable: true, get: function () { return m[k]; } };
     }
     Object.defineProperty(o, k2, desc);
-}) : (function(o, m, k, k2) {
+}) : (function (o, m, k, k2) {
     if (k2 === undefined) k2 = k;
     o[k2] = m[k];
 }));
-var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
+var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function (o, v) {
     Object.defineProperty(o, "default", { enumerable: true, value: v });
-}) : function(o, v) {
+}) : function (o, v) {
     o["default"] = v;
 });
 var __importStar = (this && this.__importStar) || (function () {
-    var ownKeys = function(o) {
+    var ownKeys = function (o) {
         ownKeys = Object.getOwnPropertyNames || function (o) {
             var ar = [];
             for (var k in o) if (Object.prototype.hasOwnProperty.call(o, k)) ar[ar.length] = k;
@@ -678,9 +678,9 @@ Our proven five-pillar standardization framework includes:
                 subheading: 'Direct access to senior advisory leadership',
                 description: 'Engage with our managing directors to review your tax objectives or scale your practice capacity ahead of critical filing deadlines.',
                 content: JSON.stringify({
-                    phone: '(800) 555-PTAX (7829)',
-                    email: 'advisory@preferredtax.com',
-                    address: '100 Wall Street, 24th Floor, New York, NY 10005',
+                    phone: '+1 214 837 7128',
+                    email: 'brian@smarttaxexpertss.com',
+                    address: '5900 BALCONES DR STE 100 AUSTIN TX 78731-4298 USA',
                 }),
             },
         };

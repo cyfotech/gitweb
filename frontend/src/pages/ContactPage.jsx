@@ -419,85 +419,85 @@ class ContactPage extends React.Component {
               <div className="hero-vis-wrap">
                 <div className="hero-vis in d2" aria-label="Animated diagram: your enquiry is routed to the CPA, Business or Individual desk" role="img">
 
-                <svg width="560" height="480" fill="none" aria-hidden="true" style={cssToStyle("position: absolute; inset: 0")}>
+                  <svg width="560" height="480" fill="none" aria-hidden="true" style={cssToStyle("position: absolute; inset: 0")}>
 
-                  <path d="M 120 240 C 230 240, 220 90, 330 90" stroke="#17262b" strokeOpacity=".14" strokeWidth="2"></path>
-
-
-                  <path d="M 120 240 L 330 240" stroke="#17262b" strokeOpacity=".14" strokeWidth="2"></path>
+                    <path d="M 120 240 C 230 240, 220 90, 330 90" stroke="#17262b" strokeOpacity=".14" strokeWidth="2"></path>
 
 
-                  <path d="M 120 240 C 230 240, 220 390, 330 390" stroke="#17262b" strokeOpacity=".14" strokeWidth="2"></path>
+                    <path d="M 120 240 L 330 240" stroke="#17262b" strokeOpacity=".14" strokeWidth="2"></path>
 
 
-                  <path className="flow" d="M 120 240 C 230 240, 220 90, 330 90" stroke="#22af68" strokeWidth="2"></path>
+                    <path d="M 120 240 C 230 240, 220 390, 330 390" stroke="#17262b" strokeOpacity=".14" strokeWidth="2"></path>
 
 
-                  <path className="flow" d="M 120 240 L 330 240" stroke="#22af68" strokeWidth="2"></path>
+                    <path className="flow" d="M 120 240 C 230 240, 220 90, 330 90" stroke="#22af68" strokeWidth="2"></path>
 
 
-                  <path className="flow" d="M 120 240 C 230 240, 220 390, 330 390" stroke="#22af68" strokeWidth="2"></path>
-
-                </svg>
+                    <path className="flow" d="M 120 240 L 330 240" stroke="#22af68" strokeWidth="2"></path>
 
 
-                <span className="pkt pk1"></span>
-                <span className="pkt pk2"></span>
-                <span className="pkt pk3"></span>
+                    <path className="flow" d="M 120 240 C 230 240, 220 390, 330 390" stroke="#22af68" strokeWidth="2"></path>
+
+                  </svg>
+
+
+                  <span className="pkt pk1"></span>
+                  <span className="pkt pk2"></span>
+                  <span className="pkt pk3"></span>
 
 
 
-                <div style={cssToStyle("position: absolute; left: 20px; top: 180px; width: 120px; height: 120px")}>
+                  <div style={cssToStyle("position: absolute; left: 20px; top: 180px; width: 120px; height: 120px")}>
 
-                  <span className="ring"></span>
-                  <span className="ring ring2"></span>
-
-
-                  <div style={cssToStyle("position: absolute; inset: 0; border-radius: 50%; background: #17262b; color: #fff; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px; box-shadow: 0 20px 40px -18px rgba(14,26,43,.6)")}>
-
-                    <svg width="26" height="26" fill="none" stroke="#c49a52" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M4 4h16v12H5.2L4 17.2V4z"></path>
-                      <path d="M8 9h8M8 12h5"></path></svg>
+                    <span className="ring"></span>
+                    <span className="ring ring2"></span>
 
 
-                    <span className="mono" style={cssToStyle("font-size: 10px; letter-spacing: .1em")}>YOUR ENQUIRY</span>
+                    <div style={cssToStyle("position: absolute; inset: 0; border-radius: 50%; background: #17262b; color: #fff; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px; box-shadow: 0 20px 40px -18px rgba(14,26,43,.6)")}>
+
+                      <svg width="26" height="26" fill="none" stroke="#c49a52" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M4 4h16v12H5.2L4 17.2V4z"></path>
+                        <path d="M8 9h8M8 12h5"></path></svg>
+
+
+                      <span className="mono" style={cssToStyle("font-size: 10px; letter-spacing: .1em")}>YOUR ENQUIRY</span>
+
+                    </div>
 
                   </div>
 
+
+
+                  {(v.desks || []).map((d, index) => (
+                    <React.Fragment key={index}>
+
+
+                      <a href="#paths" onClick={d.pick} className="desk" style={cssToStyle(("position: absolute; left: 330px; top: " + (d.top) + "; width: 228px; min-height: 76px; padding: 14px 16px; border-radius: 16px; background: var(--card-surface); border: 1.5px solid var(--border-color); text-decoration: none; color: #17262b; display: flex; align-items: center; gap: 12px; box-shadow: 0 10px 30px -22px rgba(14,26,43,.45)"))}>
+
+                        <span style={cssToStyle("width: 40px; height: 40px; flex: 0 0 auto; border-radius: 12px; background: #17262b; color: #c49a52; display: flex; align-items: center; justify-content: center")} className="mono">{d.code}</span>
+
+
+                        <span style={cssToStyle("display: flex; flex-direction: column; min-width: 0")}>
+
+                          <span style={cssToStyle("font-weight: 600; font-size: 15px")}>{d.label}</span>
+
+
+                          <span className="mono" style={cssToStyle("font-size: 11px; color: #52646a")}>{d.sub}</span>
+
+                        </span>
+
+
+                        <span className="arrow" style={cssToStyle("margin-left: auto; color: #22af68; font-weight: 700")}>→</span>
+
+                      </a>
+
+
+                    </React.Fragment>
+                  ))}
+
+
+                  <p className="mono" style={cssToStyle("position: absolute; left: 22px; bottom: 6px; margin: 0; font-size: 11px; color: #52646a; letter-spacing: .06em")}>PICK A DESK TO SEE HOW WE HELP ↗</p>
+
                 </div>
-
-
-
-                {(v.desks || []).map((d, index) => (
-                  <React.Fragment key={index}>
-
-
-                    <a href="#paths" onClick={d.pick} className="desk" style={cssToStyle(("position: absolute; left: 330px; top: " + (d.top) + "; width: 228px; min-height: 76px; padding: 14px 16px; border-radius: 16px; background: var(--card-surface); border: 1.5px solid var(--border-color); text-decoration: none; color: #17262b; display: flex; align-items: center; gap: 12px; box-shadow: 0 10px 30px -22px rgba(14,26,43,.45)"))}>
-
-                      <span style={cssToStyle("width: 40px; height: 40px; flex: 0 0 auto; border-radius: 12px; background: #17262b; color: #c49a52; display: flex; align-items: center; justify-content: center")} className="mono">{d.code}</span>
-
-
-                      <span style={cssToStyle("display: flex; flex-direction: column; min-width: 0")}>
-
-                        <span style={cssToStyle("font-weight: 600; font-size: 15px")}>{d.label}</span>
-
-
-                        <span className="mono" style={cssToStyle("font-size: 11px; color: #52646a")}>{d.sub}</span>
-
-                      </span>
-
-
-                      <span className="arrow" style={cssToStyle("margin-left: auto; color: #22af68; font-weight: 700")}>→</span>
-
-                    </a>
-
-
-                  </React.Fragment>
-                ))}
-
-
-                <p className="mono" style={cssToStyle("position: absolute; left: 22px; bottom: 6px; margin: 0; font-size: 11px; color: #52646a; letter-spacing: .06em")}>PICK A DESK TO SEE HOW WE HELP ↗</p>
-
-              </div>
               </div>
 
             </div>
@@ -509,25 +509,25 @@ class ContactPage extends React.Component {
 
             <div style={cssToStyle("max-width: 1320px; margin: 0 auto; padding: 0 40px 56px; display: flex; flex-wrap: wrap; gap: 14px")}>
 
-              <a href="mailto:[EMAIL]" className="tile rv" style={cssToStyle("flex: 1 1 230px; min-height: 92px; padding: 18px 20px; border-radius: 18px; background: var(--card-surface); border: 1px solid var(--border-color); text-decoration: none; color: #17262b; display: flex; gap: 14px; align-items: center")}>
+              <a href="mailto:brian@smarttaxexpertss.com" className="tile rv" style={cssToStyle("flex: 1 1 230px; min-height: 92px; padding: 18px 20px; border-radius: 18px; background: var(--card-surface); border: 1px solid var(--border-color); text-decoration: none; color: #17262b; display: flex; gap: 14px; align-items: center")}>
 
                 <span style={cssToStyle("width: 44px; height: 44px; border-radius: 12px; background: #e8f3ef; color: #22af68; display: flex; align-items: center; justify-content: center; flex: 0 0 auto")}><svg width="20" height="20" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"></rect>
                   <path d="M3 7l9 6 9-6"></path></svg></span>
 
 
                 <span style={cssToStyle("display: flex; flex-direction: column")}><span className="mono" style={cssToStyle("font-size: 11px; color: #52646a; letter-spacing: .08em")}>EMAIL US</span>
-                  <span style={cssToStyle("font-weight: 600")}>[BUSINESS EMAIL]</span></span>
+                  <span style={cssToStyle("font-weight: 600")}>brian@smarttaxexpertss.com</span></span>
 
               </a>
 
 
-              <a href="tel:[PHONE]" className="tile rv" style={cssToStyle("flex: 1 1 230px; min-height: 92px; padding: 18px 20px; border-radius: 18px; background: var(--card-surface); border: 1px solid var(--border-color); text-decoration: none; color: #17262b; display: flex; gap: 14px; align-items: center")}>
+              <a href="tel:+12148377128" className="tile rv" style={cssToStyle("flex: 1 1 230px; min-height: 92px; padding: 18px 20px; border-radius: 18px; background: var(--card-surface); border: 1px solid var(--border-color); text-decoration: none; color: #17262b; display: flex; gap: 14px; align-items: center")}>
 
                 <span style={cssToStyle("width: 44px; height: 44px; border-radius: 12px; background: #e8f3ef; color: #22af68; display: flex; align-items: center; justify-content: center; flex: 0 0 auto")}><svg width="20" height="20" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2"></path></svg></span>
 
 
                 <span style={cssToStyle("display: flex; flex-direction: column")}><span className="mono" style={cssToStyle("font-size: 11px; color: #52646a; letter-spacing: .08em")}>CALL / WHATSAPP</span>
-                  <span style={cssToStyle("font-weight: 600")}>[PHONE NUMBER]</span></span>
+                  <span style={cssToStyle("font-weight: 600")}>+1 214 837 7128</span></span>
 
               </a>
 
@@ -539,7 +539,7 @@ class ContactPage extends React.Component {
 
 
                 <span style={cssToStyle("display: flex; flex-direction: column")}><span className="mono" style={cssToStyle("font-size: 11px; color: #52646a; letter-spacing: .08em")}>WORKING HOURS</span>
-                  <span style={cssToStyle("font-weight: 600")}>[US ET / IST HOURS]</span></span>
+                  <span style={cssToStyle("font-weight: 600")}>9:00 AM – 6:00 PM</span></span>
 
               </div>
 
@@ -551,7 +551,7 @@ class ContactPage extends React.Component {
 
 
                 <span style={cssToStyle("display: flex; flex-direction: column")}><span className="mono" style={cssToStyle("font-size: 11px; color: #52646a; letter-spacing: .08em")}>OFFICE</span>
-                  <span style={cssToStyle("font-weight: 600")}>[OFFICE ADDRESS]</span></span>
+                  <span style={cssToStyle("font-weight: 600")}>5900 BALCONES DR STE 100 AUSTIN TX 78731-4298 USA</span></span>
 
               </div>
 

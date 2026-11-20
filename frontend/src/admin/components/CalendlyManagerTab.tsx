@@ -915,7 +915,7 @@ export function CalendlyManagerTab({ settings, onChange, onSave, saving }: Calen
                 </div>
 
                 <div className="pt-3 border-t border-teal-500/15 text-[10px] text-slate-400 text-center font-mono">
-                  Smart Tax Experts | 100 Wall Street, 24th Floor, New York, NY
+                  Smart Tax Experts | 5900 BALCONES DR STE 100 AUSTIN TX 78731-4298 USA
                 </div>
               </div>
             </div>

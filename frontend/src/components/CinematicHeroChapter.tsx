@@ -1,788 +1,495 @@
-﻿import React, { useMemo, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { Calculator } from 'lucide-react';
-import type { ClientCategory } from '../data/services';
-import { HomeHeroServiceAnimation } from './HomeHeroServiceAnimation';
-import { DynamicUniversalMediaRenderer } from './DynamicUniversalMediaRenderer';
-import { EditableElement } from './EditableElement';
-import './CinematicHeroChapter.css';
+import React, { useCallback, useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { FinancialDonutChart } from "./FinancialDonutChart";
+import "./CinematicHeroChapter.css";
 
-export type CinematicHeroContent = {
-  title?: string | null;
-  subheading?: string | null;
-  description?: string | null;
-  content?: string | null;
-  backgroundImage?: string | null;
-  backgroundVideo?: string | null;
-  imagePosition?: string | null;
-  imageAltText?: string | null;
-  parsedContent?: {
-    eyebrow?: string;
-    primaryCtaText?: string;
-    primaryCtaUrl?: string;
-    secondaryCtaText?: string;
-    secondaryCtaUrl?: string;
-    calculatorButtonText?: string;
-    trust_item1_category?: string;
-    trust_item1_title?: string;
-    trust_item1_subtitle?: string;
-    trust_item2_category?: string;
-    trust_item2_title?: string;
-    trust_item2_subtitle?: string;
-    trust_item3_category?: string;
-    trust_item3_title?: string;
-    trust_item3_subtitle?: string;
-    trust_item4_category?: string;
-    trust_item4_title?: string;
-    trust_item4_subtitle?: string;
-    hero_media_format?: string;
-    hero_media_url?: string;
-    hero_media_alt?: string;
-    stats?: Array<{ label: string; value: string }>;
-  } | null;
-};
-
-type CinematicHeroChapterProps = {
-  onOpenConsultation: (
-    category?: ClientCategory | string,
-    serviceSlug?: string
-  ) => void;
-  onExploreWork: () => void;
+/* ------------------------------------------------------------------ */
+/*  Types                                                               */
+/* ------------------------------------------------------------------ */
+interface CinematicHeroChapterProps {
+  cmsContent?: Record<string, unknown>;
+  onOpenConsultation?: (category?: string, service?: string) => void;
+  onExploreWork?: () => void;
   onOpenCalculator?: () => void;
-  cmsContent?: CinematicHeroContent | null;
-};
+}
 
-type ChartMode = 'workflow' | 'capacity' | 'quality';
-
-type ChartPoint = { label: string; value: number };
-
-const CHART_DATA: Record<ChartMode, ChartPoint[]> = {
-  workflow: [
-    { label: 'W1', value: 32 },
-    { label: 'W2', value: 46 },
-    { label: 'W3', value: 39 },
-    { label: 'W4', value: 57 },
-    { label: 'W5', value: 52 },
-    { label: 'W6', value: 68 },
-    { label: 'W7', value: 63 },
-    { label: 'W8', value: 84 },
-  ],
-  capacity: [
-    { label: 'W1', value: 44 },
-    { label: 'W2', value: 40 },
-    { label: 'W3', value: 56 },
-    { label: 'W4', value: 51 },
-    { label: 'W5', value: 69 },
-    { label: 'W6', value: 64 },
-    { label: 'W7', value: 77 },
-    { label: 'W8', value: 88 },
-  ],
-  quality: [
-    { label: 'W1', value: 48 },
-    { label: 'W2', value: 58 },
-    { label: 'W3', value: 55 },
-    { label: 'W4', value: 67 },
-    { label: 'W5', value: 64 },
-    { label: 'W6', value: 78 },
-    { label: 'W7', value: 74 },
-    { label: 'W8', value: 91 },
-  ],
-};
-
-const CHART_LABELS: Record<ChartMode, { title: string; description: string; unit: string }> = {
-  workflow: {
-    title: 'Workflow activity',
-    description: 'Illustrative movement across workflow checkpoints',
-    unit: 'index',
+/* ------------------------------------------------------------------ */
+/*  Service data                                                        */
+/* ------------------------------------------------------------------ */
+const services = [
+  {
+    label: "TAX",
+    title: "USA Tax Preparation",
+    category: "USA TAX PREPARATION",
+    description:
+      "Every return is prepared, reviewed, and finalized under a considered workflow, minimizing risk and supporting individuals, businesses, nonprofits, and trusts with their tax compliance.",
+    items: [
+      "Individual returns: Form 1040, 1040-SR, 1040-NR",
+      "Partnerships: Form 1065 & Schedule K-1s",
+      "S Corporations: Form 1120-S",
+      "C Corporations: Form 1120",
+      "Prior-year, amended, and extension returns",
+    ],
+    forms: ["1040", "1065", "1120-S", "1120", "990"],
   },
-  capacity: {
-    title: 'Capacity planning',
-    description: 'Illustrative workload allocation trend',
-    unit: 'index',
+  {
+    label: "BKP",
+    title: "Bookkeeping & Accounting",
+    category: "BOOKKEEPING",
+    description:
+      "Every transaction recorded, classified and reconciled so your books show where the business really stands every month, not only at tax time.",
+    items: [
+      "Full-cycle daily, weekly or monthly bookkeeping",
+      "Bank, credit card, PayPal and Stripe reconciliation",
+      "General Ledger & Chart of Accounts setup",
+      "P&L, Balance Sheet and Cash Flow generation",
+      "Month-end and year-end close packages",
+    ],
+    forms: ["QBO", "Xero", "P&L", "Balance Sheet"],
   },
-  quality: {
-    title: 'Review readiness',
-    description: 'Illustrative review-readiness trend',
-    unit: 'index',
+  {
+    label: "PAY",
+    title: "Payroll Management",
+    category: "PAYROLL MANAGEMENT",
+    description:
+      "Wages calculated, withholding applied, employer taxes accounted for and every pay run reconciled, through to year-end W-2s.",
+    items: [
+      "Hourly & salaried gross-to-net calculations",
+      "Federal, state and local multi-state withholding",
+      "Social Security, Medicare, FUTA & SUTA filing",
+      "401(k), HSA and benefit pre-tax deductions",
+      "Contractor compliance & Form 1099-NEC",
+    ],
+    forms: ["W-2", "W-3", "941", "940"],
   },
-};
-
-function ArrowRightIcon() {
-  return (
-    <svg aria-hidden="true" viewBox="0 0 24 24" fill="none">
-      <path d="M5 12h13M13 6l6 6-6 6" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
-    </svg>
-  );
-}
-
-function ChevronDownIcon() {
-  return (
-    <svg aria-hidden="true" viewBox="0 0 24 24" fill="none">
-      <path d="m6 9 6 6 6-6" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
-    </svg>
-  );
-}
-
-function ShieldIcon() {
-  return (
-    <svg aria-hidden="true" viewBox="0 0 24 24" fill="none">
-      <path d="M12 3.2 19 6v5.3c0 4.2-2.8 7.5-7 9.5-4.2-2-7-5.3-7-9.5V6l7-2.8Z" stroke="currentColor" strokeWidth="1.7" strokeLinejoin="round" />
-      <path d="m8.7 11.9 2.2 2.2 4.5-4.6" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" />
-    </svg>
-  );
-}
-
-function DocumentIcon() {
-  return (
-    <svg aria-hidden="true" viewBox="0 0 24 24" fill="none">
-      <path d="M7 3.8h7l4 4v12.4H7a2 2 0 0 1-2-2V5.8a2 2 0 0 1 2-2Z" stroke="currentColor" strokeWidth="1.6" strokeLinejoin="round" />
-      <path d="M14 4v4h4M8.5 12h7M8.5 15.5h7" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" />
-    </svg>
-  );
-}
-
-function ChartIcon() {
-  return (
-    <svg aria-hidden="true" viewBox="0 0 24 24" fill="none">
-      <path d="M4 19.2h16" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" />
-      <path d="M6.5 16v-4M11.5 16V7M16.5 16V10" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" />
-    </svg>
-  );
-}
-
-function MiniTrend({ values }: { values: number[] }) {
-  const points = values
-    .map((value, index) => {
-      const x = 3 + (index / Math.max(values.length - 1, 1)) * 94;
-      const y = 26 - (value / 100) * 22;
-      return `${x},${y}`;
-    })
-    .join(' ');
-
-  return (
-    <svg className="ct-mini-trend" viewBox="0 0 100 30" role="img" aria-label="Illustrative trend line">
-      <polyline points={points} fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" />
-    </svg>
-  );
-}
-
-function InteractiveChart() {
-  const [mode, setMode] = useState<ChartMode>('workflow');
-  const points = CHART_DATA[mode];
-  const modeInfo = CHART_LABELS[mode];
-
-  const chartGeometry = useMemo(() => {
-    const width = 340;
-    const height = 124;
-    const padX = 10;
-    const padY = 12;
-    const usableWidth = width - padX * 2;
-    const usableHeight = height - padY * 2;
-    const maxValue = Math.max(...points.map((point) => point.value), 100);
-
-    const coords = points.map((point, index) => ({
-      ...point,
-      x: padX + (index / (points.length - 1)) * usableWidth,
-      y: height - padY - (point.value / maxValue) * usableHeight,
-    }));
-
-    const line = coords.map((point) => `${point.x},${point.y}`).join(' ');
-    const first = coords[0];
-    const last = coords[coords.length - 1];
-    const area = `M ${first.x} ${height - padY} L ${coords
-      .map((point) => `${point.x} ${point.y}`)
-      .join(' L ')} L ${last.x} ${height - padY} Z`;
-
-    return { coords, line, area, width, height };
-  }, [points]);
-
-  const average = Math.round(points.reduce((sum, point) => sum + point.value, 0) / points.length);
-  const lastValue = points[points.length - 1].value;
-
-  return (
-    <div className="ct-chart-panel">
-      <div className="ct-chart-panel__heading">
-        <div>
-          <span className="ct-overline">ANALYTICS PREVIEW</span>
-          <h3>{modeInfo.title}</h3>
-          <p>{modeInfo.description}</p>
-        </div>
-        <div className="ct-chart-live" aria-label="Animated demonstration, not connected to live business data">
-          <span className="ct-chart-live__pulse" />
-          MOTION PREVIEW
-        </div>
-      </div>
-
-      <div className="ct-chart-tabs" role="group" aria-label="Choose chart view">
-        <button type="button" className={mode === 'workflow' ? 'is-active' : ''} onClick={() => setMode('workflow')} aria-pressed={mode === 'workflow'}>
-          Workflow
-        </button>
-        <button type="button" className={mode === 'capacity' ? 'is-active' : ''} onClick={() => setMode('capacity')} aria-pressed={mode === 'capacity'}>
-          Capacity
-        </button>
-        <button type="button" className={mode === 'quality' ? 'is-active' : ''} onClick={() => setMode('quality')} aria-pressed={mode === 'quality'}>
-          Review
-        </button>
-      </div>
-
-      <div className="ct-chart-summary">
-        <div>
-          <span className="ct-chart-summary__label">LATEST SAMPLE</span>
-          <strong>{lastValue}<small> / 100</small></strong>
-        </div>
-        <div className="ct-chart-summary__average">
-          <span className="ct-chart-summary__label">PERIOD AVERAGE</span>
-          <strong>{average}<small> / 100</small></strong>
-        </div>
-        <div className="ct-chart-summary__trend">
-          <MiniTrend values={points.map((point) => point.value)} />
-          <span>sample trend</span>
-        </div>
-      </div>
-
-      <div className="ct-chart-plot" aria-label={`${modeInfo.title}. Illustrative sample data, not actual company metrics.`}>
-        <div className="ct-chart-plot__grid" aria-hidden="true">
-          <i /><i /><i /><i />
-        </div>
-        <svg key={mode} className="ct-chart-svg" viewBox={`0 0 ${chartGeometry.width} ${chartGeometry.height}`} role="img" aria-label={`${modeInfo.title} line chart showing sample values over eight checkpoints`}>
-          <defs>
-            <linearGradient id={`ct-area-${mode}`} x1="0" x2="0" y1="0" y2="1">
-              <stop offset="0%" className="ct-chart-svg__area-stop" />
-              <stop offset="100%" className="ct-chart-svg__area-stop ct-chart-svg__area-stop--end" />
-            </linearGradient>
-            <linearGradient id={`ct-line-${mode}`} x1="0" x2="1" y1="0" y2="0">
-              <stop offset="0%" className="ct-chart-svg__line-stop ct-chart-svg__line-stop--start" />
-              <stop offset="100%" className="ct-chart-svg__line-stop" />
-            </linearGradient>
-          </defs>
-          <path className="ct-chart-svg__area" d={chartGeometry.area} fill={`url(#ct-area-${mode})`} />
-          <polyline className="ct-chart-svg__line" points={chartGeometry.line} stroke={`url(#ct-line-${mode})`} />
-          {chartGeometry.coords.map((point, index) => (
-            <g key={`${mode}-${point.label}`} className="ct-chart-svg__point" style={{ animationDelay: `${index * 70}ms` }}>
-              <circle className="ct-chart-svg__point-halo" cx={point.x} cy={point.y} r="6" />
-              <circle className="ct-chart-svg__point-dot" cx={point.x} cy={point.y} r="2.8" />
-            </g>
-          ))}
-        </svg>
-      </div>
-
-      <div className="ct-chart-axis" aria-hidden="true">
-        {points.map((point) => <span key={point.label}>{point.label}</span>)}
-      </div>
-
-      <div className="ct-chart-panel__footer">
-        <span><i /> Sample visualization</span>
-        <span>Illustrative index · not live company data</span>
-      </div>
-    </div>
-  );
-}
-
-type PieSegment = {
-  label: string;
-  value: number;
-  className: string;
-};
-
-// Illustrative workflow mix for visual demonstration only; it is not company data.
-const PIE_SEGMENTS: PieSegment[] = [
-  { label: 'Document intake', value: 30, className: 'ct-pie-slice--teal' },
-  { label: 'Review checkpoints', value: 25, className: 'ct-pie-slice--gold' },
-  { label: 'Data in motion', value: 25, className: 'ct-pie-slice--blue' },
-  { label: 'Human oversight', value: 20, className: 'ct-pie-slice--coral' },
+  {
+    label: "PLN",
+    title: "Tax Planning & Advisory",
+    category: "TAX PLANNING",
+    description:
+      "Tax planning looks ahead, with projections and estimates while there is still time to act. We help businesses evaluate financial decisions and plan for tax obligations.",
+    items: [
+      "Annual income and tax liability projections",
+      "Quarterly estimated tax calculations (1040-ES)",
+      "Entity structure & S-Corp compensation evaluation",
+      "Section 179 & bonus depreciation acceleration",
+      "Year-end tax optimization roadmap",
+    ],
+    forms: ["1040", "1120", "1065", "1120-S"],
+  },
+  {
+    label: "AP/AR",
+    title: "Accounts Payable & Receivable",
+    category: "ACCOUNTS MANAGEMENT",
+    description:
+      "A clear picture of what your business owes and what it needs to collect — invoices verified, balances tracked and aging reported.",
+    items: [
+      "Vendor onboarding and W-9 verification",
+      "2-way and 3-way invoice matching",
+      "Payment run approval workflows",
+      "Customer invoicing and unapplied cash clearing",
+      "Granular 30/60/90-day aging reports",
+    ],
+    forms: ["INVOICES", "PAYMENTS", "AGING", "REPORTS"],
+  },
+  {
+    label: "INTL",
+    title: "International Tax Services",
+    category: "INTERNATIONAL TAX",
+    description:
+      "Foreign accounts, overseas companies and cross-border payments carry their own US reporting rules. We organize the information and prepare the required forms.",
+    items: [
+      "FBAR: FinCEN Form 114 reporting",
+      "FATCA: Form 8938 specified foreign assets",
+      "Foreign corporations: Form 5471",
+      "Foreign-owned US entities: Form 5472",
+      "Foreign Tax Credit (Form 1116) optimization",
+    ],
+    forms: ["1040-NR", "5471", "5472", "FBAR"],
+  },
+  {
+    label: "FILE",
+    title: "Tax Filing & E-File",
+    category: "TAX FILING",
+    description:
+      "Preparing a return and submitting it are separate stages. We coordinate authorization, e-filing, acknowledgments and any rejection fixes.",
+    items: [
+      "Direct electronic transmission to IRS & State",
+      "Form 8879 e-signature collection",
+      "IRS MeF acknowledgment tracking",
+      "Immediate reject code resolution",
+      "Form 4868 / 7004 extension filings",
+    ],
+    forms: ["1040", "1065", "1120", "1120-S", "990"],
+  },
 ];
 
-function pieSlicePath(
-  cx: number,
-  cy: number,
-  radius: number,
-  startAngle: number,
-  endAngle: number,
-  yOffset = 0,
-): string {
-  const point = (angle: number) => {
-    const radians = (angle * Math.PI) / 180;
-    return {
-      x: cx + radius * Math.cos(radians),
-      y: cy + yOffset + radius * Math.sin(radians),
-    };
-  };
+const features = [
+  {
+    icon: "♢",
+    label: "PROCESS",
+    title: "Structured review",
+    description: "Clear checkpoints",
+  },
+  {
+    icon: "▤",
+    label: "DOCUMENTS",
+    title: "Organized intake",
+    description: "Review-ready flow",
+  },
+  {
+    icon: "▥",
+    label: "VISIBILITY",
+    title: "Clear milestones",
+    description: "Progress at a glance",
+  },
+  {
+    icon: "♙",
+    label: "DELIVERY",
+    title: "Human oversight",
+    description: "Quality-minded workflow",
+  },
+];
 
-  const start = point(startAngle);
-  const end = point(endAngle);
-  const largeArc = endAngle - startAngle > 180 ? 1 : 0;
+/* ------------------------------------------------------------------ */
+/*  Portfolio Mix data (shown in donut chart view)                      */
+/* ------------------------------------------------------------------ */
+const portfolioMix = [
+  {
+    id: "tax-preparation",
+    name: "Tax Preparation",
+    value: 1280000,
+    color: "#07884d",
+    description: "Prepared and reviewed returns across individual and business clients.",
+    metric: "4,200+ returns",
+  },
+  {
+    id: "bookkeeping",
+    name: "Bookkeeping & Accounting",
+    value: 920000,
+    color: "#20b97a",
+    description: "Reconciliations, monthly close, and reliable financial records.",
+    metric: "3,500+ closes",
+  },
+  {
+    id: "payroll",
+    name: "Payroll Management",
+    value: 610000,
+    color: "#d3a753",
+    description: "Accurate payroll processing and employee pay-cycle support.",
+    metric: "1,800+ pay runs",
+  },
+  {
+    id: "advisory",
+    name: "Tax Planning & Advisory",
+    value: 480000,
+    color: "#728fb5",
+    description: "Strategic planning, projections, and entity structure guidance.",
+    metric: "900+ advisory sessions",
+  },
+];
 
-  return [
-    `M ${cx} ${cy + yOffset}`,
-    `L ${start.x.toFixed(3)} ${start.y.toFixed(3)}`,
-    `A ${radius} ${radius} 0 ${largeArc} 1 ${end.x.toFixed(3)} ${end.y.toFixed(3)}`,
-    'Z',
-  ].join(' ');
-}
-
-function WorkflowPieChart() {
-  const [activeIndex, setActiveIndex] = useState(0);
-
-  const slices = useMemo(() => {
-    let currentAngle = -90;
-
-    return PIE_SEGMENTS.map((segment, index) => {
-      const startAngle = currentAngle;
-      const endAngle = currentAngle + (segment.value / 100) * 360;
-      const middleAngle = (startAngle + endAngle) / 2;
-      const radians = (middleAngle * Math.PI) / 180;
-      const offset = activeIndex === index ? 3.5 : 0;
-      currentAngle = endAngle;
-
-      return {
-        ...segment,
-        index,
-        startAngle,
-        endAngle,
-        topPath: pieSlicePath(108, 88, 67, startAngle, endAngle),
-        depthPath: pieSlicePath(108, 88, 67, startAngle, endAngle, 8),
-        translateX: Math.cos(radians) * offset,
-        translateY: Math.sin(radians) * offset,
-      };
-    });
-  }, [activeIndex]);
-
-  return (
-    <div className="ct-pie-panel" aria-label="Illustrative workflow allocation pie chart">
-      <div className="ct-pie-panel__heading">
-        <div>
-          <span className="ct-pie-panel__overline">ILLUSTRATIVE DISTRIBUTION</span>
-          <h3>Workflow allocation</h3>
-          <p>Sample distribution · totals 100%</p>
-        </div>
-        <span className="ct-pie-panel__badge"><i /> SAMPLE</span>
-      </div>
-
-      <div className="ct-pie-panel__body">
-        <svg
-          className="ct-pie-chart-svg"
-          viewBox="0 0 216 177"
-          role="img"
-          aria-label="Pie chart: document intake 30 percent, review checkpoints 25 percent, data in motion 25 percent, human oversight 20 percent. Illustrative sample data."
-        >
-          <defs>
-            <filter id="ct-pie-shadow" x="-30%" y="-30%" width="160%" height="180%">
-              <feDropShadow dx="0" dy="6" stdDeviation="5" floodColor="#6f5527" floodOpacity="0.18" />
-            </filter>
-            <linearGradient id="ct-pie-gloss" x1="0" y1="0" x2="1" y2="1">
-              <stop offset="0%" stopColor="#ffffff" stopOpacity="0.32" />
-              <stop offset="55%" stopColor="#ffffff" stopOpacity="0.02" />
-              <stop offset="100%" stopColor="#17252d" stopOpacity="0.12" />
-            </linearGradient>
-          </defs>
-          <g filter="url(#ct-pie-shadow)" className="ct-pie-chart-svg__slices">
-            {slices.map((slice) => (
-              <g
-                key={slice.label}
-                className={`ct-pie-segment ${activeIndex === slice.index ? 'is-active' : ''}`}
-                transform={`translate(${slice.translateX.toFixed(2)} ${slice.translateY.toFixed(2)})`}
-              >
-                <path className={`ct-pie-slice-depth ${slice.className}`} d={slice.depthPath} />
-                <path className={`ct-pie-slice ${slice.className}`} d={slice.topPath} />
-              </g>
-            ))}
-            <path
-              className="ct-pie-chart-svg__gloss"
-              d="M 63 45 C 76 18, 126 12, 151 34 C 126 26, 93 28, 63 45 Z"
-            />
-          </g>
-        </svg>
-
-        <div className="ct-pie-legend" role="group" aria-label="Highlight a workflow category">
-          {PIE_SEGMENTS.map((segment, index) => (
-            <button
-              type="button"
-              key={segment.label}
-              className={`ct-pie-legend__item ${activeIndex === index ? 'is-active' : ''}`}
-              onClick={() => setActiveIndex(index)}
-              onMouseEnter={() => setActiveIndex(index)}
-              onFocus={() => setActiveIndex(index)}
-              aria-pressed={activeIndex === index}
-              aria-label={`Highlight ${segment.label}, ${segment.value} percent`}
-            >
-              <span className={`ct-pie-legend__swatch ${segment.className}`} aria-hidden="true" />
-              <span className="ct-pie-legend__label">{segment.label}</span>
-              <strong>{segment.value}%</strong>
-            </button>
-          ))}
-        </div>
-      </div>
-      <div className="ct-pie-panel__footer">
-        <span><i /> DEMONSTRATION DATA</span>
-        <span>Not actual company metrics</span>
-      </div>
-    </div>
-  );
-}
-
-function Financial3DScene() {
-  return (
-    <div className="ct-scene" aria-label="Interactive financial dashboard with animated illustrative charts" role="group">
-      <div className="ct-scene__aura ct-scene__aura--outer" aria-hidden="true" />
-      <div className="ct-scene__aura ct-scene__aura--inner" aria-hidden="true" />
-      <div className="ct-scene__grid-floor" aria-hidden="true" />
-
-      <div className="ct-orbit ct-orbit--one" aria-hidden="true" />
-      <div className="ct-orbit ct-orbit--two" aria-hidden="true" />
-      <div className="ct-orbit ct-orbit--three" aria-hidden="true" />
-      <div className="ct-orbit-dot ct-orbit-dot--one" aria-hidden="true" />
-      <div className="ct-orbit-dot ct-orbit-dot--two" aria-hidden="true" />
-      <div className="ct-orbit-dot ct-orbit-dot--three" aria-hidden="true" />
-
-      {/* Replace the decorative CPA sphere with a real, labelled pie chart. */}
-      <WorkflowPieChart />
-
-      <div className="ct-float-card ct-float-card--document">
-        <span className="ct-float-card__icon"><DocumentIcon /></span>
-        <span className="ct-float-card__copy">
-          <strong>Document intake</strong>
-          <small>Organized for review</small>
-        </span>
-        <span className="ct-status-dot" aria-hidden="true" />
-      </div>
-
-      <div className="ct-float-card ct-float-card--review">
-        <span className="ct-float-card__icon ct-float-card__icon--gold"><ShieldIcon /></span>
-        <span className="ct-float-card__copy">
-          <strong>Review checkpoints</strong>
-          <small>Review · Verify · Deliver</small>
-        </span>
-      </div>
-
-      <div className="ct-live-orbit-label" aria-hidden="true">
-        <span className="ct-live-orbit-label__icon"><ChartIcon /></span>
-        <span><strong>DATA IN MOTION</strong><small>Interactive preview</small></span>
-      </div>
-
-      <div className="ct-scene__spark ct-scene__spark--one" aria-hidden="true" />
-      <div className="ct-scene__spark ct-scene__spark--two" aria-hidden="true" />
-      <div className="ct-scene__spark ct-scene__spark--three" aria-hidden="true" />
-    </div>
-  );
-}
-
+/* ------------------------------------------------------------------ */
+/*  Component                                                           */
+/* ------------------------------------------------------------------ */
 export function CinematicHeroChapter({
   onOpenConsultation,
   onExploreWork,
   onOpenCalculator,
-  cmsContent,
 }: CinematicHeroChapterProps) {
   const navigate = useNavigate();
-  const eyebrowText = cmsContent?.parsedContent?.eyebrow || cmsContent?.subheading || 'STRATEGIC US TAX & CPA ADVISORY';
-  const heroTitle = cmsContent?.title || 'Financial clarity. Engineered for growth.';
-  const heroDescription = cmsContent?.description || 'High-precision tax preparation, bespoke entity advisory, and scalable white-label CPA capacity engineered for modern accounting firms and expanding enterprises.';
-  const primaryCta = cmsContent?.parsedContent?.primaryCtaText || 'Book Strategic Consultation';
-  const secondaryCta = cmsContent?.parsedContent?.secondaryCtaText || 'Explore Practices';
-  const calcText = cmsContent?.parsedContent?.calculatorButtonText || 'Calculate Your US Taxes';
-  const customBg = cmsContent?.backgroundImage;
-  const customVideo = cmsContent?.backgroundVideo;
-  const backgroundPosition = cmsContent?.imagePosition || 'center right';
-  const imageAltText = cmsContent?.imageAltText || 'Financial advisory background';
+  const [activeService, setActiveService] = useState(0);
+  const [isPaused, setIsPaused] = useState(false);
+  const [activeView, setActiveView] = useState<"orbital" | "portfolio">("orbital");
 
-  const followCmsLink = (url: string | undefined, fallback: () => void) => {
-    if (!url) {
-      fallback();
-    } else if (/^https?:\/\//i.test(url)) {
-      window.location.assign(url);
-    } else {
-      navigate(url);
+  const currentService = services[activeService];
+
+  const selectService = useCallback((index: number) => {
+    setActiveService(((index % services.length) + services.length) % services.length);
+  }, []);
+
+  const nextService = useCallback(() => {
+    setActiveService((prev) => (prev + 1) % services.length);
+  }, []);
+
+  /* Auto-rotate every 3 s, pause while hovering/focusing the dashboard */
+  useEffect(() => {
+    if (isPaused) return;
+    const timer = window.setInterval(() => {
+      setActiveService((prev) => (prev + 1) % services.length);
+    }, 3000);
+    return () => window.clearInterval(timer);
+  }, [isPaused]);
+
+  const handleMouseEnter = () => setIsPaused(true);
+  const handleMouseLeave = () => setIsPaused(false);
+  const handleFocus = () => setIsPaused(true);
+  const handleBlur = (e: React.FocusEvent<HTMLDivElement>) => {
+    if (!e.currentTarget.contains(e.relatedTarget as Node | null)) {
+      setIsPaused(false);
     }
   };
 
-  // Editable Trust Row items from CMS parsed content
-  const trustItem1Category = cmsContent?.parsedContent?.trust_item1_category || 'PROCESS';
-  const trustItem1Title = cmsContent?.parsedContent?.trust_item1_title || 'Structured review';
-  const trustItem1Subtitle = cmsContent?.parsedContent?.trust_item1_subtitle || 'Clear checkpoints';
-
-  const trustItem2Category = cmsContent?.parsedContent?.trust_item2_category || 'DOCUMENTS';
-  const trustItem2Title = cmsContent?.parsedContent?.trust_item2_title || 'Organized intake';
-  const trustItem2Subtitle = cmsContent?.parsedContent?.trust_item2_subtitle || 'Review-ready flow';
-
-  const trustItem3Category = cmsContent?.parsedContent?.trust_item3_category || 'VISIBILITY';
-  const trustItem3Title = cmsContent?.parsedContent?.trust_item3_title || 'Clear milestones';
-  const trustItem3Subtitle = cmsContent?.parsedContent?.trust_item3_subtitle || 'Progress at a glance';
-
-  const trustItem4Category = cmsContent?.parsedContent?.trust_item4_category || 'DELIVERY';
-  const trustItem4Title = cmsContent?.parsedContent?.trust_item4_title || 'Human oversight';
-  const trustItem4Subtitle = cmsContent?.parsedContent?.trust_item4_subtitle || 'Quality-minded workflow';
-
-  const handlePointerMove = (event: React.PointerEvent<HTMLDivElement>) => {
-    if (event.pointerType !== 'mouse') return;
-    const rect = event.currentTarget.getBoundingClientRect();
-    const x = (event.clientX - rect.left) / rect.width - 0.5;
-    const y = (event.clientY - rect.top) / rect.height - 0.5;
-    // tilt removed to keep stable on mouse move
-    // tilt removed to keep stable on mouse move
+  /* Button handlers — fall back to navigation if no prop provided */
+  const handleConsultation = () => {
+    if (onOpenConsultation) {
+      onOpenConsultation("cpa", "tax-prep-outsourcing");
+    } else {
+      navigate("/contact");
+    }
   };
 
-  const handlePointerLeave = (event: React.PointerEvent<HTMLDivElement>) => {
-    event.currentTarget.style.setProperty('--pointer-rotate-y', '0deg');
-    event.currentTarget.style.setProperty('--pointer-rotate-x', '0deg');
+  const handleCalculator = () => {
+    if (onOpenCalculator) {
+      onOpenCalculator();
+    } else {
+      navigate("/tax-calculator");
+    }
+  };
+
+  const handleExplore = () => {
+    if (onExploreWork) {
+      onExploreWork();
+    } else {
+      navigate("/services");
+    }
   };
 
   return (
-    <section className="ct-hero" aria-labelledby="ct-hero-title">
-      <div className="ct-hero__background" aria-hidden="true">
-        <div className="ct-hero__background-glow ct-hero__background-glow--one" />
-        <div className="ct-hero__background-glow ct-hero__background-glow--two" />
-        {customVideo && (
-          <video
-            className="ct-hero__background-video"
-            src={customVideo}
-            autoPlay
-            muted
-            loop
-            playsInline
-          />
-        )}
-        <EditableElement
-          sectionKey="hero"
-          elementKey="backgroundImage"
-          elementType="image"
-          label="Hero Background Media"
-          value={customBg}
-        >
+    <div className="cinematic-hero">
+
+      {/* ── Hero layout ── */}
+      <section className="hero-main">
+
+        {/* Left column */}
+        <div className="hero-left">
+
+          <div className="hero-eyebrow">
+            <span></span>
+            STRATEGIC US TAX &amp; CPA ADVISORY
+            <i></i>
+          </div>
+
+          <h1 className="hero-heading">
+            Financial clarity.
+            <span>Engineered</span>
+            <span>for growth.</span>
+          </h1>
+
+          <p className="hero-description">
+            High-precision tax preparation, bespoke entity advisory,
+            and scalable white-label CPA capacity engineered for
+            modern accounting firms and expanding enterprises.
+          </p>
+
+          {/* Action Buttons */}
+          <div className="hero-buttons">
+            <button
+              type="button"
+              className="hero-button primary"
+              onClick={handleConsultation}
+            >
+              Book Strategic Consultation <svg aria-hidden="true" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" style={{flexShrink:0,display:'inline-block',marginLeft:'2px'}}>
+                <path d="M5 12h14M13 6l6 6-6 6"/>
+              </svg>
+            </button>
+
+            <button
+              type="button"
+              className="hero-button secondary"
+              onClick={handleCalculator}
+            >
+              ▦&nbsp;&nbsp;Calculate Your US Taxes
+            </button>
+
+            <button
+              type="button"
+              className="hero-button outline"
+              onClick={handleExplore}
+            >
+              Explore Practices <span>⌄</span>
+            </button>
+          </div>
+
+          {/* Static feature cards */}
+          <div className="hero-features">
+            {features.map((feature) => (
+              <div className="hero-feature" key={feature.label}>
+                <div className="feature-icon">{feature.icon}</div>
+                <small>{feature.label}</small>
+                <strong>{feature.title}</strong>
+                <p>{feature.description}</p>
+              </div>
+            ))}
+          </div>
+
+        </div>
+
+        {/* Right column — interactive dashboard */}
+        <div className="hero-right">
+
+          <div className="dashboard-top">
+            <button
+              type="button"
+              className={`dashboard-pill${activeView === "orbital" ? " active" : ""}`}
+              onClick={() => setActiveView("orbital")}
+              aria-pressed={activeView === "orbital"}
+            >
+              ◈&nbsp;&nbsp;7-Service Orbital
+            </button>
+
+            <button
+              type="button"
+              className={`dashboard-pill${activeView === "portfolio" ? " active" : " transparent"}`}
+              onClick={() => setActiveView("portfolio")}
+              aria-pressed={activeView === "portfolio"}
+            >
+              ◷&nbsp;&nbsp;Portfolio Mix
+            </button>
+          </div>
+
           <div
-            className="ct-hero__background-image"
-            role={customBg ? 'img' : undefined}
-            aria-label={customBg ? imageAltText : undefined}
-            style={customBg ? { backgroundImage: `url(${customBg})`, backgroundPosition, opacity: 0.25 } : undefined}
-          />
-        </EditableElement>
-        <div className="ct-hero__background-grid" />
-        <div className="ct-hero__background-noise" />
-      </div>
-
-      <div className="ct-hero__container">
-        <div className="ct-hero__copy">
-          <EditableElement
-            sectionKey="hero"
-            elementKey="subheading"
-            elementType="subheading"
-            label="Eyebrow Subtitle"
-            value={eyebrowText}
+            className="service-dashboard"
+            onMouseEnter={handleMouseEnter}
+            onMouseLeave={handleMouseLeave}
+            onFocus={handleFocus}
+            onBlur={handleBlur}
           >
-            <div className="ct-hero__eyebrow">
-              <span className="ct-hero__eyebrow-line" />
-              <span>{eyebrowText}</span>
-              <span className="ct-hero__eyebrow-dot" />
-            </div>
-          </EditableElement>
+            {activeView === "orbital" ? (
+              <>
+                {/* Header */}
+                <div className="dashboard-header">
+                  <span>
+                    <i></i>
+                    TRANSACTION JOURNEY → {services.length} INTERCONNECTED PRACTICES
+                  </span>
+                  <strong>{currentService.label} ACTIVE</strong>
+                </div>
 
-          <EditableElement
-            sectionKey="hero"
-            elementKey="title"
-            elementType="heading"
-            label="Hero Main Headline"
-            value={heroTitle}
-          >
-            <h1 id="ct-hero-title" className="ct-hero__title">
-              {heroTitle.includes('.') ? (
-                <>
-                  {heroTitle.split('.')[0]}.
-                  <span>{heroTitle.split('.').slice(1).join('.').trim()}</span>
-                </>
-              ) : heroTitle.includes('&') ? (
-                <>
-                  {heroTitle.split('&')[0]} &amp;
-                  <span>{heroTitle.split('&').slice(1).join('&').trim()}</span>
-                </>
-              ) : (
-                heroTitle
-              )}
-            </h1>
-          </EditableElement>
+                <div className="dashboard-content">
 
-          <EditableElement
-            sectionKey="hero"
-            elementKey="description"
-            elementType="paragraph"
-            label="Lead Paragraph Description"
-            value={heroDescription}
-          >
-            <p className="ct-hero__description">
-              {heroDescription}
-            </p>
-          </EditableElement>
+                  {/* Orbital diagram */}
+                  <div className="orbital-area" aria-label="7-service orbital wheel">
+                    <div className="orbital-ring"></div>
 
-          <div className="ct-hero__actions flex flex-wrap items-center gap-3">
-            <EditableElement
-              sectionKey="hero"
-              elementKey="primaryCtaText"
-              elementType="button"
-              label="Primary CTA Button"
-              value={primaryCta}
-            >
-              <button
-                type="button"
-                className="ct-hero__button ct-hero__button--primary"
-                onClick={() => followCmsLink(cmsContent?.parsedContent?.primaryCtaUrl, () => onOpenConsultation('cpa', 'tax-prep-outsourcing'))}
-              >
-                <span>{primaryCta}</span>
-                <ArrowRightIcon />
-              </button>
-            </EditableElement>
+                    {services.map((service, index) => (
+                      <button
+                        key={service.label}
+                        type="button"
+                        className={`orbital-node node-${index + 1}${activeService === index ? " selected" : ""}`}
+                        onClick={() => selectService(index)}
+                        aria-label={`Show ${service.title}`}
+                        aria-pressed={activeService === index}
+                      >
+                        {service.label}
+                      </button>
+                    ))}
 
-            {onOpenCalculator && (
-              <EditableElement
-                sectionKey="hero"
-                elementKey="calculatorButtonText"
-                elementType="button"
-                label="Calculator CTA Button"
-                value={calcText}
-              >
-                <button
-                  type="button"
-                  className="ct-hero__button ct-hero__button--calculator"
-                  onClick={onOpenCalculator}
-                  aria-label={calcText}
-                >
-                  <Calculator className="w-4 h-4 text-[#16A765] dark:text-[#35E092]" />
-                  <span>{calcText}</span>
-                </button>
-              </EditableElement>
+                    <div className="orbital-center">
+                      <span>ONE HUB</span>
+                      <strong>7 Unified Services</strong>
+                      <small>SECURE · RELIABLE · SCALABLE</small>
+                    </div>
+                  </div>
+
+                  {/* Dynamic service details */}
+                  <div className="dashboard-details">
+
+                    <div className="detail-heading">
+                      <div className="detail-icon">▤</div>
+                      <div>
+                        <small>
+                          {String(activeService + 1).padStart(2, "0")} — {currentService.category}
+                        </small>
+                        <h3>{currentService.title}</h3>
+                      </div>
+                    </div>
+
+                    <p className="detail-description">{currentService.description}</p>
+
+                    <ul className="detail-list">
+                      {currentService.items.map((item) => (
+                        <li key={item}>{item}</li>
+                      ))}
+                    </ul>
+
+                    <div className="form-tags">
+                      <strong>KEY TAGS:</strong>
+                      {currentService.forms.map((form) => (
+                        <span key={form}>{form}</span>
+                      ))}
+                    </div>
+
+                    <div className="dashboard-progress">
+                      <div
+                        className="progress-line"
+                        role="progressbar"
+                        aria-label="Service progress"
+                        aria-valuemin={0}
+                        aria-valuemax={services.length}
+                        aria-valuenow={activeService + 1}
+                      >
+                        <span
+                          style={{
+                            width: `${((activeService + 1) / services.length) * 100}%`,
+                          }}
+                        />
+                      </div>
+
+                      <strong>
+                        Step {String(activeService + 1).padStart(2, "0")} of 0{services.length}
+                      </strong>
+
+                      <button
+                        type="button"
+                        className="progress-next"
+                        onClick={nextService}
+                        aria-label="Next service"
+                      >
+                        <svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+                      </button>
+                    </div>
+
+                  </div>
+                </div>
+              </>
+            ) : (
+              /* Portfolio Mix view */
+              <div className="portfolio-view">
+                <div className="dashboard-header">
+                  <span>
+                    <i></i>
+                    PORTFOLIO MIX · SERVICE REVENUE BREAKDOWN
+                  </span>
+                  <strong>LIVE DATA</strong>
+                </div>
+                <FinancialDonutChart
+                  data={portfolioMix}
+                  title="Financial operations"
+                  subtitle="A clearer view of work delivered across your firm."
+                  centerLabel="PORTFOLIO MIX"
+                  valueFormatter={(v) =>
+                    `$${new Intl.NumberFormat("en-US", {
+                      notation: "compact",
+                      maximumFractionDigits: 2,
+                    }).format(v)}`
+                  }
+                  totalFormatter={(v) =>
+                    `$${new Intl.NumberFormat("en-US", {
+                      notation: "compact",
+                      maximumFractionDigits: 2,
+                    }).format(v)}`
+                  }
+                  tone="home"
+                />
+              </div>
             )}
-
-            <EditableElement
-              sectionKey="hero"
-              elementKey="secondaryCtaText"
-              elementType="button"
-              label="Secondary CTA Button"
-              value={secondaryCta}
-            >
-              <button
-                type="button"
-                className="ct-hero__button ct-hero__button--secondary"
-                onClick={() => followCmsLink(cmsContent?.parsedContent?.secondaryCtaUrl, onExploreWork)}
-              >
-                <span>{secondaryCta}</span>
-                <ChevronDownIcon />
-              </button>
-            </EditableElement>
-          </div>
-
-          <div className="ct-hero__trust-row" aria-label="Service approach">
-            <EditableElement
-              sectionKey="hero"
-              elementKey="trust_item1_title"
-              elementType="text"
-              label="Trust Badge 1 Title"
-              value={trustItem1Title}
-            >
-              <div className="ct-trust-item">
-                <span className="ct-trust-item__icon ct-trust-item__icon--teal"><ShieldIcon /></span>
-                <span>
-                  <small>{trustItem1Category}</small>
-                  <strong>{trustItem1Title}</strong>
-                  <em>{trustItem1Subtitle}</em>
-                </span>
-              </div>
-            </EditableElement>
-
-            <EditableElement
-              sectionKey="hero"
-              elementKey="trust_item2_title"
-              elementType="text"
-              label="Trust Badge 2 Title"
-              value={trustItem2Title}
-            >
-              <div className="ct-trust-item">
-                <span className="ct-trust-item__icon ct-trust-item__icon--blue"><DocumentIcon /></span>
-                <span>
-                  <small>{trustItem2Category}</small>
-                  <strong>{trustItem2Title}</strong>
-                  <em>{trustItem2Subtitle}</em>
-                </span>
-              </div>
-            </EditableElement>
-
-            <EditableElement
-              sectionKey="hero"
-              elementKey="trust_item3_title"
-              elementType="text"
-              label="Trust Badge 3 Title"
-              value={trustItem3Title}
-            >
-              <div className="ct-trust-item">
-                <span className="ct-trust-item__icon ct-trust-item__icon--gold"><ChartIcon /></span>
-                <span>
-                  <small>{trustItem3Category}</small>
-                  <strong>{trustItem3Title}</strong>
-                  <em>{trustItem3Subtitle}</em>
-                </span>
-              </div>
-            </EditableElement>
-
-            <EditableElement
-              sectionKey="hero"
-              elementKey="trust_item4_title"
-              elementType="text"
-              label="Trust Badge 4 Title"
-              value={trustItem4Title}
-            >
-              <div className="ct-trust-item">
-                <span className="ct-trust-item__icon ct-trust-item__icon--teal"><ShieldIcon /></span>
-                <span>
-                  <small>{trustItem4Category}</small>
-                  <strong>{trustItem4Title}</strong>
-                  <em>{trustItem4Subtitle}</em>
-                </span>
-              </div>
-            </EditableElement>
           </div>
         </div>
 
-        <div
-          className="ct-hero__visual-wrap w-full max-w-xl"
-          onPointerMove={handlePointerMove}
-          onPointerLeave={handlePointerLeave}
-          aria-label="Automatic financial services animation"
-        >
-          {/* Dynamic Universal Media Renderer (Supports: Chart | Image | Video | GIF | Embed) */}
-          {cmsContent?.content && (() => {
-            try {
-              const p = JSON.parse(cmsContent.content);
-              if (p.hero_media_format && p.hero_media_format !== 'chart') {
-                return (
-                  <EditableElement
-                    sectionKey="hero"
-                    elementKey="hero_media_url"
-                    elementType={p.hero_media_format}
-                    label={`Hero ${p.hero_media_format.toUpperCase()}`}
-                    value={p.hero_media_url || ''}
-                  >
-                    <DynamicUniversalMediaRenderer
-                      mediaType={p.hero_media_format}
-                      mediaUrl={p.hero_media_url}
-                      altText={cmsContent.parsedContent?.hero_media_alt || imageAltText}
-                      fallbackComponent={<HomeHeroServiceAnimation />}
-                    />
-                  </EditableElement>
-                );
-              }
-            } catch { }
-            return null;
-          })()}
-          {(!cmsContent?.content || (() => {
-            try {
-              const p = JSON.parse(cmsContent.content);
-              return !p.hero_media_format || p.hero_media_format === 'chart';
-            } catch { return true; }
-          })()) && (
-              <HomeHeroServiceAnimation />
-            )}
-        </div>
-      </div>
-
-      <div className="ct-hero__scroll-cue" aria-hidden="true">
-        <span>SCROLL TO EXPLORE</span>
-        <i />
-      </div>
-    </section>
+      </section>
+    </div>
   );
 }
+
+export default CinematicHeroChapter;

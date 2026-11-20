@@ -7,33 +7,25 @@ interface BrandLogoProps {
 
 export function BrandLogo({ className = '', isDark }: BrandLogoProps) {
   return (
-    <div className={`flex items-center gap-2 cursor-pointer select-none ${className}`}>
-      {/* Light Theme STE Logo: Rendered directly from official vector PDF */}
+    <div className={`flex items-center cursor-pointer select-none ${className}`}>
+      {/*
+        New Smart Tax Experts logo — single asset used for both themes.
+        The logo has a transparent/white background and works on all backgrounds.
+        On dark backgrounds a subtle brightness filter ensures visibility.
+      */}
       <img
-        src="/assets/aistudio/ste_logo_light.png"
+        src="/assets/aistudio/ste_logo_new.png"
         alt="Smart Tax Experts"
-        className={`h-8 sm:h-9 md:h-10 w-auto object-contain transition-opacity duration-200 ${
-          isDark === true 
-            ? 'hidden' 
-            : isDark === false 
-              ? 'block' 
-              : 'dark:hidden block'
+        className={`w-auto object-contain transition-opacity duration-200 ${
+          isDark === true
+            ? 'h-10 sm:h-11 md:h-12 brightness-[1.15]'
+            : isDark === false
+              ? 'h-10 sm:h-11 md:h-12'
+              : 'h-10 sm:h-11 md:h-12 dark:brightness-[1.1]'
         }`}
+        style={{ maxWidth: '160px' }}
         loading="eager"
-      />
-
-      {/* Dark Theme STE Logo: Clean transparent asset with official white text & STE green emblem */}
-      <img
-        src="/assets/aistudio/ste_logo_dark.png"
-        alt="Smart Tax Experts"
-        className={`h-8 sm:h-9 md:h-10 w-auto object-contain transition-opacity duration-200 ${
-          isDark === true 
-            ? 'block' 
-            : isDark === false 
-              ? 'hidden' 
-              : 'hidden dark:block'
-        }`}
-        loading="eager"
+        draggable={false}
       />
     </div>
   );

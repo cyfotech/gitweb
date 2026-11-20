@@ -1,0 +1,113 @@
+/* ThemeTypographyShowcase.css */
+
+.theme-showcase {
+  --theme-green: #08c98a;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  width: 100%;
+  min-height: 560px;
+  overflow: hidden;
+  font-family: Inter, "Segoe UI", Arial, sans-serif;
+}
+
+.theme-showcase__panel {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 0;
+  padding: clamp(28px, 4vw, 68px);
+  background-size: 69px 69px;
+}
+
+.theme-showcase__panel--dark {
+  background-color: #061b1b;
+  background-image:
+    linear-gradient(rgba(123, 190, 177, 0.075) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(123, 190, 177, 0.075) 1px, transparent 1px);
+}
+
+.theme-showcase__panel--light {
+  background-color: #fff;
+  background-image:
+    linear-gradient(rgba(8, 137, 104, 0.055) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(8, 137, 104, 0.055) 1px, transparent 1px);
+  border-left: 1px solid rgba(8, 137, 104, 0.12);
+}
+
+.theme-showcase__heading {
+  width: 100%;
+  max-width: 760px;
+  margin: 0;
+  font-size: clamp(36px, 5.5vw, 88px);
+  font-weight: 800;
+  line-height: 1.12;
+  letter-spacing: -0.055em;
+  overflow-wrap: normal;
+  text-wrap: balance;
+}
+
+.theme-showcase__heading--dark {
+  color: #fff;
+}
+
+.theme-showcase__heading--dark .theme-showcase__highlight {
+  color: #60e4c1;
+}
+
+.theme-showcase__heading--light {
+  color: #08bd83;
+}
+
+.theme-showcase__heading--light .theme-showcase__amp {
+  color: #111;
+}
+
+.theme-showcase__heading--light .theme-showcase__highlight {
+  color: #08bd83;
+}
+
+@media (max-width: 900px) {
+  .theme-showcase {
+    min-height: 460px;
+  }
+
+  .theme-showcase__panel {
+    padding: 28px;
+  }
+
+  .theme-showcase__heading {
+    font-size: clamp(32px, 5.2vw, 58px);
+  }
+}
+
+@media (max-width: 640px) {
+  .theme-showcase {
+    grid-template-columns: 1fr;
+    min-height: auto;
+  }
+
+  .theme-showcase__panel {
+    min-height: 360px;
+    padding: 34px 24px;
+  }
+
+  .theme-showcase__panel--light {
+    border-left: 0;
+    border-top: 1px solid rgba(8, 137, 104, 0.12);
+  }
+
+  .theme-showcase__heading {
+    max-width: 520px;
+    font-size: clamp(38px, 9vw, 58px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+
+  .theme-showcase,
+  .theme-showcase * {
+    scroll-behavior: auto !important;
+    animation: none !important;
+    transition: none !important;
+  }
+}

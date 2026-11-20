@@ -12,37 +12,38 @@ const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
 
 export function ThemeProvider({ children }: { children: React.ReactNode }) {
   const [theme, setThemeState] = useState<Theme>(() => {
-    // Check localStorage first
     if (typeof window !== 'undefined') {
-      const saved = localStorage.getItem('preferred-tax-theme');
-      if (saved === 'light' || saved === 'dark') {
-        return saved;
+      try {
+        const saved = localStorage.getItem('preferred-tax-theme');
+        if (saved === 'light' || saved === 'dark') return saved;
+      } catch {
+        // Continue to system preference if localStorage is unavailable.
       }
-      // Check system preference
-      if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+
+      if (window.matchMedia?.('(prefers-color-scheme: dark)').matches) {
         return 'dark';
       }
     }
-    // Default to dark for premium AskAiRank / screenshot fintech visual direction
+
     return 'dark';
   });
 
   useEffect(() => {
     const root = document.documentElement;
-    if (theme === 'dark') {
-      root.classList.add('dark');
-    } else {
-      root.classList.remove('dark');
-    }
+
+    // The project uses .dark for Tailwind and data-theme for theme-aware CSS.
+    root.classList.toggle('dark', theme === 'dark');
+    root.dataset.theme = theme;
+
     try {
       localStorage.setItem('preferred-tax-theme', theme);
     } catch {
-      // Ignore storage errors in sandboxed contexts
+      // Ignore storage errors in restricted browser contexts.
     }
   }, [theme]);
 
   const toggleTheme = () => {
-    setThemeState((prev) => (prev === 'dark' ? 'light' : 'dark'));
+    setThemeState((current) => (current === 'dark' ? 'light' : 'dark'));
   };
 
   const setTheme = (newTheme: Theme) => {
@@ -58,8 +59,10 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
 
 export function useTheme() {
   const context = useContext(ThemeContext);
+
   if (!context) {
     throw new Error('useTheme must be used within a ThemeProvider');
   }
+
   return context;
 }

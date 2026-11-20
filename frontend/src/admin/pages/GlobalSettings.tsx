@@ -377,21 +377,21 @@ export function GlobalSettingsPage() {
                   icon={<Mail size={14} />}
                   value={form.email}
                   onChange={(v) => setForm({ ...form, email: v })}
-                  placeholder="advisory@preferredtax.com"
+                  placeholder="brian@smarttaxexpertss.com"
                 />
                 <Field
                   label="Contact Phone Number"
                   icon={<Phone size={14} />}
                   value={form.phone}
                   onChange={(v) => setForm({ ...form, phone: v })}
-                  placeholder="+1 (800) 555-PTAX (7829)"
+                  placeholder="+1 214 837 7128"
                 />
                 <Field
                   label="WhatsApp Direct Support"
                   icon={<MessageSquare size={14} />}
                   value={form.whatsapp}
                   onChange={(v) => setForm({ ...form, whatsapp: v })}
-                  placeholder="+1 (800) 555-7829"
+                  placeholder="+1 214 837 7128"
                 />
                 <Field
                   label="Active Operational Hours"
@@ -452,7 +452,7 @@ export function GlobalSettingsPage() {
                   icon={<MapPin size={14} />}
                   value={form.address}
                   onChange={(v) => setForm({ ...form, address: v })}
-                  placeholder="100 Wall Street, 24th Floor, New York, NY 10005"
+                  placeholder="5900 BALCONES DR STE 100 AUSTIN TX 78731-4298 USA"
                   multiline
                 />
 
@@ -461,7 +461,7 @@ export function GlobalSettingsPage() {
                   icon={<Navigation size={14} />}
                   value={form.mapEmbedUrl}
                   onChange={(v) => setForm({ ...form, mapEmbedUrl: v })}
-                  placeholder="https://maps.google.com/maps?q=100+Wall+Street+New+York&output=embed"
+                  placeholder="https://maps.google.com/maps?q=5900+BALCONES+DR+STE+100+AUSTIN+TX+78731-4298+USA&output=embed"
                 />
               </div>
 

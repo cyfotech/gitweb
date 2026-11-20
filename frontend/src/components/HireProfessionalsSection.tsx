@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
-import { 
-  UserCheck, 
-  Star, 
-  CheckCircle2, 
-  ArrowUpRight, 
-  ShieldCheck, 
-  Clock, 
-  Briefcase, 
+import {
+  UserCheck,
+  Star,
+  CheckCircle2,
+  ArrowUpRight,
+  ShieldCheck,
+  Clock,
+  Briefcase,
   Cpu
 } from 'lucide-react';
 import { CPA_PROFILES, HIRING_ENGAGEMENT_MODELS, ProfessionalProfile } from '../data/cpaProfiles';
@@ -21,7 +21,7 @@ export function HireProfessionalsSection({ onHireProfessional }: HireProfessiona
   return (
     <section id="hire-professionals" className="py-20 sm:py-28 px-4 sm:px-6 lg:px-8 relative bg-[#F7F9F8] dark:bg-[#031117] transition-colors duration-300">
       <div className="max-w-7xl mx-auto">
-        
+
         {/* Header */}
         <div className="text-center max-w-3xl mx-auto mb-16">
           <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full text-xs font-semibold tracking-wider uppercase bg-[#E4F0EE] dark:bg-[rgba(44,207,197,0.12)] text-[#315F69] dark:text-[#79F1E8] border border-[#DCE5E2] dark:border-[rgba(121,241,232,0.25)] mb-3">
@@ -41,11 +41,10 @@ export function HireProfessionalsSection({ onHireProfessional }: HireProfessiona
           {HIRING_ENGAGEMENT_MODELS.map((model, idx) => (
             <div
               key={idx}
-              className={`p-6 sm:p-7 rounded-3xl transition-all duration-300 border flex flex-col justify-between ${
-                model.recommended
+              className={`p-6 sm:p-7 rounded-3xl transition-all duration-300 border flex flex-col justify-between ${model.recommended
                   ? 'glass-panel border-[#315F69] dark:border-[#2CCFC5] shadow-xl relative scale-[1.02]'
                   : 'bg-white dark:bg-[#071C24] border-[#DCE5E2] dark:border-[rgba(121,241,232,0.15)] shadow-sm hover:shadow-md'
-              }`}
+                }`}
             >
               {model.recommended && (
                 <div className="absolute -top-3 left-6 px-3 py-0.5 rounded-full text-[10px] font-bold tracking-wider uppercase bg-[#315F69] text-white dark:bg-[#2CCFC5] dark:text-[#031117] shadow-sm">
@@ -61,9 +60,6 @@ export function HireProfessionalsSection({ onHireProfessional }: HireProfessiona
                   {model.idealFor}
                 </p>
 
-                <div className="text-xl font-extrabold text-[#315F69] dark:text-[#79F1E8] mb-6">
-                  {model.pricing}
-                </div>
 
                 <div className="space-y-2.5 mb-6">
                   {model.benefits.map((b, bIdx) => (
@@ -77,11 +73,10 @@ export function HireProfessionalsSection({ onHireProfessional }: HireProfessiona
 
               <button
                 onClick={() => onHireProfessional('Staff Augmentation', model.title)}
-                className={`w-full py-2.5 px-4 rounded-xl text-xs font-semibold flex items-center justify-center gap-1.5 transition-all ${
-                  model.recommended
+                className={`w-full py-2.5 px-4 rounded-xl text-xs font-semibold flex items-center justify-center gap-1.5 transition-all ${model.recommended
                     ? 'bg-[#315F69] text-white dark:bg-[#2CCFC5] dark:text-[#031117] hover:scale-[1.02] shadow-md'
                     : 'bg-black/5 dark:bg-white/5 text-[#17252B] dark:text-[#F3FBFC] hover:bg-black/10 dark:hover:bg-white/10'
-                }`}
+                  }`}
               >
                 <span>Select Engagement Model</span>
                 <ArrowUpRight className="w-3.5 h-3.5" />

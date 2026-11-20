@@ -365,7 +365,7 @@ class BookkeepingPage extends React.Component {
               <a href="#start" className="b b-mint" style={{ minHeight: "46px", padding: "0 8px 0 20px", fontSize: "14px" }}>
                 Talk to Our Team
                 <span className="ar">
-                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.6" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                  <svg style={{flexShrink:0,display:"inline-block",verticalAlign:"middle"}} width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.6" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
                     <path d="M5 12h14M13 6l6 6-6 6"></path>
                   </svg>
                 </span>
@@ -465,7 +465,7 @@ class BookkeepingPage extends React.Component {
                         <a href="#start" className="b b-mint" style={{ paddingRight: "10px" }}>
                           Request a Consultation
                           <span className="ar">
-                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.6" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                            <svg style={{flexShrink:0,display:"inline-block",verticalAlign:"middle"}} width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.6" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
                               <path d="M5 12h14M13 6l6 6-6 6"></path>
                             </svg>
                           </span>
@@ -505,7 +505,7 @@ class BookkeepingPage extends React.Component {
                         <a href="#start" className="b b-mint" style={{ paddingRight: "10px" }}>
                           Talk to Our Team
                           <span className="ar">
-                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.6" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                            <svg style={{flexShrink:0,display:"inline-block",verticalAlign:"middle"}} width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.6" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
                               <path d="M5 12h14M13 6l6 6-6 6"></path>
                             </svg>
                           </span>
@@ -545,7 +545,7 @@ class BookkeepingPage extends React.Component {
                         <a href="#start" className="b b-mint" style={{ paddingRight: "10px" }}>
                           Discuss CPA Outsourcing
                           <span className="ar">
-                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.6" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                            <svg style={{flexShrink:0,display:"inline-block",verticalAlign:"middle"}} width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.6" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
                               <path d="M5 12h14M13 6l6 6-6 6"></path>
                             </svg>
                           </span>
@@ -584,7 +584,7 @@ class BookkeepingPage extends React.Component {
 
                     <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
                       <span style={{ width: "32px", height: "32px", borderRadius: "10px", background: "#121519", display: "grid", placeItems: "center", color: "#37E191" }}>
-                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round">
+                        <svg style={{flexShrink:0,display:"inline-block",verticalAlign:"middle"}} width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round">
                           <path d="M3 10h18M5 10v8M9 10v8M15 10v8M19 10v8M3 20h18M12 3l9 5H3z"></path>
                         </svg>
                       </span>
@@ -640,7 +640,7 @@ class BookkeepingPage extends React.Component {
 
 
                           <span className="tick" style={{ position: "relative", animation: `tk 7s ${w.delay} ease-in-out infinite` }}>
-                            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3.4" strokeLinecap="round" strokeLinejoin="round">
+                            <svg style={{flexShrink:0,display:"inline-block",verticalAlign:"middle"}} width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3.4" strokeLinecap="round" strokeLinejoin="round">
                               <path d="M5 12.5l4.5 4.5L19 7.5"></path>
                             </svg>
                           </span>
@@ -708,7 +708,7 @@ class BookkeepingPage extends React.Component {
 
 
                 <div aria-hidden="true" style={{ position: "absolute", zIndex: "3", left: "-26px", top: "0", padding: "12px 16px", borderRadius: "16px", background: "#22AE68", color: "#0A2418", fontSize: "13px", fontWeight: "800", display: "flex", alignItems: "center", gap: "8px", boxShadow: "0 20px 40px -20px rgba(0,0,0,.7)", animation: "float 6s ease-in-out infinite" }}>
-                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
+                  <svg style={{flexShrink:0,display:"inline-block",verticalAlign:"middle"}} width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
                     <path d="M20 12V7l-8-4-8 4v10l8 4 3-1.5M8 9l4 2 4-2M12 11v9"></path>
                   </svg>
                   Chart of accounts applied
@@ -956,7 +956,7 @@ class BookkeepingPage extends React.Component {
 
                           <span style={{ justifySelf: "end", display: "inline-flex", alignItems: "center", gap: "6px", fontSize: "12px", fontWeight: "800", color: "#0B7A44" }}>
                             <span className="tick" style={{ width: "18px", height: "18px" }}>
-                              <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3.4" strokeLinecap="round" strokeLinejoin="round">
+                              <svg style={{flexShrink:0,display:"inline-block",verticalAlign:"middle"}} width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3.4" strokeLinecap="round" strokeLinejoin="round">
                                 <path d="M5 12.5l4.5 4.5L19 7.5"></path>
                               </svg>
                             </span>
@@ -987,7 +987,7 @@ class BookkeepingPage extends React.Component {
 
 
                   <span className="ba-knob" style={{ position: "absolute", top: "50%", left: "-32px", width: "64px", height: "64px", marginTop: "-32px", borderRadius: "50%", background: "#121519", color: "#37E191", display: "grid", placeItems: "center", boxShadow: "0 16px 34px -12px rgba(18,21,25,0.7)" }}>
-                    <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round">
+                    <svg style={{flexShrink:0,display:"inline-block",verticalAlign:"middle"}} width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round">
                       <path d="M9 6l-6 6 6 6M15 6l6 6-6 6"></path>
                     </svg>
                   </span>
@@ -1062,7 +1062,7 @@ class BookkeepingPage extends React.Component {
 
 
                         <span className="sa">
-                          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                          <svg style={{flexShrink:0,display:"inline-block",verticalAlign:"middle"}} width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
                             <path d="M5 12h14M13 6l6 6-6 6"></path>
                           </svg>
                         </span>
@@ -1191,7 +1191,7 @@ class BookkeepingPage extends React.Component {
                                   {(b.ok) && (
                                     <>
                                       <span className="tick" style={{ animation: `tk 5s ${b.delay} ease-in-out infinite` }}>
-                                        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3.4" strokeLinecap="round" strokeLinejoin="round">
+                                        <svg style={{flexShrink:0,display:"inline-block",verticalAlign:"middle"}} width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3.4" strokeLinecap="round" strokeLinejoin="round">
                                           <path d="M5 12.5l4.5 4.5L19 7.5"></path>
                                         </svg>
                                       </span>
@@ -1280,7 +1280,7 @@ class BookkeepingPage extends React.Component {
 
                               <p style={{ display: "flex", alignItems: "center", gap: "8px", fontSize: "14px", fontWeight: "800", color: "#0B7A44" }}>
                                 <span className="tick">
-                                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3.4" strokeLinecap="round" strokeLinejoin="round">
+                                  <svg style={{flexShrink:0,display:"inline-block",verticalAlign:"middle"}} width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3.4" strokeLinecap="round" strokeLinejoin="round">
                                     <path d="M5 12.5l4.5 4.5L19 7.5"></path>
                                   </svg>
                                 </span>
@@ -1536,7 +1536,7 @@ class BookkeepingPage extends React.Component {
 
 
                                   <span className="tick" style={{ animation: `tk 6s ${c.delay} ease-in-out infinite` }}>
-                                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3.4" strokeLinecap="round" strokeLinejoin="round">
+                                    <svg style={{flexShrink:0,display:"inline-block",verticalAlign:"middle"}} width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3.4" strokeLinecap="round" strokeLinejoin="round">
                                       <path d="M5 12.5l4.5 4.5L19 7.5"></path>
                                     </svg>
                                   </span>
@@ -1630,14 +1630,14 @@ class BookkeepingPage extends React.Component {
 
 
                         <button type="button" aria-label="Previous service" onClick={svcPrev} style={{ width: "48px", height: "48px", borderRadius: "14px", border: "1.5px solid rgba(255,255,255,0.25)", background: "transparent", color: "#fff", display: "grid", placeItems: "center", cursor: "pointer" }}>
-                          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                          <svg style={{flexShrink:0,display:"inline-block",verticalAlign:"middle"}} width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
                             <path d="M19 12H5M11 6l-6 6 6 6"></path>
                           </svg>
                         </button>
 
 
                         <button type="button" aria-label="Next service" onClick={svcNext} style={{ width: "48px", height: "48px", borderRadius: "14px", border: "0", background: "#37E191", color: "#0A2418", display: "grid", placeItems: "center", cursor: "pointer" }}>
-                          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                          <svg style={{flexShrink:0,display:"inline-block",verticalAlign:"middle"}} width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
                             <path d="M5 12h14M13 6l6 6-6 6"></path>
                           </svg>
                         </button>
@@ -1649,7 +1649,7 @@ class BookkeepingPage extends React.Component {
                       <a href="#start" className="b b-mint" style={{ minHeight: "48px", paddingRight: "8px" }}>
                         Discuss this service
                         <span className="ar">
-                          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.6" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                          <svg style={{flexShrink:0,display:"inline-block",verticalAlign:"middle"}} width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.6" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
                             <path d="M5 12h14M13 6l6 6-6 6"></path>
                           </svg>
                         </span>
@@ -1818,7 +1818,7 @@ class BookkeepingPage extends React.Component {
 
                     <li className="pop" style={{ display: "flex", alignItems: "center", gap: "12px", padding: "18px 20px", borderRadius: "18px", background: "rgba(255,255,255,0.05)", border: "1px solid rgba(255,255,255,0.1)", fontSize: "15px", fontWeight: "700", color: "#fff" }}>
                       <span className="tick">
-                        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3.4" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                        <svg style={{flexShrink:0,display:"inline-block",verticalAlign:"middle"}} width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3.4" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
                           <path d="M5 12.5l4.5 4.5L19 7.5"></path>
                         </svg>
                       </span>
@@ -2345,7 +2345,7 @@ class BookkeepingPage extends React.Component {
                   <a href="#start" className="b b-mint" style={{ paddingRight: "10px" }}>
                     {verdictCta}
                     <span className="ar">
-                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.6" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                      <svg style={{flexShrink:0,display:"inline-block",verticalAlign:"middle"}} width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.6" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
                         <path d="M5 12h14M13 6l6 6-6 6"></path>
                       </svg>
                     </span>
@@ -2458,7 +2458,7 @@ class BookkeepingPage extends React.Component {
 
 
                             <li style={{ minHeight: "40px", display: "flex", alignItems: "center", gap: "10px", fontSize: "14px", fontWeight: "700" }}>
-                              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke={m.tickC} strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                              <svg style={{flexShrink:0,display:"inline-block",verticalAlign:"middle"}} width="16" height="16" viewBox="0 0 24 24" fill="none" stroke={m.tickC} strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
                                 <path d="M5 12.5l4.5 4.5L19 7.5"></path>
                               </svg>
                               {i}
@@ -2475,7 +2475,7 @@ class BookkeepingPage extends React.Component {
                       <a href="#start" className={m.btn} style={{ position: "relative", alignSelf: "flex-start", paddingRight: "10px" }}>
                         {m.cta}
                         <span className="ar">
-                          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.6" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                          <svg style={{flexShrink:0,display:"inline-block",verticalAlign:"middle"}} width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.6" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
                             <path d="M5 12h14M13 6l6 6-6 6"></path>
                           </svg>
                         </span>
@@ -2789,7 +2789,7 @@ class BookkeepingPage extends React.Component {
 
 
                         <span className="tick" style={{ width: "26px", height: "26px", animation: `tk 9s ${q.delay} ease-in-out infinite` }}>
-                          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3.4" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                          <svg style={{flexShrink:0,display:"inline-block",verticalAlign:"middle"}} width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3.4" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
                             <path d="M5 12.5l4.5 4.5L19 7.5"></path>
                           </svg>
                         </span>
@@ -2817,7 +2817,7 @@ class BookkeepingPage extends React.Component {
 
 
                     <span style={{ width: "64px", height: "64px", borderRadius: "20px", background: "#37E191", color: "#0A2418", display: "grid", placeItems: "center" }}>
-                      <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                      <svg style={{flexShrink:0,display:"inline-block",verticalAlign:"middle"}} width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
                         <rect x="4" y="10" width="16" height="11" rx="3"></rect>
                         <path d="M8 10V7a4 4 0 0 1 8 0v3M12 14v3"></path>
                       </svg>
@@ -2968,14 +2968,14 @@ class BookkeepingPage extends React.Component {
 
 
                   <button type="button" aria-label="Previous audience" onClick={whoPrev} style={{ width: "56px", height: "56px", borderRadius: "18px", border: "1.5px solid rgba(255,255,255,0.25)", background: "transparent", color: "#fff", display: "grid", placeItems: "center", cursor: "pointer" }}>
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                    <svg style={{flexShrink:0,display:"inline-block",verticalAlign:"middle"}} width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
                       <path d="M19 12H5M11 6l-6 6 6 6"></path>
                     </svg>
                   </button>
 
 
                   <button type="button" aria-label="Next audience" onClick={whoNext} style={{ width: "56px", height: "56px", borderRadius: "18px", border: "0", background: "#37E191", color: "#0A2418", display: "grid", placeItems: "center", cursor: "pointer" }}>
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                    <svg style={{flexShrink:0,display:"inline-block",verticalAlign:"middle"}} width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
                       <path d="M5 12h14M13 6l6 6-6 6"></path>
                     </svg>
                   </button>
@@ -3167,7 +3167,7 @@ class BookkeepingPage extends React.Component {
                   <a href="#start" className="b b-ink" style={{ position: "relative", alignSelf: "flex-start", paddingRight: "10px" }}>
                     Ask us something else
                     <span className="ar">
-                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.6" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                      <svg style={{flexShrink:0,display:"inline-block",verticalAlign:"middle"}} width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.6" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
                         <path d="M5 12h14M13 6l6 6-6 6"></path>
                       </svg>
                     </span>
@@ -3388,7 +3388,7 @@ class BookkeepingPage extends React.Component {
                   <button type="submit" disabled={submitting} className="b b-mint" style={{ paddingRight: "10px", opacity: submitting ? 0.7 : 1 }}>
                     {submitting ? "Sending..." : submitLabel}
                     <span className="ar">
-                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.6" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                      <svg style={{flexShrink:0,display:"inline-block",verticalAlign:"middle"}} width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.6" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
                         <path d="M5 12h14M13 6l6 6-6 6"></path>
                       </svg>
                     </span>
